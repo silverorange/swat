@@ -9,7 +9,7 @@
  */
 class SwatNumericCellRenderer extends SwatCellRenderer
 {
-    // {{{ public properties
+
 
     /**
      * Value can be either a float or an integer
@@ -49,8 +49,7 @@ class SwatNumericCellRenderer extends SwatCellRenderer
      */
     public $show_thousands_separator = true;
 
-    // }}}
-    // {{{ public function render()
+
 
     /**
      * Renders the contents of this cell
@@ -72,8 +71,7 @@ class SwatNumericCellRenderer extends SwatCellRenderer
         }
     }
 
-    // }}}
-    // {{{ protected function renderNullValue()
+
 
     protected function renderNullValue()
     {
@@ -83,8 +81,7 @@ class SwatNumericCellRenderer extends SwatCellRenderer
         $span_tag->display();
     }
 
-    // }}}
-    // {{{ protected function getDisplayValue()
+
 
     public function getDisplayValue()
     {
@@ -101,5 +98,4 @@ class SwatNumericCellRenderer extends SwatCellRenderer
         return $value;
     }
 
-    // }}}
 }

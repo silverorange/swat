@@ -11,7 +11,7 @@
  */
 class DemoApplication
 {
-	// {{{ private properties
+
 
 	private $ui;
 	private $demo;
@@ -56,8 +56,7 @@ class DemoApplication
         'YesNoFlydown'      => 'SwatYesNoFlydown',
     ];
 
-	// }}}
-	// {{{ public function run()
+
 
 	/**
 	 * test
@@ -92,8 +91,7 @@ class DemoApplication
 		$this->buildLayout();
 	}
 
-	// }}}
-	// {{{ private function buildTitle()
+
 
 	private function buildTitle()
 	{
@@ -101,8 +99,7 @@ class DemoApplication
 			sprintf(Swat::_('%s Demo'), $this->available_demos[$this->demo]);
 	}
 
-	// }}}
-	// {{{ private function buildDemo()
+
 
 	private function buildDemo()
 	{
@@ -121,8 +118,7 @@ class DemoApplication
 		}
 	}
 
-	// }}}
-	// {{{ private function buildXmlSourceView()
+
 
 	private function buildXmlSourceView()
 	{
@@ -142,8 +138,7 @@ class DemoApplication
 		}
 	}
 
-	// }}}
-	// {{{ private function buildPhpSourceView()
+
 
 	private function buildPhpSourceView()
 	{
@@ -162,8 +157,7 @@ class DemoApplication
 		}
 	}
 
-	// }}}
-	// {{{ private function buildDemoMenuBar()
+
 
 	private function buildDemoMenuBar()
 	{
@@ -171,8 +165,7 @@ class DemoApplication
 		$this->layout_ui->getWidget('menu')->setSelectedEntry($this->demo);
 	}
 
-	// }}}
-	// {{{ private function buildDemoNavBar()
+
 
 	private function buildDemoNavBar()
 	{
@@ -186,8 +179,7 @@ class DemoApplication
 		}
 	}
 
-	// }}}
-	// {{{ private function buildDemoDocumentationMenuBar()
+
 
 	private function buildDemoDocumentationMenuBar()
 	{
@@ -439,8 +431,7 @@ class DemoApplication
 		$documentation_links->setEntries($entries);
 	}
 
-	// }}}
-	// {{{ private function buildFrontPage()
+
 
 	private function buildFrontPage()
 	{
@@ -455,8 +446,7 @@ class DemoApplication
 		$main_frame->add($content_block);
 	}
 
-	// }}}
-	// {{{ private function buildLayout()
+
 
 	private function buildLayout()
 	{
@@ -481,8 +471,7 @@ class DemoApplication
 		require '../include/layout.php';
 	}
 
-	// }}}
-	// {{{ private function getDemo()
+
 
 	/**
 	 * Gets the demo page
@@ -498,7 +487,6 @@ class DemoApplication
 		return $demo;
 	}
 
-	// }}}
 }
 
 ?>

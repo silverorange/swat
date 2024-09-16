@@ -9,7 +9,7 @@
  */
 class SwatFloatEntry extends SwatNumericEntry
 {
-    // {{{ public function process()
+
 
     /**
      * Checks to make sure value is a number
@@ -34,8 +34,7 @@ class SwatFloatEntry extends SwatNumericEntry
         }
     }
 
-    // }}}
-    // {{{ protected function getDisplayValue()
+
 
     /**
      * Formats a float value to display
@@ -60,8 +59,7 @@ class SwatFloatEntry extends SwatNumericEntry
         return $value;
     }
 
-    // }}}
-    // {{{ protected function getNumericValue()
+
 
     /**
      * Gets the float value of this widget
@@ -80,8 +78,7 @@ class SwatFloatEntry extends SwatNumericEntry
         return $locale->parseFloat($value);
     }
 
-    // }}}
-    // {{{ protected function getValidationMessage()
+
 
     /**
      * Gets a validation message for this float entry
@@ -111,8 +108,7 @@ class SwatFloatEntry extends SwatNumericEntry
         return $message;
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
+
 
     /**
      * Gets the array of CSS classes that are applied to this entry
@@ -127,5 +123,4 @@ class SwatFloatEntry extends SwatNumericEntry
         return $classes;
     }
 
-    // }}}
 }

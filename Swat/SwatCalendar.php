@@ -12,7 +12,7 @@
  */
 class SwatCalendar extends SwatControl
 {
-    // {{{ public properties
+
 
     /**
      * Start date of the valid range (inclusive).
@@ -28,8 +28,7 @@ class SwatCalendar extends SwatControl
      */
     public $valid_range_end;
 
-    // }}}
-    // {{{ public function __construct()
+
 
     /**
      * Creates a new calendar
@@ -54,8 +53,7 @@ class SwatCalendar extends SwatControl
         );
     }
 
-    // }}}
-    // {{{ public function display()
+
 
     /**
      * Displays this calendar widget
@@ -94,8 +92,7 @@ class SwatCalendar extends SwatControl
         Swat::displayInlineJavaScript($this->getInlineJavaScript());
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
+
 
     /**
      * Gets the array of CSS classes that are applied to this calendar widget
@@ -110,8 +107,7 @@ class SwatCalendar extends SwatControl
         return $classes;
     }
 
-    // }}}
-    // {{{ protected function getInlineJavaScript()
+
 
     /**
      * Gets inline calendar JavaScript
@@ -157,8 +153,7 @@ class SwatCalendar extends SwatControl
         return $javascript;
     }
 
-    // }}}
-    // {{{ protected function getInlineJavaScriptTranslations()
+
 
     /**
      * Gets translatable string resources for the JavaScript object for
@@ -213,5 +208,4 @@ class SwatCalendar extends SwatControl
             "SwatCalendar.close_toggle_text = '{$close_toggle_text}';\n";
     }
 
-    // }}}
 }

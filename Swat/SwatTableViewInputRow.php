@@ -57,7 +57,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
      */
     public $show_row_messages = true;
 
-    // }}}
     // {{{ private properties
 
     /**
@@ -97,7 +96,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
      */
     private $replicators = [];
 
-    // }}}
     // {{{ public function __construct()
 
     /**
@@ -115,7 +113,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         );
     }
 
-    // }}}
     // {{{ public function init()
 
     /**
@@ -166,7 +163,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         }
     }
 
-    // }}}
     // {{{ public function process()
 
     /**
@@ -187,7 +183,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         }
     }
 
-    // }}}
     // {{{ public function addInputCell()
 
     /**
@@ -209,7 +204,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         $this->input_cells[$column_id] = $cell;
     }
 
-    // }}}
     // {{{ public function display()
 
     /**
@@ -252,7 +246,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         $this->displayEnterAnotherRow();
     }
 
-    // }}}
     // {{{ public function addReplication()
 
     /**
@@ -267,7 +260,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         return end($this->replicators);
     }
 
-    // }}}
     // {{{ public function getReplicators()
 
     /**
@@ -288,7 +280,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         return $this->replicators;
     }
 
-    // }}}
     // {{{ public function getWidget()
 
     /**
@@ -326,7 +317,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         );
     }
 
-    // }}}
     // {{{ public function getPrototypeWidget()
 
     /**
@@ -362,7 +352,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         );
     }
 
-    // }}}
     // {{{ public function removeReplicatedRow()
 
     /**
@@ -381,7 +370,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         }
     }
 
-    // }}}
     // {{{ public function getVisibleByCount()
 
     /**
@@ -401,7 +389,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         return $this->visible;
     }
 
-    // }}}
     // {{{ public function rowHasMessage()
 
     /**
@@ -427,7 +414,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         return $row_has_message;
     }
 
-    // }}}
     // {{{ public function getMessages()
 
     /**
@@ -451,7 +437,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         return $messages;
     }
 
-    // }}}
     // {{{ public function hasMessage()
 
     /**
@@ -476,7 +461,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         return $has_message;
     }
 
-    // }}}
     // {{{ public function getInlineJavaScript()
 
     /**
@@ -515,7 +499,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         );
     }
 
-    // }}}
     // {{{ public function getHtmlHeadEntrySet()
 
     /**
@@ -536,7 +519,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         return $set;
     }
 
-    // }}}
     // {{{ public function getAvailableHtmlHeadEntrySet()
 
     /**
@@ -559,7 +541,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         return $set;
     }
 
-    // }}}
     // {{{ private function getId()
 
     private function getId()
@@ -573,7 +554,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         return $id;
     }
 
-    // }}}
     // {{{ private function displayInputRows()
 
     /**
@@ -676,7 +656,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         }
     }
 
-    // }}}
     // {{{ private function createEmbeddedWidgets()
 
     /**
@@ -695,7 +674,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         }
     }
 
-    // }}}
     // {{{ private function displayEnterAnotherRow()
 
     /**
@@ -760,7 +738,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         $tr_tag->close();
     }
 
-    // }}}
     // {{{ private function getRowString()
 
     /**
@@ -809,7 +786,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         return ob_get_clean();
     }
 
-    // }}}
     // {{{ private function getForm()
 
     /**
@@ -833,5 +809,4 @@ class SwatTableViewInputRow extends SwatTableViewRow
         return $form;
     }
 
-    // }}}
 }

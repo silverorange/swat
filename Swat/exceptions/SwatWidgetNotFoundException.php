@@ -9,7 +9,7 @@
  */
 class SwatWidgetNotFoundException extends SwatException
 {
-    // {{{ protected properties
+
 
     /**
      * The widget id that was searched for
@@ -18,8 +18,7 @@ class SwatWidgetNotFoundException extends SwatException
      */
     protected $widget_id = null;
 
-    // }}}
-    // {{{ public function __construct()
+
 
     /**
      * Creates a new widget not found exception
@@ -34,8 +33,7 @@ class SwatWidgetNotFoundException extends SwatException
         $this->widget_id = $widget_id;
     }
 
-    // }}}
-    // {{{ public function getWidgetId()
+
 
     /**
      * Gets the widget id that was searched for
@@ -47,5 +45,4 @@ class SwatWidgetNotFoundException extends SwatException
         return $this->widget_id;
     }
 
-    // }}}
 }

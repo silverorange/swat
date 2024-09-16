@@ -9,7 +9,7 @@
  */
 class SwatCellRendererMapping extends SwatObject
 {
-    // {{{ public properties
+
 
     /**
      * The name of the property.
@@ -39,8 +39,7 @@ class SwatCellRendererMapping extends SwatObject
      */
     public $array_key = null;
 
-    // }}}
-    // {{{ public function __construct()
+
 
     /**
      * Create a new mapping object
@@ -54,5 +53,4 @@ class SwatCellRendererMapping extends SwatObject
         $this->field = $field;
     }
 
-    // }}}
 }

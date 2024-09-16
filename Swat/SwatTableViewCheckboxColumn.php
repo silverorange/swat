@@ -18,7 +18,7 @@
  */
 class SwatTableViewCheckboxColumn extends SwatTableViewColumn
 {
-    // {{{ public properties
+
 
     /**
      * Whether to show a check-all row for this checkbox column
@@ -89,8 +89,7 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
      */
     public $highlight_row = true;
 
-    // }}}
-    // {{{ private properties
+
 
     /**
      * The selected rows of this checkbox column after processing this column
@@ -112,8 +111,7 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
      */
     private $check_all;
 
-    // }}}
-    // {{{ public function init()
+
 
     /**
      * Initializes this checkbox column
@@ -130,8 +128,7 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
         }
     }
 
-    // }}}
-    // {{{ public function process()
+
 
     /**
      * Processes this checkbox column
@@ -155,8 +152,7 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
         }
     }
 
-    // }}}
-    // {{{ public function isExtendedCheckAllSelected()
+
 
     /**
      * Whether or not the extended-check-all check-box was checked
@@ -168,8 +164,7 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
         return $this->check_all->isExtendedSelected();
     }
 
-    // }}}
-    // {{{ public function displayHeader()
+
 
     /**
      * Displays the contents of the header cell for this column
@@ -188,8 +183,7 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
         parent::displayHeader();
     }
 
-    // }}}
-    // {{{ public function getItems()
+
 
     /**
      * Gets the selected rows of this checkbox column
@@ -206,8 +200,7 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
         return $this->items;
     }
 
-    // }}}
-    // {{{ public function getCheckboxRendererId()
+
 
     /**
      * Gets the identifier of the first checkbox cell renderer in this column
@@ -220,8 +213,7 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
         return $this->getCheckboxRenderer()->id;
     }
 
-    // }}}
-    // {{{ public function getCheckboxRenderer()
+
 
     private function getCheckboxRenderer()
     {
@@ -237,8 +229,7 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
         );
     }
 
-    // }}}
-    // {{{ public function extendedCheckAllSelected()
+
 
     /**
      * Whether or not the extended-check-all check-box was checked
@@ -250,8 +241,7 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
         return $this->check_all->extendedSelected();
     }
 
-    // }}}
-    // {{{ private function createEmbeddedWidgets()
+
 
     private function createEmbeddedWidgets()
     {
@@ -259,5 +249,4 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
         $this->check_all = new SwatTableViewCheckAllRow($this, $renderer_id);
     }
 
-    // }}}
 }

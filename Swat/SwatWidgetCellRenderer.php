@@ -10,7 +10,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
     SwatUIParent,
     SwatTitleable
 {
-    // {{{ public properties
+
 
     /**
      * Identifier of this widget cell renderer
@@ -28,8 +28,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
      */
     public $replicator_id = null;
 
-    // }}}
-    // {{{ private properties
+
 
     /**
      * A reference to the prototype widget for this cell renderer
@@ -64,8 +63,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
      */
     private $using_null_replication = false;
 
-    // }}}
-    // {{{ public function __construct()
+
 
     /**
      * Creates a new radio button cell renderer
@@ -80,8 +78,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
         $this->id = $this->getUniqueId();
     }
 
-    // }}}
-    // {{{ public function addChild()
+
 
     /**
      * Fulfills SwatUIParent::addChild()
@@ -99,8 +96,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
         }
     }
 
-    // }}}
-    // {{{ public function getPropertyNameToMap()
+
 
     public function getPropertyNameToMap(SwatUIObject $object, $name)
     {
@@ -129,8 +125,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
         return $mangled_name;
     }
 
-    // }}}
-    // {{{ public function init()
+
 
     /**
      * Initializes this cell renderer
@@ -159,8 +154,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
         }
     }
 
-    // }}}
-    // {{{ public function process()
+
 
     /**
      *
@@ -193,8 +187,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
         }
     }
 
-    // }}}
-    // {{{ public function render()
+
 
     /**
      *
@@ -266,8 +259,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
         }
     }
 
-    // }}}
-    // {{{ public function setPrototypeWidget()
+
 
     /**
      *
@@ -279,8 +271,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
         $widget->parent = $this;
     }
 
-    // }}}
-    // {{{ public function getPrototypeWidget()
+
 
     /**
      * Gets the prototype widget of this widget cell renderer
@@ -292,8 +283,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
         return $this->prototype_widget;
     }
 
-    // }}}
-    // {{{ public function getWidget()
+
 
     /**
      * Retrieves a reference to a replicated widget
@@ -322,8 +312,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
         return $widget;
     }
 
-    // }}}
-    // {{{ public function getWidgets()
+
 
     /**
      * Gets an array of replicated widgets indexed by the replicator_id
@@ -381,8 +370,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
         return $widgets;
     }
 
-    // }}}
-    // {{{ public function getClonedWidgets()
+
 
     /**
      * Gets an array of cloned widgets indexed by the replicator_id
@@ -420,8 +408,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
         return $clones;
     }
 
-    // }}}
-    // {{{ public function getDataSpecificCSSClassNames()
+
 
     /**
      * Gets the data specific CSS class names for this widget cell renderer
@@ -446,8 +433,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
         return $classes;
     }
 
-    // }}}
-    // {{{ public function getMessages()
+
 
     /**
      * Gathers all messages from the widget of this cell renderer for the given
@@ -475,8 +461,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
         return $messages;
     }
 
-    // }}}
-    // {{{ public function hasMessage()
+
 
     /**
      * Gets whether or not this widget cell renderer has messages
@@ -505,8 +490,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
         return $has_message;
     }
 
-    // }}}
-    // {{{ public function getTitle()
+
 
     /**
      * Gets the title of this widget cell renderer
@@ -527,8 +511,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
         return $title;
     }
 
-    // }}}
-    // {{{ public function getTitleContentType()
+
 
     /**
      * Gets the title content-type of this widget cell renderer
@@ -548,8 +531,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
         return $title_content_type;
     }
 
-    // }}}
-    // {{{ public function getHtmlHeadEntrySet()
+
 
     /**
      * Gets the SwatHtmlHeadEntry objects needed by this widget cell renderer
@@ -577,8 +559,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
         return $set;
     }
 
-    // }}}
-    // {{{ public function getAvailableHtmlHeadEntrySet()
+
 
     /**
      * Gets the SwatHtmlHeadEntry objects that may be needed by this widget
@@ -607,8 +588,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
         return $set;
     }
 
-    // }}}
-    // {{{ public function getDescendants()
+
 
     /**
      * Gets descendant UI-objects
@@ -660,8 +640,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
         return $out;
     }
 
-    // }}}
-    // {{{ public function getFirstDescendant()
+
 
     /**
      * Gets the first descendant UI-object of a specific class
@@ -701,8 +680,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
         return $out;
     }
 
-    // }}}
-    // {{{ public function getDescendantStates()
+
 
     /**
      * Gets descendant states
@@ -724,8 +702,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
         return $states;
     }
 
-    // }}}
-    // {{{ public function setDescendantStates()
+
 
     /**
      * Sets descendant states
@@ -745,8 +722,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
         }
     }
 
-    // }}}
-    // {{{ public function __set()
+
 
     /**
      * Maps a data field to a property of a widget in the widget tree
@@ -763,8 +739,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
         }
     }
 
-    // }}}
-    // {{{ protected function getReplicatorFieldName()
+
 
     protected function getReplicatorFieldName()
     {
@@ -778,8 +753,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
         return $name;
     }
 
-    // }}}
-    // {{{ private function getForm()
+
 
     /**
      * Gets the form
@@ -792,8 +766,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
         return $form;
     }
 
-    // }}}
-    // {{{ private function getClonedWidget()
+
 
     private function getClonedWidget($replicator)
     {
@@ -804,8 +777,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
         return $this->clones[$replicator];
     }
 
-    // }}}
-    // {{{ private function applyPropertyValuesToPrototypeWidget()
+
 
     private function applyPropertyValuesToPrototypeWidget()
     {
@@ -816,8 +788,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
         }
     }
 
-    // }}}
-    // {{{ private function applyPropertyValuesToClonedWidget()
+
 
     private function applyPropertyValuesToClonedWidget($cloned_widget)
     {
@@ -863,8 +834,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
         }
     }
 
-    // }}}
-    // {{{ private function createClonedWidget()
+
 
     private function createClonedWidget($replicator)
     {
@@ -902,5 +872,4 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
         $this->clones[$replicator] = $new_widget;
     }
 
-    // }}}
 }

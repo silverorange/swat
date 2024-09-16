@@ -11,7 +11,7 @@ require_once 'Demo.php';
  */
 class DetailsViewDemo extends Demo
 {
-	// {{{ public function buildDemoUI()
+
 
 	public function buildDemoUI(SwatUI $ui)
 	{
@@ -40,7 +40,6 @@ class DetailsViewDemo extends Demo
 		$details_view->data = $fruit;
 	}
 
-	// }}}
 }
 
 /**
@@ -52,7 +51,7 @@ class DetailsViewDemo extends Demo
  */
 class FruitObject
 {
-	// {{{ public properties
+
 
 	public $align = '';
 	public $image = '';
@@ -66,7 +65,6 @@ class FruitObject
 	public $cost = 0;
 	public $text = '';
 
-	// }}}
 }
 
 ?>

@@ -16,7 +16,7 @@
  */
 class SwatDBClassMap extends SwatObject
 {
-    // {{{ private properties
+
 
     /**
      * An associative array of class-mappings
@@ -35,8 +35,7 @@ class SwatDBClassMap extends SwatObject
      */
     private static $search_paths = ['.'];
 
-    // }}}
-    // {{{ public static function add()
+
 
     /**
      * Maps a class name to another class name
@@ -90,8 +89,7 @@ class SwatDBClassMap extends SwatObject
         self::$map[$from_class_name] = $to_class_name;
     }
 
-    // }}}
-    // {{{ public static function get()
+
 
     /**
      * Resolves a class name from the class map
@@ -129,8 +127,7 @@ class SwatDBClassMap extends SwatObject
         return $to_class_name;
     }
 
-    // }}}
-    // {{{ public static function addPath()
+
 
     /**
      * Adds a search path for class-definition files
@@ -154,8 +151,7 @@ class SwatDBClassMap extends SwatObject
         }
     }
 
-    // }}}
-    // {{{ public static function removePath()
+
 
     /**
      * Removes a search path for class-definition files
@@ -172,8 +168,7 @@ class SwatDBClassMap extends SwatObject
         }
     }
 
-    // }}}
-    // {{{ private function __construct()
+
 
     /**
      * The class map is a static object and should not be instantiated
@@ -182,10 +177,9 @@ class SwatDBClassMap extends SwatObject
     {
     }
 
-    // }}}
 
     // deprecated API
-    // {{{ private properties
+
 
     /**
      * Singleton instance
@@ -216,8 +210,7 @@ class SwatDBClassMap extends SwatObject
      */
     private $path = null;
 
-    // }}}
-    // {{{ public static function instance()
+
 
     /**
      * Gets the singleton instance of the class-mapping object
@@ -236,8 +229,7 @@ class SwatDBClassMap extends SwatObject
         return self::$instance;
     }
 
-    // }}}
-    // {{{ public function addMapping()
+
 
     /**
      * Adds a class-mapping to the class-mapping object
@@ -254,8 +246,7 @@ class SwatDBClassMap extends SwatObject
         self::add($package_class_name, $class_name);
     }
 
-    // }}}
-    // {{{ public function resolveClass()
+
 
     /**
      * Gets the appropriate class name for a given package class name
@@ -276,8 +267,7 @@ class SwatDBClassMap extends SwatObject
         return self::get($name);
     }
 
-    // }}}
-    // {{{ public function setPath()
+
 
     /**
      * Sets the path to search for site-specific class files
@@ -293,5 +283,4 @@ class SwatDBClassMap extends SwatObject
         self::addPath($path);
     }
 
-    // }}}
 }

@@ -15,7 +15,7 @@
  */
 class SwatReplicableDisclosure extends SwatReplicableContainer
 {
-    // {{{ public function init()
+
 
     /**
      * Initilizes this replicable disclosure
@@ -45,5 +45,4 @@ class SwatReplicableDisclosure extends SwatReplicableContainer
         }
     }
 
-    // }}}
 }

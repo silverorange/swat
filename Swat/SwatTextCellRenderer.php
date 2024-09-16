@@ -9,7 +9,7 @@
  */
 class SwatTextCellRenderer extends SwatCellRenderer
 {
-    // {{{ public properties
+
 
     /**
      * The textual content to place within this cell
@@ -48,8 +48,7 @@ class SwatTextCellRenderer extends SwatCellRenderer
      */
     public $value = null;
 
-    // }}}
-    // {{{ public function render()
+
 
     /**
      * Renders the contents of this cell
@@ -79,5 +78,4 @@ class SwatTextCellRenderer extends SwatCellRenderer
         }
     }
 
-    // }}}
 }

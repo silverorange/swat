@@ -37,7 +37,7 @@
  */
 class SwatYUI extends SwatObject
 {
-    // {{{ private static properties
+
 
     /**
      * Static component definitions
@@ -50,8 +50,7 @@ class SwatYUI extends SwatObject
      */
     private static $components = [];
 
-    // }}}
-    // {{{ private properties
+
 
     /**
      * The {@link SwatHtmlHeadEntrySet} required for this SwaYUI object
@@ -60,8 +59,7 @@ class SwatYUI extends SwatObject
      */
     private $html_head_entry_set;
 
-    // }}}
-    // {{{ public function __construct()
+
 
     /**
      * Creates a new SwatYUI HTML head entry set building object
@@ -86,8 +84,7 @@ class SwatYUI extends SwatObject
         );
     }
 
-    // }}}
-    // {{{ public function getHtmlHeadEntrySet()
+
 
     /**
      * Gets the HTML head entry set required for the YUI components of this
@@ -100,8 +97,7 @@ class SwatYUI extends SwatObject
         return $this->html_head_entry_set;
     }
 
-    // }}}
-    // {{{ private function buildHtmlHeadEntrySet()
+
 
     /**
      * Builds the HTML head entry set required for the YUI components of this
@@ -129,8 +125,7 @@ class SwatYUI extends SwatObject
         return $set;
     }
 
-    // }}}
-    // {{{ private function getAttributionHtmlHeadEntry()
+
 
     private function getAttributionHtmlHeadEntry()
     {
@@ -141,8 +136,7 @@ class SwatYUI extends SwatObject
         return new SwatCommentHtmlHeadEntry($comment);
     }
 
-    // }}}
-    // {{{ private static function buildComponents()
+
 
     /**
      * Builds the YUI component definitions and dependency information
@@ -464,5 +458,4 @@ class SwatYUI extends SwatObject
         $components_built = true;
     }
 
-    // }}}
 }

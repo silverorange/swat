@@ -9,7 +9,7 @@
  */
 class SwatDetailsViewField extends SwatCellRendererContainer
 {
-    // {{{ public properties
+
 
     /**
      * The unique identifier of this field
@@ -67,8 +67,7 @@ class SwatDetailsViewField extends SwatCellRendererContainer
      */
     public $show_renderer_classes = true;
 
-    // }}}
-    // {{{ protected properties
+
 
     /**
      * Whether or not this field is odd or even in its parent details view
@@ -77,8 +76,7 @@ class SwatDetailsViewField extends SwatCellRendererContainer
      */
     protected $odd = false;
 
-    // }}}
-    // {{{ public function __construct()
+
 
     /**
      * Creates a new details view field
@@ -92,8 +90,7 @@ class SwatDetailsViewField extends SwatCellRendererContainer
         parent::__construct();
     }
 
-    // }}}
-    // {{{ public function init()
+
 
     /**
      * Initializes this field
@@ -107,8 +104,7 @@ class SwatDetailsViewField extends SwatCellRendererContainer
         }
     }
 
-    // }}}
-    // {{{ public function process()
+
 
     public function process()
     {
@@ -117,8 +113,7 @@ class SwatDetailsViewField extends SwatCellRendererContainer
         }
     }
 
-    // }}}
-    // {{{ public function display()
+
 
     /**
      * Displays this details view field using a data object
@@ -146,8 +141,7 @@ class SwatDetailsViewField extends SwatCellRendererContainer
         $tr_tag->close();
     }
 
-    // }}}
-    // {{{ public function displayHeader()
+
 
     /**
      * Displays the header for this details view field
@@ -168,8 +162,7 @@ class SwatDetailsViewField extends SwatCellRendererContainer
         $th_tag->display();
     }
 
-    // }}}
-    // {{{ public function displayValue()
+
 
     /**
      * Displays the value of this details view field
@@ -198,8 +191,7 @@ class SwatDetailsViewField extends SwatCellRendererContainer
         $this->displayRenderers($data);
     }
 
-    // }}}
-    // {{{ public function getTdAttributes()
+
 
     /**
      * Gets the TD tag attributes for this column
@@ -215,8 +207,7 @@ class SwatDetailsViewField extends SwatCellRendererContainer
         ];
     }
 
-    // }}}
-    // {{{ public function getHtmlHeadEntrySet()
+
 
     /**
      * Gets the SwatHtmlHeadEntry objects needed by this field
@@ -238,8 +229,7 @@ class SwatDetailsViewField extends SwatCellRendererContainer
         return $set;
     }
 
-    // }}}
-    // {{{ public function getAvailableHtmlHeadEntrySet()
+
 
     /**
      * Gets the SwatHtmlHeadEntry objects that may be needed by this
@@ -262,7 +252,6 @@ class SwatDetailsViewField extends SwatCellRendererContainer
         return $set;
     }
 
-    // }}}
     // {{{ protected function getHeaderTitle()
 
     /**
@@ -285,7 +274,6 @@ class SwatDetailsViewField extends SwatCellRendererContainer
         return $header_title;
     }
 
-    // }}}
     // {{{ protected function displayRenderers()
 
     /**
@@ -313,7 +301,6 @@ class SwatDetailsViewField extends SwatCellRendererContainer
         $td_tag->close();
     }
 
-    // }}}
     // {{{ protected function getCSSClassNames()
 
     /**
@@ -387,7 +374,6 @@ class SwatDetailsViewField extends SwatCellRendererContainer
         return $classes;
     }
 
-    // }}}
     // {{{ protected function getBaseCSSClassNames()
 
     /**
@@ -404,5 +390,4 @@ class SwatDetailsViewField extends SwatCellRendererContainer
         return ['swat-details-view-field'];
     }
 
-    // }}}
 }

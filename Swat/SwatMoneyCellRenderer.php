@@ -75,7 +75,6 @@ class SwatMoneyCellRenderer extends SwatCellRenderer
      */
     public $null_display_value = null;
 
-    // }}}
     // {{{ public function __construct()
 
     /**
@@ -90,7 +89,6 @@ class SwatMoneyCellRenderer extends SwatCellRenderer
         );
     }
 
-    // }}}
     // {{{ public function render()
 
     /**
@@ -132,7 +130,6 @@ class SwatMoneyCellRenderer extends SwatCellRenderer
         }
     }
 
-    // }}}
     // {{{ protected function getCurrencyFormat()
 
     /**
@@ -147,5 +144,4 @@ class SwatMoneyCellRenderer extends SwatCellRenderer
         return $format;
     }
 
-    // }}}
 }

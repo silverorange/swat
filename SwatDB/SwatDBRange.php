@@ -18,7 +18,7 @@
  */
 class SwatDBRange extends SwatObject
 {
-    // {{{ private properties
+
 
     /**
      * The limit of this range
@@ -38,8 +38,7 @@ class SwatDBRange extends SwatObject
      */
     private $offset;
 
-    // }}}
-    // {{{ public function __construct()
+
 
     /**
      * Creates a new database range
@@ -54,8 +53,7 @@ class SwatDBRange extends SwatObject
         $this->offset = intval($offset);
     }
 
-    // }}}
-    // {{{ public function getLimit()
+
 
     /**
      * Gets the limit of this range
@@ -67,8 +65,7 @@ class SwatDBRange extends SwatObject
         return $this->limit;
     }
 
-    // }}}
-    // {{{ public function getOffset()
+
 
     /**
      * Gets the offset of this range
@@ -80,8 +77,7 @@ class SwatDBRange extends SwatObject
         return $this->offset;
     }
 
-    // }}}
-    // {{{ public function addOffset()
+
 
     /**
      * Increases the offset of this range
@@ -93,8 +89,7 @@ class SwatDBRange extends SwatObject
         $this->offset += intval($offset);
     }
 
-    // }}}
-    // {{{ public function combine()
+
 
     /**
      * Combines this range with another range forming a new range
@@ -131,5 +126,4 @@ class SwatDBRange extends SwatObject
         return new SwatDBRange($limit, $offset);
     }
 
-    // }}}
 }

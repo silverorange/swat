@@ -9,7 +9,7 @@
  */
 abstract class SwatOptionControl extends SwatInputControl
 {
-    // {{{ public properties
+
 
     /**
      * Options
@@ -68,8 +68,7 @@ abstract class SwatOptionControl extends SwatInputControl
      */
     public $serialize_values = true;
 
-    // }}}
-    // {{{ public function addOption()
+
 
     /**
      * Adds an option to this option control
@@ -136,8 +135,7 @@ abstract class SwatOptionControl extends SwatInputControl
         }
     }
 
-    // }}}
-    // {{{ public function addOptionMetadata()
+
 
     /**
      * Sets the metadata for an option
@@ -175,8 +173,7 @@ abstract class SwatOptionControl extends SwatInputControl
         }
     }
 
-    // }}}
-    // {{{ public function getOptionMetadata()
+
 
     /**
      * Gets the metadata for an option
@@ -223,8 +220,7 @@ abstract class SwatOptionControl extends SwatInputControl
         return $metadata;
     }
 
-    // }}}
-    // {{{ public function removeOption()
+
 
     /**
      * Removes an option from this option control
@@ -253,8 +249,7 @@ abstract class SwatOptionControl extends SwatInputControl
         return $removed_option;
     }
 
-    // }}}
-    // {{{ public function removeOptionsByValue()
+
 
     /**
      * Removes options from this option control by their value
@@ -284,8 +279,7 @@ abstract class SwatOptionControl extends SwatInputControl
         return $removed_options;
     }
 
-    // }}}
-    // {{{ public function addOptionsByArray()
+
 
     /**
      * Adds options to this option control using an associative array
@@ -305,8 +299,7 @@ abstract class SwatOptionControl extends SwatInputControl
         }
     }
 
-    // }}}
-    // {{{ public function getOptionsByValue()
+
 
     /**
      * Gets options from this option control by their value
@@ -330,8 +323,7 @@ abstract class SwatOptionControl extends SwatInputControl
         return $options;
     }
 
-    // }}}
-    // {{{ protected function getOptions()
+
 
     /**
      * Gets a reference to the array of options
@@ -345,8 +337,7 @@ abstract class SwatOptionControl extends SwatInputControl
         return $this->options;
     }
 
-    // }}}
-    // {{{ protected function getOption()
+
 
     /**
      * Gets an option within this option control
@@ -368,8 +359,7 @@ abstract class SwatOptionControl extends SwatInputControl
         return $option;
     }
 
-    // }}}
-    // {{{ protected function getOptionMetadataKey()
+
 
     /**
      * Gets the key used to load and store metadata for an option
@@ -384,5 +374,4 @@ abstract class SwatOptionControl extends SwatInputControl
         return spl_object_hash($option);
     }
 
-    // }}}
 }

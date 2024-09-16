@@ -14,7 +14,7 @@
 class SwatRadioButtonCellRenderer extends SwatCellRenderer implements
     SwatViewSelector
 {
-    // {{{ public properties
+
 
     /**
      * Identifier of this radio button cell renderer
@@ -56,8 +56,7 @@ class SwatRadioButtonCellRenderer extends SwatCellRenderer implements
      */
     public $content_type = 'text/plain';
 
-    // }}}
-    // {{{ private properties
+
 
     /**
      * The selected value populated during the processing of this cell
@@ -70,8 +69,7 @@ class SwatRadioButtonCellRenderer extends SwatCellRenderer implements
      */
     private $selected_value;
 
-    // }}}
-    // {{{ public function __construct()
+
 
     /**
      * Creates a new radio button cell renderer
@@ -92,8 +90,7 @@ class SwatRadioButtonCellRenderer extends SwatCellRenderer implements
         $this->id = $this->getUniqueId();
     }
 
-    // }}}
-    // {{{ public function process()
+
 
     /**
      * Processes this radio button cell renderer
@@ -116,8 +113,7 @@ class SwatRadioButtonCellRenderer extends SwatCellRenderer implements
         }
     }
 
-    // }}}
-    // {{{ public function render()
+
 
     /**
      * Renders this radio button cell renderer
@@ -165,8 +161,7 @@ class SwatRadioButtonCellRenderer extends SwatCellRenderer implements
         }
     }
 
-    // }}}
-    // {{{ public function getId()
+
 
     /**
      * Gets the identifier of this checkbox cell renderer
@@ -180,8 +175,7 @@ class SwatRadioButtonCellRenderer extends SwatCellRenderer implements
         return $this->id;
     }
 
-    // }}}
-    // {{{ public function getInlineJavaScript()
+
 
     /**
      * Gets the inline JavaScript required by this radio button cell renderer
@@ -206,8 +200,7 @@ class SwatRadioButtonCellRenderer extends SwatCellRenderer implements
         return $javascript;
     }
 
-    // }}}
-    // {{{ public function copy()
+
 
     /**
      * Performs a deep copy of the UI tree starting with this UI object
@@ -231,8 +224,7 @@ class SwatRadioButtonCellRenderer extends SwatCellRenderer implements
         return $copy;
     }
 
-    // }}}
-    // {{{ private function getForm()
+
 
     /**
      * Gets the form this radio button cell renderer is contained in
@@ -257,5 +249,4 @@ class SwatRadioButtonCellRenderer extends SwatCellRenderer implements
         return $form;
     }
 
-    // }}}
 }

@@ -15,7 +15,7 @@
  */
 class SwatTileViewGroup extends SwatTile
 {
-    // {{{ public properties
+
 
     /**
      * Unique identifier of this group
@@ -31,8 +31,7 @@ class SwatTileViewGroup extends SwatTile
      */
     public $group_by = null;
 
-    // }}}
-    // {{{ private properties
+
 
     /**
      * The current value of the group_by field of the tile view for the
@@ -46,8 +45,7 @@ class SwatTileViewGroup extends SwatTile
      */
     private $header_current = null;
 
-    // }}}
-    // {{{ public function displayFooter()
+
 
     /**
      * Displays the grouping footer of this tile-view group
@@ -79,8 +77,7 @@ class SwatTileViewGroup extends SwatTile
         }
     }
 
-    // }}}
-    // {{{ protected function displayGroupHeader()
+
 
     /**
      * Displays the group header for this grouping tile
@@ -109,8 +106,7 @@ class SwatTileViewGroup extends SwatTile
         $div_tag->close();
     }
 
-    // }}}
-    // {{{ protected function displayGroupFooter()
+
 
     /**
      * Displays the group footer for this grouping tile
@@ -126,8 +122,7 @@ class SwatTileViewGroup extends SwatTile
     {
     }
 
-    // }}}
-    // {{{ protected function displayRenderers()
+
 
     /**
      * Displays the renderers for this tile
@@ -158,8 +153,7 @@ class SwatTileViewGroup extends SwatTile
         }
     }
 
-    // }}}
-    // {{{ protected function isEqual()
+
 
     /**
      * Compares the value of the current row to the value of the current
@@ -183,8 +177,7 @@ class SwatTileViewGroup extends SwatTile
         return $group_value === $row_value;
     }
 
-    // }}}
-    // {{{ protected function resetSubGroups()
+
 
     /**
      * Resets grouping tiles below this one
@@ -207,8 +200,7 @@ class SwatTileViewGroup extends SwatTile
         }
     }
 
-    // }}}
-    // {{{ protected function reset()
+
 
     /**
      * Resets the current value of this grouping tile
@@ -224,5 +216,4 @@ class SwatTileViewGroup extends SwatTile
         $this->header_current = null;
     }
 
-    // }}}
 }

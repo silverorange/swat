@@ -14,7 +14,7 @@
  */
 abstract class SwatExceptionLogger
 {
-    // {{{ public abstract function log()
+
 
     /**
      * Logs a SwatException
@@ -23,5 +23,4 @@ abstract class SwatExceptionLogger
      */
     abstract public function log(SwatException $e);
 
-    // }}}
 }

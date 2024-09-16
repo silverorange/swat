@@ -9,7 +9,7 @@
  */
 class SwatLinkHtmlHeadEntry extends SwatHtmlHeadEntry
 {
-    // {{{ protected properties
+
 
     /**
      * The URI linked to by this link
@@ -39,7 +39,6 @@ class SwatLinkHtmlHeadEntry extends SwatHtmlHeadEntry
      */
     protected $type;
 
-    // }}}
     // {{{ public function __construct()
 
     /**
@@ -67,7 +66,6 @@ class SwatLinkHtmlHeadEntry extends SwatHtmlHeadEntry
         $this->title = $title;
     }
 
-    // }}}
     // {{{ protected function displayInternal()
 
     protected function displayInternal($uri_prefix = '', $tag = null)
@@ -80,7 +78,6 @@ class SwatLinkHtmlHeadEntry extends SwatHtmlHeadEntry
         $link->display();
     }
 
-    // }}}
     // {{{ protected function displayInlineInternal()
 
     protected function displayInlineInternal($path)
@@ -88,5 +85,4 @@ class SwatLinkHtmlHeadEntry extends SwatHtmlHeadEntry
         $this->displayInternal();
     }
 
-    // }}}
 }

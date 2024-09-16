@@ -13,7 +13,7 @@ class SwatDBDataObject extends SwatObject implements
     SwatDBMarshallable,
     SwatDBFlushable
 {
-    // {{{ private properties
+
 
     /**
      * @var array
@@ -60,8 +60,7 @@ class SwatDBDataObject extends SwatObject implements
      */
     private $deprecated_properties = [];
 
-    // }}}
-    // {{{ protected properties
+
 
     /**
      * @var MDB2
@@ -89,8 +88,7 @@ class SwatDBDataObject extends SwatObject implements
      */
     protected $flushable_cache;
 
-    // }}}
-    // {{{ private properties
+
 
     /**
      * Cache of public property names indexed by class name
@@ -99,8 +97,7 @@ class SwatDBDataObject extends SwatObject implements
      */
     private static $public_properties_cache = [];
 
-    // }}}
-    // {{{ public function __construct()
+
 
     /**
      * @param mixed $data
@@ -123,8 +120,7 @@ class SwatDBDataObject extends SwatObject implements
         $this->generatePropertyHashes();
     }
 
-    // }}}
-    // {{{ public function setTable()
+
 
     /**
      * @param string $table Database table
@@ -134,8 +130,7 @@ class SwatDBDataObject extends SwatObject implements
         $this->table = $table;
     }
 
-    // }}}
-    // {{{ public function getModifiedProperties()
+
 
     /**
      * Gets a list of all the modified properties of this object
@@ -163,8 +158,7 @@ class SwatDBDataObject extends SwatObject implements
         return $modified_properties;
     }
 
-    // }}}
-    // {{{ public function __get()
+
 
     public function __get($key)
     {
@@ -210,8 +204,7 @@ class SwatDBDataObject extends SwatObject implements
         return $value;
     }
 
-    // }}}
-    // {{{ public function __set()
+
 
     public function __set($key, $value)
     {
@@ -264,8 +257,7 @@ class SwatDBDataObject extends SwatObject implements
         }
     }
 
-    // }}}
-    // {{{ public function __isset()
+
 
     public function __isset($key)
     {
@@ -282,8 +274,7 @@ class SwatDBDataObject extends SwatObject implements
         return $is_set;
     }
 
-    // }}}
-    // {{{ public function __toString()
+
 
     /**
      * Gets a string representation of this data-object
@@ -360,8 +351,7 @@ class SwatDBDataObject extends SwatObject implements
         return $string;
     }
 
-    // }}}
-    // {{{ public function getInternalValue()
+
 
     public function getInternalValue($name)
     {
@@ -372,16 +362,14 @@ class SwatDBDataObject extends SwatObject implements
         }
     }
 
-    // }}}
-    // {{{ public function hasInternalValue()
+
 
     public function hasInternalValue($name)
     {
         return array_key_exists($name, $this->internal_properties);
     }
 
-    // }}}
-    // {{{ public function hasPublicProperty()
+
 
     /**
      * Whether or not a public property exists for the given property name
@@ -400,8 +388,7 @@ class SwatDBDataObject extends SwatObject implements
         return array_key_exists($name, $public_properties);
     }
 
-    // }}}
-    // {{{ public function hasDateProperty()
+
 
     /**
      * Whether or not a registered date property exists for the given property
@@ -419,8 +406,7 @@ class SwatDBDataObject extends SwatObject implements
         return in_array($name, $this->date_properties);
     }
 
-    // }}}
-    // {{{ public function duplicate()
+
 
     /**
      * Duplicates this object
@@ -496,8 +482,7 @@ class SwatDBDataObject extends SwatObject implements
         return $new_object;
     }
 
-    // }}}
-    // {{{ public function getAttributes()
+
 
     /**
      * Returns an array of the public and protected properties of this object
@@ -520,8 +505,7 @@ class SwatDBDataObject extends SwatObject implements
         );
     }
 
-    // }}}
-    // {{{ protected function setInternalValue()
+
 
     protected function setInternalValue($name, $value)
     {
@@ -530,23 +514,20 @@ class SwatDBDataObject extends SwatObject implements
         }
     }
 
-    // }}}
-    // {{{ protected function init()
+
 
     protected function init()
     {
     }
 
-    // }}}
-    // {{{ protected function registerDateProperty()
+
 
     protected function registerDateProperty($name)
     {
         $this->date_properties[] = $name;
     }
 
-    // }}}
-    // {{{ protected function registerInternalProperty()
+
 
     protected function registerInternalProperty(
         $name,
@@ -560,16 +541,14 @@ class SwatDBDataObject extends SwatObject implements
         $this->internal_property_classes[$name] = $class;
     }
 
-    // }}}
-    // {{{ protected function registerDeprecatedProperty()
+
 
     protected function registerDeprecatedProperty($name)
     {
         $this->deprecated_properties[] = $name;
     }
 
-    // }}}
-    // {{{ protected function initFromRow()
+
 
     /**
      * Takes a data row and sets the properties of this object according to
@@ -624,8 +603,7 @@ class SwatDBDataObject extends SwatObject implements
         $this->loaded_from_database = true;
     }
 
-    // }}}
-    // {{{ protected function generatePropertyHashes()
+
 
     /**
      * Generates the set of md5 hashes for this data object
@@ -648,8 +626,7 @@ class SwatDBDataObject extends SwatObject implements
         }
     }
 
-    // }}}
-    // {{{ protected function generatePropertyHash()
+
 
     /**
      * Generates the MD5 hash for a property of this object
@@ -671,8 +648,7 @@ class SwatDBDataObject extends SwatObject implements
         }
     }
 
-    // }}}
-    // {{{ protected function getHashValue()
+
 
     /**
      * Gets the hash of a value
@@ -688,8 +664,7 @@ class SwatDBDataObject extends SwatObject implements
         return md5(serialize($value));
     }
 
-    // }}}
-    // {{{ protected function getId()
+
 
     protected function getId()
     {
@@ -707,16 +682,14 @@ class SwatDBDataObject extends SwatObject implements
         return $this->$temp;
     }
 
-    // }}}
-    // {{{ protected function getSubDataObject()
+
 
     protected function getSubDataObject($name)
     {
         return $this->sub_data_objects[$name];
     }
 
-    // }}}
-    // {{{ protected function setSubDataObject()
+
 
     protected function setSubDataObject($name, $value)
     {
@@ -728,16 +701,14 @@ class SwatDBDataObject extends SwatObject implements
         }
     }
 
-    // }}}
-    // {{{ protected function unsetSubDataObject()
+
 
     protected function unsetSubDataObject($name)
     {
         unset($this->sub_data_objects[$name]);
     }
 
-    // }}}
-    // {{{ protected function hasSubDataObject()
+
 
     /**
      * Whether or not a sub data object is loaded for the given key
@@ -752,23 +723,20 @@ class SwatDBDataObject extends SwatObject implements
         return isset($this->sub_data_objects[(string) $key]);
     }
 
-    // }}}
-    // {{{ protected function setDeprecatedProperty()
+
 
     protected function setDeprecatedProperty($key, $value)
     {
     }
 
-    // }}}
-    // {{{ protected function getDeprecatedProperty()
+
 
     protected function getDeprecatedProperty($key)
     {
         return null;
     }
 
-    // }}}
-    // {{{ protected function getProtectedPropertyList()
+
 
     /**
      * Gets a list of all protected properties of this data-object
@@ -787,8 +755,7 @@ class SwatDBDataObject extends SwatObject implements
         return [];
     }
 
-    // }}}
-    // {{{ private function getPublicProperties()
+
 
     /**
      * Gets the public properties of this data-object
@@ -827,8 +794,7 @@ class SwatDBDataObject extends SwatObject implements
         return $properties;
     }
 
-    // }}}
-    // {{{ private function getSerializableProtectedProperties()
+
 
     /**
      * Gets the serializable protected properties of this data-object.
@@ -852,8 +818,7 @@ class SwatDBDataObject extends SwatObject implements
         return $properties;
     }
 
-    // }}}
-    // {{{ private function getProtectedProperties()
+
 
     /**
      * Gets the protected properties of this data-object using the getter
@@ -876,8 +841,7 @@ class SwatDBDataObject extends SwatObject implements
         return $properties;
     }
 
-    // }}}
-    // {{{ private function getProperties()
+
 
     /**
      * Gets all the modifyable properties of this data-object
@@ -901,8 +865,7 @@ class SwatDBDataObject extends SwatObject implements
         return $property_array;
     }
 
-    // }}}
-    // {{{ private function getLoaderMethod()
+
 
     private function getLoaderMethod($key)
     {
@@ -922,8 +885,7 @@ class SwatDBDataObject extends SwatObject implements
         return $cache[$key];
     }
 
-    // }}}
-    // {{{ private function getUsingLoaderMethod()
+
 
     private function getUsingLoaderMethod($key)
     {
@@ -949,8 +911,7 @@ class SwatDBDataObject extends SwatObject implements
         return $value;
     }
 
-    // }}}
-    // {{{ private function getUsingInternalProperty()
+
 
     private function getUsingInternalProperty($key)
     {
@@ -1001,10 +962,9 @@ class SwatDBDataObject extends SwatObject implements
         return $value;
     }
 
-    // }}}
 
     // database loading and saving
-    // {{{ public function setDatabase()
+
 
     /**
      * Sets the database driver for this data-object
@@ -1038,8 +998,7 @@ class SwatDBDataObject extends SwatObject implements
         }
     }
 
-    // }}}
-    // {{{ public function save()
+
 
     /**
      * Saves this object to the database
@@ -1079,8 +1038,7 @@ class SwatDBDataObject extends SwatObject implements
         $this->generatePropertyHashes();
     }
 
-    // }}}
-    // {{{ public function load()
+
 
     /**
      * Loads this object's properties from the database given an id
@@ -1104,8 +1062,7 @@ class SwatDBDataObject extends SwatObject implements
         return true;
     }
 
-    // }}}
-    // {{{ public function delete()
+
 
     /**
      * Deletes this object from the database
@@ -1132,8 +1089,7 @@ class SwatDBDataObject extends SwatObject implements
         }
     }
 
-    // }}}
-    // {{{ public function isModified()
+
 
     /**
      * Returns true if this object has been modified since it was loaded
@@ -1187,8 +1143,7 @@ class SwatDBDataObject extends SwatObject implements
         return false;
     }
 
-    // }}}
-    // {{{ protected function checkDB()
+
 
     protected function checkDB()
     {
@@ -1203,8 +1158,7 @@ class SwatDBDataObject extends SwatObject implements
         }
     }
 
-    // }}}
-    // {{{ protected function loadInternal()
+
 
     /**
      * Loads this object's properties from the database given an id
@@ -1235,8 +1189,7 @@ class SwatDBDataObject extends SwatObject implements
         return null;
     }
 
-    // }}}
-    // {{{ protected function saveInternal()
+
 
     /**
      * Saves this object to the database
@@ -1337,8 +1290,7 @@ class SwatDBDataObject extends SwatObject implements
         $this->flushCacheNamespaces();
     }
 
-    // }}}
-    // {{{ protected function saveInternalProperties()
+
 
     protected function saveInternalProperties()
     {
@@ -1351,8 +1303,7 @@ class SwatDBDataObject extends SwatObject implements
         }
     }
 
-    // }}}
-    // {{{ protected function saveSubDataObjects()
+
 
     protected function saveSubDataObjects()
     {
@@ -1382,8 +1333,7 @@ class SwatDBDataObject extends SwatObject implements
         }
     }
 
-    // }}}
-    // {{{ protected function deleteInternal()
+
 
     /**
      * Deletes this object from the database
@@ -1417,8 +1367,7 @@ class SwatDBDataObject extends SwatObject implements
         }
     }
 
-    // }}}
-    // {{{ protected function saveNewBinding()
+
 
     /**
      * Saves a new binding object without an id to the database
@@ -1447,8 +1396,7 @@ class SwatDBDataObject extends SwatObject implements
         $this->flushCacheNamespaces();
     }
 
-    // }}}
-    // {{{ protected function guessType()
+
 
     protected function guessType($name, $value)
     {
@@ -1470,8 +1418,7 @@ class SwatDBDataObject extends SwatObject implements
         }
     }
 
-    // }}}
-    // {{{ protected function rollback()
+
 
     protected function rollback(
         SwatDBTransaction $transaction,
@@ -1481,10 +1428,9 @@ class SwatDBDataObject extends SwatObject implements
         $transaction->rollback();
     }
 
-    // }}}
 
     // cache flushing
-    // {{{ public function setFlushableCache()
+
 
     /**
      * Sets the flushable cache to use for this dataobject
@@ -1500,8 +1446,7 @@ class SwatDBDataObject extends SwatObject implements
         $this->flushable_cache = $cache;
     }
 
-    // }}}
-    // {{{ public function getCacheNamespaces()
+
 
     /**
      * Gets the name-spaces that should be flushed for this dataobject.
@@ -1513,8 +1458,7 @@ class SwatDBDataObject extends SwatObject implements
         return [];
     }
 
-    // }}}
-    // {{{ public function getAvailableCacheNamespaces()
+
 
     /**
      * Gets all available name-spaces that should be flushed for this dataobject
@@ -1527,8 +1471,7 @@ class SwatDBDataObject extends SwatObject implements
         return [];
     }
 
-    // }}}
-    // {{{ public function flushCacheNamespaces()
+
 
     /**
      * Flushes the cache name-spaces for this object.
@@ -1555,8 +1498,7 @@ class SwatDBDataObject extends SwatObject implements
         }
     }
 
-    // }}}
-    // {{{ public function flushAvailableCacheNamespaces()
+
 
     /**
      * Flushes all possible cache name-spaces for this object.
@@ -1571,18 +1513,16 @@ class SwatDBDataObject extends SwatObject implements
         $this->flushCacheNamespaces($namespaces);
     }
 
-    // }}}
 
     // serialization
-    // {{{ public function serialize()
+
 
     public function serialize(): string
     {
         return serialize($this->__serialize());
     }
 
-    // }}}
-    // {{{ public function unserialize()
+
 
     public function unserialize(string $data): void
     {
@@ -1590,8 +1530,7 @@ class SwatDBDataObject extends SwatObject implements
         $this->__unserialize($data);
     }
 
-    // }}}
-    // {{{ public function __serialize()
+
 
     public function __serialize(): array
     {
@@ -1634,8 +1573,7 @@ class SwatDBDataObject extends SwatObject implements
         return $data;
     }
 
-    // }}}
-    // {{{ public function __unserialize()
+
 
     public function __unserialize(array $data): void
     {
@@ -1662,8 +1600,7 @@ class SwatDBDataObject extends SwatObject implements
         }
     }
 
-    // }}}
-    // {{{ public function marshall()
+
 
     public function marshall(array $tree = [])
     {
@@ -1730,8 +1667,7 @@ class SwatDBDataObject extends SwatObject implements
         return $data;
     }
 
-    // }}}
-    // {{{ public function unmarshall()
+
 
     public function unmarshall(array $data = [])
     {
@@ -1789,24 +1725,21 @@ class SwatDBDataObject extends SwatObject implements
         }
     }
 
-    // }}}
-    // {{{ protected function wakeup()
+
 
     protected function wakeup()
     {
         $this->class_map = SwatDBClassMap::instance();
     }
 
-    // }}}
-    // {{{ protected function getSerializableSubDataObjects()
+
 
     protected function getSerializableSubDataObjects()
     {
         return [];
     }
 
-    // }}}
-    // {{{ protected function getSerializablePrivateProperties()
+
 
     protected function getSerializablePrivateProperties()
     {
@@ -1821,5 +1754,4 @@ class SwatDBDataObject extends SwatObject implements
         ];
     }
 
-    // }}}
 }

@@ -9,7 +9,7 @@
  */
 class SwatDBException extends SwatException
 {
-    // {{{ private function ___construct()
+
 
     public function __construct($message = null, $code = 0)
     {
@@ -23,5 +23,4 @@ class SwatDBException extends SwatException
         parent::__construct($message, $code);
     }
 
-    // }}}
 }

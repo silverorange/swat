@@ -12,7 +12,7 @@
  */
 class SwatImagePreviewDisplay extends SwatImageDisplay
 {
-    // {{{ public properties
+
 
     /**
      * Preview Image
@@ -140,8 +140,7 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
      */
     public $close_text = null;
 
-    // }}}
-    // {{{ public function __construct()
+
 
     /**
      * Creates a new image preview display
@@ -174,8 +173,7 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
         $this->title = Swat::_('View Larger Image');
     }
 
-    // }}}
-    // {{{ public function display()
+
 
     /**
      * Displays this image
@@ -219,8 +217,7 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
         }
     }
 
-    // }}}
-    // {{{ protected function isPreviewDisplayable()
+
 
     /**
      * Checks whether the preview exists, and whether it should be displayed.
@@ -239,8 +236,7 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
             ($this->show_preview_when_smaller || $difference >= 0.2);
     }
 
-    // }}}
-    // {{{ protected function getJavaScriptClass()
+
 
     /**
      * Gets the name of the JavaScript class to instantiate for this image
@@ -258,8 +254,7 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
         return 'SwatImagePreviewDisplay';
     }
 
-    // }}}
-    // {{{ protected function getInlineJavaScript()
+
 
     /**
      * Gets inline JavaScript required by this image preview.
@@ -308,8 +303,7 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
         return $javascript;
     }
 
-    // }}}
-    // {{{ protected function getInlineJavaScriptTranslations()
+
 
     /**
      * Gets translatable string resources for the JavaScript object for
@@ -328,8 +322,7 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
         );
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
+
 
     /**
      * Gets the array of CSS classes that are applied to this image display
@@ -344,5 +337,4 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
         return $classes;
     }
 
-    // }}}
 }

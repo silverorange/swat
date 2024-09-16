@@ -9,7 +9,7 @@
  */
 class SwatDisclosure extends SwatDisplayableContainer
 {
-    // {{{ public properties
+
 
     /**
      * A visible title for the label shown beside the disclosure triangle
@@ -25,8 +25,7 @@ class SwatDisclosure extends SwatDisplayableContainer
      */
     public $open = true;
 
-    // }}}
-    // {{{ public function __construct()
+
 
     /**
      * Creates a new disclosure container
@@ -47,8 +46,7 @@ class SwatDisclosure extends SwatDisplayableContainer
         $this->addStyleSheet('packages/swat/styles/swat-disclosure.css');
     }
 
-    // }}}
-    // {{{ public function display()
+
 
     /**
      * Displays this disclosure container
@@ -92,8 +90,7 @@ class SwatDisclosure extends SwatDisplayableContainer
         $control_div->close();
     }
 
-    // }}}
-    // {{{ protected function getControlDivTag()
+
 
     protected function getControlDivTag()
     {
@@ -104,8 +101,7 @@ class SwatDisclosure extends SwatDisplayableContainer
         return $div;
     }
 
-    // }}}
-    // {{{ protected function getContainerDivTag()
+
 
     protected function getContainerDivTag()
     {
@@ -115,8 +111,7 @@ class SwatDisclosure extends SwatDisplayableContainer
         return $div;
     }
 
-    // }}}
-    // {{{ protected function getAnimateDivTag()
+
 
     protected function getAnimateDivTag()
     {
@@ -125,8 +120,7 @@ class SwatDisclosure extends SwatDisplayableContainer
         return $div;
     }
 
-    // }}}
-    // {{{ protected function getPaddingDivTag()
+
 
     protected function getPaddingDivTag()
     {
@@ -136,8 +130,7 @@ class SwatDisclosure extends SwatDisplayableContainer
         return $div;
     }
 
-    // }}}
-    // {{{ protected function getInputTag()
+
 
     protected function getInputTag()
     {
@@ -150,8 +143,7 @@ class SwatDisclosure extends SwatDisplayableContainer
         return $input;
     }
 
-    // }}}
-    // {{{ protected function getSpanTag()
+
 
     protected function getSpanTag()
     {
@@ -164,8 +156,7 @@ class SwatDisclosure extends SwatDisplayableContainer
         return $span;
     }
 
-    // }}}
-    // {{{ protected function getJavaScriptClass()
+
 
     /**
      * Gets the name of the JavaScript class to instantiate for this disclosure
@@ -181,8 +172,7 @@ class SwatDisclosure extends SwatDisplayableContainer
         return 'SwatDisclosure';
     }
 
-    // }}}
-    // {{{ protected function getInlineJavaScript()
+
 
     /**
      * Gets disclosure specific inline JavaScript
@@ -201,8 +191,7 @@ class SwatDisclosure extends SwatDisplayableContainer
         );
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
+
 
     /**
      * Gets the array of CSS classes that are applied to this disclosure
@@ -222,5 +211,4 @@ class SwatDisclosure extends SwatDisplayableContainer
         return $classes;
     }
 
-    // }}}
 }

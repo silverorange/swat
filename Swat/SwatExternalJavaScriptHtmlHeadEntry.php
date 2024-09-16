@@ -9,7 +9,7 @@
  */
 class SwatExternalJavaScriptHtmlHeadEntry extends SwatHtmlHeadEntry
 {
-    // {{{ protected function displayInternal()
+
 
     protected function displayInternal($uri_prefix = '', $tag = null)
     {
@@ -18,13 +18,11 @@ class SwatExternalJavaScriptHtmlHeadEntry extends SwatHtmlHeadEntry
         printf('<script type="text/javascript" src="%s"></script>', $uri);
     }
 
-    // }}}
-    // {{{ protected function displayInlineInternal()
+
 
     protected function displayInlineInternal($path)
     {
         // Can't inline external JavaScript resources
     }
 
-    // }}}
 }

@@ -11,7 +11,7 @@ require_once 'Demo.php';
  */
 class PaginationDemo extends Demo
 {
-	// {{{ public function buildDemoUI()
+
 
 	public function buildDemoUI(SwatUI $ui)
 	{
@@ -24,7 +24,6 @@ class PaginationDemo extends Demo
 		$ui->getWidget('small')->setCurrentPage(50);
 	}
 
-	// }}}
 }
 
 ?>

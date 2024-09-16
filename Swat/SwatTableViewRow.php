@@ -9,7 +9,7 @@
  */
 abstract class SwatTableViewRow extends SwatUIObject
 {
-    // {{{ public properties
+
 
     /**
      * The {@link SwatTableView} associated with this row
@@ -25,8 +25,7 @@ abstract class SwatTableViewRow extends SwatUIObject
      */
     public $id = null;
 
-    // }}}
-    // {{{ protected properties
+
 
     /**
      * Whether or not this row has been processed
@@ -46,8 +45,7 @@ abstract class SwatTableViewRow extends SwatUIObject
      */
     protected $displayed = false;
 
-    // }}}
-    // {{{ public function init()
+
 
     /**
      * Initializes this row
@@ -62,8 +60,7 @@ abstract class SwatTableViewRow extends SwatUIObject
     {
     }
 
-    // }}}
-    // {{{ public function process()
+
 
     /**
      * Processes this row
@@ -79,8 +76,7 @@ abstract class SwatTableViewRow extends SwatUIObject
         $this->processed = true;
     }
 
-    // }}}
-    // {{{ public function display()
+
 
     /**
      * Displays this row
@@ -90,8 +86,7 @@ abstract class SwatTableViewRow extends SwatUIObject
         $this->displayed = true;
     }
 
-    // }}}
-    // {{{ public function isProcessed()
+
 
     /**
      * Whether or not this row is processed
@@ -103,8 +98,7 @@ abstract class SwatTableViewRow extends SwatUIObject
         return $this->processed;
     }
 
-    // }}}
-    // {{{ public function isDisplayed()
+
 
     /**
      * Whether or not this row is displayed
@@ -116,8 +110,7 @@ abstract class SwatTableViewRow extends SwatUIObject
         return $this->displayed;
     }
 
-    // }}}
-    // {{{ public function getInlineJavaScript()
+
 
     /**
      * Gets the inline JavaScript required by this row
@@ -132,8 +125,7 @@ abstract class SwatTableViewRow extends SwatUIObject
         return '';
     }
 
-    // }}}
-    // {{{ public function getVisibleByCount()
+
 
     /**
      * Gets whether or not to show this row based on a count of rows
@@ -151,8 +143,7 @@ abstract class SwatTableViewRow extends SwatUIObject
         return $count > 0;
     }
 
-    // }}}
-    // {{{ public function getHtmlHeadEntrySet()
+
 
     /**
      * Gets the SwatHtmlHeadEntry objects needed by this row
@@ -174,8 +165,7 @@ abstract class SwatTableViewRow extends SwatUIObject
         return $set;
     }
 
-    // }}}
-    // {{{ public function getAvailableHtmlHeadEntrySet()
+
 
     /**
      * Gets the SwatHtmlHeadEntry objects that may be needed by this row
@@ -188,8 +178,7 @@ abstract class SwatTableViewRow extends SwatUIObject
         return new SwatHtmlHeadEntrySet($this->html_head_entry_set);
     }
 
-    // }}}
-    // {{{ public function getMessages()
+
 
     /**
      * Gathers all messages from this table-view row
@@ -201,8 +190,7 @@ abstract class SwatTableViewRow extends SwatUIObject
         return [];
     }
 
-    // }}}
-    // {{{ public function hasMessage()
+
 
     /**
      * Gets whether or this row has any messages
@@ -215,8 +203,7 @@ abstract class SwatTableViewRow extends SwatUIObject
         return false;
     }
 
-    // }}}
-    // {{{ public function copy()
+
 
     /**
      * Performs a deep copy of the UI tree starting with this UI object
@@ -240,5 +227,4 @@ abstract class SwatTableViewRow extends SwatUIObject
         return $copy;
     }
 
-    // }}}
 }

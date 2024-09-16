@@ -11,15 +11,14 @@
  */
 class SwatDB extends SwatObject
 {
-    // {{{ protected static properties
+
 
     protected static $query_count = 0;
     protected static $debug = false;
     protected static $debug_info = [];
     protected static $debug_wrapper_depth = 0;
 
-    // }}}
-    // {{{ public static function setDebug()
+
 
     /**
      * Sets the debug mode used by SwatDB
@@ -32,8 +31,7 @@ class SwatDB extends SwatObject
         self::$debug = (bool) $debug;
     }
 
-    // }}}
-    // {{{ public static function connect()
+
 
     /**
      * Connects to a database
@@ -58,8 +56,7 @@ class SwatDB extends SwatObject
         return $db;
     }
 
-    // }}}
-    // {{{ public static function query()
+
 
     /**
      * Performs an SQL query
@@ -111,8 +108,7 @@ class SwatDB extends SwatObject
         return $rs;
     }
 
-    // }}}
-    // {{{ public static function exec()
+
 
     /**
      * Execute a data manipulation SQL statement
@@ -131,8 +127,7 @@ class SwatDB extends SwatObject
         return self::executeQuery($db, 'exec', [$sql]);
     }
 
-    // }}}
-    // {{{ public static function updateColumn()
+
 
     /**
      * Update a column
@@ -210,8 +205,7 @@ class SwatDB extends SwatObject
         return self::exec($db, $sql);
     }
 
-    // }}}
-    // {{{ public static function queryColumn()
+
 
     /**
      * Query a column
@@ -271,8 +265,7 @@ class SwatDB extends SwatObject
         return $values;
     }
 
-    // }}}
-    // {{{ public static function queryOne()
+
 
     /**
      * Query a single value
@@ -294,8 +287,7 @@ class SwatDB extends SwatObject
         return self::executeQuery($db, 'queryOne', [$sql, $mdb2_type]);
     }
 
-    // }}}
-    // {{{ public static function queryRow()
+
 
     /**
      * Query a single row
@@ -323,8 +315,7 @@ class SwatDB extends SwatObject
         return $row;
     }
 
-    // }}}
-    // {{{ public static function queryOneFromTable()
+
 
     /**
      * Query a single value from a specified table and column
@@ -382,8 +373,7 @@ class SwatDB extends SwatObject
         return $value;
     }
 
-    // }}}
-    // {{{ public static function queryRowFromTable()
+
 
     /**
      * Query a single row from a specified table and column
@@ -441,8 +431,7 @@ class SwatDB extends SwatObject
         return $row;
     }
 
-    // }}}
-    // {{{ public static function executeStoredProc()
+
 
     /**
      * Performs a stored procedure
@@ -510,8 +499,7 @@ class SwatDB extends SwatObject
         return $rs;
     }
 
-    // }}}
-    // {{{ public static function executeStoredProcOne()
+
 
     /**
      * Execute a stored procedure that returns a single value
@@ -541,8 +529,7 @@ class SwatDB extends SwatObject
         return current($row);
     }
 
-    // }}}
-    // {{{ public static function updateBinding()
+
 
     /**
      * Update a binding table
@@ -652,8 +639,7 @@ class SwatDB extends SwatObject
         $transaction->commit();
     }
 
-    // }}}
-    // {{{ public static function insertRow()
+
 
     /**
      * Insert a row
@@ -738,8 +724,7 @@ class SwatDB extends SwatObject
         return $ret;
     }
 
-    // }}}
-    // {{{ public static function updateRow()
+
 
     /**
      * Update a row
@@ -808,8 +793,7 @@ class SwatDB extends SwatObject
         self::exec($db, $sql);
     }
 
-    // }}}
-    // {{{ public static function deleteRow()
+
 
     /**
      * Delete a row
@@ -845,8 +829,7 @@ class SwatDB extends SwatObject
         self::exec($db, $sql);
     }
 
-    // }}}
-    // {{{ public static function getOptionArray()
+
 
     /**
      * Query for an option array
@@ -924,8 +907,7 @@ class SwatDB extends SwatObject
         return $options;
     }
 
-    // }}}
-    // {{{ public static function getCascadeOptionArray()
+
 
     /**
      * Query for an option array cascaded by a field
@@ -1024,8 +1006,7 @@ class SwatDB extends SwatObject
         return $options;
     }
 
-    // }}}
-    // {{{ public static function getGroupedOptionArray()
+
 
     /**
      * Queries for a grouped option array
@@ -1160,8 +1141,7 @@ class SwatDB extends SwatObject
         return $base_parent;
     }
 
-    // }}}
-    // {{{ public static function getFieldMax()
+
 
     /**
      * Get max field value
@@ -1194,8 +1174,7 @@ class SwatDB extends SwatObject
         return self::queryOne($db, $sql);
     }
 
-    // }}}
-    // {{{ public static function equalityOperator()
+
 
     /**
      * Get proper conditional operator
@@ -1223,8 +1202,7 @@ class SwatDB extends SwatObject
         }
     }
 
-    // }}}
-    // {{{ public static function getDataTree()
+
 
     /**
      * Get a tree of data nodes
@@ -1290,8 +1268,7 @@ class SwatDB extends SwatObject
         return $base_parent;
     }
 
-    // }}}
-    // {{{ public static function implodeSelection()
+
 
     /**
      * Implodes a view selection object
@@ -1319,8 +1296,7 @@ class SwatDB extends SwatObject
         return implode(',', $quoted_ids);
     }
 
-    // }}}
-    // {{{ private static function executeQuery()
+
 
     private static function executeQuery($db, $method, array $args)
     {
@@ -1336,8 +1312,7 @@ class SwatDB extends SwatObject
         return $ret;
     }
 
-    // }}}
-    // {{{ private static function getFieldNameArray()
+
 
     private static function getFieldNameArray($fields)
     {
@@ -1354,8 +1329,7 @@ class SwatDB extends SwatObject
         return $names;
     }
 
-    // }}}
-    // {{{ private static function getFieldTypeArray()
+
 
     private static function getFieldTypeArray($fields)
     {
@@ -1372,8 +1346,7 @@ class SwatDB extends SwatObject
         return $types;
     }
 
-    // }}}
-    // {{{ private static function initFields()
+
 
     /**
      * Transforms an array of text field identifiers ('type:name') into
@@ -1397,8 +1370,7 @@ class SwatDB extends SwatObject
         }
     }
 
-    // }}}
-    // {{{ private static function initArray()
+
 
     /**
      * Noramlizes Iterator objects into simple arrays
@@ -1429,8 +1401,7 @@ class SwatDB extends SwatObject
         throw new SwatDBException('Value is not an array');
     }
 
-    // }}}
-    // {{{ private static function debugStart()
+
 
     private static function debugStart($message)
     {
@@ -1476,8 +1447,7 @@ class SwatDB extends SwatObject
         }
     }
 
-    // }}}
-    // {{{ private static function debugEnd()
+
 
     private static function debugEnd()
     {
@@ -1554,5 +1524,4 @@ class SwatDB extends SwatObject
         }
     }
 
-    // }}}
 }

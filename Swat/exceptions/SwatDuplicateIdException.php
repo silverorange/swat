@@ -9,7 +9,7 @@
  */
 class SwatDuplicateIdException extends SwatException
 {
-    // {{{ protected properties
+
 
     /**
      * The id that is colliding
@@ -18,8 +18,7 @@ class SwatDuplicateIdException extends SwatException
      */
     protected $id = null;
 
-    // }}}
-    // {{{ public function __construct()
+
 
     /**
      * Creates a new duplicate id exception
@@ -34,8 +33,7 @@ class SwatDuplicateIdException extends SwatException
         $this->id = $id;
     }
 
-    // }}}
-    // {{{ public function getId()
+
 
     /**
      * Gets the id that is colliding
@@ -47,5 +45,4 @@ class SwatDuplicateIdException extends SwatException
         return $this->id;
     }
 
-    // }}}
 }

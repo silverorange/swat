@@ -11,7 +11,7 @@ require_once 'Demo.php';
  */
 class FieldsetDemo extends Demo
 {
-	// {{{ public function buildDemoUI()
+
 
 	public function buildDemoUI(SwatUI $ui)
 	{
@@ -29,7 +29,6 @@ class FieldsetDemo extends Demo
         ]);
 	}
 
-	// }}}
 }
 
 ?>

@@ -12,7 +12,7 @@
  */
 class SwatGroupedFlydown extends SwatTreeFlydown
 {
-    // {{{ public function setTree()
+
 
     /**
      * Sets the tree to use for display
@@ -30,8 +30,7 @@ class SwatGroupedFlydown extends SwatTreeFlydown
         parent::setTree($tree);
     }
 
-    // }}}
-    // {{{ public function display()
+
 
     /**
      * Displays this grouped flydown
@@ -79,8 +78,7 @@ class SwatGroupedFlydown extends SwatTreeFlydown
         }
     }
 
-    // }}}
-    // {{{ protected function checkTree()
+
 
     /**
      * Checks a tree to ensure it is valid for a grouped flydown
@@ -103,8 +101,7 @@ class SwatGroupedFlydown extends SwatTreeFlydown
         }
     }
 
-    // }}}
-    // {{{ protected function displayNode()
+
 
     /**
      * Displays a grouped tree flydown node and its child nodes
@@ -182,8 +179,7 @@ class SwatGroupedFlydown extends SwatTreeFlydown
         }
     }
 
-    // }}}
-    // {{{ protected function buildDisplayTree()
+
 
     /**
      * Builds this grouped flydown's display tree by copying nodes from this
@@ -209,8 +205,7 @@ class SwatGroupedFlydown extends SwatTreeFlydown
         }
     }
 
-    // }}}
-    // {{{ protected function getDisplayTree()
+
 
     /**
      * Gets the display tree of this grouped flydown
@@ -240,5 +235,4 @@ class SwatGroupedFlydown extends SwatTreeFlydown
         return $display_tree;
     }
 
-    // }}}
 }

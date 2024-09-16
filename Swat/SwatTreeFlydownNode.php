@@ -11,7 +11,7 @@
  */
 class SwatTreeFlydownNode extends SwatTreeNode
 {
-    // {{{ protected properties
+
 
     /**
      * The flydown option for this node
@@ -20,8 +20,7 @@ class SwatTreeFlydownNode extends SwatTreeNode
      */
     protected $flydown_option;
 
-    // }}}
-    // {{{ public function __construct()
+
 
     /**
      * Creates a new tree flydown node
@@ -62,8 +61,7 @@ class SwatTreeFlydownNode extends SwatTreeNode
         }
     }
 
-    // }}}
-    // {{{ public function getOption()
+
 
     /**
      * Gets the option for this node
@@ -75,8 +73,7 @@ class SwatTreeFlydownNode extends SwatTreeNode
         return $this->flydown_option;
     }
 
-    // }}}
-    // {{{ public function addChild()
+
 
     /**
      * Adds a child node to this node
@@ -94,8 +91,7 @@ class SwatTreeFlydownNode extends SwatTreeNode
         parent::addChild($child);
     }
 
-    // }}}
-    // {{{ public staticfunction convertFromDataTree()
+
 
     public static function convertFromDataTree(SwatDataTreeNode $tree)
     {
@@ -108,5 +104,4 @@ class SwatTreeFlydownNode extends SwatTreeNode
         return $new_tree;
     }
 
-    // }}}
 }

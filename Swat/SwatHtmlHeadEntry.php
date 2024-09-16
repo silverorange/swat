@@ -12,7 +12,7 @@
  */
 abstract class SwatHtmlHeadEntry extends SwatObject
 {
-    // {{{ protected properties
+
 
     /**
      * The uri of this head entry
@@ -35,8 +35,7 @@ abstract class SwatHtmlHeadEntry extends SwatObject
      */
     protected $ie_condition = '';
 
-    // }}}
-    // {{{ public function __construct()
+
 
     /**
      * Creates a new HTML head entry
@@ -48,8 +47,7 @@ abstract class SwatHtmlHeadEntry extends SwatObject
         $this->uri = $uri;
     }
 
-    // }}}
-    // {{{ public function display()
+
 
     /**
      * Displays this html head entry
@@ -68,8 +66,7 @@ abstract class SwatHtmlHeadEntry extends SwatObject
         $this->closeIECondition();
     }
 
-    // }}}
-    // {{{ public function displayInline()
+
 
     /**
      * Displays the resource referenced by this html head entry inline
@@ -85,8 +82,7 @@ abstract class SwatHtmlHeadEntry extends SwatObject
         $this->closeIECondition();
     }
 
-    // }}}
-    // {{{ public function getUri()
+
 
     /**
      * Gets the URI of this HTML head entry
@@ -98,8 +94,7 @@ abstract class SwatHtmlHeadEntry extends SwatObject
         return $this->uri;
     }
 
-    // }}}
-    // {{{ public function getType()
+
 
     /**
      * Gets the type of this HTML head entry
@@ -111,8 +106,7 @@ abstract class SwatHtmlHeadEntry extends SwatObject
         return get_class($this);
     }
 
-    // }}}
-    // {{{ public function getIECondition()
+
 
     /**
      * Gets the conditional expression used to limit display for Internet
@@ -127,8 +121,7 @@ abstract class SwatHtmlHeadEntry extends SwatObject
         return $this->ie_conditional;
     }
 
-    // }}}
-    // {{{ public function setIECondition()
+
 
     /**
      * Sets the conditional expression used to limit display for Internet
@@ -147,8 +140,7 @@ abstract class SwatHtmlHeadEntry extends SwatObject
         $this->ie_condition = (string) $condition;
     }
 
-    // }}}
-    // {{{ protected abstract function displayInternal()
+
 
     /**
      * Displays this html head entry
@@ -162,8 +154,7 @@ abstract class SwatHtmlHeadEntry extends SwatObject
      */
     abstract protected function displayInternal($uri_prefix = '', $tag = null);
 
-    // }}}
-    // {{{ protected abstract function displayInlineInternal()
+
 
     /**
      * Displays the resource referenced by this html head entry inline
@@ -174,8 +165,7 @@ abstract class SwatHtmlHeadEntry extends SwatObject
      */
     abstract protected function displayInlineInternal($path);
 
-    // }}}
-    // {{{ protected function openIECondition()
+
 
     /**
      * Renders the opening tag for the IE condditional if an IE conditional
@@ -193,8 +183,7 @@ abstract class SwatHtmlHeadEntry extends SwatObject
         }
     }
 
-    // }}}
-    // {{{ protected function closeIECondition()
+
 
     /**
      * Renders the closing tag for the IE condditional if an IE conditional
@@ -210,5 +199,4 @@ abstract class SwatHtmlHeadEntry extends SwatObject
         }
     }
 
-    // }}}
 }

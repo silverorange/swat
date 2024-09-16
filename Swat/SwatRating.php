@@ -9,7 +9,7 @@
  */
 class SwatRating extends SwatInputControl
 {
-    // {{{ public properties
+
 
     /**
      * The value of this rating control
@@ -25,8 +25,7 @@ class SwatRating extends SwatInputControl
      */
     public $maximum_value = 5;
 
-    // }}}
-    // {{{ public function __construct()
+
 
     /**
      * Creates a new rating control
@@ -47,8 +46,7 @@ class SwatRating extends SwatInputControl
         $this->addStyleSheet('packages/swat/styles/swat-rating.css');
     }
 
-    // }}}
-    // {{{ public function init()
+
 
     /**
      * Initializes this rating control
@@ -61,8 +59,7 @@ class SwatRating extends SwatInputControl
         $flydown->addOptionsByArray($this->getRatings());
     }
 
-    // }}}
-    // {{{ public function process()
+
 
     /**
      * Processes this rating control
@@ -79,8 +76,7 @@ class SwatRating extends SwatInputControl
         }
     }
 
-    // }}}
-    //  {{{ public function display()
+
 
     /**
      * Displays this rating control
@@ -109,8 +105,7 @@ class SwatRating extends SwatInputControl
         Swat::displayInlineJavaScript($this->getInlineJavaScript());
     }
 
-    // }}}
-    // {{{ protected function getRatings()
+
 
     protected function getRatings()
     {
@@ -123,8 +118,7 @@ class SwatRating extends SwatInputControl
         return $ratings;
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
+
 
     /**
      * Gets the array of CSS classes that are applied to this rating control
@@ -139,8 +133,7 @@ class SwatRating extends SwatInputControl
         return $classes;
     }
 
-    // }}}
-    // {{{ protected function getInlineJavaScript()
+
 
     /**
      * Gets the inline JavaScript for this rating control
@@ -158,8 +151,7 @@ class SwatRating extends SwatInputControl
         );
     }
 
-    // }}}
-    // {{{ protected function createCompositeWidgets()
+
 
     /**
      * Creates the composite flydown used by this rating control
@@ -174,5 +166,4 @@ class SwatRating extends SwatInputControl
         $this->addCompositeWidget($flydown, 'flydown');
     }
 
-    // }}}
 }

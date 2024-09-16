@@ -9,7 +9,7 @@
  */
 abstract class SwatInputControl extends SwatControl
 {
-    // {{{ public properties
+
 
     /**
      * Whether this entry widget is required or not
@@ -27,8 +27,7 @@ abstract class SwatInputControl extends SwatControl
      */
     public $show_field_title_in_messages = true;
 
-    // }}}
-    // {{{ public function init()
+
 
     /**
      * Initializes this widget
@@ -46,8 +45,7 @@ abstract class SwatInputControl extends SwatControl
         }
     }
 
-    // }}}
-    // {{{ public function getForm()
+
 
     /**
      * Gets the form that this control is contained in
@@ -80,8 +78,7 @@ abstract class SwatInputControl extends SwatControl
         return $form;
     }
 
-    // }}}
-    // {{{ protected function getValidationMessage()
+
 
     /**
      * Gets a validation message for this control
@@ -121,5 +118,4 @@ abstract class SwatInputControl extends SwatControl
         return $message;
     }
 
-    // }}}
 }

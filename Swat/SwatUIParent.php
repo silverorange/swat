@@ -9,7 +9,7 @@
  */
 interface SwatUIParent
 {
-    // {{{ public function addChild()
+
 
     /**
      * Adds a child object to this parent object
@@ -22,8 +22,7 @@ interface SwatUIParent
      */
     public function addChild(SwatObject $child);
 
-    // }}}
-    // {{{ public function getDescendants()
+
 
     /**
      * Gets descendant UI-objects
@@ -42,8 +41,7 @@ interface SwatUIParent
      */
     public function getDescendants($class_name = null);
 
-    // }}}
-    // {{{ public function getFirstDescendant()
+
 
     /**
      * Gets the first descendant UI-object of a specific class
@@ -61,8 +59,7 @@ interface SwatUIParent
      */
     public function getFirstDescendant($class_name);
 
-    // }}}
-    // {{{ public function getDescendantStates()
+
 
     /**
      * Gets descendant states
@@ -75,8 +72,7 @@ interface SwatUIParent
      */
     public function getDescendantStates();
 
-    // }}}
-    // {{{ public function setDescendantStates()
+
 
     /**
      * Sets descendant states
@@ -89,5 +85,4 @@ interface SwatUIParent
      */
     public function setDescendantStates(array $states);
 
-    // }}}
 }

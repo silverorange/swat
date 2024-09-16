@@ -9,7 +9,7 @@
  */
 class SwatContentBlock extends SwatControl
 {
-    // {{{ public properties
+
 
     /**
      * User visible textual content of this widget
@@ -27,8 +27,7 @@ class SwatContentBlock extends SwatControl
      */
     public $content_type = 'text/plain';
 
-    // }}}
-    // {{{ public function display()
+
 
     /**
      * Displays this content
@@ -50,5 +49,4 @@ class SwatContentBlock extends SwatControl
         }
     }
 
-    // }}}
 }

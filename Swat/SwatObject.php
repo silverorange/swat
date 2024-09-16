@@ -9,7 +9,7 @@
  */
 class SwatObject implements Stringable
 {
-    // {{{ public function __toString()
+
 
     /**
      * Gets this object as a string
@@ -31,5 +31,4 @@ class SwatObject implements Stringable
         return ob_get_clean();
     }
 
-    // }}}
 }

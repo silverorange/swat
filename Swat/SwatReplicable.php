@@ -9,7 +9,7 @@
  */
 interface SwatReplicable
 {
-    // {{{ public function getWidget()
+
 
     /**
      * Retrives a reference to a replicated widget
@@ -23,5 +23,4 @@ interface SwatReplicable
      */
     public function getWidget($widget_id, $replicator_id);
 
-    // }}}
 }

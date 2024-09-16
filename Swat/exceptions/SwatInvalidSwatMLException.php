@@ -12,7 +12,7 @@
  */
 class SwatInvalidSwatMLException extends SwatException
 {
-    // {{{ protected properties
+
 
     /**
      * The filename of the SwatML file that caused this exception to be thrown.
@@ -21,8 +21,7 @@ class SwatInvalidSwatMLException extends SwatException
      */
     protected $filename = '';
 
-    // }}}
-    // {{{ public function __construct()
+
 
     /**
      * Creates a new invalid SwatML exception
@@ -37,8 +36,7 @@ class SwatInvalidSwatMLException extends SwatException
         $this->filename = $filename;
     }
 
-    // }}}
-    // {{{ public function getFilename()
+
 
     /**
      * Gets the filename of the SwatML file that caused this exception to be
@@ -52,5 +50,4 @@ class SwatInvalidSwatMLException extends SwatException
         return $this->filename;
     }
 
-    // }}}
 }

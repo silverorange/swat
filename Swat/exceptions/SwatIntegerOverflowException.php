@@ -9,7 +9,7 @@
  */
 class SwatIntegerOverflowException extends OverflowException
 {
-    // {{{ protected properties
+
 
     /**
      * Sign
@@ -20,8 +20,7 @@ class SwatIntegerOverflowException extends OverflowException
      */
     protected $sign = null;
 
-    // }}}
-    // {{{ public function __construct()
+
 
     /**
      * Creates a new invalid type exception
@@ -38,8 +37,7 @@ class SwatIntegerOverflowException extends OverflowException
         $this->sign = $sign;
     }
 
-    // }}}
-    // {{{ public function getSign()
+
 
     /**
      * Gets the sign of the integer
@@ -51,5 +49,4 @@ class SwatIntegerOverflowException extends OverflowException
         return $this->sign;
     }
 
-    // }}}
 }

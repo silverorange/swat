@@ -9,7 +9,7 @@
  */
 class SwatDisplayableContainer extends SwatContainer
 {
-    // {{{ public function display()
+
 
     /**
      * Displays this container
@@ -31,8 +31,7 @@ class SwatDisplayableContainer extends SwatContainer
         $div->close();
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
+
 
     /**
      * Gets the array of CSS classes that are applied to this displayable
@@ -48,5 +47,4 @@ class SwatDisplayableContainer extends SwatContainer
         return $classes;
     }
 
-    // }}}
 }

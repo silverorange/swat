@@ -11,7 +11,7 @@
  */
 class SwatFooterFormField extends SwatFormField
 {
-    // {{{ protected function getCSSClassNames()
+
 
     /**
      * Gets the array of CSS classes that are applied to this footer form field
@@ -26,5 +26,4 @@ class SwatFooterFormField extends SwatFormField
         return $classes;
     }
 
-    // }}}
 }

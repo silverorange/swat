@@ -12,13 +12,12 @@
  */
 class DemoMenuBar extends SwatControl
 {
-	// {{{ protected properties
+
 
 	protected $entries = [];
 	protected $selected_entry;
 
-	// }}}
-	// {{{ public function display()
+
 
 	public function display()
 	{
@@ -53,23 +52,20 @@ class DemoMenuBar extends SwatControl
 		$ul_tag->close();
 	}
 
-	// }}}
-	// {{{ public function setEntries()
+
 
 	public function setEntries(array $entries)
 	{
 		$this->entries = $entries;
 	}
 
-	// }}}
-	// {{{ public function setSelectedEntry()
+
 
 	public function setSelectedEntry($entry)
 	{
 		$this->selected_entry = $entry;
 	}
 
-	// }}}
 }
 
 ?>

@@ -11,7 +11,7 @@
  */
 class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 {
-    // {{{ constants
+
 
     /**
      * Indicates the required status display should highlight no fields.
@@ -28,8 +28,7 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
      */
     const SHOW_OPTIONAL = 2;
 
-    // }}}
-    // {{{ public properties
+
 
     /**
      * The visible name for this field, or null
@@ -154,8 +153,7 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
      */
     public $show_title = true;
 
-    // }}}
-    // {{{ protected properties
+
 
     /**
      * Container tag to use
@@ -184,8 +182,7 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
      */
     protected $widget_class;
 
-    // }}}
-    // {{{ public function __construct()
+
 
     /**
      * Creates a new form field
@@ -201,8 +198,7 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
         $this->addStyleSheet('packages/swat/styles/swat-message.css');
     }
 
-    // }}}
-    // {{{ public function getTitle()
+
 
     /**
      * Gets the title of this form field
@@ -216,8 +212,7 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
         return $this->title;
     }
 
-    // }}}
-    // {{{ public function getTitleContentType()
+
 
     /**
      * Gets the title content-type of this form field
@@ -231,8 +226,7 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
         return $this->title_content_type;
     }
 
-    // }}}
-    // {{{ public function display()
+
 
     /**
      * Displays this form field
@@ -334,8 +328,7 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
         $container_tag->close();
     }
 
-    // }}}
-    // {{{ protected function displayTitle()
+
 
     protected function displayTitle()
     {
@@ -353,8 +346,7 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
         $title_tag->close();
     }
 
-    // }}}
-    // {{{ protected function displayRequiredStatus()
+
 
     /**
      * Highlights required and/or optional fields according to the required
@@ -384,8 +376,7 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
         }
     }
 
-    // }}}
-    // {{{ protected function displayContent()
+
 
     protected function displayContent()
     {
@@ -397,8 +388,7 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
         $contents_tag->close();
     }
 
-    // }}}
-    // {{{ protected function displayMessages()
+
 
     protected function displayMessages()
     {
@@ -441,8 +431,7 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
         $message_ul->close();
     }
 
-    // }}}
-    // {{{ protected function displayNotes()
+
 
     protected function displayNotes()
     {
@@ -487,8 +476,7 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
         }
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
+
 
     /**
      * Gets the array of CSS classes that are applied to this form field
@@ -516,8 +504,7 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
         return $classes;
     }
 
-    // }}}
-    // {{{ protected function getTitleTag()
+
 
     /**
      * Get a SwatHtmlTag to display the title
@@ -547,8 +534,7 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
         return $label_tag;
     }
 
-    // }}}
-    // {{{ protected function notifyOfAdd()
+
 
     /**
      * Notifies this widget that a widget was added
@@ -579,10 +565,9 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
         }
     }
 
-    // }}}
 
     // deprecated
-    // {{{ protected function displayRequired()
+
 
     /**
      * @deprecated use the displayRequiredStatus() method instead
@@ -597,5 +582,4 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
         }
     }
 
-    // }}}
 }

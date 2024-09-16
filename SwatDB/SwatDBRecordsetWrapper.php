@@ -27,7 +27,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
     SwatDBMarshallable,
     SwatDBFlushable
 {
-    // {{{ protected properties
+
 
     /**
      * The name of the row wrapper class to use for this recordset wrapper
@@ -62,8 +62,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
      */
     protected $options = [];
 
-    // }}}
-    // {{{ private properties
+
 
     /**
      * Records contained in this recordset
@@ -104,8 +103,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
      */
     private $current_index = 0;
 
-    // }}}
-    // {{{ public function __construct()
+
 
     /**
      * Creates a new recordset wrapper
@@ -127,8 +125,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         }
     }
 
-    // }}}
-    // {{{ public function initializeFromResultSet()
+
 
     public function initializeFromResultSet(MDB2_Result_Common $rs)
     {
@@ -165,8 +162,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         } while ($rs->nextResult());
     }
 
-    // }}}
-    // {{{ public function duplicate()
+
 
     /**
      * Duplicates this record set wrapper
@@ -191,8 +187,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         return $new_wrapper;
     }
 
-    // }}}
-    // {{{ public function setOptions()
+
 
     /**
      * Sets one or more options for this recordset wrapper
@@ -230,8 +225,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         return $this;
     }
 
-    // }}}
-    // {{{ public function getOption()
+
 
     /**
      * Gets an option value or a default value if the option is not set
@@ -254,8 +248,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         return $value;
     }
 
-    // }}}
-    // {{{ public function copyEmpty()
+
 
     /**
      * Creates a new empty copy of this recordset wrapper
@@ -274,8 +267,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         return $wrapper;
     }
 
-    // }}}
-    // {{{ protected function instantiateRowWrapperObject()
+
 
     /**
      * Creates a new dataobject
@@ -300,8 +292,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         return $object;
     }
 
-    // }}}
-    // {{{ protected function init()
+
 
     /**
      * Initializes this recordset wrapper
@@ -321,8 +312,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
     {
     }
 
-    // }}}
-    // {{{ protected function checkDB()
+
 
     protected function checkDB()
     {
@@ -337,10 +327,9 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         }
     }
 
-    // }}}
 
     // array access
-    // {{{ public function offsetExists()
+
 
     /**
      * Gets whether or not a value exists for the given offset
@@ -361,8 +350,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         return isset($this->objects_by_index[$offset]);
     }
 
-    // }}}
-    // {{{ public function offsetGet()
+
 
     /**
      * Gets a record in this recordset by an offset value
@@ -392,8 +380,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         return $this->objects_by_index[$offset];
     }
 
-    // }}}
-    // {{{ public function offsetSet()
+
 
     /**
      * Sets a record at a specified offset
@@ -492,8 +479,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         }
     }
 
-    // }}}
-    // {{{ public function offsetUnset()
+
 
     /**
      * Unsets a record in this recordset at the specified offset
@@ -545,10 +531,9 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         }
     }
 
-    // }}}
 
     // iteration
-    // {{{ public function current()
+
 
     /**
      * Returns the current element
@@ -560,8 +545,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         return $this->objects[$this->current_index];
     }
 
-    // }}}
-    // {{{ public function key()
+
 
     /**
      * Returns the key of the current record
@@ -586,8 +570,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         return $key;
     }
 
-    // }}}
-    // {{{ public function next()
+
 
     /**
      * Moves forward to the next element
@@ -597,8 +580,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         $this->current_index++;
     }
 
-    // }}}
-    // {{{ public function rewind()
+
 
     /**
      * Rewinds this iterator to the first element
@@ -608,8 +590,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         $this->current_index = 0;
     }
 
-    // }}}
-    // {{{ public function valid()
+
 
     /**
      * Checks is there is a current element after calls to rewind() and next()
@@ -622,10 +603,9 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         return array_key_exists($this->current_index, $this->objects);
     }
 
-    // }}}
 
     // counting
-    // {{{ public function getCount()
+
 
     /**
      * Gets the number of records in this recordset
@@ -640,8 +620,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         return count($this);
     }
 
-    // }}}
-    // {{{ public function count()
+
 
     /**
      * Gets the number of records in this recordset
@@ -655,26 +634,23 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         return count($this->objects);
     }
 
-    // }}}
 
     // serialization
-    // {{{ public function serialize()
+
 
     public function serialize(): string
     {
         return serialize($this->__serialize());
     }
 
-    // }}}
-    // {{{ public function unserialize()
+
 
     public function unserialize(string $data): void
     {
         $this->__unserialize(unserialize($data));
     }
 
-    // }}}
-    // {{{ public function __serialize()
+
 
     public function __serialize(): array
     {
@@ -695,8 +671,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         return $data;
     }
 
-    // }}}
-    // {{{ public function __unserialize()
+
 
     public function __unserialize(array $data): void
     {
@@ -705,8 +680,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         }
     }
 
-    // }}}
-    // {{{ public function marshall()
+
 
     public function marshall(array $tree = [])
     {
@@ -730,8 +704,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         return $data;
     }
 
-    // }}}
-    // {{{ public function unmarshall()
+
 
     public function unmarshall(array $data = [])
     {
@@ -761,10 +734,9 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         }
     }
 
-    // }}}
 
     // manipulating of sub data objects
-    // {{{ public function getInternalValues()
+
 
     /**
      * Gets the values of an internal property for each record in this set
@@ -798,8 +770,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         return $values;
     }
 
-    // }}}
-    // {{{ public function loadAllSubDataObjects()
+
 
     /**
      * Loads all sub-data-objects for an internal property of the data-objects
@@ -851,8 +822,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         return $sub_data_objects;
     }
 
-    // }}}
-    // {{{ public function attachSubDataObjects()
+
 
     /**
      * Attach existing sub-dataobjects for an internal property of the
@@ -884,10 +854,9 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         }
     }
 
-    // }}}
 
     // manipulating of sub-recordsets
-    // {{{ public function loadAllSubRecordsets()
+
 
     /**
      * Efficiently loads sub-recordsets for records in this recordset
@@ -985,8 +954,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         );
     }
 
-    // }}}
-    // {{{ public function attachSubRecordset()
+
 
     /**
      * Efficiently loads sub-recordsets for records in this recordset
@@ -1046,10 +1014,9 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         return $recordset;
     }
 
-    // }}}
 
     // manipulating of objects
-    // {{{ public function getIndexes()
+
 
     /**
      * Gets the index values of the records in this recordset
@@ -1071,8 +1038,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         return array_keys($this->objects_by_index);
     }
 
-    // }}}
-    // {{{ public function getArray()
+
 
     /**
      * Gets this recordset as an array of objects
@@ -1085,8 +1051,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         return $this->objects;
     }
 
-    // }}}
-    // {{{ public function getFirst()
+
 
     /**
      * Retrieves the first object in this recordset
@@ -1105,8 +1070,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         return $first;
     }
 
-    // }}}
-    // {{{ public function getLast()
+
 
     /**
      * Retrieves the last object in this recordset
@@ -1125,8 +1089,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         return $last;
     }
 
-    // }}}
-    // {{{ public function getByIndex()
+
 
     /**
      * Retrieves a record in this recordset by index
@@ -1151,8 +1114,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         return isset($this[$index]) ? $this[$index] : null;
     }
 
-    // }}}
-    // {{{ public function add()
+
 
     /**
      * Adds a record to this recordset
@@ -1172,8 +1134,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         $this[] = $object;
     }
 
-    // }}}
-    // {{{ public function remove()
+
 
     /**
      * Removes a record from this recordset
@@ -1205,8 +1166,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         }
     }
 
-    // }}}
-    // {{{ public function removeByIndex()
+
 
     /**
      * Removes a record from this recordset given the record's index value
@@ -1227,8 +1187,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         unset($this[$index]);
     }
 
-    // }}}
-    // {{{ public function removeAll()
+
 
     /**
      * Removes all records from this recordset
@@ -1241,8 +1200,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         $this->current_index = 0;
     }
 
-    // }}}
-    // {{{ public function reindex()
+
 
     /**
      * Reindexes this recordset
@@ -1264,8 +1222,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         }
     }
 
-    // }}}
-    // {{{ public function getPropertyValues()
+
 
     /**
      * Gets the values of a property for each record in this set
@@ -1297,10 +1254,9 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         return $values;
     }
 
-    // }}}
 
     // database loading and saving
-    // {{{ public function setDatabase()
+
 
     /**
      * Sets the database driver for this recordset
@@ -1334,8 +1290,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         }
     }
 
-    // }}}
-    // {{{ public function save()
+
 
     /**
      * Saves this recordset to the database
@@ -1374,8 +1329,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         $this->reindex();
     }
 
-    // }}}
-    // {{{ public function load()
+
 
     /**
      * Loads a set of records into this recordset
@@ -1452,8 +1406,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         return $success;
     }
 
-    // }}}
-    // {{{ public function delete()
+
 
     /**
      * Deletes this recordset from the database
@@ -1467,8 +1420,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         $this->save();
     }
 
-    // }}}
-    // {{{ public function isModified()
+
 
     /**
      * Returns true if this recordset has been modified since it was loaded
@@ -1495,8 +1447,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         return false;
     }
 
-    // }}}
-    // {{{ public function setFlushableCache()
+
 
     /**
      * Sets the flushable cache to use for this record-set
@@ -1516,5 +1467,4 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         }
     }
 
-    // }}}
 }

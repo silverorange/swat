@@ -30,5 +30,4 @@ class SwatConfirmationButton extends SwatButton
         );
     }
 
-    // }}}
 }

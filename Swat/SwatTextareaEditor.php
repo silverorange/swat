@@ -13,13 +13,12 @@
  */
 class SwatTextareaEditor extends SwatTextarea
 {
-    // {{{ class constants
+
 
     const MODE_VISUAL = 1;
     const MODE_SOURCE = 2;
 
-    // }}}
-    // {{{ public properties
+
 
     public static $tiny_mce_api_key = null;
 
@@ -136,8 +135,7 @@ class SwatTextareaEditor extends SwatTextarea
 
     public $basehref = null;
 
-    // }}}
-    // {{{ public function __construct()
+
 
     /**
      * Creates a new what-you-see-is-what-you-get XHTML textarea editor
@@ -168,8 +166,7 @@ class SwatTextareaEditor extends SwatTextarea
         );
     }
 
-    // }}}
-    // {{{ public function display()
+
 
     public function display()
     {
@@ -234,8 +231,7 @@ class SwatTextareaEditor extends SwatTextarea
         Swat::displayInlineJavaScript($this->getInlineJavaScript());
     }
 
-    // }}}
-    // {{{ public function getFocusableHtmlId()
+
 
     /**
      * Gets the id attribute of the XHTML element displayed by this widget
@@ -252,8 +248,7 @@ class SwatTextareaEditor extends SwatTextarea
         return null;
     }
 
-    // }}}
-    // {{{ protected function getConfig()
+
 
     protected function getConfig()
     {
@@ -298,8 +293,7 @@ class SwatTextareaEditor extends SwatTextarea
         return $config;
     }
 
-    // }}}
-    // {{{ protected function getConfigButtons()
+
 
     protected function getConfigButtons()
     {
@@ -327,8 +321,7 @@ class SwatTextareaEditor extends SwatTextarea
         ];
     }
 
-    // }}}
-    // {{{ protected function displayColorMap()
+
 
     protected function displayColorMap()
     {
@@ -343,8 +336,7 @@ class SwatTextareaEditor extends SwatTextarea
         }
     }
 
-    // }}}
-    // {{{ protected function getInlineJavaScript()
+
 
     protected function getInlineJavaScript()
     {
@@ -501,8 +493,7 @@ class SwatTextareaEditor extends SwatTextarea
         return ob_get_clean();
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
+
 
     /**
      * Gets the array of CSS classes that are applied to this textarea
@@ -516,5 +507,4 @@ class SwatTextareaEditor extends SwatTextarea
         return $classes;
     }
 
-    // }}}
 }

@@ -9,7 +9,7 @@
  */
 interface SwatDBFlushable
 {
-    // {{{ public function setFlushableCache()
+
 
     /**
      * Sets the flushable cache to use for this object
@@ -20,5 +20,4 @@ interface SwatDBFlushable
      */
     public function setFlushableCache(SwatDBCacheNsFlushable $cache);
 
-    // }}}
 }

@@ -11,7 +11,7 @@ require_once 'Demo.php';
  */
 class ViewSelectorDemo extends Demo
 {
-	// {{{ public function buildDemoUI();
+
 
 	public function buildDemoUI(SwatUI $ui)
 	{
@@ -45,7 +45,6 @@ class ViewSelectorDemo extends Demo
 		$table_view->model = $table_store;
 	}
 
-	// }}}
 }
 
 /**
@@ -57,7 +56,7 @@ class ViewSelectorDemo extends Demo
  */
 class FruitObject
 {
-	// {{{ public properties
+
 
 	public $image = '';
 	public $image_width = 0;
@@ -69,7 +68,6 @@ class FruitObject
 	public $harvest_date = null;
 	public $cost = 0;
 
-	// }}}
 }
 
 ?>

@@ -10,7 +10,7 @@
 class SwatReplicableContainer extends SwatDisplayableContainer implements
     SwatReplicable
 {
-    // {{{ public properties
+
 
     /**
      * An array of unique id => title pairs, one for each replication
@@ -34,14 +34,12 @@ class SwatReplicableContainer extends SwatDisplayableContainer implements
      */
     public $replication_ids = null;
 
-    // }}}
-    // {{{ private properties
+
 
     private $widgets = [];
     private $prototype_widgets = [];
 
-    // }}}
-    // {{{ public function __construct()
+
 
     /**
      * Creates a new replicator container
@@ -56,8 +54,7 @@ class SwatReplicableContainer extends SwatDisplayableContainer implements
         $this->requires_id = true;
     }
 
-    // }}}
-    // {{{ public function init()
+
 
     /**
      * Initilizes this replicable container
@@ -88,8 +85,7 @@ class SwatReplicableContainer extends SwatDisplayableContainer implements
         parent::init();
     }
 
-    // }}}
-    // {{{ public function addReplication()
+
 
     public function addReplication($id)
     {
@@ -123,8 +119,7 @@ class SwatReplicableContainer extends SwatDisplayableContainer implements
         }
     }
 
-    // }}}
-    // {{{ public function getWidget()
+
 
     /**
      * Retrives a reference to a replicated widget
@@ -146,5 +141,4 @@ class SwatReplicableContainer extends SwatDisplayableContainer implements
         return $widget;
     }
 
-    // }}}
 }

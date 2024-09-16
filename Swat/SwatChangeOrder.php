@@ -15,7 +15,7 @@
  */
 class SwatChangeOrder extends SwatOptionControl implements SwatState
 {
-    // {{{ public properties
+
 
     /**
      * Value ordered array
@@ -41,8 +41,7 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
      */
     public $height = '300px';
 
-    // }}}
-    // {{{ public function __construct()
+
 
     /**
      * Creates a new change-order widget
@@ -66,8 +65,7 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
         );
     }
 
-    // }}}
-    // {{{ public function display()
+
 
     /**
      * Displays this change-order control
@@ -134,8 +132,7 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
         Swat::displayInlineJavaScript($this->getInlineJavaScript());
     }
 
-    // }}}
-    // {{{ public function process()
+
 
     public function process()
     {
@@ -157,8 +154,7 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
         }
     }
 
-    // }}}
-    // {{{ public function getNote()
+
 
     /**
      * Gets a note letting the user know drag-and-drop is available for
@@ -178,8 +174,7 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
         return new SwatMessage($message);
     }
 
-    // }}}
-    // {{{ public function getState()
+
 
     public function getState()
     {
@@ -190,16 +185,14 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
         }
     }
 
-    // }}}
-    // {{{ public function setState()
+
 
     public function setState($state)
     {
         $this->values = $state;
     }
 
-    // }}}
-    // {{{ public function getOrderedOptions()
+
 
     /**
      * Gets the options of this change-order control ordered by the
@@ -238,8 +231,7 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
         return $ordered_options;
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
+
 
     /**
      * Gets the array of CSS classes that are applied to this change-order
@@ -256,8 +248,7 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
         return $classes;
     }
 
-    // }}}
-    // {{{ protected function getInlineJavaScript()
+
 
     /**
      * Gets the inline JavaScript required by this change-order control
@@ -275,8 +266,7 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
         );
     }
 
-    // }}}
-    // {{{ private function displayButtons()
+
 
     private function displayButtons()
     {
@@ -323,5 +313,4 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
         $buttons_div->close();
     }
 
-    // }}}
 }

@@ -9,7 +9,7 @@
  */
 interface SwatState
 {
-    // {{{ public function setState()
+
 
     /**
      * Set the state of the control
@@ -23,8 +23,7 @@ interface SwatState
      */
     public function setState($state);
 
-    // }}}
-    // {{{ public function getState()
+
 
     /**
      * Get the state of the control
@@ -39,5 +38,4 @@ interface SwatState
      */
     public function getState();
 
-    // }}}
 }

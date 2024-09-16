@@ -10,7 +10,7 @@
  */
 class SwatTile extends SwatCellRendererContainer
 {
-    // {{{ public properties
+
 
     /**
      * Whether or not to include CSS classes from the first cell renderer
@@ -20,8 +20,7 @@ class SwatTile extends SwatCellRendererContainer
      */
     public $show_renderer_classes = true;
 
-    // }}}
-    // {{{ protected properties
+
 
     /**
      * Messages affixed to this tile
@@ -30,8 +29,7 @@ class SwatTile extends SwatCellRendererContainer
      */
     protected $messages = [];
 
-    // }}}
-    // {{{ public function display()
+
 
     /**
      * Displays this tile using a data object
@@ -49,8 +47,7 @@ class SwatTile extends SwatCellRendererContainer
         $this->displayRenderers($data);
     }
 
-    // }}}
-    // {{{ public function init()
+
 
     /**
      * Initializes this tile
@@ -64,8 +61,7 @@ class SwatTile extends SwatCellRendererContainer
         }
     }
 
-    // }}}
-    // {{{ public function process()
+
 
     /**
      * Processes this tile
@@ -79,8 +75,7 @@ class SwatTile extends SwatCellRendererContainer
         }
     }
 
-    // }}}
-    // {{{ public function getMessages()
+
 
     /**
      * Gathers all messages from this tile
@@ -98,8 +93,7 @@ class SwatTile extends SwatCellRendererContainer
         return $messages;
     }
 
-    // }}}
-    // {{{ public function addMessages()
+
 
     /**
      * Adds a message to this tile
@@ -113,8 +107,7 @@ class SwatTile extends SwatCellRendererContainer
         $this->messages[] = $message;
     }
 
-    // }}}
-    // {{{ public function hasMessage()
+
 
     /**
      * Gets whether or not this tile has any messages
@@ -136,8 +129,7 @@ class SwatTile extends SwatCellRendererContainer
         return $has_message;
     }
 
-    // }}}
-    // {{{ protected function setupRenderers()
+
 
     /**
      * Sets properties of renderers using data from current row
@@ -162,8 +154,7 @@ class SwatTile extends SwatCellRendererContainer
         }
     }
 
-    // }}}
-    // {{{ protected function displayRenderers()
+
 
     /**
      * Renders cell renderers
@@ -180,8 +171,7 @@ class SwatTile extends SwatCellRendererContainer
         $div_tag->close();
     }
 
-    // }}}
-    // {{{ protected function displayRenderersInternal()
+
 
     /**
      * Renders each cell renderer in this tile
@@ -228,8 +218,7 @@ class SwatTile extends SwatCellRendererContainer
         }
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
+
 
     /**
      * Gets the array of CSS classes that are applied to this tile
@@ -294,8 +283,7 @@ class SwatTile extends SwatCellRendererContainer
         return $classes;
     }
 
-    // }}}
-    // {{{ protected function getBaseCSSClassNames()
+
 
     /**
      * Gets the base CSS class names of this tile
@@ -310,5 +298,4 @@ class SwatTile extends SwatCellRendererContainer
         return ['swat-tile'];
     }
 
-    // }}}
 }

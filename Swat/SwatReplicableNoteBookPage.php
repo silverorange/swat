@@ -16,7 +16,7 @@
 class SwatReplicableNoteBookPage extends SwatReplicableContainer implements
     SwatNoteBookChild
 {
-    // {{{ public function init()
+
 
     /**
      * Initilizes this replicable notebook page
@@ -55,8 +55,7 @@ class SwatReplicableNoteBookPage extends SwatReplicableContainer implements
         $this->add($note_book);
     }
 
-    // }}}
-    // {{{ public function getPages()
+
 
     /**
      * Gets the notebook pages of this replicable notebook page
@@ -71,5 +70,4 @@ class SwatReplicableNoteBookPage extends SwatReplicableContainer implements
         return $this->children;
     }
 
-    // }}}
 }

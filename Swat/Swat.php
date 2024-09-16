@@ -9,7 +9,7 @@
  */
 class Swat
 {
-    // {{{ constants
+
 
     /**
      * The gettext domain for Swat
@@ -18,8 +18,7 @@ class Swat
      */
     const GETTEXT_DOMAIN = 'swat';
 
-    // }}}
-    // {{{ private properties
+
 
     /**
      * Whether or not this package is initialized
@@ -28,8 +27,7 @@ class Swat
      */
     private static $is_initialized = false;
 
-    // }}}
-    // {{{ public static function _()
+
 
     /**
      * Translates a phrase
@@ -45,8 +43,7 @@ class Swat
         return self::gettext($message);
     }
 
-    // }}}
-    // {{{ public static function gettext()
+
 
     /**
      * Translates a phrase
@@ -63,8 +60,7 @@ class Swat
         return dgettext(self::GETTEXT_DOMAIN, $message);
     }
 
-    // }}}
-    // {{{ public static function ngettext()
+
 
     /**
      * Translates a plural phrase
@@ -96,8 +92,7 @@ class Swat
         );
     }
 
-    // }}}
-    // {{{ public static function setupGettext()
+
 
     public static function setupGettext()
     {
@@ -105,8 +100,7 @@ class Swat
         bind_textdomain_codeset(self::GETTEXT_DOMAIN, 'UTF-8');
     }
 
-    // }}}
-    // {{{ public static function displayMethods()
+
 
     /**
      * Displays the methods of an object
@@ -127,8 +121,7 @@ class Swat
         echo '</ul>';
     }
 
-    // }}}
-    // {{{ public static function displayProperties()
+
 
     /**
      * Displays the properties of an object
@@ -152,8 +145,7 @@ class Swat
         echo '</ul>';
     }
 
-    // }}}
-    // {{{ public static function printObject()
+
 
     /**
      * Displays an object's properties and values recursively
@@ -170,8 +162,7 @@ class Swat
         echo '<pre>' . print_r($object, true) . '</pre>';
     }
 
-    // }}}
-    // {{{ public static function displayInlineJavaScript()
+
 
     /**
      * Displays inline JavaScript properly encapsulating the script in a CDATA
@@ -189,8 +180,7 @@ class Swat
         }
     }
 
-    // }}}
-    // {{{ public static function init()
+
 
     public static function init()
     {
@@ -203,8 +193,7 @@ class Swat
         self::$is_initialized = true;
     }
 
-    // }}}
-    // {{{ private function __construct()
+
 
     /**
      * Don't allow instantiation of the Swat object
@@ -215,10 +204,8 @@ class Swat
     {
     }
 
-    // }}}
 }
 
-// {{{ dummy dngettext()
 
 /*
  * Define a dummy dngettext() for when gettext is not available.
@@ -249,8 +236,7 @@ if (!function_exists('dngettext')) {
     }
 }
 
-// }}}
-// {{{ dummy dgettext()
+
 
 /*
  * Define a dummy dgettext() for when gettext is not available.
@@ -274,4 +260,3 @@ if (!function_exists('dgettext')) {
     }
 }
 
-// }}}

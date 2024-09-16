@@ -10,7 +10,7 @@
  */
 class SwatNoteBook extends SwatWidget implements SwatUIParent
 {
-    // {{{ constants
+
 
     /**
      * Positions notebook tabs on the top of notebook pages.
@@ -32,8 +32,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
      */
     const POSITION_LEFT = 4;
 
-    // }}}
-    // {{{ public properties
+
 
     /**
      * Position of tabs for this notebook
@@ -52,8 +51,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
      */
     public $selected_page;
 
-    // }}}
-    // {{{ protected properties
+
 
     /**
      * Note book child objects initally added to this widget
@@ -69,8 +67,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
      */
     protected $pages = [];
 
-    // }}}
-    // {{{ public function __construct()
+
 
     /**
      * Creates a new notebook
@@ -89,8 +86,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
         $this->addStyleSheet('packages/swat/styles/swat-note-book.css');
     }
 
-    // }}}
-    // {{{ public function addChild()
+
 
     /**
      * Adds a {@link SwatNoteBookChild} to this notebook
@@ -125,8 +121,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
         }
     }
 
-    // }}}
-    // {{{ public function addPage()
+
 
     /**
      * Adds a {@link SwatNoteBookPage} to this notebook
@@ -139,8 +134,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
         $page->parent = $this;
     }
 
-    // }}}
-    // {{{ public function getPage()
+
 
     /**
      * Gets a page in this notebook
@@ -166,8 +160,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
         return $found_page;
     }
 
-    // }}}
-    // {{{ public function init()
+
 
     /**
      * Initializes this notebook
@@ -188,8 +181,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
         }
     }
 
-    // }}}
-    // {{{ public function process()
+
 
     /**
      * Processes this notebook
@@ -202,8 +194,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
         }
     }
 
-    // }}}
-    // {{{ public function display()
+
 
     /**
      * Displays this notebook
@@ -264,8 +255,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
         Swat::displayInlineJavaScript($this->getInlineJavaScript());
     }
 
-    // }}}
-    // {{{ public function printWidgetTree()
+
 
     public function printWidgetTree()
     {
@@ -282,8 +272,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
         }
     }
 
-    // }}}
-    // {{{ public function getMessages()
+
 
     /**
      * Gets all messaages
@@ -306,8 +295,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
         return $messages;
     }
 
-    // }}}
-    // {{{ public function hasMessage()
+
 
     /**
      * Checks for the presence of messages
@@ -329,8 +317,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
         return $has_message;
     }
 
-    // }}}
-    // {{{ public function getHtmlHeadEntrySet()
+
 
     /**
      * Gets the {@link SwatHtmlHeadEntry} objects needed by this notebook
@@ -352,8 +339,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
         return $set;
     }
 
-    // }}}
-    // {{{ public function getAvailableHtmlHeadEntrySet()
+
 
     /**
      * Gets the {@link SwatHtmlHeadEntry} objects that may be needed by this
@@ -376,8 +362,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
         return $set;
     }
 
-    // }}}
-    // {{{ public function getDescendants()
+
 
     /**
      * Gets descendant UI-objects
@@ -423,8 +408,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
         return $out;
     }
 
-    // }}}
-    // {{{ public function getFirstDescendant()
+
 
     /**
      * Gets the first descendant UI-object of a specific class
@@ -461,8 +445,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
         return $out;
     }
 
-    // }}}
-    // {{{ public function getDescendantStates()
+
 
     /**
      * Gets descendant states
@@ -484,8 +467,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
         return $states;
     }
 
-    // }}}
-    // {{{ public function setDescendantStates()
+
 
     /**
      * Sets descendant states
@@ -505,8 +487,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
         }
     }
 
-    // }}}
-    // {{{ public function copy()
+
 
     /**
      * Performs a deep copy of the UI tree starting with this UI object
@@ -532,8 +513,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
         return $copy;
     }
 
-    // }}}
-    // {{{ protected function getInlineJavaScript()
+
 
     /**
      * Gets the inline JavaScript used by this notebook
@@ -567,5 +547,4 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
         );
     }
 
-    // }}}
 }

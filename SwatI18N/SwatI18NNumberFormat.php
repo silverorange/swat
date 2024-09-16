@@ -11,7 +11,7 @@
  */
 class SwatI18NNumberFormat extends SwatObject
 {
-    // {{{ public properties
+
 
     /**
      * Decimal point character
@@ -34,8 +34,7 @@ class SwatI18NNumberFormat extends SwatObject
      */
     public $grouping;
 
-    // }}}
-    // {{{ public function override()
+
 
     /**
      * Gets a new number format object with certain properties overridden from
@@ -87,8 +86,7 @@ class SwatI18NNumberFormat extends SwatObject
         return $new_format;
     }
 
-    // }}}
-    // {{{ public function __toString()
+
 
     /**
      * Gets a string representation of this format
@@ -114,5 +112,4 @@ class SwatI18NNumberFormat extends SwatObject
         return $string;
     }
 
-    // }}}
 }

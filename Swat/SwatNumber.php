@@ -9,7 +9,7 @@
  */
 class SwatNumber extends SwatObject
 {
-    // {{{ public static function roundUp()
+
 
     /**
      * Rounds a number to the specified number of fractional digits using the
@@ -31,8 +31,7 @@ class SwatNumber extends SwatObject
         return $value;
     }
 
-    // }}}
-    // {{{ public static function roundToEven()
+
 
     /**
      * Rounds a number to the specified number of fractional digits using the
@@ -69,8 +68,7 @@ class SwatNumber extends SwatObject
         return $value;
     }
 
-    // }}}
-    // {{{ public static function ordinal()
+
 
     /**
      * Formats an integer as an ordinal number (1st, 2nd, 3rd)
@@ -159,8 +157,7 @@ class SwatNumber extends SwatObject
         return $ordinal_value;
     }
 
-    // }}}
-    // {{{ private function __construct()
+
 
     /**
      * Don't allow instantiation of the SwatNumber object
@@ -171,5 +168,4 @@ class SwatNumber extends SwatObject
     {
     }
 
-    // }}}
 }

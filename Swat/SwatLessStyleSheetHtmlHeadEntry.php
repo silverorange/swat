@@ -9,7 +9,7 @@
  */
 class SwatLessStyleSheetHtmlHeadEntry extends SwatStyleSheetHtmlHeadEntry
 {
-    // {{{ protected function displayInternal()
+
 
     protected function displayInternal($uri_prefix = '', $tag = null)
     {
@@ -30,13 +30,11 @@ class SwatLessStyleSheetHtmlHeadEntry extends SwatStyleSheetHtmlHeadEntry
         );
     }
 
-    // }}}
-    // {{{ public function getStyleSheetHeadEntry()
+
 
     public function getStyleSheetHeadEntry()
     {
         return new SwatStyleSheetHtmlHeadEntry($this->uri);
     }
 
-    // }}}
 }

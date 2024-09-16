@@ -22,7 +22,7 @@
  */
 class SwatProgressBar extends SwatControl
 {
-    // {{{ class constants
+
 
     /**
      * Progress bar displays horizontally and completes from left to right
@@ -44,8 +44,7 @@ class SwatProgressBar extends SwatControl
      */
     const ORIENTATION_TOP_TO_BOTTOM = 4;
 
-    // }}}
-    // {{{ public properties
+
 
     /**
      * Orientation of this progress bar
@@ -118,8 +117,7 @@ class SwatProgressBar extends SwatControl
      */
     public $length = '200px';
 
-    // }}}
-    // {{{ public function __construct()
+
 
     /**
      * Creates a new progress bar
@@ -141,8 +139,7 @@ class SwatProgressBar extends SwatControl
         $this->addJavaScript('packages/swat/javascript/swat-progress-bar.js');
     }
 
-    // }}}
-    // {{{ public function display()
+
 
     /**
      * Displays this progress bar
@@ -172,8 +169,7 @@ class SwatProgressBar extends SwatControl
         Swat::displayInlineJavaScript($this->getInlineJavaScript());
     }
 
-    // }}}
-    // {{{ protected function displayBar()
+
 
     /**
      * Displays the bar part of this progress bar
@@ -262,8 +258,7 @@ class SwatProgressBar extends SwatControl
         $bar_div_tag->close();
     }
 
-    // }}}
-    // {{{ protected function displayText()
+
 
     /**
      * Displays the text part of this progress bar
@@ -291,8 +286,7 @@ class SwatProgressBar extends SwatControl
         $span_tag->display();
     }
 
-    // }}}
-    // {{{ protected function getInlineJavaScript()
+
 
     /**
      * Gets inline JavaScript for this progress bar
@@ -310,8 +304,7 @@ class SwatProgressBar extends SwatControl
         );
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
+
 
     /**
      * Gets the array of CSS classes that are applied to this progress bar
@@ -326,5 +319,4 @@ class SwatProgressBar extends SwatControl
         return $classes;
     }
 
-    // }}}
 }

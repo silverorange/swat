@@ -15,7 +15,7 @@
  */
 class SwatTableViewGroup extends SwatTableViewColumn
 {
-    // {{{ public properties
+
 
     /**
      * The field of the table store to group rows by
@@ -24,8 +24,7 @@ class SwatTableViewGroup extends SwatTableViewColumn
      */
     public $group_by = null;
 
-    // }}}
-    // {{{ private properties
+
 
     /**
      * The current value of the group_by field of the table model for the
@@ -51,8 +50,7 @@ class SwatTableViewGroup extends SwatTableViewColumn
      */
     private $footer_current = null;
 
-    // }}}
-    // {{{ public function displayFooter()
+
 
     /**
      * Displays the grouping footer of this table-view group
@@ -84,8 +82,7 @@ class SwatTableViewGroup extends SwatTableViewColumn
         }
     }
 
-    // }}}
-    // {{{ protected function displayGroupHeader()
+
 
     /**
      * Displays the group header for this grouping column
@@ -110,8 +107,7 @@ class SwatTableViewGroup extends SwatTableViewColumn
         $tr_tag->close();
     }
 
-    // }}}
-    // {{{ protected function displayGroupFooter()
+
 
     /**
      * Displays the group footer for this grouping column
@@ -127,8 +123,7 @@ class SwatTableViewGroup extends SwatTableViewColumn
     {
     }
 
-    // }}}
-    // {{{ protected function displayRenderers()
+
 
     /**
      * Displays the renderers for this column
@@ -159,8 +154,7 @@ class SwatTableViewGroup extends SwatTableViewColumn
         }
     }
 
-    // }}}
-    // {{{ protected function isEqual()
+
 
     /**
      * Compares the value of the current row to the value of the current
@@ -184,8 +178,7 @@ class SwatTableViewGroup extends SwatTableViewColumn
         return $group_value === $row_value;
     }
 
-    // }}}
-    // {{{ protected function resetSubGroups()
+
 
     /**
      * Resets grouping columns below this one
@@ -208,8 +201,7 @@ class SwatTableViewGroup extends SwatTableViewColumn
         }
     }
 
-    // }}}
-    // {{{ protected function reset()
+
 
     /**
      * Resets the current value of this grouping column
@@ -225,8 +217,7 @@ class SwatTableViewGroup extends SwatTableViewColumn
         $this->header_current = null;
     }
 
-    // }}}
-    // {{{ protected function getBaseCSSClassNames()
+
 
     /**
      * Gets the base CSS class names of this table-view group
@@ -239,5 +230,4 @@ class SwatTableViewGroup extends SwatTableViewColumn
         return ['swat-table-view-group'];
     }
 
-    // }}}
 }

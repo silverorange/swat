@@ -12,7 +12,7 @@
  */
 class SwatI18NLocale extends SwatObject
 {
-    // {{{ protected properties
+
 
     /**
      * The locale string or array specified in the constructor for this locale
@@ -69,8 +69,7 @@ class SwatI18NLocale extends SwatObject
      */
     protected $old_locale_by_category = [];
 
-    // }}}
-    // {{{ private properties
+
 
     /**
      * Cache of existing locale objects
@@ -84,8 +83,7 @@ class SwatI18NLocale extends SwatObject
      */
     private static $locales = [];
 
-    // }}}
-    // {{{ public static function get()
+
 
     /**
      * Gets a locale object
@@ -142,8 +140,7 @@ class SwatI18NLocale extends SwatObject
         return $locale_object;
     }
 
-    // }}}
-    // {{{ public static function setlocale()
+
 
     /**
      * Sets the current locale
@@ -199,8 +196,7 @@ class SwatI18NLocale extends SwatObject
         return $return;
     }
 
-    // }}}
-    // {{{ public function set()
+
 
     /**
      * Sets the system locale to this locale
@@ -220,8 +216,7 @@ class SwatI18NLocale extends SwatObject
         self::setlocale($category, $this->locale);
     }
 
-    // }}}
-    // {{{ public function reset()
+
 
     /**
      * Resets the system to the previous locale after a call to
@@ -237,8 +232,7 @@ class SwatI18NLocale extends SwatObject
         self::setlocale($category, $this->old_locale_by_category[$category]);
     }
 
-    // }}}
-    // {{{ public function formatCurrency()
+
 
     /**
      * Formats a monetary value for this locale
@@ -530,8 +524,7 @@ class SwatI18NLocale extends SwatObject
         return $formatted_value;
     }
 
-    // }}}
-    // {{{ public function formatNumber()
+
 
     /**
      * Formats a numeric value for this locale
@@ -585,8 +578,7 @@ class SwatI18NLocale extends SwatObject
         return $formatted_value;
     }
 
-    // }}}
-    // {{{ public function parseCurrency()
+
 
     /**
      * Parses a currency string formatted for this locale into a floating-point
@@ -634,8 +626,7 @@ class SwatI18NLocale extends SwatObject
         return $value;
     }
 
-    // }}}
-    // {{{ public function parseFloat()
+
 
     /**
      * Parses a numeric string formatted for this locale into a floating-point
@@ -677,8 +668,7 @@ class SwatI18NLocale extends SwatObject
         return $value;
     }
 
-    // }}}
-    // {{{ public function parseInteger()
+
 
     /**
      * Parses a numeric string formatted for this locale into an integer number
@@ -741,8 +731,7 @@ class SwatI18NLocale extends SwatObject
         return $value;
     }
 
-    // }}}
-    // {{{ public function getNumberFormat()
+
 
     /**
      * Gets the number format for this locale
@@ -756,8 +745,7 @@ class SwatI18NLocale extends SwatObject
         return clone $this->number_format;
     }
 
-    // }}}
-    // {{{ public function getNationalCurrencyFormat()
+
 
     /**
      * Gets the national currency format for this locale
@@ -771,8 +759,7 @@ class SwatI18NLocale extends SwatObject
         return clone $this->national_currency_format;
     }
 
-    // }}}
-    // {{{ public function getInternationalCurrencyFormat()
+
 
     /**
      * Gets the international currency format for this locale
@@ -786,8 +773,7 @@ class SwatI18NLocale extends SwatObject
         return clone $this->international_currency_format;
     }
 
-    // }}}
-    // {{{ public function getInternationalCurrencySymbol()
+
 
     /**
      * Gets the international currency symbol of this locale
@@ -806,8 +792,7 @@ class SwatI18NLocale extends SwatObject
         return $symbol;
     }
 
-    // }}}
-    // {{{ public function getLocaleInfo()
+
 
     /**
      * Gets numeric formatting information for this locale
@@ -824,8 +809,7 @@ class SwatI18NLocale extends SwatObject
         return $this->locale_info;
     }
 
-    // }}}
-    // {{{ public function __toString()
+
 
     /**
      * Gets a string representation of this locale
@@ -839,8 +823,7 @@ class SwatI18NLocale extends SwatObject
         return $this->preferred_locale;
     }
 
-    // }}}
-    // {{{ protected function detectCharacterEncoding()
+
 
     /**
      * Detects the character encoding used by this locale
@@ -886,8 +869,7 @@ class SwatI18NLocale extends SwatObject
         return $encoding;
     }
 
-    // }}}
-    // {{{ protected function buildLocaleInfo()
+
 
     /**
      * Builds the locale info array for this locale
@@ -925,8 +907,7 @@ class SwatI18NLocale extends SwatObject
         }
     }
 
-    // }}}
-    // {{{ protected function buildNumberFormat()
+
 
     /**
      * Builds the number format of this locale
@@ -944,8 +925,7 @@ class SwatI18NLocale extends SwatObject
         $this->number_format = $format;
     }
 
-    // }}}
-    // {{{ protected function buildNationalCurrencyFormat()
+
 
     /**
      * Builds the national currency format of this locale
@@ -989,8 +969,7 @@ class SwatI18NLocale extends SwatObject
         $this->national_currency_format = $format;
     }
 
-    // }}}
-    // {{{ protected function buildInternationalCurrencyFormat()
+
 
     /**
      * Builds the internatiobal currency format for this locale
@@ -1022,8 +1001,7 @@ class SwatI18NLocale extends SwatObject
         $this->international_currency_format = $format;
     }
 
-    // }}}
-    // {{{ protected function formatIntegerGroupings()
+
 
     /**
      * Formats the integer part of a value according to format-specific numeric
@@ -1136,8 +1114,7 @@ class SwatI18NLocale extends SwatObject
         return $formatted_value;
     }
 
-    // }}}
-    // {{{ protected function formatFractionalPart()
+
 
     /**
      * Formats the fractional  part of a value
@@ -1176,8 +1153,7 @@ class SwatI18NLocale extends SwatObject
         return $formatted_value;
     }
 
-    // }}}
-    // {{{ protected function parseNegativeNotation
+
 
     /**
      * Parses the negative notation for a numeric string formatted in this
@@ -1248,8 +1224,7 @@ class SwatI18NLocale extends SwatObject
         return $string;
     }
 
-    // }}}
-    // {{{ protected function getFractionalPrecision()
+
 
     /**
      * Gets the fractional precision of a floating point number
@@ -1296,8 +1271,7 @@ class SwatI18NLocale extends SwatObject
         return $precision;
     }
 
-    // }}}
-    // {{{ protected function roundToEven()
+
 
     /**
      * Rounds a number to the specified number of fractional digits using the
@@ -1334,8 +1308,7 @@ class SwatI18NLocale extends SwatObject
         return $value;
     }
 
-    // }}}
-    // {{{ private function __construct()
+
 
     /**
      * Creates a new locale object
@@ -1383,8 +1356,7 @@ class SwatI18NLocale extends SwatObject
         }
     }
 
-    // }}}
-    // {{{ private function iconvArray()
+
 
     /**
      * Recursivly converts the character encoding of all strings in an array
@@ -1426,5 +1398,4 @@ class SwatI18NLocale extends SwatObject
         return $array;
     }
 
-    // }}}
 }

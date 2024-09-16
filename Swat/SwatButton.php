@@ -12,7 +12,7 @@
  */
 class SwatButton extends SwatInputControl
 {
-    // {{{ public properties
+
 
     /**
      * The visible text on this button
@@ -82,8 +82,7 @@ class SwatButton extends SwatInputControl
      */
     public $confirmation_message = null;
 
-    // }}}
-    // {{{ protected properties
+
 
     /**
      * A CSS class set by the stock_id of this button
@@ -103,8 +102,7 @@ class SwatButton extends SwatInputControl
      */
     protected $clicked = false;
 
-    // }}}
-    // {{{ public function __construct()
+
 
     /**
      * Creates a new button
@@ -124,8 +122,7 @@ class SwatButton extends SwatInputControl
         $this->requires_id = true;
     }
 
-    // }}}
-    // {{{ public function init()
+
 
     /**
      * Initializes this widget
@@ -146,8 +143,7 @@ class SwatButton extends SwatInputControl
         }
     }
 
-    // }}}
-    // {{{ public function display()
+
 
     /**
      * Displays this button
@@ -173,8 +169,7 @@ class SwatButton extends SwatInputControl
         }
     }
 
-    // }}}
-    // {{{ public function process()
+
 
     /**
      * Does button processing
@@ -195,8 +190,7 @@ class SwatButton extends SwatInputControl
         }
     }
 
-    // }}}
-    // {{{ public function hasBeenClicked()
+
 
     /**
      * Returns whether this button has been clicked
@@ -208,8 +202,7 @@ class SwatButton extends SwatInputControl
         return $this->clicked;
     }
 
-    // }}}
-    // {{{ public function setFromStock()
+
 
     /**
      * Sets the values of this button to a stock type
@@ -277,8 +270,7 @@ class SwatButton extends SwatInputControl
         $this->stock_class = $class;
     }
 
-    // }}}
-    // {{{ protected function getInputTag()
+
 
     /**
      * Get the HTML tag to display for this button
@@ -310,8 +302,7 @@ class SwatButton extends SwatInputControl
         return $tag;
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
+
 
     /**
      * Gets the array of CSS classes that are applied to this button
@@ -339,8 +330,7 @@ class SwatButton extends SwatInputControl
         return $classes;
     }
 
-    // }}}
-    // {{{ protected function getJavaScriptClass()
+
 
     /**
      * Gets the name of the JavaScript class to instantiate for this button
@@ -356,8 +346,7 @@ class SwatButton extends SwatInputControl
         return 'SwatButton';
     }
 
-    // }}}
-    // {{{ protected function getInlineJavaScript()
+
 
     /**
      * Gets the inline JavaScript required for this control
@@ -399,5 +388,4 @@ class SwatButton extends SwatInputControl
         return $javascript;
     }
 
-    // }}}
 }

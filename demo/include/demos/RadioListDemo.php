@@ -11,7 +11,7 @@ require_once 'Demo.php';
  */
 class RadioListDemo extends Demo
 {
-	// {{{ public function buildDemoUI()
+
 
 	public function buildDemoUI(SwatUI $ui)
 	{
@@ -76,7 +76,6 @@ class RadioListDemo extends Demo
 		$radiotable->addOption(new SwatOption(9, 'I don\'t like fruit'));
 	}
 
-	// }}}
 }
 
 ?>

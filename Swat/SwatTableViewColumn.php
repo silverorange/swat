@@ -16,7 +16,7 @@
  */
 class SwatTableViewColumn extends SwatCellRendererContainer
 {
-    // {{{ public properties
+
 
     /**
      * Unique identifier of this column
@@ -86,8 +86,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
      */
     public $show_renderer_classes = true;
 
-    // }}}
-    // {{{ protected properties
+
 
     /**
      * An optional {@link SwatInputCell} object for this column
@@ -110,8 +109,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
      */
     protected $has_auto_id = false;
 
-    // }}}
-    // {{{ public function __construct()
+
 
     /**
      * Creates a new table-view column
@@ -125,8 +123,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
         parent::__construct();
     }
 
-    // }}}
-    // {{{ public function init()
+
 
     /**
      * Initializes this column
@@ -161,8 +158,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
         }
     }
 
-    // }}}
-    // {{{ public function process()
+
 
     public function process()
     {
@@ -171,8 +167,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
         }
     }
 
-    // }}}
-    // {{{ public function hasHeader()
+
 
     /**
      * Whether this column has a header to display
@@ -182,8 +177,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
         return $this->visible && $this->title != '';
     }
 
-    // }}}
-    // {{{ public function displayHeaderCell()
+
 
     /**
      * Displays the table-view header cell for this column
@@ -207,8 +201,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
         $th_tag->close();
     }
 
-    // }}}
-    // {{{ public function displayHeader()
+
 
     /**
      * Displays the contents of the header cell for this column
@@ -242,7 +235,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
         }
     }
 
-    // }}}
     // {{{ public function display()
 
     /**
@@ -264,7 +256,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
         $this->displayRenderers($row);
     }
 
-    // }}}
     // {{{ public function getMessages()
 
     /**
@@ -289,7 +280,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
         return $messages;
     }
 
-    // }}}
     // {{{ public function hasMessage()
 
     /**
@@ -319,7 +309,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
         return $has_message;
     }
 
-    // }}}
     // {{{ public function getInlineJavaScript()
 
     /**
@@ -335,7 +324,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
         return '';
     }
 
-    // }}}
     // {{{ public function setInputCell()
 
     /**
@@ -352,7 +340,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
         $cell->parent = $this;
     }
 
-    // }}}
     // {{{ public function getTrAttributes()
 
     /**
@@ -374,7 +361,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
         return [];
     }
 
-    // }}}
     // {{{ public function getInputCell()
 
     /**
@@ -395,7 +381,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
         return $this->input_cell;
     }
 
-    // }}}
     // {{{ public function addChild()
 
     /**
@@ -430,7 +415,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
         }
     }
 
-    // }}}
     // {{{ public function getDescendants()
 
     /**
@@ -500,7 +484,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
         return $out;
     }
 
-    // }}}
     // {{{ public function getFirstDescendant()
 
     /**
@@ -532,7 +515,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
         return $out;
     }
 
-    // }}}
     // {{{ public function getHtmlHeadEntrySet()
 
     /**
@@ -554,7 +536,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
         return $set;
     }
 
-    // }}}
     // {{{ public function getAvailableHtmlHeadEntrySet()
 
     /**
@@ -578,7 +559,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
         return $set;
     }
 
-    // }}}
     // {{{ public function getTdAttributes()
 
     /**
@@ -595,7 +575,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
         ];
     }
 
-    // }}}
     // {{{ public function getThAttributes()
 
     /**
@@ -612,7 +591,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
         ];
     }
 
-    // }}}
     // {{{ public function getXhtmlColspan()
 
     /**
@@ -626,7 +604,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
         return 1;
     }
 
-    // }}}
     // {{{ public function hasVisibleRenderer()
 
     /**
@@ -655,7 +632,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
         return $visible_renderers;
     }
 
-    // }}}
     // {{{ public function copy()
 
     /**
@@ -686,7 +662,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
         return $copy;
     }
 
-    // }}}
     // {{{ protected function displayRenderers()
 
     /**
@@ -710,7 +685,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
         $td_tag->close();
     }
 
-    // }}}
     // {{{ protected function displayRenderersInternal()
 
     /**
@@ -771,7 +745,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
         }
     }
 
-    // }}}
     // {{{ protected function setupRenderers()
 
     /**
@@ -797,7 +770,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
         }
     }
 
-    // }}}
     // {{{ protected function getCSSClassNames()
 
     /**
@@ -874,7 +846,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
         return $classes;
     }
 
-    // }}}
     // {{{ protected function getBaseCSSClassNames()
 
     /**
@@ -891,5 +862,4 @@ class SwatTableViewColumn extends SwatCellRendererContainer
         return [];
     }
 
-    // }}}
 }

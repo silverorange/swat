@@ -9,7 +9,7 @@
  */
 class SwatObjectNotFoundException extends SwatException
 {
-    // {{{ protected properties
+
 
     /**
      * The object id that was searched for
@@ -18,8 +18,7 @@ class SwatObjectNotFoundException extends SwatException
      */
     protected $object_id = null;
 
-    // }}}
-    // {{{ public function __construct()
+
 
     /**
      * Creates a new object not found exception
@@ -34,8 +33,7 @@ class SwatObjectNotFoundException extends SwatException
         $this->object_id = $object_id;
     }
 
-    // }}}
-    // {{{ public function getObjectId()
+
 
     /**
      * Gets the object id that was searched for
@@ -47,5 +45,4 @@ class SwatObjectNotFoundException extends SwatException
         return $this->object_id;
     }
 
-    // }}}
 }

@@ -9,7 +9,7 @@
  */
 class SwatInvalidSerializedDataException extends SwatException
 {
-    // {{{ protected properties
+
 
     /**
      * The unsafe serialized data
@@ -18,8 +18,7 @@ class SwatInvalidSerializedDataException extends SwatException
      */
     protected $data = null;
 
-    // }}}
-    // {{{ public function __construct()
+
 
     /**
      * Creates a new invalid serialized data exception
@@ -34,8 +33,7 @@ class SwatInvalidSerializedDataException extends SwatException
         $this->data = $data;
     }
 
-    // }}}
-    // {{{ public function getData()
+
 
     /**
      * Gets the unsafe serialized data
@@ -47,5 +45,4 @@ class SwatInvalidSerializedDataException extends SwatException
         return $this->data;
     }
 
-    // }}}
 }

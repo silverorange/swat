@@ -9,7 +9,7 @@
  */
 class SwatActions extends SwatControl implements SwatUIParent
 {
-    // {{{ public properties
+
 
     /**
      * Selected action
@@ -39,8 +39,7 @@ class SwatActions extends SwatControl implements SwatUIParent
      */
     public $auto_reset = true;
 
-    // }}}
-    // {{{ protected properties
+
 
     /**
      * The available actions for this actions selector indexed by id
@@ -51,8 +50,7 @@ class SwatActions extends SwatControl implements SwatUIParent
      */
     protected $action_items_by_id = [];
 
-    // }}}
-    // {{{ private properties
+
 
     /**
      * The available actions for this actions selector.
@@ -79,8 +77,7 @@ class SwatActions extends SwatControl implements SwatUIParent
      */
     private $selector;
 
-    // }}}
-    // {{{ public function __construct()
+
 
     /**
      * Creates a new actions list
@@ -99,8 +96,7 @@ class SwatActions extends SwatControl implements SwatUIParent
         $this->addStyleSheet('packages/swat/styles/swat-actions.css');
     }
 
-    // }}}
-    // {{{ public function init()
+
 
     /**
      * Initializes this action item
@@ -116,8 +112,7 @@ class SwatActions extends SwatControl implements SwatUIParent
         }
     }
 
-    // }}}
-    // {{{ public function display()
+
 
     /**
      * Displays this list of actions
@@ -206,8 +201,7 @@ class SwatActions extends SwatControl implements SwatUIParent
         Swat::displayInlineJavaScript($this->getInlineJavaScript());
     }
 
-    // }}}
-    // {{{ public function process()
+
 
     /**
      * Figures out what action item is selected
@@ -234,8 +228,7 @@ class SwatActions extends SwatControl implements SwatUIParent
         }
     }
 
-    // }}}
-    // {{{ public function addActionItem()
+
 
     /**
      * Adds an action item
@@ -256,8 +249,7 @@ class SwatActions extends SwatControl implements SwatUIParent
         }
     }
 
-    // }}}
-    // {{{ public function addChild()
+
 
     /**
      * Adds a child object
@@ -288,8 +280,7 @@ class SwatActions extends SwatControl implements SwatUIParent
         }
     }
 
-    // }}}
-    // {{{ public function getHtmlHeadEntrySet()
+
 
     /**
      * Gets the SwatHtmlHeadEntry objects needed by this actions list
@@ -310,8 +301,7 @@ class SwatActions extends SwatControl implements SwatUIParent
         return $set;
     }
 
-    // }}}
-    // {{{ public function getAvailableHtmlHeadEntrySet()
+
 
     /**
      * Gets the SwatHtmlHeadEntry objects that may be needed by this actions
@@ -333,8 +323,7 @@ class SwatActions extends SwatControl implements SwatUIParent
         return $set;
     }
 
-    // }}}
-    // {{{ public function getActionItems()
+
 
     /**
      * Gets the array of current SwatActions
@@ -348,8 +337,7 @@ class SwatActions extends SwatControl implements SwatUIParent
         return $this->action_items;
     }
 
-    // }}}
-    // {{{ public function getDescendants()
+
 
     /**
      * Gets descendant UI-objects
@@ -398,8 +386,7 @@ class SwatActions extends SwatControl implements SwatUIParent
         return $out;
     }
 
-    // }}}
-    // {{{ public function getFirstDescendant()
+
 
     /**
      * Gets the first descendant UI-object of a specific class
@@ -436,8 +423,7 @@ class SwatActions extends SwatControl implements SwatUIParent
         return $out;
     }
 
-    // }}}
-    // {{{ public function getDescendantStates()
+
 
     /**
      * Gets descendant states
@@ -459,8 +445,7 @@ class SwatActions extends SwatControl implements SwatUIParent
         return $states;
     }
 
-    // }}}
-    // {{{ public function setDescendantStates()
+
 
     /**
      * Sets descendant states
@@ -480,8 +465,7 @@ class SwatActions extends SwatControl implements SwatUIParent
         }
     }
 
-    // }}}
-    // {{{ public function setViewSelector()
+
 
     /**
      * Sets the optional view and selector of this actions control
@@ -523,8 +507,7 @@ class SwatActions extends SwatControl implements SwatUIParent
         $this->selector = $selector;
     }
 
-    // }}}
-    // {{{ public function copy()
+
 
     /**
      * Performs a deep copy of the UI tree starting with this UI object
@@ -556,8 +539,7 @@ class SwatActions extends SwatControl implements SwatUIParent
         return $copy;
     }
 
-    // }}}
-    // {{{ public function hasMessage()
+
 
     /**
      * Checks for the presence of messages
@@ -582,8 +564,7 @@ class SwatActions extends SwatControl implements SwatUIParent
         return $has_message;
     }
 
-    // }}}
-    // {{{ protected function displayButton()
+
 
     /**
      * Displays the button for this action list
@@ -597,8 +578,7 @@ class SwatActions extends SwatControl implements SwatUIParent
         $button->display();
     }
 
-    // }}}
-    // {{{ protected function createCompositeWidgets()
+
 
     /**
      * Creates and the composite flydown and button widgets of this actions
@@ -615,8 +595,7 @@ class SwatActions extends SwatControl implements SwatUIParent
         $this->addCompositeWidget($button, 'apply_button');
     }
 
-    // }}}
-    // {{{ protected function getInlineJavaScript()
+
 
     /**
      * Gets inline JavaScript required to show and hide selected action items
@@ -671,8 +650,7 @@ class SwatActions extends SwatControl implements SwatUIParent
         return $javascript;
     }
 
-    // }}}
-    // {{{ protected function getInlineJavaScriptTranslations()
+
 
     /**
      * Gets translatable string resources for the JavaScript object for
@@ -701,8 +679,7 @@ class SwatActions extends SwatControl implements SwatUIParent
         );
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
+
 
     /**
      * Gets the array of CSS classes that are applied to this actions list
@@ -717,5 +694,4 @@ class SwatActions extends SwatControl implements SwatUIParent
         return $classes;
     }
 
-    // }}}
 }

@@ -13,7 +13,7 @@
  */
 class SwatTableView extends SwatView implements SwatUIParent
 {
-    // {{{ public properties
+
 
     /**
      * The column of this table-view that data in the model is currently being
@@ -85,8 +85,7 @@ class SwatTableView extends SwatView implements SwatUIParent
      */
     public $use_invalid_tfoot_ordering = false;
 
-    // }}}
-    // {{{ protected properties
+
 
     /**
      * The columns of this table-view indexed by their unique identifier
@@ -186,10 +185,9 @@ class SwatTableView extends SwatView implements SwatUIParent
      */
     protected $has_input_row = false;
 
-    // }}}
 
     // general methods
-    // {{{ public function __construct()
+
 
     /**
      * Creates a new table view
@@ -209,8 +207,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         $this->addStyleSheet('packages/swat/styles/swat-table-view.css');
     }
 
-    // }}}
-    // {{{ public function init()
+
 
     /**
      * Initializes this table-view
@@ -256,8 +253,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         }
     }
 
-    // }}}
-    // {{{ public function display()
+
 
     /**
      * Displays this table-view
@@ -324,8 +320,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         Swat::displayInlineJavaScript($this->getInlineJavaScript());
     }
 
-    // }}}
-    // {{{ public function process()
+
 
     /**
      * Processes this table-view
@@ -353,8 +348,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         }
     }
 
-    // }}}
-    // {{{ public function addChild()
+
 
     /**
      * Adds a child object
@@ -398,8 +392,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         }
     }
 
-    // }}}
-    // {{{ public function getMessages()
+
 
     /**
      * Gathers all messages from this table-view
@@ -437,8 +430,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         return $messages;
     }
 
-    // }}}
-    // {{{ public function hasMessage()
+
 
     /**
      * Gets whether or not this table-view has any messages
@@ -480,8 +472,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         return $has_message;
     }
 
-    // }}}
-    // {{{ public function getXhtmlColspan()
+
 
     /**
      * Gets how many XHTML table columns the visible column objects of this
@@ -512,8 +503,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         return $colspan;
     }
 
-    // }}}
-    // {{{ public function getHtmlHeadEntrySet()
+
 
     /**
      * Gets the SwatHtmlHeadEntry objects needed by this table
@@ -546,8 +536,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         return $set;
     }
 
-    // }}}
-    // {{{ public function getAvailableHtmlHeadEntrySet()
+
 
     /**
      * Gets the SwatHtmlHeadEntry objects that may be needed by this table
@@ -580,8 +569,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         return $set;
     }
 
-    // }}}
-    // {{{ public function getDescendants()
+
 
     /**
      * Gets descendant UI-objects
@@ -669,8 +657,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         return $out;
     }
 
-    // }}}
-    // {{{ public function getFirstDescendant()
+
 
     /**
      * Gets the first descendant UI-object of a specific class
@@ -755,8 +742,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         return $out;
     }
 
-    // }}}
-    // {{{ public function getDescendantStates()
+
 
     /**
      * Gets descendant states
@@ -778,8 +764,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         return $states;
     }
 
-    // }}}
-    // {{{ public function setDescendantStates()
+
 
     /**
      * Sets descendant states
@@ -799,8 +784,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         }
     }
 
-    // }}}
-    // {{{ public function copy()
+
 
     /**
      * Performs a deep copy of the UI tree starting with this UI object
@@ -862,8 +846,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         return $copy;
     }
 
-    // }}}
-    // {{{ protected function hasHeader()
+
 
     /**
      * Whether this table has a header to display
@@ -884,8 +867,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         return $has_header;
     }
 
-    // }}}
-    // {{{ protected function displayHeader()
+
 
     /**
      * Displays the column headers for this table-view
@@ -906,8 +888,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         echo '</thead>';
     }
 
-    // }}}
-    // {{{ protected function displayBody()
+
 
     /**
      * Displays the contents of this view
@@ -951,8 +932,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         }
     }
 
-    // }}}
-    // {{{ protected function displayRow()
+
 
     /**
      * Displays a single row
@@ -975,8 +955,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         $this->displayRowGroupFooters($row, $next_row, $count);
     }
 
-    // }}}
-    // {{{ protected function displayRowGroupHeaders()
+
 
     /**
      * Displays row group headers
@@ -994,8 +973,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         }
     }
 
-    // }}}
-    // {{{ protected function displayRowGroupFooters()
+
 
     /**
      * Displays row group headers
@@ -1013,8 +991,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         }
     }
 
-    // }}}
-    // {{{ protected function displayRowColumns()
+
 
     /**
      * Displays the columns for a row
@@ -1061,8 +1038,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         }
     }
 
-    // }}}
-    // {{{ protected function displayRowSpanningColumns()
+
 
     /**
      * Displays row spanning columns
@@ -1093,8 +1069,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         }
     }
 
-    // }}}
-    // {{{ protected function displayRowMessages()
+
 
     /**
      * Displays a list of {@link SwatMessage} object for the given row
@@ -1144,8 +1119,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         }
     }
 
-    // }}}
-    // {{{ protected function displayFooter()
+
 
     /**
      * Displays any footer content for this table-view
@@ -1173,8 +1147,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         }
     }
 
-    // }}}
-    // {{{ protected function rowHasMessage()
+
 
     /**
      * Whether any of the columns in the row has a message
@@ -1208,8 +1181,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         return $has_message;
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
+
 
     /**
      * Gets the array of CSS classes that are applied to this table view
@@ -1224,8 +1196,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         return $classes;
     }
 
-    // }}}
-    // {{{ protected function getRowClasses()
+
 
     /**
      * Gets CSS classes for the XHTML tr tag
@@ -1255,8 +1226,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         return $classes;
     }
 
-    // }}}
-    // {{{ protected function getRowClassString()
+
 
     /**
      * Gets CSS class string for the XHTML tr tag
@@ -1280,8 +1250,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         return $class_string;
     }
 
-    // }}}
-    // {{{ protected function getInlineJavaScript()
+
 
     /**
      * Gets inline JavaScript required by this table-view as well as any
@@ -1352,10 +1321,9 @@ class SwatTableView extends SwatView implements SwatUIParent
         return $javascript;
     }
 
-    // }}}
 
     // column methods
-    // {{{ public function appendColumn()
+
 
     /**
      * Appends a column to this table-view
@@ -1370,8 +1338,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         $this->insertColumn($column);
     }
 
-    // }}}
-    // {{{ public function insertColumnBefore()
+
 
     /**
      * Inserts a column before an existing column in this table-view
@@ -1392,8 +1359,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         $this->insertColumn($column, $reference_column, false);
     }
 
-    // }}}
-    // {{{ public function insertColumnAfter()
+
 
     /**
      * Inserts a column after an existing column in this table-view
@@ -1414,8 +1380,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         $this->insertColumn($column, $reference_column, true);
     }
 
-    // }}}
-    // {{{ public function hasColumn()
+
 
     /**
      * Returns true if a column with the given id exists within this
@@ -1432,8 +1397,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         return array_key_exists($id, $this->columns_by_id);
     }
 
-    // }}}
-    // {{{ public function getColumn()
+
 
     /**
      * Gets a column in this table-view by the column's id
@@ -1456,8 +1420,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         return $this->columns_by_id[$id];
     }
 
-    // }}}
-    // {{{ public function getColumns()
+
 
     /**
      * Gets all columns of this table-view as an array
@@ -1469,8 +1432,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         return $this->columns;
     }
 
-    // }}}
-    // {{{ public function getColumnCount()
+
 
     /**
      * Gets the number of columns in this table-view
@@ -1482,8 +1444,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         return count($this->columns);
     }
 
-    // }}}
-    // {{{ public function getVisibleColumns()
+
 
     /**
      * Gets all visible columns of this table-view as an array
@@ -1502,8 +1463,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         return $columns;
     }
 
-    // }}}
-    // {{{ public function getVisibleColumnCount()
+
 
     /**
      * Gets the number of visible columns in this table-view
@@ -1515,8 +1475,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         return count($this->getVisibleColumns());
     }
 
-    // }}}
-    // {{{ public function setDefaultOrderbyColumn()
+
 
     /**
      * Sets a default column to use for ordering the data of this table-view
@@ -1544,8 +1503,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         $column->setDirection($direction);
     }
 
-    // }}}
-    // {{{ protected function validateColumn()
+
 
     /**
      * Ensures a column added to this table-view is valid for this table-view
@@ -1571,8 +1529,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         }
     }
 
-    // }}}
-    // {{{ protected function insertColumn()
+
 
     /**
      * Helper method to insert columns into this table-view
@@ -1656,10 +1613,9 @@ class SwatTableView extends SwatView implements SwatUIParent
         $column->parent = $this;
     }
 
-    // }}}
 
     // spanning column methods
-    // {{{ public function appendSpanningColumn()
+
 
     /**
      * Appends a spanning column object to this table-view
@@ -1676,8 +1632,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         $column->parent = $this;
     }
 
-    // }}}
-    // {{{ public function hasSpanningColumn()
+
 
     /**
      * Returns true if a spanning column with the given id exists within this table-view
@@ -1689,8 +1644,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         return array_key_exists($id, $this->spanning_columns_by_id);
     }
 
-    // }}}
-    // {{{ public function getSpanningColumn()
+
 
     /**
      * Gets a spanning column in this table-view by the spanning column's id
@@ -1714,8 +1668,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         return $this->spanning_columns_by_id[$id];
     }
 
-    // }}}
-    // {{{ public function getSpanningColumns()
+
 
     /**
      * Gets all spanning columns of this table-view as an array
@@ -1727,8 +1680,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         return $this->spanning_columns;
     }
 
-    // }}}
-    // {{{ public function getVisibleSpanningColumns()
+
 
     /**
      * Gets all visible spanning columns of this table-view as an array
@@ -1748,10 +1700,9 @@ class SwatTableView extends SwatView implements SwatUIParent
         return $columns;
     }
 
-    // }}}
 
     // grouping methods
-    // {{{ public function appendGroup()
+
 
     /**
      * Appends a grouping object to this table-view
@@ -1784,8 +1735,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         $group->parent = $this;
     }
 
-    // }}}
-    // {{{ public function hasGroup()
+
 
     /**
      * Returns true if a group with the given id exists within this table-view
@@ -1801,8 +1751,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         return array_key_exists($id, $this->groups_by_id);
     }
 
-    // }}}
-    // {{{ public function getGroup()
+
 
     /**
      * Gets a group in this table-view by the group's id
@@ -1825,8 +1774,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         return $this->groups_by_id[$id];
     }
 
-    // }}}
-    // {{{ public function getGroups()
+
 
     /**
      * Gets all groups of this table-view as an array
@@ -1838,8 +1786,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         return $this->groups;
     }
 
-    // }}}
-    // {{{ protected function validateGroup()
+
 
     /**
      * Ensures a group added to this table-view is valid for this table-view
@@ -1865,10 +1812,9 @@ class SwatTableView extends SwatView implements SwatUIParent
         }
     }
 
-    // }}}
 
     // extra row methods
-    // {{{ public function appendRow()
+
 
     /**
      * Appends a single row to this table-view
@@ -1886,8 +1832,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         $this->insertRow($row);
     }
 
-    // }}}
-    // {{{ public function insertRowBefore()
+
 
     /**
      * Inserts a row before an existing row in this table-view
@@ -1910,8 +1855,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         $this->insertRow($row, $reference_row, false);
     }
 
-    // }}}
-    // {{{ public function insertRowAfter()
+
 
     /**
      * Inserts a row after an existing row in this table-view
@@ -1934,8 +1878,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         $this->insertRow($row, $reference_row, true);
     }
 
-    // }}}
-    // {{{ public function hasRow()
+
 
     /**
      * Returns true if a row with the given id exists within this table-view
@@ -1951,8 +1894,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         return array_key_exists($id, $this->rows_by_id);
     }
 
-    // }}}
-    // {{{ public function getRow()
+
 
     /**
      * Gets a row in this table-view by the row's id
@@ -1975,8 +1917,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         return $this->rows_by_id[$id];
     }
 
-    // }}}
-    // {{{ public function getRowsByClass()
+
 
     /**
      * Gets all the extra rows of the specified class from this table-view
@@ -1997,7 +1938,6 @@ class SwatTableView extends SwatView implements SwatUIParent
         return $rows;
     }
 
-    // }}}
     // {{{ public function getFirstRowByClass()
 
     /**
@@ -2027,7 +1967,6 @@ class SwatTableView extends SwatView implements SwatUIParent
         return $my_row;
     }
 
-    // }}}
     // {{{ protected function validateRow()
 
     /**
@@ -2064,7 +2003,6 @@ class SwatTableView extends SwatView implements SwatUIParent
         }
     }
 
-    // }}}
     // {{{ protected function insertRow()
 
     /**
@@ -2146,5 +2084,4 @@ class SwatTableView extends SwatView implements SwatUIParent
         $row->parent = $this;
     }
 
-    // }}}
 }

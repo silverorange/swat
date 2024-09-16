@@ -10,7 +10,7 @@
  */
 class SwatNavBar extends SwatControl implements Countable
 {
-    // {{{ public properties
+
 
     /**
      * Whether or not to display the last entry in this navbar as a link
@@ -41,8 +41,7 @@ class SwatNavBar extends SwatControl implements Countable
      */
     public $container_tag;
 
-    // }}}
-    // {{{ private properties
+
 
     /**
      * Array of SwatNavBarEntry objects displayed in this navbar
@@ -53,8 +52,7 @@ class SwatNavBar extends SwatControl implements Countable
      */
     private $entries = [];
 
-    // }}}
-    // {{{ public function createEntry()
+
 
     /**
      * Creates a SwatNavBarEntry and adds it to the end of this navigation bar
@@ -71,8 +69,7 @@ class SwatNavBar extends SwatControl implements Countable
         $this->addEntry(new SwatNavBarEntry($title, $link, $content_type));
     }
 
-    // }}}
-    // {{{ public function addEntry()
+
 
     /**
      * Adds a SwatNavBarEntry to the end of this navigation bar
@@ -84,8 +81,7 @@ class SwatNavBar extends SwatControl implements Countable
         $this->entries[] = $entry;
     }
 
-    // }}}
-    // {{{ public function addEntries()
+
 
     /**
      * Adds an array of SwatNavBarEntry to the end of this navigation bar
@@ -99,8 +95,7 @@ class SwatNavBar extends SwatControl implements Countable
         }
     }
 
-    // }}}
-    // {{{ public function addEntryToStart()
+
 
     /**
      * Adds a SwatNavBarEntry to the beginning of this navigation bar
@@ -112,8 +107,7 @@ class SwatNavBar extends SwatControl implements Countable
         array_unshift($this->entries, $entry);
     }
 
-    // }}}
-    // {{{ public function replaceEntryByPosition()
+
 
     /**
      * Replaces an entry in this navigation bar
@@ -151,8 +145,7 @@ class SwatNavBar extends SwatControl implements Countable
         );
     }
 
-    // }}}
-    // {{{ public function getEntryByPosition()
+
 
     /**
      * Gets an entry from this navigation bar
@@ -188,8 +181,7 @@ class SwatNavBar extends SwatControl implements Countable
         }
     }
 
-    // }}}
-    // {{{ public function getLastEntry()
+
 
     /**
      * Gets the last entry from this navigation bar
@@ -209,8 +201,7 @@ class SwatNavBar extends SwatControl implements Countable
         return end($this->entries);
     }
 
-    // }}}
-    // {{{ public function getCount()
+
 
     /**
      * Gets the number of entries in this navigational bar
@@ -225,8 +216,7 @@ class SwatNavBar extends SwatControl implements Countable
         return count($this->entries);
     }
 
-    // }}}
-    // {{{ public function count()
+
 
     /**
      * Gets the number of entries in this navigational bar
@@ -240,8 +230,7 @@ class SwatNavBar extends SwatControl implements Countable
         return count($this->entries);
     }
 
-    // }}}
-    // {{{ public function popEntry()
+
 
     /**
      * Pops the last entry off the end of this navigational bar
@@ -263,8 +252,7 @@ class SwatNavBar extends SwatControl implements Countable
         }
     }
 
-    // }}}
-    // {{{ public function popEntries()
+
 
     /**
      * Pops one or more entries off the end of this navigational bar
@@ -298,8 +286,7 @@ class SwatNavBar extends SwatControl implements Countable
         }
     }
 
-    // }}}
-    // {{{ public function clear()
+
 
     /**
      * Clears all entries from this navigational bar
@@ -314,8 +301,7 @@ class SwatNavBar extends SwatControl implements Countable
         return $entries;
     }
 
-    // }}}
-    // {{{ public function display()
+
 
     /**
      * Displays this navigational bar
@@ -354,8 +340,7 @@ class SwatNavBar extends SwatControl implements Countable
         $container_tag->close();
     }
 
-    // }}}
-    // {{{ protected function displayEntry()
+
 
     /**
      * Displays an entry in this navigational bar
@@ -394,8 +379,7 @@ class SwatNavBar extends SwatControl implements Countable
         }
     }
 
-    // }}}
-    // {{{ protected function getLink()
+
 
     /**
      * Gets the link from an entry.
@@ -409,8 +393,7 @@ class SwatNavBar extends SwatControl implements Countable
         return $entry->link;
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
+
 
     /**
      * Gets the array of CSS classes that are applied to this navigational bar
@@ -425,8 +408,7 @@ class SwatNavBar extends SwatControl implements Countable
         return $classes;
     }
 
-    // }}}
-    // {{{ protected function getContainerTag()
+
 
     /**
      * Gets the container tag for this navigational bar
@@ -448,5 +430,4 @@ class SwatNavBar extends SwatControl implements Countable
         return $tag;
     }
 
-    // }}}
 }

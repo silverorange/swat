@@ -15,7 +15,7 @@
  */
 abstract class SwatExceptionDisplayer
 {
-    // {{{ public abstract function display()
+
 
     /**
      * Displays a SwatException
@@ -24,5 +24,4 @@ abstract class SwatExceptionDisplayer
      */
     abstract public function display(SwatException $e);
 
-    // }}}
 }

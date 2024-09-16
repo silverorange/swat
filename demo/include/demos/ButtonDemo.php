@@ -14,7 +14,7 @@ require_once 'Demo.php';
  */
 class ButtonDemo extends Demo
 {
-	// {{{ public function buildDemoUI()
+
 
 	public function buildDemoUI(SwatUI $ui)
 	{
@@ -29,7 +29,6 @@ class ButtonDemo extends Demo
 		}
 	}
 
-	// }}}
 }
 
 ?>

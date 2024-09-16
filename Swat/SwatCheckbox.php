@@ -9,7 +9,7 @@
  */
 class SwatCheckbox extends SwatInputControl implements SwatState
 {
-    // {{{ public properties
+
 
     /**
      * Checkbox value
@@ -40,8 +40,7 @@ class SwatCheckbox extends SwatInputControl implements SwatState
      */
     public $tab_index;
 
-    // }}}
-    // {{{ public function __construct()
+
 
     /**
      * Creates a new checkbox
@@ -56,8 +55,7 @@ class SwatCheckbox extends SwatInputControl implements SwatState
         $this->requires_id = true;
     }
 
-    // }}}
-    // {{{ public function display()
+
 
     /**
      * Displays this checkbox
@@ -97,8 +95,7 @@ class SwatCheckbox extends SwatInputControl implements SwatState
         echo '</span>';
     }
 
-    // }}}
-    // {{{ public function process()
+
 
     /**
      * Processes this checkbox
@@ -119,8 +116,7 @@ class SwatCheckbox extends SwatInputControl implements SwatState
         $this->value = array_key_exists($this->id, $data);
     }
 
-    // }}}
-    // {{{ public function getState()
+
 
     /**
      * Gets the current state of this checkbox
@@ -134,8 +130,7 @@ class SwatCheckbox extends SwatInputControl implements SwatState
         return $this->value;
     }
 
-    // }}}
-    // {{{ public function setState()
+
 
     /**
      * Sets the current state of this checkbox
@@ -149,8 +144,7 @@ class SwatCheckbox extends SwatInputControl implements SwatState
         $this->value = $state;
     }
 
-    // }}}
-    // {{{ public function getFocusableHtmlId()
+
 
     /**
      * Gets the id attribute of the XHTML element displayed by this widget
@@ -167,8 +161,7 @@ class SwatCheckbox extends SwatInputControl implements SwatState
         return $this->visible ? $this->id : null;
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
+
 
     /**
      * Gets the array of CSS classes that are applied to this checkbox
@@ -183,5 +176,4 @@ class SwatCheckbox extends SwatInputControl implements SwatState
         return $classes;
     }
 
-    // }}}
 }

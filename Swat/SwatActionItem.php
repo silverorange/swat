@@ -11,7 +11,7 @@
  */
 class SwatActionItem extends SwatControl implements SwatUIParent
 {
-    // {{{ public properties
+
 
     /**
      * A unique identifier for this action item
@@ -34,8 +34,7 @@ class SwatActionItem extends SwatControl implements SwatUIParent
      */
     public $widget = null;
 
-    // }}}
-    // {{{ public function init()
+
 
     /**
      * Initializes this action item
@@ -52,8 +51,7 @@ class SwatActionItem extends SwatControl implements SwatUIParent
         }
     }
 
-    // }}}
-    // {{{ public function display()
+
 
     /**
      * Displays this item
@@ -71,8 +69,7 @@ class SwatActionItem extends SwatControl implements SwatUIParent
         $this->widget->display();
     }
 
-    // }}}
-    // {{{ public function setWidget()
+
 
     /**
      * Sets the widget to use for this item
@@ -97,8 +94,7 @@ class SwatActionItem extends SwatControl implements SwatUIParent
         $widget->parent = $this;
     }
 
-    // }}}
-    // {{{ public function addChild()
+
 
     /**
      * Adds a child object
@@ -129,8 +125,7 @@ class SwatActionItem extends SwatControl implements SwatUIParent
         }
     }
 
-    // }}}
-    // {{{ public function getHtmlHeadEntrySet()
+
 
     /**
      * Gets the SwatHtmlHeadEntry objects needed by this action item
@@ -151,8 +146,7 @@ class SwatActionItem extends SwatControl implements SwatUIParent
         return $set;
     }
 
-    // }}}
-    // {{{ public function getAvailableHtmlHeadEntrySet()
+
 
     /**
      * Gets the SwatHtmlHeadEntry objects that may be needed by this action item
@@ -173,8 +167,7 @@ class SwatActionItem extends SwatControl implements SwatUIParent
         return $set;
     }
 
-    // }}}
-    // {{{ public function getDescendants()
+
 
     /**
      * Gets descendant UI-objects
@@ -223,8 +216,7 @@ class SwatActionItem extends SwatControl implements SwatUIParent
         return $out;
     }
 
-    // }}}
-    // {{{ public function getFirstDescendant()
+
 
     /**
      * Gets the first descendant UI-object of a specific class
@@ -255,8 +247,7 @@ class SwatActionItem extends SwatControl implements SwatUIParent
         return $out;
     }
 
-    // }}}
-    // {{{ public function getDescendantStates()
+
 
     /**
      * Gets descendant states
@@ -278,8 +269,7 @@ class SwatActionItem extends SwatControl implements SwatUIParent
         return $states;
     }
 
-    // }}}
-    // {{{ public function setDescendantStates()
+
 
     /**
      * Sets descendant states
@@ -299,8 +289,7 @@ class SwatActionItem extends SwatControl implements SwatUIParent
         }
     }
 
-    // }}}
-    // {{{ public function copy()
+
 
     /**
      * Performs a deep copy of the UI tree starting with this UI object
@@ -326,5 +315,4 @@ class SwatActionItem extends SwatControl implements SwatUIParent
         return $copy;
     }
 
-    // }}}
 }

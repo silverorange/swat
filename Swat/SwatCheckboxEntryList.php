@@ -19,7 +19,7 @@
  */
 class SwatCheckboxEntryList extends SwatCheckboxList
 {
-    // {{{ public properties
+
 
     /**
      * The size of all the embedded entry widgets
@@ -42,8 +42,7 @@ class SwatCheckboxEntryList extends SwatCheckboxList
      */
     public $entry_maxlength = null;
 
-    // }}}
-    // {{{ protected properties
+
 
     /**
      * The entry widgets used by this checkbox entry list
@@ -54,8 +53,7 @@ class SwatCheckboxEntryList extends SwatCheckboxList
      */
     protected $entry_widgets = [];
 
-    // }}}
-    // {{{ public function __construct()
+
 
     /**
      * Creates a new checkbox entry list
@@ -80,8 +78,7 @@ class SwatCheckboxEntryList extends SwatCheckboxList
         );
     }
 
-    // }}}
-    // {{{ public function display()
+
 
     /**
      * Displays this checkbox list
@@ -166,8 +163,7 @@ class SwatCheckboxEntryList extends SwatCheckboxList
         Swat::displayInlineJavaScript($this->getInlineJavaScript());
     }
 
-    // }}}
-    // {{{ public function process()
+
 
     /**
      * Processes this checkbox entry list
@@ -192,8 +188,7 @@ class SwatCheckboxEntryList extends SwatCheckboxList
         }
     }
 
-    // }}}
-    // {{{ public function getMessages()
+
 
     /**
      * Gets all messages
@@ -215,7 +210,6 @@ class SwatCheckboxEntryList extends SwatCheckboxList
         return $messages;
     }
 
-    // }}}
     // {{{ public function hasMessage()
 
     /**
@@ -243,7 +237,6 @@ class SwatCheckboxEntryList extends SwatCheckboxList
         return $has_message;
     }
 
-    // }}}
     // {{{ public function getEntryValue()
 
     /**
@@ -266,7 +259,6 @@ class SwatCheckboxEntryList extends SwatCheckboxList
         return $entry_value;
     }
 
-    // }}}
     // {{{ public function setEntryValue()
 
     /**
@@ -301,7 +293,6 @@ class SwatCheckboxEntryList extends SwatCheckboxList
         $this->getEntryWidget($option_value)->getFirst()->value = $entry_value;
     }
 
-    // }}}
     // {{{ public function setEntryValuesByArray()
 
     /**
@@ -327,7 +318,6 @@ class SwatCheckboxEntryList extends SwatCheckboxList
         }
     }
 
-    // }}}
     // {{{ protected function getInlineJavaScript()
 
     /**
@@ -355,7 +345,6 @@ class SwatCheckboxEntryList extends SwatCheckboxList
         return $javascript;
     }
 
-    // }}}
     // {{{ protected function getCSSClassNames()
 
     /**
@@ -372,7 +361,6 @@ class SwatCheckboxEntryList extends SwatCheckboxList
         return $classes;
     }
 
-    // }}}
     // {{{ protected function hasEntryWidget()
 
     /**
@@ -389,7 +377,6 @@ class SwatCheckboxEntryList extends SwatCheckboxList
         return isset($this->entry_widgets[$option_value]);
     }
 
-    // }}}
     // {{{ protected function getEntryWidget()
 
     /**
@@ -420,7 +407,6 @@ class SwatCheckboxEntryList extends SwatCheckboxList
         return $this->entry_widgets[$option_value];
     }
 
-    // }}}
     // {{{ protected function createEntryWidget()
 
     /**
@@ -441,5 +427,4 @@ class SwatCheckboxEntryList extends SwatCheckboxList
         return $widget;
     }
 
-    // }}}
 }
