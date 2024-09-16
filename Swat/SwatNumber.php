@@ -25,7 +25,7 @@ class SwatNumber extends SwatObject
      */
     public static function roundUp($value, $fractional_digits)
     {
-        $power = pow(10, $fractional_digits);
+        $power = 10 ** $fractional_digits;
         $value = ceil($value * $power) / $power;
 
         return $value;
@@ -48,7 +48,7 @@ class SwatNumber extends SwatObject
      */
     public static function roundToEven($value, $fractional_digits)
     {
-        $power = pow(10, $fractional_digits);
+        $power = 10 ** $fractional_digits;
         $fractional_part = abs(fmod($value, 1)) * $power;
         $ends_in_five = intval($fractional_part * 10) % 10 === 5;
         if ($ends_in_five) {

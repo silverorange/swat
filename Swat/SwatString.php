@@ -1275,7 +1275,7 @@ class SwatString extends SwatObject
             }
         }
 
-        $value = $value / pow(2, $unit_magnitude);
+        $value = $value / 2 ** $unit_magnitude;
 
         if ($unit_magnitude == 0) {
             // 'bytes' are always formatted as integers

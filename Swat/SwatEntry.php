@@ -373,7 +373,7 @@ class SwatEntry extends SwatInputControl implements SwatState
     protected function getNonce()
     {
         if ($this->nonce === null) {
-            $this->nonce = 'n' . md5(rand());
+            $this->nonce = 'n' . md5(random_int(0, mt_getrandmax()));
         }
 
         return $this->nonce;

@@ -1047,10 +1047,10 @@ class SwatI18NLocale extends SwatObject
                 }
 
                 $grouping_value = floor(
-                    fmod($grouping_total, pow(10, $grouping)),
+                    fmod($grouping_total, 10 ** $grouping),
                 );
 
-                $grouping_total = floor($grouping_total / pow(10, $grouping));
+                $grouping_total = floor($grouping_total / 10 ** $grouping);
                 if ($grouping_total > 0) {
                     $grouping_value = str_pad(
                         $grouping_value,
@@ -1081,11 +1081,11 @@ class SwatI18NLocale extends SwatObject
                 } else {
                     while ($grouping_total > 0) {
                         $grouping_value = floor(
-                            fmod($grouping_total, pow(10, $grouping)),
+                            fmod($grouping_total, 10 ** $grouping),
                         );
 
                         $grouping_total = floor(
-                            $grouping_total / pow(10, $grouping),
+                            $grouping_total / 10 ** $grouping,
                         );
 
                         if ($grouping_total > 0) {
@@ -1139,7 +1139,7 @@ class SwatI18NLocale extends SwatObject
             $formatted_value = '';
         } else {
             $frac_part = abs(fmod($value, 1));
-            $frac_part = round($frac_part * pow(10, $fractional_digits));
+            $frac_part = round($frac_part * 10 ** $fractional_digits);
             $frac_part = str_pad(
                 $frac_part,
                 $fractional_digits,
@@ -1288,7 +1288,7 @@ class SwatI18NLocale extends SwatObject
      */
     protected function roundToEven($value, $fractional_digits)
     {
-        $exp = pow(10, $fractional_digits);
+        $exp = 10 ** $fractional_digits;
         $frac_part = abs(fmod($value, 1)) * $exp;
         $ends_in_five = intval($frac_part * 10) % 10 === 5;
         if ($ends_in_five) {
