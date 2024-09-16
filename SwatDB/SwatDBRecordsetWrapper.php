@@ -803,9 +803,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         $sub_data_objects = null;
 
         $values = $this->getInternalValues($name);
-        $values = array_filter($values, function ($value) {
-            return $value !== null;
-        });
+        $values = array_filter($values, fn($value) => $value !== null);
 
         $values = array_unique($values);
 
