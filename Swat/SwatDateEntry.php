@@ -559,7 +559,6 @@ class SwatDateEntry extends SwatInputControl implements SwatState
         return SwatDate::compare(
             $this->value,
             $this->valid_range_start,
-            true,
         ) >= 0;
     }
 
@@ -575,7 +574,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
     protected function isEndDateValid()
     {
         $this->valid_range_end->setTZById('UTC');
-        return SwatDate::compare($this->value, $this->valid_range_end, true) <
+        return SwatDate::compare($this->value, $this->valid_range_end) <
             0;
     }
 
@@ -807,7 +806,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
             for ($i = $start_day; $i <= $end_day; $i++) {
                 $flydown->addOption($i, $i);
             }
-        } elseif (SwatDate::compare($end_check, $range_end, true) != -1) {
+        } elseif (SwatDate::compare($end_check, $range_end) != -1) {
             // extra days at the beginning of the next month allowed
             $days_in_month = $this->valid_range_start->getDaysInMonth();
 
