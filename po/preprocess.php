@@ -56,7 +56,7 @@ for ($i = 0; $i < count($tokens); $i++) {
 			break;
 		}
 	} else {
-		list($id, $text) = $token;
+		[$id, $text] = $token;
 		switch ($id) {
 		// most whitespace in gettext is from concatenation, ignore it
 		case T_WHITESPACE:
