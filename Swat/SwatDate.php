@@ -1131,18 +1131,18 @@ class SwatDate extends DateTime implements Stringable
     // {{{ public function getDate() - deprecated
 
     /**
-     * Gets a PEAR-conanical formatted date
+     * Gets a PEAR-canonical formatted date
      *
      * This method is provided for backwards compatibility with PEAR::Date.
      *
      * This is a valid ISO 8601 representation of this date, but omits the
      * time zone offset. The returned string is YYYY-MM-DD HH:MM:SS.
      *
-     * @return string a PEAR-conanical formatted version of this date.
+     * @return string a PEAR-canonical formatted version of this date.
      *
-     * @deprecated Use {@link SwatDate::formatLikeIntl()} instead. The format
-     *             code <i>yyyy-MM-dd HH:mm:ss</i> is equivalent. Alternatively,
-     *             just cast the SwatDate object to a string.
+     * @deprecated Use {@link SwatDate::getISO8601()} instead. The format
+     *             code <i>yyyy-MM-ddTHH:mm:ss</i> is equivalent for most uses.
+     *             Alternatively, just cast the SwatDate object to a string.
      */
     public function getDate(): string
     {
