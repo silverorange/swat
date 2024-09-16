@@ -1413,7 +1413,7 @@ class SwatDB extends SwatObject
             foreach ($trace as $entry) {
                 if (
                     !array_key_exists('class', $entry) ||
-                    strncmp($entry['class'], 'SwatDB', 6) !== 0
+                    !str_starts_with($entry['class'], 'SwatDB')
                 ) {
                     break;
                 }

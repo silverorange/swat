@@ -203,7 +203,7 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
                 }
             } else {
                 // look for leading '!' and inverse value if found
-                if (strncmp($field, '!', 1) === 0) {
+                if (str_starts_with($field, '!')) {
                     $field = mb_substr($field, 1);
                     $renderer->$property = !$data_object->$field;
                 } else {

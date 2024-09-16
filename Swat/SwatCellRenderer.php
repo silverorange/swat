@@ -296,7 +296,7 @@ abstract class SwatCellRenderer extends SwatUIObject
 
         // get the ancestors that are swat classes
         while ($php_class_name !== 'SwatCellRenderer') {
-            if (strncmp($php_class_name, 'Swat', 4) === 0) {
+            if (str_starts_with($php_class_name, 'Swat')) {
                 $css_class_name = mb_strtolower(
                     preg_replace('/([A-Z])/u', '-\1', $php_class_name),
                 );

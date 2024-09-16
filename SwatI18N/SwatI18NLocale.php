@@ -846,7 +846,7 @@ class SwatI18NLocale extends SwatObject
                 $lc_ctype = reset($lc_all_exp);
             } else {
                 foreach ($lc_all_exp as $lc) {
-                    if (strncmp($lc, 'LC_CTYPE', 8) === 0) {
+                    if (str_starts_with($lc, 'LC_CTYPE')) {
                         $lc_ctype = $lc;
                         break;
                     }
