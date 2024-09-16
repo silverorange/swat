@@ -269,7 +269,7 @@ class SwatTextareaEditor extends SwatTextarea
         $blockformats = implode('; ', $blockformats);
 
         $modes = $this->modes_enabled ? 'yes' : 'no';
-        $image_server = $this->image_server ? $this->image_server : '';
+        $image_server = $this->image_server ?: '';
 
         $has_api_key =
             self::$tiny_mce_api_key !== null && !empty(self::$tiny_mce_api_key);
