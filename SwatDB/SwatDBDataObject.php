@@ -343,7 +343,7 @@ class SwatDBDataObject extends SwatObject implements
             }
         }
         */
-        $string = ob_get_clean();
+        $string = (string) ob_get_clean();
 
         // set db back again
         $this->db = $db;

@@ -28,7 +28,7 @@ class SwatObject implements Stringable
     {
         ob_start();
         Swat::printObject($this);
-        return ob_get_clean();
+        return (string) ob_get_clean();
     }
 
 }
