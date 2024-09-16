@@ -16,45 +16,45 @@ class DemoApplication
 	private $ui;
 	private $demo;
 
-	private $available_demos = array(
-		'Accordion'         => 'SwatAccordion',
-		'Button'            => 'SwatButton',
-		'Calendar'          => 'SwatCalendar',
-		'ChangeOrder'       => 'SwatChangeOrder',
-		'Checkbox'          => 'SwatCheckbox',
-		'DateEntry'         => 'SwatDateEntry',
-		'DetailsView'       => 'SwatDetailsView',
-		'Disclosure'        => 'SwatDisclosure',
-		'Entry'             => 'SwatEntry',
-		'Fieldset'          => 'SwatFieldset',
-		'FileEntry'         => 'SwatFileEntry',
-		'Flydown'           => 'SwatFlydown',
-		'Frame'             => 'SwatFrame',
-		'ImageCropper'      => 'SwatImageCropper',
-		'ImageDisplay'      => 'SwatImageDisplay',
-		'MessageDisplay'    => 'SwatMessageDisplay',
-		'NavBar'            => 'SwatNavBar',
-		'NoteBook'          => 'SwatNoteBook',
-		'Pagination'        => 'SwatPagination',
-		'PasswordEntry'     => 'SwatPasswordEntry',
-		'ProgressBar'       => 'SwatProgressBar',
-		'RadioList'         => 'SwatRadioList',
-		'Rating'            => 'SwatRating',
-		'Replicable'        => 'SwatReplicable',
-		'SelectList'        => 'SwatSelectList',
-		'SimpleColorEntry'  => 'SwatSimpleColorEntry',
-		'String'            => 'SwatString',
-		'TableView'         => 'SwatTableView',
-		'TableViewInputRow' => 'SwatTableViewInputRow',
-		'Textarea'          => 'SwatTextarea',
-		'TextareaEditor'    => 'SwatTextareaEditor',
-		'TileView'          => 'SwatTileView',
-		'TimeEntry'         => 'SwatTimeEntry',
-		'TimeZoneEntry'     => 'SwatTimeZoneEntry',
-		'ToolLink'          => 'SwatToolLink',
-		'ViewSelector'      => 'SwatViewSelector',
-		'YesNoFlydown'      => 'SwatYesNoFlydown',
-	);
+	private $available_demos = [
+        'Accordion'         => 'SwatAccordion',
+        'Button'            => 'SwatButton',
+        'Calendar'          => 'SwatCalendar',
+        'ChangeOrder'       => 'SwatChangeOrder',
+        'Checkbox'          => 'SwatCheckbox',
+        'DateEntry'         => 'SwatDateEntry',
+        'DetailsView'       => 'SwatDetailsView',
+        'Disclosure'        => 'SwatDisclosure',
+        'Entry'             => 'SwatEntry',
+        'Fieldset'          => 'SwatFieldset',
+        'FileEntry'         => 'SwatFileEntry',
+        'Flydown'           => 'SwatFlydown',
+        'Frame'             => 'SwatFrame',
+        'ImageCropper'      => 'SwatImageCropper',
+        'ImageDisplay'      => 'SwatImageDisplay',
+        'MessageDisplay'    => 'SwatMessageDisplay',
+        'NavBar'            => 'SwatNavBar',
+        'NoteBook'          => 'SwatNoteBook',
+        'Pagination'        => 'SwatPagination',
+        'PasswordEntry'     => 'SwatPasswordEntry',
+        'ProgressBar'       => 'SwatProgressBar',
+        'RadioList'         => 'SwatRadioList',
+        'Rating'            => 'SwatRating',
+        'Replicable'        => 'SwatReplicable',
+        'SelectList'        => 'SwatSelectList',
+        'SimpleColorEntry'  => 'SwatSimpleColorEntry',
+        'String'            => 'SwatString',
+        'TableView'         => 'SwatTableView',
+        'TableViewInputRow' => 'SwatTableViewInputRow',
+        'Textarea'          => 'SwatTextarea',
+        'TextareaEditor'    => 'SwatTextareaEditor',
+        'TileView'          => 'SwatTileView',
+        'TimeEntry'         => 'SwatTimeEntry',
+        'TimeZoneEntry'     => 'SwatTimeZoneEntry',
+        'ToolLink'          => 'SwatToolLink',
+        'ViewSelector'      => 'SwatViewSelector',
+        'YesNoFlydown'      => 'SwatYesNoFlydown',
+    ];
 
 	// }}}
 	// {{{ public function run()
@@ -193,247 +193,243 @@ class DemoApplication
 	{
 		switch ($this->demo) {
 		case 'Accordion':
-			$entries = array(
-				'SwatAccordion',
-				'SwatNoteBookPage'
-				);
+			$entries = [
+                'SwatAccordion',
+                'SwatNoteBookPage'
+            ];
 			break;
 
 		case 'Button':
-			$entries = array(
-				'SwatButton',
-				'SwatConfirmationButton'
-				);
+			$entries = [
+                'SwatButton',
+                'SwatConfirmationButton'
+            ];
 			break;
 
 		case 'Calendar':
-			$entries = array('SwatCalendar');
+			$entries = ['SwatCalendar'];
 			break;
 
 		case 'ChangeOrder':
-			$entries = array('SwatChangeOrder');
+			$entries = ['SwatChangeOrder'];
 			break;
 
 		case 'Checkbox':
-			$entries = array(
-				'SwatCheckbox',
-				'SwatCheckboxList',
-				'SwatCheckboxEntryList',
-				'SwatCheckboxTree',
-				);
+			$entries = [
+                'SwatCheckbox',
+                'SwatCheckboxList',
+                'SwatCheckboxEntryList',
+                'SwatCheckboxTree'
+            ];
 			break;
 
 		case 'DateEntry':
-			$entries = array('SwatDateEntry');
+			$entries = ['SwatDateEntry'];
 			break;
 
 		case 'DetailsView':
-			$entries = array(
-				'SwatDetailsView',
-				'SwatDetailsViewField',
-				'SwatDetailsViewVerticalField',
-				'SwatBooleanCellRenderer',
-				'SwatDateCellRenderer',
-				'SwatImageCellRenderer',
-				'SwatMoneyCellRenderer',
-				'SwatTextCellRenderer'
-				);
+			$entries = [
+                'SwatDetailsView',
+                'SwatDetailsViewField',
+                'SwatDetailsViewVerticalField',
+                'SwatBooleanCellRenderer',
+                'SwatDateCellRenderer',
+                'SwatImageCellRenderer',
+                'SwatMoneyCellRenderer',
+                'SwatTextCellRenderer'
+            ];
 			break;
 
 		case 'Disclosure':
-			$entries = array(
-				'SwatDisclosure',
-				'SwatFrameDisclosure',
-				);
+			$entries = [
+                'SwatDisclosure',
+                'SwatFrameDisclosure'
+            ];
 			break;
 
 		case 'Entry':
-			$entries = array(
-				'SwatEntry',
-				'SwatListEntry',
-				'SwatEmailEntry',
-				'SwatIntegerEntry',
-				'SwatFloatEntry',
-				'SwatMoneyEntry'
-				);
+			$entries = [
+                'SwatEntry',
+                'SwatListEntry',
+                'SwatEmailEntry',
+                'SwatIntegerEntry',
+                'SwatFloatEntry',
+                'SwatMoneyEntry'
+            ];
 			break;
 
 		case 'Fieldset':
-			$entries = array('SwatFieldset');
+			$entries = ['SwatFieldset'];
 			break;
 
 		case 'FileEntry':
-			$entries = array('SwatFileEntry');
+			$entries = ['SwatFileEntry'];
 			break;
 
 		case 'Flydown':
-			$entries = array(
-				'SwatFlydown',
-				'SwatFlydownTree',
-				'SwatGroupedFlydown',
-				'SwatCascadeFlydown',
-				'SwatFlydownDivider',
-				'SwatTreeFlydownNode',
-				'SwatOption',
-				);
+			$entries = [
+                'SwatFlydown',
+                'SwatFlydownTree',
+                'SwatGroupedFlydown',
+                'SwatCascadeFlydown',
+                'SwatFlydownDivider',
+                'SwatTreeFlydownNode',
+                'SwatOption'
+            ];
 			break;
 
 		case 'Frame':
-			$entries = array('SwatFrame');
+			$entries = ['SwatFrame'];
 			break;
 
 		case 'ImageCropper':
-			$entries = array('SwatImageCropper');
+			$entries = ['SwatImageCropper'];
 			break;
 
 		case 'ImageDisplay':
-			$entries = array(
-				'SwatImageDisplay',
-				'SwatImagePreviewDisplay',
-				);
+			$entries = [
+                'SwatImageDisplay',
+                'SwatImagePreviewDisplay'
+            ];
 			break;
 
 		case 'MessageDisplay':
-			$entries = array('SwatMessageDisplay');
+			$entries = ['SwatMessageDisplay'];
 			break;
 
 		case 'NavBar':
-			$entries = array(
-				'SwatNavBar',
-				'SwatNavBarEntry',
-				);
+			$entries = [
+                'SwatNavBar',
+                'SwatNavBarEntry'
+            ];
 			break;
 
 		case 'NoteBook':
-			$entries = array(
-				'SwatNoteBook',
-				'SwatNoteBookPage',
-				);
+			$entries = [
+                'SwatNoteBook',
+                'SwatNoteBookPage'
+            ];
 			break;
 
 		case 'Pagination':
-			$entries = array('SwatPagination');
+			$entries = ['SwatPagination'];
 			break;
 
 		case 'PasswordEntry':
-			$entries = array(
-				'SwatPasswordEntry',
-				'SwatConfirmPasswordEntry'
-				);
+			$entries = [
+                'SwatPasswordEntry',
+                'SwatConfirmPasswordEntry'
+            ];
 			break;
 
 		case 'ProgressBar':
-			$entries = array(
-				'SwatProgressBar',
-				);
+			$entries = ['SwatProgressBar'];
 			break;
 
 		case 'RadioList':
-			$entries = array(
-				'SwatRadioList',
-				'SwatRadioTable',
-				);
+			$entries = [
+                'SwatRadioList',
+                'SwatRadioTable'
+            ];
 			break;
 
 		case 'Replicable':
-			$entries = array(
-				'SwatReplicable',
-				'SwatReplicableContainer',
-				'SwatReplicableFieldset',
-				'SwatReplicableFormField',
-				);
+			$entries = [
+                'SwatReplicable',
+                'SwatReplicableContainer',
+                'SwatReplicableFieldset',
+                'SwatReplicableFormField'
+            ];
 			break;
 
 		case 'SelectListDemo':
-			$entries = array('SwatSelectList');
+			$entries = ['SwatSelectList'];
 			break;
 
 		case 'SimpleColorEntry':
-			$entries = array(
-				'SwatSimpleColorEntry'
-				);
+			$entries = ['SwatSimpleColorEntry'];
 			break;
 
 		case 'StringDemo':
-			$entries = array('SwatString');
+			$entries = ['SwatString'];
 			break;
 
 		case 'TableView':
-			$entries = array(
-				'SwatTableView',
-				'SwatTableStore',
-				'SwatTableViewColumn',
-				'SwatTableViewCheckboxColumn',
-				'SwatCheckboxCellRenderer',
-				'SwatBooleanCellRenderer',
-				'SwatDateCellRenderer',
-				'SwatImageCellRenderer',
-				'SwatMoneyCellRenderer',
-				'SwatTextCellRenderer',
-				'SwatActions',
-				'SwatActionItem'
-				);
+			$entries = [
+                'SwatTableView',
+                'SwatTableStore',
+                'SwatTableViewColumn',
+                'SwatTableViewCheckboxColumn',
+                'SwatCheckboxCellRenderer',
+                'SwatBooleanCellRenderer',
+                'SwatDateCellRenderer',
+                'SwatImageCellRenderer',
+                'SwatMoneyCellRenderer',
+                'SwatTextCellRenderer',
+                'SwatActions',
+                'SwatActionItem'
+            ];
 			break;
 
 		case 'TableViewInputRow':
-			$entries = array(
-				'SwatTableView',
-				'SwatTableViewInputRow',
-				'SwatInputCell',
-				'SwatRemoveInputCell',
-				);
+			$entries = [
+                'SwatTableView',
+                'SwatTableViewInputRow',
+                'SwatInputCell',
+                'SwatRemoveInputCell'
+            ];
 			break;
 
 		case 'Textarea':
-			$entries = array(
-				'SwatTextarea',
-				'SwatXHTMLTextarea',
-				);
+			$entries = [
+                'SwatTextarea',
+                'SwatXHTMLTextarea'
+            ];
 			break;
 
 		case 'TextareaEditor':
-			$entries = array('SwatTextareaEditor');
+			$entries = ['SwatTextareaEditor'];
 			break;
 
 		case 'TileView':
-			$entries = array(
-				'SwatTileView',
-				'SwatTile',
-				'SwatTableStore',
-				'SwatCheckboxCellRenderer',
-				'SwatDateCellRenderer',
-				'SwatTextCellRenderer',
-				);
+			$entries = [
+                'SwatTileView',
+                'SwatTile',
+                'SwatTableStore',
+                'SwatCheckboxCellRenderer',
+                'SwatDateCellRenderer',
+                'SwatTextCellRenderer'
+            ];
 			break;
 
 		case 'TimeEntry':
-			$entries = array('SwatTimeEntry');
+			$entries = ['SwatTimeEntry'];
 			break;
 
 		case 'TimeZoneEntry':
-			$entries = array('SwatTimeZoneEntry');
+			$entries = ['SwatTimeZoneEntry'];
 			break;
 
 		case 'ToolLink':
-			$entries = array('SwatToolLink');
+			$entries = ['SwatToolLink'];
 			break;
 
 		case 'ViewSelector':
-			$entries = array(
-				'SwatCheckboxCellRenderer',
-				'SwatRadioButtonCellRenderer',
-				'SwatView',
-				'SwatViewSelection',
-				'SwatViewSelector',
-				);
+			$entries = [
+                'SwatCheckboxCellRenderer',
+                'SwatRadioButtonCellRenderer',
+                'SwatView',
+                'SwatViewSelection',
+                'SwatViewSelector'
+            ];
 			break;
 
 		case 'YesNoFlydown':
-			$entries = array('SwatYesNoFlydown');
+			$entries = ['SwatYesNoFlydown'];
 			break;
 
 		default:
-			$entries = array();
+			$entries = [];
 			break;
 		}
 

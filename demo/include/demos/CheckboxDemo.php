@@ -45,24 +45,26 @@ class CheckboxDemo extends Demo
 		$checkbox_tree->setTree($tree);
 
 		// checkbox list
-		$checkbox_list_options = array(
-			0 => 'McIntosh',
-			1 => 'Courtland',
-			2 => 'Golden Delicious',
-			3 => 'Fuji',
-			4 => 'Granny Smith');
+		$checkbox_list_options = [
+            0 => 'McIntosh',
+            1 => 'Courtland',
+            2 => 'Golden Delicious',
+            3 => 'Fuji',
+            4 => 'Granny Smith'
+        ];
 
 		$checkbox_list = $ui->getWidget('checkbox_list');
 		$checkbox_list->addOptionsByArray($checkbox_list_options);
 
 		// checkbox entry list
-		$checkbox_entry_list_options = array(
-			0 => 'Apple',
-			1 => 'Orange',
-			2 => 'Banana',
-			3 => 'Pear',
-			4 => 'Pineapple',
-			5 => 'Kiwi');
+		$checkbox_entry_list_options = [
+            0 => 'Apple',
+            1 => 'Orange',
+            2 => 'Banana',
+            3 => 'Pear',
+            4 => 'Pineapple',
+            5 => 'Kiwi',
+        ];
 
 		$checkbox_entry_list = $ui->getWidget('checkbox_entry_list');
 		$checkbox_entry_list->addOptionsByArray($checkbox_entry_list_options);

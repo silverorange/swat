@@ -19,58 +19,59 @@ class RadioListDemo extends Demo
 
 		$radiolist->addOption(
 			new SwatOption('mackintosh', 'McIntosh'),
-			array('classes' => 'apple'));
+			['classes' => 'apple']);
 
 		$radiolist->addOption(
 			new SwatOption('courtland', 'Courtland'),
-			array('classes' => 'apple'));
+			['classes' => 'apple']);
 
 		$radiolist->addOption(
 			new SwatOption('golden', 'Golden Delicious'),
-			array('classes' => 'apple'));
+			['classes' => 'apple']);
 
 		$radiolist->addOption(
 			new SwatOption('fuji', 'Fuji'),
-			array('classes' => 'apple'));
+			['classes' => 'apple']);
 
 		$radiolist->addOption(
 			new SwatOption('smith', 'Granny Smith'),
-			array('classes' => 'apple'));
+			['classes' => 'apple']);
 
 		$radiolist->addOption(
 			new SwatOption('navel', 'Navel'),
-			array('classes' => 'orange'));
+			['classes' => 'orange']);
 
 		$radiolist->addOption(
 			new SwatOption('blood', 'Blood'),
-			array('classes' => 'orange'));
+			['classes' => 'orange']);
 
 		$radiolist->addOption(
 			new SwatOption('florida', 'Florida'),
-			array('classes' => 'orange'));
+			['classes' => 'orange']);
 
 		$radiolist->addOption(
 			new SwatOption('california', 'California'),
-			array('classes' => 'orange'));
+			['classes' => 'orange']);
 
 		$radiolist->addOption(
 			new SwatOption('mandarin', 'Mandarin'),
-			array('classes' => 'orange'));
+			['classes' => 'orange']);
 
 		$radiolist->addDivider();
 		$radiolist->addOption(new SwatOption(9, 'I don\'t like fruit'));
 
 		$radiotable = $ui->getWidget('radiotable');
-		$radiotable->addOptionsByArray(array(
-			0 => 'Apple',
-			1 => 'Orange',
-			2 => 'Banana',
-			3 => 'Pear',
-			4 => 'Pineapple',
-			5 => 'Kiwi',
-			6 => 'Tangerine',
-			7 => 'Grapefruit',
-			8 => 'Strawberry'));
+		$radiotable->addOptionsByArray([
+            0 => 'Apple',
+            1 => 'Orange',
+            2 => 'Banana',
+            3 => 'Pear',
+            4 => 'Pineapple',
+            5 => 'Kiwi',
+            6 => 'Tangerine',
+            7 => 'Grapefruit',
+            8 => 'Strawberry',
+        ]);
 		$radiotable->addDivider();
 		$radiotable->addOption(new SwatOption(9, 'I don\'t like fruit'));
 	}

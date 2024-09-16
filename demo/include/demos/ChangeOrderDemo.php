@@ -16,16 +16,17 @@ class ChangeOrderDemo extends Demo
 	public function buildDemoUI(SwatUI $ui)
 	{
 		$order_widget = $ui->getWidget('change_order');
-		$order_widget->addOptionsByArray(array(
-			0 => 'Apple',
-			1 => 'Orange',
-			2 => 'Banana',
-			3 => 'Pear',
-			4 => 'Pineapple',
-			5 => 'Kiwi',
-			6 => 'Tangerine',
-			7 => 'Grapefruit',
-			8 => 'Strawberry'));
+		$order_widget->addOptionsByArray([
+            0 => 'Apple',
+            1 => 'Orange',
+            2 => 'Banana',
+            3 => 'Pear',
+            4 => 'Pineapple',
+            5 => 'Kiwi',
+            6 => 'Tangerine',
+            7 => 'Grapefruit',
+            8 => 'Strawberry',
+        ]);
 	}
 
 	// }}}

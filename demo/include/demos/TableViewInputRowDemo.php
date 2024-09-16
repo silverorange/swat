@@ -24,11 +24,11 @@ class TableViewInputRowDemo extends Demo
 
 		$ui->getWidget('note')->add($message, SwatMessageDisplay::DISMISS_OFF);
 
-		$data = array(
-			array('Apple', false, true),
-			array('Orange', false, false),
-			array('Strawberry', true, false),
-		);
+		$data = [
+            ['Apple', false, true],
+            ['Orange', false, false],
+            ['Strawberry', true, false]
+        ];
 
 		$table_view = $ui->getWidget('table_view');
 		$table_store = new SwatTableStore();

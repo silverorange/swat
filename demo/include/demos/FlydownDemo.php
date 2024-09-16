@@ -23,43 +23,43 @@ class FlydownDemo extends Demo
 
 		$flydown->addOption(
 			new SwatOption('mackintosh', 'McIntosh'),
-			array('classes' => 'apple'));
+			['classes' => 'apple']);
 
 		$flydown->addOption(
 			new SwatOption('courtland', 'Courtland'),
-			array('classes' => 'apple'));
+			['classes' => 'apple']);
 
 		$flydown->addOption(
 			new SwatOption('golden', 'Golden Delicious'),
-			array('classes' => 'apple'));
+			['classes' => 'apple']);
 
 		$flydown->addOption(
 			new SwatOption('fuji', 'Fuji'),
-			array('classes' => 'apple'));
+			['classes' => 'apple']);
 
 		$flydown->addOption(
 			new SwatOption('smith', 'Granny Smith'),
-			array('classes' => 'apple'));
+			['classes' => 'apple']);
 
 		$flydown->addOption(
 			new SwatOption('navel', 'Navel'),
-			array('classes' => 'orange'));
+			['classes' => 'orange']);
 
 		$flydown->addOption(
 			new SwatOption('blood', 'Blood'),
-			array('classes' => 'orange'));
+			['classes' => 'orange']);
 
 		$flydown->addOption(
 			new SwatOption('florida', 'Florida'),
-			array('classes' => 'orange'));
+			['classes' => 'orange']);
 
 		$flydown->addOption(
 			new SwatOption('california', 'California'),
-			array('classes' => 'orange'));
+			['classes' => 'orange']);
 
 		$flydown->addOption(
 			new SwatOption('mandarin', 'Mandarin'),
-			array('classes' => 'orange'));
+			['classes' => 'orange']);
 
 		// tree flydown
 		$tree = new SwatTreeFlydownNode(null, 'Root');
@@ -108,30 +108,27 @@ class FlydownDemo extends Demo
 
 		// cascading flydown
 		$cascade_from = $ui->getWidget('cascade_from');
-		$cascade_from->options = array(
-			new SwatOption(0, 'Apple'),
-			new SwatOption(1, 'Orange')
-		);
+		$cascade_from->options = [new SwatOption(0, 'Apple'), new SwatOption(1, 'Orange')];
 
 		$cascade_to = $ui->getWidget('cascade_to');
 		$cascade_to->cascade_from = $cascade_from;
 
-		$cascade_to->options = array(
-			0 => array(
-				new SwatOption(0, 'McIntosh'),
-				new SwatOption(1, 'Courtland'),
-				new SwatOption(2, 'Golden Delicious'),
-				new SwatOption(3, 'Fuji'),
-				new SwatOption(4, 'Granny Smith')
-			),
-			1 => array(
-				new SwatOption(0, 'Navel'),
-				new SwatOption(1, 'Blood'),
-				new SwatOption(2, 'Florida'),
-				new SwatOption(3, 'California'),
-				new SwatOption(4, 'Mandarin')
-			)
-		);
+		$cascade_to->options = [
+            0 => [
+                new SwatOption(0, 'McIntosh'),
+                new SwatOption(1, 'Courtland'),
+                new SwatOption(2, 'Golden Delicious'),
+                new SwatOption(3, 'Fuji'),
+                new SwatOption(4, 'Granny Smith'),
+            ],
+            1 => [
+                new SwatOption(0, 'Navel'),
+                new SwatOption(1, 'Blood'),
+                new SwatOption(2, 'Florida'),
+                new SwatOption(3, 'California'),
+                new SwatOption(4, 'Mandarin'),
+            ],
+        ];
 	}
 
 	// }}}

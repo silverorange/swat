@@ -16,22 +16,22 @@ class StringDemo extends Demo
 {
 	// {{{ private properties
 
-	private $strings = array(
-		'Suspendisse potenti. Cras varius diam. Fusce mollis pharetra sapien. Curabitur vel tellus vel nisi luctus tempus.',
-		'Nullam consequat metus porttitor libero. Integer rhoncus. Phasellus tortor.',
-		'Quisque quis nulla.',
-		'Vu bei Eisen p&auml;ift Keppchen, R&auml;is Blieder da dem, en n&euml;t ma\'n d\'Gaassen.',
-		'Br&eacute;t Dall Schiet hu n&euml;t, um w&auml;it onser hirem get, si Dall gemaacht Fletschen bei.',
-		'Pellentesque iaculis egestas nibh.',
-		'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;',
-		'Hello, world.',
-		'Foobar',
-		'麻生十番',
-	);
+	private $strings = [
+        'Suspendisse potenti. Cras varius diam. Fusce mollis pharetra sapien. Curabitur vel tellus vel nisi luctus tempus.',
+        'Nullam consequat metus porttitor libero. Integer rhoncus. Phasellus tortor.',
+        'Quisque quis nulla.',
+        'Vu bei Eisen p&auml;ift Keppchen, R&auml;is Blieder da dem, en n&euml;t ma\'n d\'Gaassen.',
+        'Br&eacute;t Dall Schiet hu n&euml;t, um w&auml;it onser hirem get, si Dall gemaacht Fletschen bei.',
+        'Pellentesque iaculis egestas nibh.',
+        'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;',
+        'Hello, world.',
+        'Foobar',
+        '麻生十番',
+    ];
 
-	private $text_blocks = array();
+	private $text_blocks = [];
 
-	private $unformatted_text_blocks = array();
+	private $unformatted_text_blocks = [];
 
 	// }}}
 	// {{{ public function buildDemoUI()

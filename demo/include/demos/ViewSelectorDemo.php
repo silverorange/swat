@@ -15,14 +15,11 @@ class ViewSelectorDemo extends Demo
 
 	public function buildDemoUI(SwatUI $ui)
 	{
-		$data = array(
-			array('images/apple.png', 28, 28, 'Apple', 'red', false, true,
-				new SwatDate('2005-09-01'), 0.5),
-			array('images/orange.png', 28, 28, 'Orange', 'orange', false, false,
-				new SwatDate('2005-04-20'), 0.75),
-			array('images/strawberry.png', 28, 28, 'Strawberry', 'red', true, false,
-				new SwatDate('2005-07-05'), 0.6)
-		);
+		$data = [
+            ['images/apple.png', 28, 28, 'Apple', 'red', false, true, new SwatDate('2005-09-01'), 0.5],
+            ['images/orange.png', 28, 28, 'Orange', 'orange', false, false, new SwatDate('2005-04-20'), 0.75],
+            ['images/strawberry.png', 28, 28, 'Strawberry', 'red', true, false, new SwatDate('2005-07-05'), 0.6],
+        ];
 
 		$table_store = new SwatTableStore();
 

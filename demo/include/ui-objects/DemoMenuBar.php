@@ -14,7 +14,7 @@ class DemoMenuBar extends SwatControl
 {
 	// {{{ protected properties
 
-	protected $entries = array();
+	protected $entries = [];
 	protected $selected_entry;
 
 	// }}}
