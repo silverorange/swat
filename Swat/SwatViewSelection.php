@@ -68,7 +68,7 @@ class SwatViewSelection extends SwatObject implements Countable, Iterator
      *
      * @return mixed the current selected item.
      */
-    public function current()
+    public function current(): mixed
     {
         return $this->selected_items[$this->current_index];
     }
@@ -78,9 +78,9 @@ class SwatViewSelection extends SwatObject implements Countable, Iterator
     /**
      * Returns the key of the current selected item
      *
-     * @return integer the key of the current selected item
+     * @return int the key of the current selected item
      */
-    public function key()
+    public function key(): int
     {
         return $this->current_index;
     }

@@ -223,9 +223,9 @@ class SwatNavBar extends SwatControl implements Countable
      *
      * This satisfies the Countable interface.
      *
-     * @return integer number of entries in this navigational bar.
+     * @return int number of entries in this navigational bar.
      */
-    public function count()
+    public function count(): int
     {
         return count($this->entries);
     }

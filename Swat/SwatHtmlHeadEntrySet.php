@@ -114,9 +114,9 @@ class SwatHtmlHeadEntrySet implements Countable, IteratorAggregate
      *
      * Fulfills the Coutnable interface.
      *
-     * @return integer the number of entries in this set.
+     * @return int the number of entries in this set.
      */
-    public function count()
+    public function count(): int
     {
         return count($this->entries);
     }
@@ -130,11 +130,11 @@ class SwatHtmlHeadEntrySet implements Countable, IteratorAggregate
      *
      * @return Iterable an iterator over the entries in this set.
      */
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         // return an array copy by design to fulfil the IteratorAggregate
         // interface.
-        return $this->entries;
+        return new ArrayIterator($this->entries);
     }
 
 

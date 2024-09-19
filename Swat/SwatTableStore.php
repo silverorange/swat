@@ -49,7 +49,7 @@ class SwatTableStore extends SwatObject implements SwatTableModel
      *
      * @return mixed the current element.
      */
-    public function current()
+    public function current(): mixed
     {
         return $this->rows[$this->current_index];
     }
@@ -59,9 +59,9 @@ class SwatTableStore extends SwatObject implements SwatTableModel
     /**
      * Returns the key of the current element
      *
-     * @return integer the key of the current element
+     * @return int the key of the current element
      */
-    public function key()
+    public function key(): int
     {
         return $this->current_index;
     }
