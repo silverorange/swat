@@ -82,16 +82,6 @@ class StringDemo extends Demo
 		$to_xhtml->content = ob_get_clean();
 	}
 
-
-
-	protected function createLayout()
-	{
-		return new SiteLayout($this->app,
-			'../include/layouts/xhtml/no-source.php');
-	}
-
-
-
 	private function testEllipsizeRight($length = 20)
 	{
 		echo '<ol class="string-demo">';
