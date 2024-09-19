@@ -98,7 +98,7 @@ class SwatRatingCellRenderer extends SwatNumericCellRenderer
             self::ROUND_UP => round($this->value, $this->precision),
             self::ROUND_NONE => $this->value,
             self::ROUND_HALF => round($this->value * 2) / 2,
-            default => $value,
+            default => $this->value,
         };
     }
 

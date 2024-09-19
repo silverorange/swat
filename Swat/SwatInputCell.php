@@ -464,8 +464,8 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
             $copy_clone = $clone->copy($id_suffix);
             $copy_clone->parent = $copy;
             $copy->clones[$replicator_id] = $copy_clone;
-            if ($copy_child->id !== null) {
-                $copy->children_by_id[$copy_child->id] = $copy_child;
+            if ($copy_clone->id !== null) {
+                $copy->children_by_id[$copy_clone->id] = $copy_clone;
             }
 
             $clone->widgets[$replicator_id] = [];
