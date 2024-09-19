@@ -12,7 +12,7 @@
  * @lisence   http://www.gnu.org/copyleft/lesser.html LGPL Lisence 2.1
  * @see       SwatTile
  */
-class SwatTileView extends SwatView implements SwatUIParent
+class SwatTileView extends SwatView
 {
 
 
