@@ -27,12 +27,7 @@ pipeline {
                 sh '''
                     master_sha=$(git rev-parse origin/master)
                     newest_sha=$(git rev-parse HEAD)
-                    ./vendor/bin/phpcs \
-                    --standard=SilverorangeTransitionalPrettier \
-                    --tab-width=4 \
-                    --encoding=utf-8 \
-                    --warning-severity=0 \
-                    --extensions=php \
+                    composer run phpcs
                     $(git diff --diff-filter=ACRM --name-only $master_sha...$newest_sha)
                 '''
             }
@@ -43,13 +38,13 @@ pipeline {
                 branch 'master'
             }
             steps {
-                sh './vendor/bin/phpcs'
+                sh 'composer run phpcs'
             }
         }
 
         stage('Check if Pretty') {
             steps {
-                sh 'yarn check-if-pretty'
+                sh 'yarn run prettier'
             }
         }
     }

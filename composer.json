@@ -3,7 +3,7 @@
 	"description": "Web application toolkit.",
 	"type": "library",
 	"keywords": [ "swat", "toolkit", "widget" ],
-	"homepage": "https://code.silverorange.com/swat",
+	"homepage": "https://github.com/silverorange/swat",
 	"license": "LGPL-2.1",
 	"authors": [
 		{
@@ -38,7 +38,10 @@
 			"only": ["silverorange/*"]
 		}
 	],
-	"require": {
+    "autoload": {
+        "classmap": [ "Swat/", "SwatDB/", "SwatI18N/" ]
+    },
+    "require": {
 		"php": ">=8.1.0",
 		"ext-dom": "*",
 		"ext-iconv": "*",
@@ -46,19 +49,25 @@
 		"ext-mbstring": "*",
 		"ext-pcre": "*",
 		"pear/pear_exception": "^1.0.0",
+		"silverorange/concentrate": "^3.0",
 		"silverorange/mdb2": "^3.1.1",
-		"silverorange/concentrate": "^2.0.0",
 		"silverorange/yui": "^1.0.11"
 	},
 	"require-dev": {
-		"silverorange/coding-standard": "^1.0.0"
-	},
-	"autoload": {
-		"classmap": [ "Swat/", "SwatDB/", "SwatI18N/" ]
+		"cviebrock/package-checker": "dev-main",
+		"friendsofphp/php-cs-fixer": "^3.64",
+		"phpstan/phpstan": "^1.12",
+		"rector/rector": "^1.2",
+		"silverorange/php-coding-tools": "^1.4"
 	},
 	"scripts": {
-		"lint": "./vendor/bin/phpcs",
-		"post-install-cmd": "./vendor/bin/phpcs --config-set installed_paths vendor/silverorange/coding-standard/src",
-		"post-update-cmd": "./vendor/bin/phpcs --config-set installed_paths vendor/silverorange/coding-standard/src"
-	}
+        "phpcs": "./vendor/bin/php-cs-fixer check --config=./.php-cs-fixer.php -v",
+        "phpcs:fix": "./vendor/bin/php-cs-fixer fix --config=./.php-cs-fixer.php -v",
+        "phpstan": "./vendor/bin/phpstan",
+        "rector": "./vendor/bin/rector --dry-run",
+        "rector:fix": "./vendor/bin/rector"
+    },
+    "config": {
+        "sort-packages": true
+    }
 }
