@@ -21,7 +21,7 @@ class SwatCheckboxTree {
   }
 
   static compose(second, first) {
-    return function(x) {
+    return function (x) {
       return second(first(x));
     };
   }
@@ -42,23 +42,20 @@ class SwatCheckboxTree {
    */
   static walk(container, parents, chain, effect) {
     return Array.from(container.querySelectorAll(':scope > ul > li'))
-      .map(function(item) {
+      .map(function (item) {
         return {
           item,
           input: item.querySelector(':scope > span > input[type="checkbox"]')
         };
       })
-      .map(obj => {
+      .map((obj) => {
         const item = obj.item;
         const input = obj.input;
         const link = input !== null ? chain(input) : SwatCheckboxTree.identity;
 
         const children = SwatCheckboxTree.walk(
           item,
-          SwatCheckboxTree.compose(
-            parents,
-            link
-          ),
+          SwatCheckboxTree.compose(parents, link),
           chain,
           effect
         );
@@ -67,10 +64,7 @@ class SwatCheckboxTree {
           effect(input, parents, children);
         }
 
-        return SwatCheckboxTree.compose(
-          link,
-          children
-        );
+        return SwatCheckboxTree.compose(link, children);
       })
       .reduce(SwatCheckboxTree.compose, SwatCheckboxTree.identity);
   }
@@ -88,8 +82,8 @@ class SwatCheckboxTree {
     const isChecked = SwatCheckboxTree.walk(
       container,
       SwatCheckboxTree.identity,
-      function(input) {
-        return function(checked) {
+      function (input) {
+        return function (checked) {
           return (input.disabled || input.checked) && checked;
         };
       },
@@ -121,8 +115,8 @@ class SwatCheckboxTree {
     const checkAll = SwatCheckboxTree.walk(
       container,
       SwatCheckboxTree.identity,
-      function(input) {
-        return function(state) {
+      function (input) {
+        return function (state) {
           if (state.disabled !== undefined) {
             input.disabled = state.disabled;
             input.checked = false;
@@ -136,7 +130,7 @@ class SwatCheckboxTree {
         };
       },
       // After we call the side effect we also update the state of the check all
-      function(input, parents, children) {
+      function (input, parents, children) {
         effect(input, parents, children);
         input.addEventListener('change', updateCheckAll);
       }
@@ -146,7 +140,7 @@ class SwatCheckboxTree {
     this.updateCheckAll = updateCheckAll;
 
     // The this.checkAll property is required by SwatCheckAll.
-    this.checkAll = checked => {
+    this.checkAll = (checked) => {
       checkAll({ checked: checked });
     };
   }
@@ -162,8 +156,8 @@ function SwatCheckboxChildDependencyTree(id) {
    * When an option is checked we check all children.
    * When an option is unchecked we uncheck all parents.
    */
-  return new SwatCheckboxTree(id, function(input, parents, children) {
-    const onChange = function() {
+  return new SwatCheckboxTree(id, function (input, parents, children) {
+    const onChange = function () {
       if (input.checked) {
         children({ checked: true });
       } else {
@@ -194,8 +188,8 @@ function SwatCheckboxParentDependencyTree(id) {
    * When an option is checked we check all parents.
    * When an option is unchecked we uncheck all children.
    */
-  return new SwatCheckboxTree(id, function(input, parents, children) {
-    const onChange = function() {
+  return new SwatCheckboxTree(id, function (input, parents, children) {
+    const onChange = function () {
       if (input.checked) {
         parents({ checked: true });
       } else {

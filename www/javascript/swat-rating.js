@@ -82,22 +82,22 @@ class SwatRating {
 
       star_div.appendChild(star);
 
-      star.addEventListener('focus', e => {
+      star.addEventListener('focus', (e) => {
         this.handleFocus(e, star_number);
       });
-      star.addEventListener('blur', e => {
+      star.addEventListener('blur', (e) => {
         this.handleBlur(e, star_number);
       });
-      star.addEventListener('mouseover', e => {
+      star.addEventListener('mouseover', (e) => {
         this.handleFocus(e, star_number);
       });
-      star.addEventListener('mouseout', e => {
+      star.addEventListener('mouseout', (e) => {
         this.handleBlur(e, star_number);
       });
-      star.addEventListener('click', e => {
+      star.addEventListener('click', (e) => {
         this.handleClick(e, star_number);
       });
-      star.addEventListener('keypress', e => {
+      star.addEventListener('keypress', (e) => {
         if (e.key === 'Enter' || e.key === 'Space') {
           e.preventDefault();
           this.handleClick(e, star_number);

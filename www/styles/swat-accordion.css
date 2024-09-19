@@ -1,59 +1,58 @@
 ul.swat-accordion {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	border: 1px solid #dcceb2;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #dcceb2;
 }
 
 li.swat-accordion-page {
-	display: block;
-	list-style-type: none;
-	margin: 1px;
+  display: block;
+  list-style-type: none;
+  margin: 1px;
 }
 
 li.swat-accordion-page .swat-accordion-page-toggle {
-	display: block;
-	background: #f8f6f0;
-	padding: 2px 6px;
-	text-decoration: none;
+  display: block;
+  background: #f8f6f0;
+  padding: 2px 6px;
+  text-decoration: none;
 }
 
-
 li.swat-accordion-page .swat-accordion-page-toggle:hover {
-	background: #f1ebdf;
+  background: #f1ebdf;
 }
 
 li.swat-accordion-page .swat-accordion-page-toggle em {
-	font-style: normal;
+  font-style: normal;
 }
 
 li.swat-accordion-page .swat-accordion-page-content {
-	padding: 16px;
+  padding: 16px;
 }
 
 li.swat-accordion-page .swat-accordion-toggle-status {
-	display: block;
-	float: right;
-	width: 11px;
-	height: 11px;
-	margin-right: -2px;
-	background: url(../images/swat-accordion-open.png) top left no-repeat;
-	transition: all 0.25s;
-	transform-origin: 5px 7px;
+  display: block;
+  float: right;
+  width: 11px;
+  height: 11px;
+  margin-right: -2px;
+  background: url(../images/swat-accordion-open.png) top left no-repeat;
+  transition: all 0.25s;
+  transform-origin: 5px 7px;
 }
 
 li.swat-accordion-page-closed .swat-accordion-toggle-status {
-	transform: rotate(90deg);
+  transform: rotate(90deg);
 }
 
 .ie7 li.swat-accordion-page-opened .swat-accordion-toggle-status,
 .ie8 li.swat-accordion-page-opened .swat-accordion-toggle-status {
-	margin-right: -4px;
+  margin-right: -4px;
 }
 
 .ie7 li.swat-accordion-page-closed .swat-accordion-toggle-status,
 .ie8 li.swat-accordion-page-closed .swat-accordion-toggle-status {
-	background: url(../images/swat-accordion-closed.png) top left no-repeat;
-	margin-top: 2px;
-	margin-right: -5px;
+  background: url(../images/swat-accordion-closed.png) top left no-repeat;
+  margin-top: 2px;
+  margin-right: -5px;
 }

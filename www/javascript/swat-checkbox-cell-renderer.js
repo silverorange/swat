@@ -35,15 +35,15 @@ class SwatCheckboxCellRenderer {
         this.check_list.push(input_nodes[i]);
         this.updateNode(input_nodes[i]);
 
-        input_nodes[i].addEventListener('click', e => {
+        input_nodes[i].addEventListener('click', (e) => {
           this.handleClick(e);
         });
-        input_nodes[i].addEventListener('dblclick', e => {
+        input_nodes[i].addEventListener('dblclick', (e) => {
           this.handleClick(e);
         });
 
         // prevent selecting label text when shift key is held
-        input_nodes[i].parentElement.addEventListener('mousedown', e => {
+        input_nodes[i].parentElement.addEventListener('mousedown', (e) => {
           this.handleMouseDown(e);
         });
       }

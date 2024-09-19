@@ -1,73 +1,83 @@
 {
-	"name": "silverorange/swat",
-	"description": "Web application toolkit.",
-	"type": "library",
-	"keywords": [ "swat", "toolkit", "widget" ],
-	"homepage": "https://github.com/silverorange/swat",
-	"license": "LGPL-2.1",
-	"authors": [
-		{
-			"name": "Charles Waddell",
-			"email": "charles@silverorange.com"
-		},
-		{
-			"name": "Isaac Grant",
-			"email": "isaac@silverorange.com"
-		},
-		{
-			"name": "Michael Gauthier",
-			"email": "mike@silverorange.com"
-		},
-		{
-			"name": "Nathan Frederikson",
-			"email": "nathan@silverorange.com"
-		},
-		{
-			"name": "Nick Burka",
-			"email": "nick@silverorange.com"
-		},
-		{
-			"name": "Steven Garrity",
-			"email": "steven@silverorange.com"
-		}
-	],
-	"repositories": [
-		{
-			"type": "composer",
-			"url": "https://composer.silverorange.com",
-			"only": ["silverorange/*"]
-		}
-	],
-    "autoload": {
-        "classmap": [ "Swat/", "SwatDB/", "SwatI18N/" ]
+  "name": "silverorange/swat",
+  "description": "Web application toolkit.",
+  "type": "library",
+  "keywords": [
+    "swat",
+    "toolkit",
+    "widget"
+  ],
+  "homepage": "https://github.com/silverorange/swat",
+  "license": "LGPL-2.1",
+  "authors": [
+    {
+      "name": "Charles Waddell",
+      "email": "charles@silverorange.com"
     },
-    "require": {
-		"php": ">=8.1.0",
-		"ext-dom": "*",
-		"ext-iconv": "*",
-		"ext-intl": "*",
-		"ext-mbstring": "*",
-		"ext-pcre": "*",
-		"pear/pear_exception": "^1.0.0",
-		"silverorange/concentrate": "^3.0",
-		"silverorange/mdb2": "^3.1.1",
-		"silverorange/yui": "^1.0.11"
-	},
-	"require-dev": {
-		"cviebrock/package-checker": "dev-main",
-		"friendsofphp/php-cs-fixer": "^3.64",
-		"phpstan/phpstan": "^1.12",
-		"rector/rector": "^1.2",
-		"silverorange/php-coding-tools": "^1.4"
-	},
-	"scripts": {
-        "phpcs": "./vendor/bin/php-cs-fixer check --config=./.php-cs-fixer.php -v",
-        "phpcs:fix": "./vendor/bin/php-cs-fixer fix --config=./.php-cs-fixer.php -v",
-        "phpstan": "./vendor/bin/phpstan",
-        "rector": "./vendor/bin/rector --dry-run",
-        "rector:fix": "./vendor/bin/rector"
+    {
+      "name": "Isaac Grant",
+      "email": "isaac@silverorange.com"
     },
-    "config": {
-        "sort-packages": true
+    {
+      "name": "Michael Gauthier",
+      "email": "mike@silverorange.com"
+    },
+    {
+      "name": "Nathan Frederikson",
+      "email": "nathan@silverorange.com"
+    },
+    {
+      "name": "Nick Burka",
+      "email": "nick@silverorange.com"
+    },
+    {
+      "name": "Steven Garrity",
+      "email": "steven@silverorange.com"
     }
+  ],
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://composer.silverorange.com",
+      "only": [
+        "silverorange/*"
+      ]
+    }
+  ],
+  "autoload": {
+    "classmap": [
+      "Swat/",
+      "SwatDB/",
+      "SwatI18N/"
+    ]
+  },
+  "require": {
+    "php": ">=8.1.0",
+    "ext-dom": "*",
+    "ext-iconv": "*",
+    "ext-intl": "*",
+    "ext-mbstring": "*",
+    "ext-pcre": "*",
+    "pear/pear_exception": "^1.0.0",
+    "silverorange/concentrate": "^3.0",
+    "silverorange/mdb2": "^3.1.1",
+    "silverorange/yui": "^1.0.11"
+  },
+  "require-dev": {
+    "cviebrock/package-checker": "dev-main",
+    "friendsofphp/php-cs-fixer": "^3.64",
+    "phpstan/phpstan": "^1.12",
+    "rector/rector": "^1.2",
+    "silverorange/php-coding-tools": "^1.4"
+  },
+  "scripts": {
+    "phpcs": "./vendor/bin/php-cs-fixer check --config=./.php-cs-fixer.php -v",
+    "phpcs:fix": "./vendor/bin/php-cs-fixer fix --config=./.php-cs-fixer.php -v",
+    "phpstan": "./vendor/bin/phpstan",
+    "rector": "./vendor/bin/rector --dry-run",
+    "rector:fix": "./vendor/bin/rector"
+  },
+  "config": {
+    "sort-packages": true
+  }
 }
