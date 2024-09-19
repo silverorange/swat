@@ -176,15 +176,6 @@ abstract class SwatUIObject extends SwatObject
         );
     }
 
-
-
-    public function addInlineScript($script)
-    {
-        $this->inline_scripts->add($script);
-    }
-
-
-
     /**
      * Gets the first ancestor object of a specific class
      *
