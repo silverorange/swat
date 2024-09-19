@@ -118,7 +118,7 @@ abstract class SwatHtmlHeadEntry extends SwatObject
      */
     public function getIECondition()
     {
-        return $this->ie_conditional;
+        return $this->ie_condition;
     }
 
 
