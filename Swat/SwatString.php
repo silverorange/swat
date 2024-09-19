@@ -229,20 +229,20 @@ class SwatString extends SwatObject
         $blocklevel_then_break =
             '/(<(' . $blocklevel_elements . ')[^<>]*?>)\n/siu';
 
-        $text = preg_replace($blocklevel_then_break, '\\1', $text);
+        $text = preg_replace($blocklevel_then_break, '\1', $text);
 
         // remove line break from line break followed by an ending block-level
         // tag
         $break_then_ending_blocklevel =
             '/\n(<\/(' . $blocklevel_elements . ')[^<>]*?>)/siu';
 
-        $text = preg_replace($break_then_ending_blocklevel, '\\1', $text);
+        $text = preg_replace($break_then_ending_blocklevel, '\1', $text);
 
         // remove line break from ending breaking tag followed by a line break
         $ending_breaking_then_break =
             '/(<\/(' . $breaking_elements . ')[^<>]*?>)\n/siu';
 
-        $text = preg_replace($ending_breaking_then_break, '\\1', $text);
+        $text = preg_replace($ending_breaking_then_break, '\1', $text);
 
         // temporarily remove preformatted content so it is not auto-formatted
         $preformatted_search =
