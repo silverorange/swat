@@ -1,71 +1,59 @@
 <?php
 
 /**
- * The menu for the Swat Demo Application
+ * The menu for the Swat Demo Application.
  *
  * This is a simple menu that takes a flat array of titles and links and
  * displays them in an unordered list.
  *
- * @package   SwatDemo
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class DemoMenuBar extends SwatControl
 {
+    protected $entries = [];
+    protected $selected_entry;
 
+    public function display()
+    {
+        $ul_tag = new SwatHtmlTag('ul');
+        $ul_tag->id = $this->id;
+        $ul_tag->class = 'demo-menu-bar';
 
-	protected $entries = [];
-	protected $selected_entry;
+        $a_tag = new SwatHtmlTag('a');
+        $span_tag = new SwatHtmlTag('span');
+        $li_tag = new SwatHtmlTag('li');
 
+        $ul_tag->open();
 
+        foreach ($this->entries as $demo => $title) {
+            $li_tag->class = ($this->selected_entry == $demo) ?
+                'demo-menu-bar-selected' : null;
 
-	public function display()
-	{
-		$ul_tag = new SwatHtmlTag('ul');
-		$ul_tag->id = $this->id;
-		$ul_tag->class = 'demo-menu-bar';
+            $li_tag->open();
 
-		$a_tag = new SwatHtmlTag('a');
-		$span_tag = new SwatHtmlTag('span');
-		$li_tag = new SwatHtmlTag('li');
+            if ($this->selected_entry == $demo) {
+                $span_tag->setContent($title);
+                $span_tag->display();
+            } else {
+                $a_tag->href = 'index.php?demo=' . $demo;
+                $a_tag->setContent($title);
+                $a_tag->display();
+            }
 
-		$ul_tag->open();
+            $li_tag->close();
+        }
 
-		foreach ($this->entries as $demo => $title) {
-			$li_tag->class = ($this->selected_entry == $demo) ?
-				'demo-menu-bar-selected' : null;
+        $ul_tag->close();
+    }
 
-			$li_tag->open();
+    public function setEntries(array $entries)
+    {
+        $this->entries = $entries;
+    }
 
-			if ($this->selected_entry == $demo) {
-				$span_tag->setContent($title);
-				$span_tag->display();
-			} else {
-				$a_tag->href = 'index.php?demo='.$demo;
-				$a_tag->setContent($title);
-				$a_tag->display();
-			}
-
-			$li_tag->close();
-		}
-
-		$ul_tag->close();
-	}
-
-
-
-	public function setEntries(array $entries)
-	{
-		$this->entries = $entries;
-	}
-
-
-
-	public function setSelectedEntry($entry)
-	{
-		$this->selected_entry = $entry;
-	}
-
+    public function setSelectedEntry($entry)
+    {
+        $this->selected_entry = $entry;
+    }
 }
-
-?>

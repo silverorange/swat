@@ -2,20 +2,17 @@
 
 /**
  * A cell renderer that displays a message if it is asked to display
- * null text
+ * null text.
  *
- * @package   Swat
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatNullTextCellRenderer extends SwatTextCellRenderer
 {
-
-
     /**
      * The text to display in this cell if the
      * {@link SwatTextCellRenderer::$text} proeprty is null when the render()
-     * method is called
+     * method is called.
      *
      * @var string
      */
@@ -25,14 +22,12 @@ class SwatNullTextCellRenderer extends SwatTextCellRenderer
      * Whether to test the {@link SwatTextCellRenderer::$text} property for
      * null using strict equality.
      *
-     * @var boolean
+     * @var bool
      */
     public $strict = false;
 
-
-
     /**
-     * Creates a null text cell renderer
+     * Creates a null text cell renderer.
      */
     public function __construct()
     {
@@ -43,10 +38,8 @@ class SwatNullTextCellRenderer extends SwatTextCellRenderer
         );
     }
 
-
-
     /**
-     * Renders this cell renderer
+     * Renders this cell renderer.
      */
     public function render()
     {
@@ -69,5 +62,4 @@ class SwatNullTextCellRenderer extends SwatTextCellRenderer
             parent::render();
         }
     }
-
 }

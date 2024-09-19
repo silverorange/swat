@@ -1,21 +1,18 @@
 <?php
 
 /**
- * An image button widget
+ * An image button widget.
  *
  * This widget displays as an XHTML form image button, so it must be used
  * within {@link SwatForm}.
  *
- * @package   Swat
  * @copyright 2008-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatImageButton extends SwatButton
 {
-
-
     /**
-     * Image
+     * Image.
      *
      * The src attribute in the XHTML input tag.
      *
@@ -24,7 +21,7 @@ class SwatImageButton extends SwatButton
     public $image;
 
     /**
-     * Optional array of values to substitute into the image property
+     * Optional array of values to substitute into the image property.
      *
      * Uses vsprintf() syntax, for example:
      *
@@ -38,18 +35,16 @@ class SwatImageButton extends SwatButton
     public $values = [];
 
     /**
-     * Image alt text
+     * Image alt text.
      *
      * The alt attribute in the input tag.
      *
      * @var string
      */
-    public $alt = null;
-
-
+    public $alt;
 
     /**
-     * Does button processing
+     * Does button processing.
      *
      * Sets whether this button has been clicked and also updates the form
      * this button belongs to with a reference to this button if this button
@@ -68,10 +63,8 @@ class SwatImageButton extends SwatButton
         }
     }
 
-
-
     /**
-     * Displays this image button
+     * Displays this image button.
      *
      * Outputs an XHTML input tag.
      */
@@ -115,25 +108,22 @@ class SwatImageButton extends SwatButton
         $input_tag->display();
 
         if (
-            $this->show_processing_throbber ||
-            $this->confirmation_message !== null
+            $this->show_processing_throbber
+            || $this->confirmation_message !== null
         ) {
             Swat::displayInlineJavaScript($this->getInlineJavaScript());
         }
     }
 
-
-
     /**
-     * Gets the array of CSS classes that are applied to this button
+     * Gets the array of CSS classes that are applied to this button.
      *
-     * @return array the array of CSS classes that are applied to this button.
+     * @return array the array of CSS classes that are applied to this button
      */
     protected function getCSSClassNames()
     {
         $classes = ['swat-image-button'];
-        $classes = array_merge($classes, parent::getCSSClassNames());
-        return $classes;
-    }
 
+        return array_merge($classes, parent::getCSSClassNames());
+    }
 }

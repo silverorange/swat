@@ -1,67 +1,65 @@
 <?php
 
 /**
- * Information for formatting currency values
+ * Information for formatting currency values.
  *
- * @package   SwatI18N
  * @copyright 2007-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ *
  * @see       SwatLocale::formatCurrency()
  * @see       SwatLocale::getCurrencyFormat()
  */
 class SwatI18NCurrencyFormat extends SwatI18NNumberFormat
 {
-
-
     /**
-     * Number of fractional digits
+     * Number of fractional digits.
      *
-     * @var integer
+     * @var int
      */
     public $fractional_digits;
 
     /**
-     * Whether or not currency symbol preceds a positive value
+     * Whether or not currency symbol preceds a positive value.
      *
      * True if <code>$symbol</code> precedes a positive value, false if it
      * succeeds one.
      *
-     * @var boolean
+     * @var bool
      */
     public $p_cs_precedes;
 
     /**
-     * Whether or not currency symbol preceds a negative value
+     * Whether or not currency symbol preceds a negative value.
      *
      * True if <code>$symbol</code> precedes a negative value, false if it
      * succeeds one.
      *
-     * @var boolean
+     * @var bool
      */
     public $n_cs_precedes;
 
     /**
-     * Whether or not currency symbol is separated by space for positive values
+     * Whether or not currency symbol is separated by space for positive values.
      *
      * True if a space separates <code>$symbol</code> from a positive value,
      * false otherwise.
      *
-     * @var boolean
+     * @var bool
      */
     public $p_separate_by_space;
 
     /**
-     * Whether or not currency symbol is separated by space for negative values
+     * Whether or not currency symbol is separated by space for negative values.
      *
      * True if a space separates <code>$symbol</code> from a negative value,
      * false otherwise.
      *
-     * @var boolean
+     * @var bool
      */
     public $n_separate_by_space;
 
     /**
-     * Positive sign position
+     * Positive sign position.
      *
      * <pre>
      * 0 - Parentheses surround the quantity and currency_symbol
@@ -71,12 +69,12 @@ class SwatI18NCurrencyFormat extends SwatI18NNumberFormat
      * 4 - The sign string immediately succeeds the currency_symbol
      * </pre>
      *
-     * @var integer
+     * @var int
      */
     public $p_sign_position;
 
     /**
-     * Negative sign position
+     * Negative sign position.
      *
      * <pre>
      * 0 - Parentheses surround the quantity and currency_symbol
@@ -86,37 +84,35 @@ class SwatI18NCurrencyFormat extends SwatI18NNumberFormat
      * 4 - The sign string immediately succeeds the currency_symbol
      * </pre>
      *
-     * @var integer
+     * @var int
      */
     public $n_sign_position;
 
     /**
-     * Positive sign
+     * Positive sign.
      *
      * @var string
      */
     public $p_sign;
 
     /**
-     * Negative sign
+     * Negative sign.
      *
      * @var string
      */
     public $n_sign;
 
     /**
-     * Currency symbol
+     * Currency symbol.
      *
      * @var string
      */
     public $symbol;
 
-
-
     /**
-     * Gets a string representation of this format
+     * Gets a string representation of this format.
      *
-     * @return string a string representation of this format.
+     * @return string a string representation of this format
      */
     public function __toString(): string
     {
@@ -152,5 +148,4 @@ class SwatI18NCurrencyFormat extends SwatI18NNumberFormat
 
         return $string;
     }
-
 }

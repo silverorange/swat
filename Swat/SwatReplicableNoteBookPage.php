@@ -1,11 +1,11 @@
 <?php
 
 /**
- * A container that replicates itself and its children as pages of a notebook
+ * A container that replicates itself and its children as pages of a notebook.
  *
- * @package    Swat
  * @copyright  2008 silverorange
  * @license    http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ *
  * @deprecated Use a regular {@link SwatNoteBook} containing a
  *             {@link SwatReplicableNoteBookChild}. Within the
  *             SwatReplicableNoteBookChild, place one or more
@@ -13,13 +13,10 @@
  *             title-setting functionality of SwatReplicableNoteBookPage is
  *             not available using this approach.
  */
-class SwatReplicableNoteBookPage extends SwatReplicableContainer implements
-    SwatNoteBookChild
+class SwatReplicableNoteBookPage extends SwatReplicableContainer implements SwatNoteBookChild
 {
-
-
     /**
-     * Initilizes this replicable notebook page
+     * Initilizes this replicable notebook page.
      */
     public function init()
     {
@@ -55,19 +52,16 @@ class SwatReplicableNoteBookPage extends SwatReplicableContainer implements
         $this->add($note_book);
     }
 
-
-
     /**
-     * Gets the notebook pages of this replicable notebook page
+     * Gets the notebook pages of this replicable notebook page.
      *
      * Implements the {@link SwatNoteBookChild::getPages()} interface.
      *
      * @return array an array containing all the replicated pages of this
-     *                container.
+     *               container
      */
     public function getPages()
     {
         return $this->children;
     }
-
 }

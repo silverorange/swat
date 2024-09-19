@@ -1,20 +1,17 @@
 <?php
 
 /**
- * Image display control
+ * Image display control.
  *
  * This control simply displays a static image.
  *
- * @package   Swat
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatImageDisplay extends SwatControl
 {
-
-
     /**
-     * Image
+     * Image.
      *
      * The src attribute in the XHTML img tag.
      *
@@ -23,7 +20,7 @@ class SwatImageDisplay extends SwatControl
     public $image;
 
     /**
-     * Optional array of values to substitute into the image property
+     * Optional array of values to substitute into the image property.
      *
      * Uses vsprintf() syntax, for example:
      *
@@ -37,65 +34,63 @@ class SwatImageDisplay extends SwatControl
     public $values = [];
 
     /**
-     * Image height
+     * Image height.
      *
      * The height attribute in the XHTML img tag.
      *
-     * @var integer
+     * @var int
      */
-    public $height = null;
+    public $height;
 
     /**
-     * Image width
+     * Image width.
      *
      * The width attribute in the XHTML img tag.
      *
-     * @var integer
+     * @var int
      */
-    public $width = null;
+    public $width;
 
     /**
-     * The total height that the image occupies
+     * The total height that the image occupies.
      *
      * Extra margin will be adding to the style of the img tag if the height is
      * less than occupy_height.
      *
-     * @var integer
+     * @var int
      */
-    public $occupy_height = null;
+    public $occupy_height;
 
     /**
-     * The total width that the image occupies
+     * The total width that the image occupies.
      *
      * Extra margin will be adding to the style of the img tag if the width is
      * less than occupy_width.
      *
-     * @var integer
+     * @var int
      */
-    public $occupy_width = null;
+    public $occupy_width;
 
     /**
-     * Image title
+     * Image title.
      *
      * The title attribute in the XHTML img tag.
      *
      * @var string
      */
-    public $title = null;
+    public $title;
 
     /**
-     * Image alt text
+     * Image alt text.
      *
      * The alt attribute in the XHTML img tag.
      *
      * @var string
      */
-    public $alt = null;
-
-
+    public $alt;
 
     /**
-     * Displays this image
+     * Displays this image.
      */
     public function display()
     {
@@ -141,8 +136,6 @@ class SwatImageDisplay extends SwatControl
         $image_tag->display();
     }
 
-
-
     public static function getOccupyMargin(
         $width,
         $height,
@@ -177,19 +170,16 @@ class SwatImageDisplay extends SwatControl
         return $style;
     }
 
-
-
     /**
-     * Gets the array of CSS classes that are applied to this image display
+     * Gets the array of CSS classes that are applied to this image display.
      *
      * @return array the array of CSS classes that are applied to this image
-     *                display.
+     *               display
      */
     protected function getCSSClassNames()
     {
         $classes = ['swat-image-display'];
-        $classes = array_merge($classes, parent::getCSSClassNames());
-        return $classes;
-    }
 
+        return array_merge($classes, parent::getCSSClassNames());
+    }
 }

@@ -1,28 +1,25 @@
 <?php
 
 /**
- * A button widget
+ * A button widget.
  *
  * This widget displays as an XHTML form submit button, so it must be used
  * within {@link SwatForm}.
  *
- * @package   Swat
  * @copyright 2004-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatButton extends SwatInputControl
 {
-
-
     /**
-     * The visible text on this button
+     * The visible text on this button.
      *
      * @var string
      */
-    public $title = null;
+    public $title;
 
     /**
-     * The stock id of this button
+     * The stock id of this button.
      *
      * Specifying a stock id before the {@link SwatButton::init()} method is
      * called causes this button to be initialized with a set of stock values.
@@ -31,48 +28,48 @@ class SwatButton extends SwatInputControl
      *
      * @see SwatToolLink::setFromStock()
      */
-    public $stock_id = null;
+    public $stock_id;
 
     /**
-     * The access key for this button
+     * The access key for this button.
      *
      * The access key is used for keyboard nagivation and screen readers.
      *
      * @var string
      */
-    public $access_key = null;
+    public $access_key;
 
     /**
      * The ordinal tab index position of the XHTML input tag, or null if the
-     * tab index should be automatically set by the browser
+     * tab index should be automatically set by the browser.
      *
-     * @var integer
+     * @var int
      */
-    public $tab_index = null;
+    public $tab_index;
 
     /**
      * Whether or not to show a processing throbber when this button is
-     * clicked
+     * clicked.
      *
      * Showing a processing throbber is appropriate when this button is used
      * to submit forms that can take a long time to process. By default, the
      * processing throbber is not displayed.
      *
-     * @var boolean
+     * @var bool
      */
     public $show_processing_throbber = false;
 
     /**
-     * Optional content to display beside the processing throbber
+     * Optional content to display beside the processing throbber.
      *
      * @var string
      *
      * @see SwatButton::$show_processing_throbber
      */
-    public $processing_throbber_message = null;
+    public $processing_throbber_message;
 
     /**
-     * Optional confirmation message to display when this button is clicked
+     * Optional confirmation message to display when this button is clicked.
      *
      * If this message is specified, users will have to click through a
      * JavaScript confirmation dialog to submit the form. If this is null, no
@@ -80,34 +77,30 @@ class SwatButton extends SwatInputControl
      *
      * @var string
      */
-    public $confirmation_message = null;
-
-
+    public $confirmation_message;
 
     /**
-     * A CSS class set by the stock_id of this button
+     * A CSS class set by the stock_id of this button.
      *
      * @var string
      */
-    protected $stock_class = null;
+    protected $stock_class;
 
     /**
-     * Clicked
+     * Clicked.
      *
      * This is set to true after processing if this button was clicked.
      * The form will also contain a refernce to the clicked button in the
      * {@link SwatForm::$button} class variable.
      *
-     * @var boolean
+     * @var bool
      */
     protected $clicked = false;
 
-
-
     /**
-     * Creates a new button
+     * Creates a new button.
      *
-     * @param string $id a non-visible unique id for this widget.
+     * @param string $id a non-visible unique id for this widget
      *
      * @see SwatWidget::__construct()
      */
@@ -122,10 +115,8 @@ class SwatButton extends SwatInputControl
         $this->requires_id = true;
     }
 
-
-
     /**
-     * Initializes this widget
+     * Initializes this widget.
      *
      * Loads properties from stock if $stock_id is set, otherwise sets a
      * default stock title.
@@ -143,10 +134,8 @@ class SwatButton extends SwatInputControl
         }
     }
 
-
-
     /**
-     * Displays this button
+     * Displays this button.
      *
      * Outputs an XHTML input tag.
      */
@@ -162,17 +151,15 @@ class SwatButton extends SwatInputControl
         $input_tag->display();
 
         if (
-            $this->show_processing_throbber ||
-            $this->confirmation_message !== null
+            $this->show_processing_throbber
+            || $this->confirmation_message !== null
         ) {
             Swat::displayInlineJavaScript($this->getInlineJavaScript());
         }
     }
 
-
-
     /**
-     * Does button processing
+     * Does button processing.
      *
      * Sets whether this button has been clicked and also updates the form
      * this button belongs to with a reference to this button if this button
@@ -190,22 +177,18 @@ class SwatButton extends SwatInputControl
         }
     }
 
-
-
     /**
-     * Returns whether this button has been clicked
+     * Returns whether this button has been clicked.
      *
-     * @return boolean whether this button has been clicked.
+     * @return bool whether this button has been clicked
      */
     public function hasBeenClicked()
     {
         return $this->clicked;
     }
 
-
-
     /**
-     * Sets the values of this button to a stock type
+     * Sets the values of this button to a stock type.
      *
      * Valid stock type ids are:
      *
@@ -216,9 +199,9 @@ class SwatButton extends SwatInputControl
      * - delete
      * - cancel
      *
-     * @param string $stock_id the identifier of the stock type to use.
-     * @param boolean $overwrite_properties whether to overwrite properties if
-     *                                       they are already set.
+     * @param string $stock_id             the identifier of the stock type to use
+     * @param bool   $overwrite_properties whether to overwrite properties if
+     *                                     they are already set
      *
      * @throws SwatUndefinedStockTypeException
      */
@@ -270,14 +253,12 @@ class SwatButton extends SwatInputControl
         $this->stock_class = $class;
     }
 
-
-
     /**
-     * Get the HTML tag to display for this button
+     * Get the HTML tag to display for this button.
      *
      * Can be used by sub-classes to change the setup of the input tag.
      *
-     * @return SwatHtmlTag the HTML tag to display for this button.
+     * @return SwatHtmlTag the HTML tag to display for this button
      */
     protected function getInputTag()
     {
@@ -302,12 +283,10 @@ class SwatButton extends SwatInputControl
         return $tag;
     }
 
-
-
     /**
-     * Gets the array of CSS classes that are applied to this button
+     * Gets the array of CSS classes that are applied to this button.
      *
-     * @return array the array of CSS classes that are applied to this button.
+     * @return array the array of CSS classes that are applied to this button
      */
     protected function getCSSClassNames()
     {
@@ -325,33 +304,27 @@ class SwatButton extends SwatInputControl
             $classes[] = $this->stock_class;
         }
 
-        $classes = array_merge($classes, parent::getCSSClassNames());
-
-        return $classes;
+        return array_merge($classes, parent::getCSSClassNames());
     }
 
-
-
     /**
-     * Gets the name of the JavaScript class to instantiate for this button
+     * Gets the name of the JavaScript class to instantiate for this button.
      *
      * Subclasses of this class may want to return a subclass of the default
      * JavaScript button class.
      *
      * @return string the name of the JavaScript class to instantiate for this
-     *                 button. Defaults to 'SwatButton'.
+     *                button. Defaults to 'SwatButton'.
      */
     protected function getJavaScriptClass()
     {
         return 'SwatButton';
     }
 
-
-
     /**
-     * Gets the inline JavaScript required for this control
+     * Gets the inline JavaScript required for this control.
      *
-     * @return stirng the inline JavaScript required for this control.
+     * @return stirng the inline JavaScript required for this control
      */
     protected function getInlineJavaScript()
     {
@@ -387,5 +360,4 @@ class SwatButton extends SwatInputControl
 
         return $javascript;
     }
-
 }

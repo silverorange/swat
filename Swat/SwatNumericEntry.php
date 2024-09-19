@@ -1,52 +1,47 @@
 <?php
 
 /**
- * Base class for numeric entry widgets
+ * Base class for numeric entry widgets.
  *
- * @package   Swat
  * @copyright 2004-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatNumericEntry extends SwatEntry
 {
-
-
     /**
-     * Show Thousands Seperator
+     * Show Thousands Seperator.
      *
      * Whether or not to show a thousands separator (shown depending on
      * locale).
      *
-     * @var boolean
+     * @var bool
      */
     public $show_thousands_separator = true;
 
     /**
-     * The smallest valid number in this entry
+     * The smallest valid number in this entry.
      *
      * This is inclusive. If set to null, there is no minimum value.
      *
-     * @var double
+     * @var float
      */
-    public $minimum_value = null;
+    public $minimum_value;
 
     /**
-     * The largest valid number in this entry
+     * The largest valid number in this entry.
      *
      * This is inclusive. If set to null, there is no maximum value.
      *
-     * @var double
+     * @var float
      */
-    public $maximum_value = null;
-
-
+    public $maximum_value;
 
     /**
-     * Creates a new numeric entry widget
+     * Creates a new numeric entry widget.
      *
      * Sets the input size to 10 by default.
      *
-     * @param string $id a non-visible unique id for this widget.
+     * @param string $id a non-visible unique id for this widget
      *
      * @see SwatWidget::__construct()
      */
@@ -57,10 +52,8 @@ abstract class SwatNumericEntry extends SwatEntry
         $this->size = 10;
     }
 
-
-
     /**
-     * Checks the minimum and maximum values of this numeric entry widget
+     * Checks the minimum and maximum values of this numeric entry widget.
      */
     public function process()
     {
@@ -74,8 +67,8 @@ abstract class SwatNumericEntry extends SwatEntry
 
         if ($value !== null) {
             if (
-                $this->minimum_value !== null &&
-                $value < $this->minimum_value
+                $this->minimum_value !== null
+                && $value < $this->minimum_value
             ) {
                 $message = $this->getValidationMessage('below-minimum');
                 $minimum_value = str_replace(
@@ -92,8 +85,8 @@ abstract class SwatNumericEntry extends SwatEntry
                 $this->addMessage($message);
             }
             if (
-                $this->maximum_value !== null &&
-                $value > $this->maximum_value
+                $this->maximum_value !== null
+                && $value > $this->maximum_value
             ) {
                 $message = $this->getValidationMessage('above-maximum');
                 $maximum_value = str_replace(
@@ -112,15 +105,14 @@ abstract class SwatNumericEntry extends SwatEntry
         }
     }
 
-
-
     /**
-     * Gets a validation message for this numeric entry
+     * Gets a validation message for this numeric entry.
      *
      * @see SwatEntry::getValidationMessage()
-     * @param string $id the string identifier of the validation message.
      *
-     * @return SwatMessage the validation message.
+     * @param string $id the string identifier of the validation message
+     *
+     * @return SwatMessage the validation message
      */
     protected function getValidationMessage($id)
     {
@@ -149,34 +141,29 @@ abstract class SwatNumericEntry extends SwatEntry
         return $message;
     }
 
-
-
     /**
-     * Gets the numeric value of this widget
+     * Gets the numeric value of this widget.
      *
      * This allows each widget to parse raw values how they want to get numeric
      * values.
      *
-     * @param string $value the raw value to use to get the numeric value.
+     * @param string $value the raw value to use to get the numeric value
      *
      * @return mixed the numeric value of this entry widget or null if no
-     *                numeric value is available.
+     *               numeric value is available
      */
     abstract protected function getNumericValue($value);
 
-
-
     /**
-     * Gets the array of CSS classes that are applied to this entry
+     * Gets the array of CSS classes that are applied to this entry.
      *
      * @return array the array of CSS classes that are applied to this
-     *                entry.
+     *               entry
      */
     protected function getCSSClassNames()
     {
         $classes = ['swat-numeric-entry'];
-        $classes = array_merge($classes, parent::getCSSClassNames());
-        return $classes;
-    }
 
+        return array_merge($classes, parent::getCSSClassNames());
+    }
 }

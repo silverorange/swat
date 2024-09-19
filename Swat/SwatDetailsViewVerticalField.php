@@ -2,23 +2,20 @@
 
 /**
  * A visible field in a SwatDetailsView that has its label displayed above
- * its content
+ * its content.
  *
- * @package   Swat
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDetailsViewVerticalField extends SwatDetailsViewField
 {
-
-
     /**
-     * Displays this details view field using a data object
+     * Displays this details view field using a data object.
      *
      * @param mixed $data a data object used to display the cell renderers in
-     *                      this field.
-     * @param boolean $odd whether this is an odd or even field so alternating
-     *                      style can be applied.
+     *                    this field
+     * @param bool  $odd  whether this is an odd or even field so alternating
+     *                    style can be applied
      *
      * @see SwatDetailsViewField::display()
      */
@@ -45,10 +42,8 @@ class SwatDetailsViewVerticalField extends SwatDetailsViewField
         $tr_tag->close();
     }
 
-
-
     /**
-     * Displays the header for this details view field
+     * Displays the header for this details view field.
      *
      * @see SwatDetailsViewField::displayHeader()
      */
@@ -66,13 +61,11 @@ class SwatDetailsViewVerticalField extends SwatDetailsViewField
         }
     }
 
-
-
     /**
-     * Renders each cell renderer in this details-view field
+     * Renders each cell renderer in this details-view field.
      *
      * @param mixed $data the data object being used to render the cell
-     *                     renderers of this field.
+     *                    renderers of this field
      *
      * @see SwatDetailsViewField::displayRenderers()
      */
@@ -89,17 +82,14 @@ class SwatDetailsViewVerticalField extends SwatDetailsViewField
         $div_tag->close();
     }
 
-
-
     /**
-     * Gets the base CSS class names of this details-view field
+     * Gets the base CSS class names of this details-view field.
      *
      * @return array the array of base CSS class names for this vertical
-     *                details-view field.
+     *               details-view field
      */
     protected function getBaseCSSClassNames()
     {
         return ['swat-details-view-vertical-field'];
     }
-
 }

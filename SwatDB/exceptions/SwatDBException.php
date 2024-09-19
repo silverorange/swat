@@ -3,14 +3,11 @@
 /**
  * A SwatDB Exception.
  *
- * @package   SwatDB
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDBException extends SwatException
 {
-
-
     public function __construct($message = null, $code = 0)
     {
         if (is_object($message) && $message instanceof PEAR_Error) {
@@ -22,5 +19,4 @@ class SwatDBException extends SwatException
 
         parent::__construct($message, $code);
     }
-
 }

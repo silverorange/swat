@@ -1,27 +1,23 @@
 <?php
 
 /**
- * Stores and outputs an HTML tag
+ * Stores and outputs an HTML tag.
  *
- * @package   Swat
  * @copyright 2004-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-
-#[\AllowDynamicProperties]
+#[AllowDynamicProperties]
 class SwatHtmlTag extends SwatObject
 {
-
-
     /**
-     * The name of the HTML tag
+     * The name of the HTML tag.
      *
      * @var string
      */
     private $tag_name;
 
     /**
-     * Atribute array
+     * Atribute array.
      *
      * Array containing attributes of the HTML tag in the form:
      *    attribute_name => value
@@ -31,28 +27,26 @@ class SwatHtmlTag extends SwatObject
     private $attributes = [];
 
     /**
-     * Optional content for the body of the XHTML tag
+     * Optional content for the body of the XHTML tag.
      *
      * @var string
      */
-    private $content = null;
+    private $content;
 
     /**
      * Optional content type for the body of the XHTML tag
      *     default text/plain
-     *     use text/xml for XHTML fragments
+     *     use text/xml for XHTML fragments.
      *
      * @var string
      */
     private $content_type = 'text/plain';
 
-
-
     /**
-     * Creates a new HTML tag
+     * Creates a new HTML tag.
      *
-     * @param string $tag_name the name of the HTML tag.
-     * @param array $attributes an optional array of attributes in the form:
+     * @param string $tag_name   the name of the HTML tag
+     * @param array  $attributes an optional array of attributes in the form:
      *                           attribute => value
      */
     public function __construct($tag_name, $attributes = null)
@@ -64,10 +58,8 @@ class SwatHtmlTag extends SwatObject
         }
     }
 
-
-
     /**
-     * Set content for the body of the XHTML tag
+     * Set content for the body of the XHTML tag.
      *
      * This property is a UTF-8 encoded XHTML fragment. It is not escaped
      * before display so the user of SwatHtmlTag is responsible for any
@@ -78,8 +70,8 @@ class SwatHtmlTag extends SwatObject
      * closing tag.
      *
      * @param string $content content for the body of the XHTML tag
-     * @param string $type mime type of the content.  Default is 'text/plain',
-     *                      use 'text/xml' for XHTML fragments.
+     * @param string $type    mime type of the content.  Default is 'text/plain',
+     *                        use 'text/xml' for XHTML fragments.
      */
     public function setContent($content, $type = 'text/plain')
     {
@@ -87,17 +79,16 @@ class SwatHtmlTag extends SwatObject
         $this->content_type = $type;
     }
 
-
-
     /**
-     * Adds an array of attributes to this XHTML tag
+     * Adds an array of attributes to this XHTML tag.
      *
      * If entries in the attributes array coincide with existing attributes of
      * this XHTML tag, the attributes in the array overwrite the existing
      * attributes.
      *
      * @param array an array of attribute-value pairs of the form
-     *               'attribute' => 'value'.
+     *               'attribute' => 'value'
+     * @param mixed $attributes
      */
     public function addAttributes($attributes)
     {
@@ -106,25 +97,21 @@ class SwatHtmlTag extends SwatObject
         }
     }
 
-
-
     /**
-     * Removes an attribute
+     * Removes an attribute.
      *
      * Removes a previously assigned attribute. Useful when one tag object is
      * displayed multiple times with different attributes.
      *
-     * @param string $attribute The name of attribute to remove.
+     * @param string $attribute the name of attribute to remove
      */
     public function removeAttribute($attribute)
     {
         unset($this->attributes[$attribute]);
     }
 
-
-
     /**
-     * Displays this tag
+     * Displays this tag.
      *
      * Output the opening tag including all its attributes and implicitly
      * close the tag. If explicit closing is desired, use
@@ -146,10 +133,8 @@ class SwatHtmlTag extends SwatObject
         }
     }
 
-
-
     /**
-     * Displays the content of this tag
+     * Displays the content of this tag.
      *
      * If {@link SwatHtmlTag::content} is set then the content is displayed.
      *
@@ -166,10 +151,8 @@ class SwatHtmlTag extends SwatObject
         }
     }
 
-
-
     /**
-     * Opens this tag
+     * Opens this tag.
      *
      * Outputs the opening tag including all its attributes. Should be paired
      * with a call to {@link SwatHtmlTag::close()}. If implicit closing
@@ -182,10 +165,8 @@ class SwatHtmlTag extends SwatObject
         $this->openInternal(false);
     }
 
-
-
     /**
-     * Closes this tag
+     * Closes this tag.
      *
      * Outputs the closing tag. Should be paired with a call to
      * {@link SwatHtmlTag::open()}.
@@ -197,10 +178,8 @@ class SwatHtmlTag extends SwatObject
         echo '</', $this->tag_name, '>';
     }
 
-
-
     /**
-     * Gets this tag as a string
+     * Gets this tag as a string.
      *
      * The string is the same as the displayed content of
      * {@link SwatHtmlString::display()}. It is not possible to get paired tags
@@ -209,47 +188,44 @@ class SwatHtmlTag extends SwatObject
      *
      * @see SwatHtmlTag::display()
      *
-     * @return string this tag as a string.
+     * @return string this tag as a string
      */
     public function toString(): string
     {
         ob_start();
         $this->display();
+
         return ob_get_clean();
     }
 
-
-
     /**
-     * Magic __get method
+     * Magic __get method.
      *
      * This should never be called directly, but is invoked indirectly when
      * accessing properties of a tag object.
      *
-     * @param string $attr the name of attribute to get.
+     * @param mixed $attribute
      *
      * @return mixed the value of the attribute. If the attribute is not set,
-     *                null is returned.
+     *               null is returned.
      */
     public function __get($attribute)
     {
         if (isset($this->attributes[$attribute])) {
             return $this->attributes[$attribute];
-        } else {
-            return null;
         }
+
+        return null;
     }
 
-
-
     /**
-     * Magic __set method
+     * Magic __set method.
      *
      * This should never be called directly, but is invoked indirectly when
      * setting properties of a tag object.
      *
-     * @param string $attribute the name of attribute.
-     * @param mixed $value the value of attribute.
+     * @param string $attribute the name of attribute
+     * @param mixed  $value     the value of attribute
      */
     public function __set($attribute, $value)
     {
@@ -257,10 +233,8 @@ class SwatHtmlTag extends SwatObject
             $value === null ? null : (string) $value;
     }
 
-
-
     /**
-     * Gets this tag as a string
+     * Gets this tag as a string.
      *
      * This is a magic method that is called by PHP when this object is used
      * in string context. For example:
@@ -275,7 +249,7 @@ class SwatHtmlTag extends SwatObject
      * Note: It is more efficient to simply call {@link SwatHtmlTag::display()}
      * instead of using <code>echo $tag;</code>.
      *
-     * @return string this tag as a string.
+     * @return string this tag as a string
      *
      * @see SwatHtmlTag::toString()
      */
@@ -284,16 +258,14 @@ class SwatHtmlTag extends SwatObject
         return $this->toString();
     }
 
-
-
     /**
-     * Outputs opening tag and all attributes
+     * Outputs opening tag and all attributes.
      *
      * This is a helper method that does the attribute displaying when opening
      * this tag. This method can also display self-closing XHTML tags.
      *
-     * @param boolean $self_closing whether this tag should be displayed as a
-     *                               self-closing tag.
+     * @param bool $self_closing whether this tag should be displayed as a
+     *                           self-closing tag
      */
     private function openInternal($self_closing = false)
     {
@@ -302,10 +274,10 @@ class SwatHtmlTag extends SwatObject
         foreach ($this->attributes as $attribute => $value) {
             if ($value !== null) {
                 echo ' ',
-                    $attribute,
-                    '="',
-                    SwatString::minimizeEntities($value),
-                    '"';
+                $attribute,
+                '="',
+                SwatString::minimizeEntities($value),
+                '"';
             }
         }
 
@@ -315,5 +287,4 @@ class SwatHtmlTag extends SwatObject
             echo '>';
         }
     }
-
 }

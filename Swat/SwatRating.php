@@ -1,37 +1,32 @@
 <?php
 
 /**
- * A control for recording a rating out of a variable number of values
+ * A control for recording a rating out of a variable number of values.
  *
- * @package   Swat
  * @copyright 2007-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatRating extends SwatInputControl
 {
-
-
     /**
-     * The value of this rating control
+     * The value of this rating control.
      *
-     * @var integer
+     * @var int
      */
-    public $value = null;
+    public $value;
 
     /**
-     * The maximum value of this rating control
+     * The maximum value of this rating control.
      *
-     * @var integer
+     * @var int
      */
     public $maximum_value = 5;
 
-
-
     /**
-     * Creates a new rating control
+     * Creates a new rating control.
      *
      * @param string $id optional. A non-visible unique id for this rating
-     *                    control.
+     *                   control.
      */
     public function __construct($id = null)
     {
@@ -46,10 +41,8 @@ class SwatRating extends SwatInputControl
         $this->addStyleSheet('packages/swat/styles/swat-rating.css');
     }
 
-
-
     /**
-     * Initializes this rating control
+     * Initializes this rating control.
      */
     public function init()
     {
@@ -59,10 +52,8 @@ class SwatRating extends SwatInputControl
         $flydown->addOptionsByArray($this->getRatings());
     }
 
-
-
     /**
-     * Processes this rating control
+     * Processes this rating control.
      */
     public function process()
     {
@@ -76,10 +67,8 @@ class SwatRating extends SwatInputControl
         }
     }
 
-
-
     /**
-     * Displays this rating control
+     * Displays this rating control.
      */
     public function display()
     {
@@ -105,8 +94,6 @@ class SwatRating extends SwatInputControl
         Swat::displayInlineJavaScript($this->getInlineJavaScript());
     }
 
-
-
     protected function getRatings()
     {
         $ratings = [];
@@ -118,31 +105,28 @@ class SwatRating extends SwatInputControl
         return $ratings;
     }
 
-
-
     /**
-     * Gets the array of CSS classes that are applied to this rating control
+     * Gets the array of CSS classes that are applied to this rating control.
      *
      * @return array the array of CSS classes that are applied to this rating
-     *                control.
+     *               control
      */
     protected function getCSSClassNames()
     {
         $classes = ['swat-rating'];
-        $classes = array_merge($classes, parent::getCSSClassNames());
-        return $classes;
+
+        return array_merge($classes, parent::getCSSClassNames());
     }
 
-
-
     /**
-     * Gets the inline JavaScript for this rating control
+     * Gets the inline JavaScript for this rating control.
      *
-     * @return string the inline JavaScript required for this rating control.
+     * @return string the inline JavaScript required for this rating control
      */
     protected function getInlineJavaScript()
     {
         $quoted_string = SwatString::quoteJavaScriptString($this->id);
+
         return sprintf(
             'var %s_obj = new SwatRating(%s, %s);',
             $this->id,
@@ -151,10 +135,8 @@ class SwatRating extends SwatInputControl
         );
     }
 
-
-
     /**
-     * Creates the composite flydown used by this rating control
+     * Creates the composite flydown used by this rating control.
      *
      * @see SwatWidget::createCompositeWidgets()
      */
@@ -165,5 +147,4 @@ class SwatRating extends SwatInputControl
         $flydown->serialize_values = false;
         $this->addCompositeWidget($flydown, 'flydown');
     }
-
 }

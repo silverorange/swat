@@ -1,20 +1,20 @@
 <?php
 
 /**
- * A percentage entry widget
+ * A percentage entry widget.
  *
- * @package    Swat
  * @copyright  2007 silverorange
+ *
  * @lisence    http://www.gnu.org/copyleft/lesser.html LGPL Lisence 2.1
  */
 class SwatPercentageEntry extends SwatFloatEntry
 {
-
-
     /**
-     * Returns a value for this widget
+     * Returns a value for this widget.
      *
      * The method returns a value to be displayed in the widget
+     *
+     * @param mixed $value
      *
      * @return string the final percentage value
      */
@@ -31,17 +31,15 @@ class SwatPercentageEntry extends SwatFloatEntry
         return $value;
     }
 
-
-
     /**
-     * Gets the float value of this widget
+     * Gets the float value of this widget.
      *
      * This allows each widget to parse raw values and turn them into floats
      *
-     * @param string $value the raw value to use to get the numeric value.
+     * @param string $value the raw value to use to get the numeric value
      *
      * @return mixed the numeric value of this entry widget or null if no
-     *               no numeric value is available.
+     *               no numeric value is available
      */
     protected function getNumericValue($value)
     {
@@ -55,19 +53,16 @@ class SwatPercentageEntry extends SwatFloatEntry
         return $value;
     }
 
-
-
     /**
-     * Gets the array of CSS classes that are applied to this entry
+     * Gets the array of CSS classes that are applied to this entry.
      *
      * @return array the array of CSS classes that are applied to this
-     *                entry.
+     *               entry
      */
     protected function getCSSClassNames()
     {
         $classes = ['swat-percentage-entry'];
-        $classes = array_merge($classes, parent::getCSSClassNames());
-        return $classes;
-    }
 
+        return array_merge($classes, parent::getCSSClassNames());
+    }
 }

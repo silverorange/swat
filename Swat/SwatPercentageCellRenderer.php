@@ -1,18 +1,15 @@
 <?php
 
 /**
- * A percentage cell renderer
+ * A percentage cell renderer.
  *
- * @package   Swat
  * @copyright 2006-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatPercentageCellRenderer extends SwatNumericCellRenderer
 {
-
-
     /**
-     * Renders the contents of this cell
+     * Renders the contents of this cell.
      *
      * @see SwatCellRenderer::render()
      */
@@ -33,5 +30,4 @@ class SwatPercentageCellRenderer extends SwatNumericCellRenderer
             $this->value = $old_value;
         }
     }
-
 }

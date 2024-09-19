@@ -1,24 +1,22 @@
 <?php
 
 /**
- * A disclosure that replicates its children
+ * A disclosure that replicates its children.
  *
  * The disclosure can dynamically create widgets based on an array of
  * replicators identifiers.
  *
- * @package    Swat
  * @copyright  2008 silverorange
  * @license    http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ *
  * @deprecated Use a SwatReplicableContainer with a SwatDisclosure as the only
  *             child widget. Automatic title-setting functionality will need to
  *             be implemented manually.
  */
 class SwatReplicableDisclosure extends SwatReplicableContainer
 {
-
-
     /**
-     * Initilizes this replicable disclosure
+     * Initilizes this replicable disclosure.
      */
     public function init()
     {
@@ -44,5 +42,4 @@ class SwatReplicableDisclosure extends SwatReplicableContainer
             $disclosure->title = $title;
         }
     }
-
 }

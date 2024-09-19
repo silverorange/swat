@@ -1,16 +1,13 @@
 <?php
 
 /**
- * Stores and outputs an HTML head entry for a stylesheet include
+ * Stores and outputs an HTML head entry for a stylesheet include.
  *
- * @package   Swat
  * @copyright 2006-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatStyleSheetHtmlHeadEntry extends SwatHtmlHeadEntry
 {
-
-
     protected function displayInternal($uri_prefix = '', $tag = null)
     {
         $uri = $this->uri;
@@ -30,13 +27,10 @@ class SwatStyleSheetHtmlHeadEntry extends SwatHtmlHeadEntry
         );
     }
 
-
-
     protected function displayInlineInternal($path)
     {
         echo '<style type="text/css" media="all">';
         readfile($path . $this->getUri());
         echo '</style>';
     }
-
 }

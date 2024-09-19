@@ -1,29 +1,27 @@
 <?php
 
 /**
- * Visible navigation tool (breadcrumb trail)
+ * Visible navigation tool (breadcrumb trail).
  *
- * @package   Swat
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ *
  * @see       SwatNavBarEntry
  */
 class SwatNavBar extends SwatControl implements Countable
 {
-
-
     /**
-     * Whether or not to display the last entry in this navbar as a link
+     * Whether or not to display the last entry in this navbar as a link.
      *
      * If set to false, the last entry is displayed as text even if the last
      * navbar entry has a link. Defaults to true.
      *
-     * @var boolean
+     * @var bool
      */
     public $link_last_entry = true;
 
     /**
-     * Separator characters displayed between each navbar entry in this navbar
+     * Separator characters displayed between each navbar entry in this navbar.
      *
      * The default separator is a non-breaking space followed by a right
      * guillemet followed by a breaking space.
@@ -33,18 +31,16 @@ class SwatNavBar extends SwatControl implements Countable
     public $separator = ' » ';
 
     /**
-     * Optional container tag for this navigational bar
+     * Optional container tag for this navigational bar.
      *
      * The container tag wraps around all entries in this navigational bar.
      *
-     * @var SwatHtmlTag the container tag for this navigational bar.
+     * @var SwatHtmlTag the container tag for this navigational bar
      */
     public $container_tag;
 
-
-
     /**
-     * Array of SwatNavBarEntry objects displayed in this navbar
+     * Array of SwatNavBarEntry objects displayed in this navbar.
      *
      * @var array
      *
@@ -52,14 +48,12 @@ class SwatNavBar extends SwatControl implements Countable
      */
     private $entries = [];
 
-
-
     /**
-     * Creates a SwatNavBarEntry and adds it to the end of this navigation bar
+     * Creates a SwatNavBarEntry and adds it to the end of this navigation bar.
      *
-     * @param string $title the entry title.
-     * @param string $link an optional entry URI.
-     * @param string $content_type an optional content type for the entry title.
+     * @param string $title        the entry title
+     * @param string $link         an optional entry URI
+     * @param string $content_type an optional content type for the entry title
      */
     public function createEntry(
         $title,
@@ -69,24 +63,20 @@ class SwatNavBar extends SwatControl implements Countable
         $this->addEntry(new SwatNavBarEntry($title, $link, $content_type));
     }
 
-
-
     /**
-     * Adds a SwatNavBarEntry to the end of this navigation bar
+     * Adds a SwatNavBarEntry to the end of this navigation bar.
      *
-     * @param SwatNavBarEntry $entry the entry to add.
+     * @param SwatNavBarEntry $entry the entry to add
      */
     public function addEntry($entry)
     {
         $this->entries[] = $entry;
     }
 
-
-
     /**
-     * Adds an array of SwatNavBarEntry to the end of this navigation bar
+     * Adds an array of SwatNavBarEntry to the end of this navigation bar.
      *
-     * @param array $entries array of entries to add.
+     * @param array $entries array of entries to add
      */
     public function addEntries($entries)
     {
@@ -95,35 +85,28 @@ class SwatNavBar extends SwatControl implements Countable
         }
     }
 
-
-
     /**
-     * Adds a SwatNavBarEntry to the beginning of this navigation bar
+     * Adds a SwatNavBarEntry to the beginning of this navigation bar.
      *
-     * @param SwatNavBarEntry $entry the entry to add.
+     * @param SwatNavBarEntry $entry the entry to add
      */
     public function addEntryToStart($entry)
     {
         array_unshift($this->entries, $entry);
     }
 
-
-
     /**
-     * Replaces an entry in this navigation bar
+     * Replaces an entry in this navigation bar.
      *
      * If the entry is not in this navigation bar, an exception is thrown.
      *
-     * @param integer $position zero-based ordinal position of the entry
-     *                           to replace.
-     * @param SwatNavBarEntry $entry the navbar entry to replace the element
-     *                                at the given position with.
+     * @param int $position zero-based ordinal position of the entry
+     *                      to replace
      *
-     * @return SwatNavBarEntry the replaced entry.
+     * @return SwatNavBarEntry the replaced entry
      *
      * @thows SwatException
      */
-
     public function replaceEntryByPosition(
         $position,
         SwatNavBarEntry $new_entry,
@@ -145,21 +128,19 @@ class SwatNavBar extends SwatControl implements Countable
         );
     }
 
-
-
     /**
-     * Gets an entry from this navigation bar
+     * Gets an entry from this navigation bar.
      *
      * If the entry is not in this navigation bar, an exception is thrown.
      *
-     * @param integer $position zero-based ordinal position of the entry to
-     *                           fetch.  If position is negative, the entry
-     *                           position is counted from the end of the nav
-     *                           bar (-1 will return one from the end).  Use
-     *                           getLastEntry() to get the last entry of the
-     *                           nav bar.
+     * @param int $position zero-based ordinal position of the entry to
+     *                      fetch.  If position is negative, the entry
+     *                      position is counted from the end of the nav
+     *                      bar (-1 will return one from the end).  Use
+     *                      getLastEntry() to get the last entry of the
+     *                      nav bar.
      *
-     * @return SwatNavBarEntry the entry.
+     * @return SwatNavBarEntry the entry
      *
      * @throws SwatException
      */
@@ -171,24 +152,22 @@ class SwatNavBar extends SwatControl implements Countable
 
         if (isset($this->entries[$position])) {
             return $this->entries[$position];
-        } else {
-            throw new SwatException(
-                sprintf(
-                    'Navbar does not contain an entry at position %s.',
-                    $position,
-                ),
-            );
         }
+
+        throw new SwatException(
+            sprintf(
+                'Navbar does not contain an entry at position %s.',
+                $position,
+            ),
+        );
     }
 
-
-
     /**
-     * Gets the last entry from this navigation bar
+     * Gets the last entry from this navigation bar.
      *
      * If the navigation bar is empty, an exception is thrown.
      *
-     * @return SwatNavBarEntry the entry.
+     * @return SwatNavBarEntry the entry
      *
      * @throws SwatException
      */
@@ -201,12 +180,10 @@ class SwatNavBar extends SwatControl implements Countable
         return end($this->entries);
     }
 
-
-
     /**
-     * Gets the number of entries in this navigational bar
+     * Gets the number of entries in this navigational bar.
      *
-     * @return integer number of entries in this navigational bar.
+     * @return int number of entries in this navigational bar
      *
      * @deprecated this class now implements Countable. Use count($object)
      *              instead of $object->getCount().
@@ -216,28 +193,24 @@ class SwatNavBar extends SwatControl implements Countable
         return count($this->entries);
     }
 
-
-
     /**
-     * Gets the number of entries in this navigational bar
+     * Gets the number of entries in this navigational bar.
      *
      * This satisfies the Countable interface.
      *
-     * @return int number of entries in this navigational bar.
+     * @return int number of entries in this navigational bar
      */
     public function count(): int
     {
         return count($this->entries);
     }
 
-
-
     /**
-     * Pops the last entry off the end of this navigational bar
+     * Pops the last entry off the end of this navigational bar.
      *
      * If no entries currently exist, an exception is thrown.
      *
-     * @return SwatNavBarEntry the entry that was popped.
+     * @return SwatNavBarEntry the entry that was popped
      *
      * @throws SwatException
      */
@@ -247,24 +220,22 @@ class SwatNavBar extends SwatControl implements Countable
             throw new SwatException(
                 'Cannot pop entry. NavBar does not contain any entries.',
             );
-        } else {
-            return array_pop($this->entries);
         }
+
+        return array_pop($this->entries);
     }
 
-
-
     /**
-     * Pops one or more entries off the end of this navigational bar
+     * Pops one or more entries off the end of this navigational bar.
      *
      * If more entries are to be popped than currently exist, an exception is
      * thrown.
      *
      * @param $number integer number of entries to pop off this navigational
-     *                         bar.
+     *                bar
      *
      * @return array an array of SwatNavBarEntry objects that were popped off
-     *                the navagational bar.
+     *               the navagational bar
      *
      * @throws SwatException
      */
@@ -281,30 +252,27 @@ class SwatNavBar extends SwatControl implements Countable
                     $count,
                 ),
             );
-        } else {
-            return array_splice($this->entries, -$number);
         }
+
+        return array_splice($this->entries, -$number);
     }
 
-
-
     /**
-     * Clears all entries from this navigational bar
+     * Clears all entries from this navigational bar.
      *
      * @return array an array of SwatNavBarEntry objects that were cleared from
-     *                this navagational bar.
+     *               this navagational bar
      */
     public function clear()
     {
         $entries = $this->entries;
         $this->entries = [];
+
         return $entries;
     }
 
-
-
     /**
-     * Displays this navigational bar
+     * Displays this navigational bar.
      *
      * Displays each entry separated by a special character and outputs
      * navbar entries with links as anchor tags.
@@ -340,16 +308,13 @@ class SwatNavBar extends SwatControl implements Countable
         $container_tag->close();
     }
 
-
-
     /**
-     * Displays an entry in this navigational bar
+     * Displays an entry in this navigational bar.
      *
-     * @param SwatNavBarEntry $entry the entry to display.
-     * @param boolean $link whether or not to hyperlink the given entry if the
-     *                       entry has a link set.
-     * @param boolean $first whether or not this entry should be displayed as
-     *                        the first entry.
+     * @param SwatNavBarEntry $entry     the entry to display
+     * @param bool            $first     whether or not this entry should be displayed as
+     *                                   the first entry
+     * @param mixed           $show_link
      */
     protected function displayEntry(
         SwatNavBarEntry $entry,
@@ -379,43 +344,37 @@ class SwatNavBar extends SwatControl implements Countable
         }
     }
 
-
-
     /**
      * Gets the link from an entry.
      *
-     * @param SwatNavBarEntry $entry the entry to get the link from.
+     * @param SwatNavBarEntry $entry the entry to get the link from
      *
-     * @return string the entries link.
+     * @return string the entries link
      */
     protected function getLink(SwatNavBarEntry $entry)
     {
         return $entry->link;
     }
 
-
-
     /**
-     * Gets the array of CSS classes that are applied to this navigational bar
+     * Gets the array of CSS classes that are applied to this navigational bar.
      *
      * @return array the array of CSS classes that are applied to this
-     *                navigational bar.
+     *               navigational bar
      */
     protected function getCSSClassNames()
     {
         $classes = ['swat-nav-bar'];
-        $classes = array_merge($classes, parent::getCSSClassNames());
-        return $classes;
+
+        return array_merge($classes, parent::getCSSClassNames());
     }
 
-
-
     /**
-     * Gets the container tag for this navigational bar
+     * Gets the container tag for this navigational bar.
      *
      * The container tag wraps around all entries in this navigational bar.
      *
-     * @return SwatHtmlTag the container tag for this navigational bar.
+     * @return SwatHtmlTag the container tag for this navigational bar
      */
     protected function getContainerTag()
     {
@@ -427,7 +386,7 @@ class SwatNavBar extends SwatControl implements Countable
 
         $tag->id = $this->id;
         $tag->class = $this->getCSSClassString();
+
         return $tag;
     }
-
 }

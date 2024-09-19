@@ -1,7 +1,7 @@
 <?php
 
 /**
- * A special table-view column designed to contain a checkbox cell renderer
+ * A special table-view column designed to contain a checkbox cell renderer.
  *
  * A checkbox column adds a check-all row to the parent view. The check all
  * widget is used for controlling checkbox cell renderers. If your table-view
@@ -12,16 +12,13 @@
  * If this column contains more than one checkbox cell renderer, the check-all
  * widget only applies to the first checkbox renderer.
  *
- * @package   Swat
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTableViewCheckboxColumn extends SwatTableViewColumn
 {
-
-
     /**
-     * Whether to show a check-all row for this checkbox column
+     * Whether to show a check-all row for this checkbox column.
      *
      * This property only has an effect if a {@link SwatCheckboxCellRenderer}
      * is present inside this column.
@@ -29,12 +26,12 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
      * If a check-all row is never needed, use a regular
      * {@link SwatTableViewColumn} instead of a checkbox column.
      *
-     * @var boolean
+     * @var bool
      */
     public $show_check_all = true;
 
     /**
-     * Optional label title for the check-all widget
+     * Optional label title for the check-all widget.
      *
      * Defaults to "Check All".
      *
@@ -43,7 +40,7 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
     public $check_all_title;
 
     /**
-     * Optional content type for check-all widget title
+     * Optional content type for check-all widget title.
      *
      * Defaults to text/plain, use text/xml for XHTML fragments.
      *
@@ -52,21 +49,21 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
     public $check_all_content_type = 'text/plain';
 
     /**
-     * Count for displaying an extended-all checkbox
+     * Count for displaying an extended-all checkbox.
      *
      * When the check-all checkbox has been checked, an additional
      * checkbox will appear allowing the user to specify that they wish to
      * select all possible items. This is useful in cases where pagination
      * makes selecting all possible items impossible.
      *
-     * @var integer
+     * @var int
      */
     public $check_all_extended_count = 0;
 
     /**
-     * Count for all visible items when displaying an extended-all checkbox
+     * Count for all visible items when displaying an extended-all checkbox.
      *
-     * @var integer
+     * @var int
      */
     public $check_all_visible_count = 0;
 
@@ -79,9 +76,9 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
 
     /**
      * Whether or not this column is responsible for highlighting selected
-     * table-view rows
+     * table-view rows.
      *
-     * @var boolean
+     * @var bool
      *
      * @deprecated this property has no effect anymore. Table-view rows are
      *             always highlighted when selected. The column does not
@@ -89,21 +86,18 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
      */
     public $highlight_row = true;
 
-
-
     /**
-     * The selected rows of this checkbox column after processing this column
+     * The selected rows of this checkbox column after processing this column.
      *
      * @var array
      *
      * @see SwatView::getSelection()
-     *
-     * @deprecated this is part of the old selection API.
+     * @deprecated this is part of the old selection API
      */
     private $items = [];
 
     /**
-     * Check-all row added by this column to the parent table-view
+     * Check-all row added by this column to the parent table-view.
      *
      * @var SwatTableViewCheckAllRow
      *
@@ -111,10 +105,8 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
      */
     private $check_all;
 
-
-
     /**
-     * Initializes this checkbox column
+     * Initializes this checkbox column.
      */
     public function init()
     {
@@ -128,10 +120,8 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
         }
     }
 
-
-
     /**
-     * Processes this checkbox column
+     * Processes this checkbox column.
      *
      * Column-level processing is needed for the deprecated selection API.
      *
@@ -152,22 +142,18 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
         }
     }
 
-
-
     /**
-     * Whether or not the extended-check-all check-box was checked
+     * Whether or not the extended-check-all check-box was checked.
      *
-     * @return boolean Whether or not the extended-checkbox was checked
+     * @return bool Whether or not the extended-checkbox was checked
      */
     public function isExtendedCheckAllSelected()
     {
         return $this->check_all->isExtendedSelected();
     }
 
-
-
     /**
-     * Displays the contents of the header cell for this column
+     * Displays the contents of the header cell for this column.
      */
     public function displayHeader()
     {
@@ -183,15 +169,12 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
         parent::displayHeader();
     }
 
-
-
     /**
-     * Gets the selected rows of this checkbox column
+     * Gets the selected rows of this checkbox column.
      *
-     * @return array the selected rows of this checkbox column.
+     * @return array the selected rows of this checkbox column
      *
      * @see SwatView::getSelection()
-     *
      * @deprecated This is part of the old selection API. Use the selection API
      *             defined in SwatView instead.
      */
@@ -200,20 +183,16 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
         return $this->items;
     }
 
-
-
     /**
-     * Gets the identifier of the first checkbox cell renderer in this column
+     * Gets the identifier of the first checkbox cell renderer in this column.
      *
      * @return string the indentifier of the first checkbox cell renderer in
-     *                 this column.
+     *                this column
      */
     private function getCheckboxRendererId()
     {
         return $this->getCheckboxRenderer()->id;
     }
-
-
 
     private function getCheckboxRenderer()
     {
@@ -229,10 +208,8 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
         );
     }
 
-
-
     /**
-     * Whether or not the extended-check-all check-box was checked
+     * Whether or not the extended-check-all check-box was checked.
      *
      * return @boolean Whether or not the extended-checkbox was checked
      */
@@ -241,12 +218,9 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
         return $this->check_all->extendedSelected();
     }
 
-
-
     private function createEmbeddedWidgets()
     {
         $renderer_id = $this->getCheckboxRendererId();
         $this->check_all = new SwatTableViewCheckAllRow($this, $renderer_id);
     }
-
 }

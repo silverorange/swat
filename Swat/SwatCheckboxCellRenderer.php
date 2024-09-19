@@ -1,20 +1,17 @@
 <?php
 
 /**
- * A view selector cell renderer displayed as a checkbox
+ * A view selector cell renderer displayed as a checkbox.
  *
- * @package   Swat
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ *
  * @see       SwatViewSelector
  */
-class SwatCheckboxCellRenderer extends SwatCellRenderer implements
-    SwatViewSelector
+class SwatCheckboxCellRenderer extends SwatCellRenderer implements SwatViewSelector
 {
-
-
     /**
-     * Identifier of this checkbox cell renderer
+     * Identifier of this checkbox cell renderer.
      *
      * Identifier must be unique within this cell renderer's parent cell
      * renderer container. This property is required and can not be a
@@ -25,7 +22,7 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer implements
     public $id;
 
     /**
-     * Value of this cell's checkbox
+     * Value of this cell's checkbox.
      *
      * This property is intended to be data-mapped to the current row
      * identifier in a record set.
@@ -35,7 +32,7 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer implements
     public $value;
 
     /**
-     * Optional title of the label for the rendered checkbox
+     * Optional title of the label for the rendered checkbox.
      *
      * If no title is specified (default) there is no label displayed with
      * the checkbox.
@@ -45,7 +42,7 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer implements
     public $title;
 
     /**
-     * Optional content type for checkbox label title
+     * Optional content type for checkbox label title.
      *
      * Defaults to text/plain, use text/xml for XHTML fragments.
      *
@@ -54,21 +51,19 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer implements
     public $content_type = 'text/plain';
 
     /**
-     * The ordinal tab index position of the XHTML input tag
+     * The ordinal tab index position of the XHTML input tag.
      *
      * Values 1 or greater will affect the tab index of this widget. A value
      * of 0 or null will use the position of the input tag in the XHTML
      * character stream to determine tab order.
      *
-     * @var integer
+     * @var int
      */
     public $tab_index;
 
-
-
     /**
      * Array of selected values populated during the processing of this cell
-     * renderer
+     * renderer.
      *
      * This property is used to track the selected state of checkboxes when
      * rendering for a particular value.
@@ -77,10 +72,8 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer implements
      */
     private $selected_values = [];
 
-
-
     /**
-     * Creates a new checkbox cell renderer
+     * Creates a new checkbox cell renderer.
      */
     public function __construct()
     {
@@ -98,10 +91,8 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer implements
         $this->id = $this->getUniqueId();
     }
 
-
-
     /**
-     * Processes this checkbox cell renderer
+     * Processes this checkbox cell renderer.
      */
     public function process()
     {
@@ -120,10 +111,8 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer implements
         }
     }
 
-
-
     /**
-     * Renders this checkbox cell renderer
+     * Renders this checkbox cell renderer.
      */
     public function render()
     {
@@ -170,27 +159,23 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer implements
         }
     }
 
-
-
     /**
-     * Gets the identifier of this checkbox cell renderer
+     * Gets the identifier of this checkbox cell renderer.
      *
      * Satisfies the {@link SwatViewSelector} interface.
      *
-     * @return string the identifier of this checkbox cell renderer.
+     * @return string the identifier of this checkbox cell renderer
      */
     public function getId()
     {
         return $this->id;
     }
 
-
-
     /**
-     * Gets the inline JavaScript required by this checkbox cell renderer
+     * Gets the inline JavaScript required by this checkbox cell renderer.
      *
      * @return string the inline JavaScript required by this checkbox cell
-     *                 renderer.
+     *                renderer
      */
     public function getInlineJavaScript()
     {
@@ -209,16 +194,14 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer implements
         return $javascript;
     }
 
-
-
     /**
-     * Performs a deep copy of the UI tree starting with this UI object
+     * Performs a deep copy of the UI tree starting with this UI object.
      *
      * @param string $id_suffix optional. A suffix to append to copied UI
-     *                           objects in the UI tree.
+     *                          objects in the UI tree.
      *
      * @return SwatUIObject a deep copy of the UI tree starting with this UI
-     *                       object.
+     *                      object
      *
      * @see SwatUIObject::copy()
      */
@@ -233,15 +216,13 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer implements
         return $copy;
     }
 
-
-
     /**
-     * Gets the form this checkbox cell renderer is contained in
+     * Gets the form this checkbox cell renderer is contained in.
      *
-     * @return SwatForm the form this checkbox cell renderer is contained in.
+     * @return SwatForm the form this checkbox cell renderer is contained in
      *
      * @throws SwatException if this checkbox cell renderer does not have a
-     *                       SwatForm ancestor.
+     *                       SwatForm ancestor
      */
     private function getForm()
     {
@@ -256,5 +237,4 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer implements
 
         return $form;
     }
-
 }

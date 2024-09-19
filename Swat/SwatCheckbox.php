@@ -1,51 +1,46 @@
 <?php
 
 /**
- * A checkbox entry widget
+ * A checkbox entry widget.
  *
- * @package   Swat
  * @copyright 2004-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatCheckbox extends SwatInputControl implements SwatState
 {
-
-
     /**
-     * Checkbox value
+     * Checkbox value.
      *
      * The state of the widget.
      *
-     * @var boolean
+     * @var bool
      */
     public $value = false;
 
     /**
-     * Access key
+     * Access key.
      *
      * Access key for this checkbox input, for keyboard nagivation.
      *
      * @var string
      */
-    public $access_key = null;
+    public $access_key;
 
     /**
-     * The ordinal tab index position of the XHTML input tag
+     * The ordinal tab index position of the XHTML input tag.
      *
      * Values 1 or greater will affect the tab index of this widget. A value
      * of 0 or null will use the position of the input tag in the XHTML
      * character stream to determine tab order.
      *
-     * @var integer
+     * @var int
      */
     public $tab_index;
 
-
-
     /**
-     * Creates a new checkbox
+     * Creates a new checkbox.
      *
-     * @param string $id a non-visible unique id for this widget.
+     * @param string $id a non-visible unique id for this widget
      *
      * @see SwatWidget::__construct()
      */
@@ -55,10 +50,8 @@ class SwatCheckbox extends SwatInputControl implements SwatState
         $this->requires_id = true;
     }
 
-
-
     /**
-     * Displays this checkbox
+     * Displays this checkbox.
      *
      * Outputs an appropriate XHTML tag.
      */
@@ -95,10 +88,8 @@ class SwatCheckbox extends SwatInputControl implements SwatState
         echo '</span>';
     }
 
-
-
     /**
-     * Processes this checkbox
+     * Processes this checkbox.
      *
      * Sets the internal value of this checkbox based on submitted form data.
      */
@@ -116,12 +107,10 @@ class SwatCheckbox extends SwatInputControl implements SwatState
         $this->value = array_key_exists($this->id, $data);
     }
 
-
-
     /**
-     * Gets the current state of this checkbox
+     * Gets the current state of this checkbox.
      *
-     * @return boolean the current state of this checkbox.
+     * @return bool the current state of this checkbox
      *
      * @see SwatState::getState()
      */
@@ -130,12 +119,10 @@ class SwatCheckbox extends SwatInputControl implements SwatState
         return $this->value;
     }
 
-
-
     /**
-     * Sets the current state of this checkbox
+     * Sets the current state of this checkbox.
      *
-     * @param boolean $state the new state of this checkbox.
+     * @param bool $state the new state of this checkbox
      *
      * @see SwatState::setState()
      */
@@ -144,15 +131,13 @@ class SwatCheckbox extends SwatInputControl implements SwatState
         $this->value = $state;
     }
 
-
-
     /**
      * Gets the id attribute of the XHTML element displayed by this widget
-     * that should receive focus
+     * that should receive focus.
      *
      * @return string the id attribute of the XHTML element displayed by this
-     *                 widget that should receive focus or null if there is
-     *                 no such element.
+     *                widget that should receive focus or null if there is
+     *                no such element
      *
      * @see SwatWidget::getFocusableHtmlId()
      */
@@ -161,19 +146,16 @@ class SwatCheckbox extends SwatInputControl implements SwatState
         return $this->visible ? $this->id : null;
     }
 
-
-
     /**
-     * Gets the array of CSS classes that are applied to this checkbox
+     * Gets the array of CSS classes that are applied to this checkbox.
      *
      * @return array the array of CSS classes that are applied to this
-     *                checkbox.
+     *               checkbox
      */
     protected function getCSSClassNames()
     {
         $classes = ['swat-checkbox'];
-        $classes = array_merge($classes, parent::getCSSClassNames());
-        return $classes;
-    }
 
+        return array_merge($classes, parent::getCSSClassNames());
+    }
 }

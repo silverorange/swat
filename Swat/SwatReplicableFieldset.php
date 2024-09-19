@@ -1,24 +1,22 @@
 <?php
 
 /**
- * A fieldset container that replicates itself and its children
+ * A fieldset container that replicates itself and its children.
  *
  * This widget can dynamically create widgets based on an array of
  * replicator identifiers.
  *
- * @package    Swat
  * @copyright  2005-2008 silverorange
  * @license    http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ *
  * @deprecated Use a SwatReplicableContainer with a SwatFieldset as the only
  *             child widget. Automatic title-setting functionality will need to
  *             be implemented manually.
  */
 class SwatReplicableFieldset extends SwatReplicableContainer
 {
-
-
     /**
-     * Initilizes this replicable fieldset
+     * Initilizes this replicable fieldset.
      */
     public function init()
     {
@@ -44,5 +42,4 @@ class SwatReplicableFieldset extends SwatReplicableContainer
             $fieldset->title = $title;
         }
     }
-
 }

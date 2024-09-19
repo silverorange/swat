@@ -1,28 +1,25 @@
 <?php
 
 /**
- * A tree flydown input control that displays flydown options in optgroups
+ * A tree flydown input control that displays flydown options in optgroups.
  *
  * The tree for a grouped flydown may be at most 3 levels deep including the
  * root node.
  *
- * @package   Swat
  * @copyright 2006-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatGroupedFlydown extends SwatTreeFlydown
 {
-
-
     /**
-     * Sets the tree to use for display
+     * Sets the tree to use for display.
      *
      * The tree for a grouped flydown may be at most 3 levels deep including
      * the root node.
      *
-     * @param SwatTreeFlydownNode $tree the tree to use for display.
+     * @param SwatTreeFlydownNode $tree the tree to use for display
      *
-     * @throws SwatException if the tree more than 3 levels deep.
+     * @throws SwatException if the tree more than 3 levels deep
      */
     public function setTree(SwatTreeNode $tree): void
     {
@@ -30,10 +27,8 @@ class SwatGroupedFlydown extends SwatTreeFlydown
         parent::setTree($tree);
     }
 
-
-
     /**
-     * Displays this grouped flydown
+     * Displays this grouped flydown.
      *
      * Displays this flydown as a XHTML select. Level 1 tree nodes are
      * displayed as optgroups if their value is null, they have children and
@@ -78,14 +73,13 @@ class SwatGroupedFlydown extends SwatTreeFlydown
         }
     }
 
-
-
     /**
-     * Checks a tree to ensure it is valid for a grouped flydown
+     * Checks a tree to ensure it is valid for a grouped flydown.
      *
-     * @param SwatTreeFlydownNode the tree to check.
+     * @param SwatTreeFlydownNode the tree to check
+     * @param mixed $level
      *
-     * @throws SwatException if the tree is not valid for a grouped flydown.
+     * @throws SwatException if the tree is not valid for a grouped flydown
      */
     protected function checkTree(SwatTreeFlydownNode $tree, $level = 0)
     {
@@ -101,20 +95,16 @@ class SwatGroupedFlydown extends SwatTreeFlydown
         }
     }
 
-
-
     /**
-     * Displays a grouped tree flydown node and its child nodes
+     * Displays a grouped tree flydown node and its child nodes.
      *
      * Level 1 tree nodes are displayed as optgroups if their value is null,
      * they have children and they are not dividers.
      *
-     * @param SwatTreeFlydownNode $node the node to display.
-     * @param integer $level the current level of the tree node.
-     * @param array $path an array of values representing the tree path to
-     *                     this node.
-     * @param boolean $selected whether or not an element has been selected
-     *                           yet.
+     * @param SwatTreeFlydownNode $node     the node to display
+     * @param int                 $level    the current level of the tree node
+     * @param bool                $selected whether or not an element has been selected
+     *                                      yet
      */
     protected function displayNode(
         SwatTreeFlydownNode $node,
@@ -125,10 +115,10 @@ class SwatGroupedFlydown extends SwatTreeFlydown
         $flydown_option = $node->getOption();
 
         if (
-            $level == 1 &&
-            count($children) > 0 &&
-            end($flydown_option->value) === null &&
-            !($flydown_option instanceof SwatFlydownDivider)
+            $level == 1
+            && count($children) > 0
+            && end($flydown_option->value) === null
+            && !($flydown_option instanceof SwatFlydownDivider)
         ) {
             $optgroup_tag = new SwatHtmlTag('optgroup');
             $optgroup_tag->label = $flydown_option->title;
@@ -160,9 +150,9 @@ class SwatGroupedFlydown extends SwatTreeFlydown
             }
 
             if (
-                $this->path === $flydown_option->value &&
-                $selected === false &&
-                !($flydown_option instanceof SwatFlydownDivider)
+                $this->path === $flydown_option->value
+                && $selected === false
+                && !($flydown_option instanceof SwatFlydownDivider)
             ) {
                 $option_tag->selected = 'selected';
                 $selected = true;
@@ -179,16 +169,14 @@ class SwatGroupedFlydown extends SwatTreeFlydown
         }
     }
 
-
-
     /**
      * Builds this grouped flydown's display tree by copying nodes from this
-     * grouped flydown's tree
+     * grouped flydown's tree.
      *
-     * @param SwatTreeFlydownNode $tree the source tree node to build from.
+     * @param SwatTreeFlydownNode $tree   the source tree node to build from
      * @param SwatTreeFlydownNode $parent the destination parent node to add
-     *                                     display tree nodes to.
-     * @param array $path the current path of the display tree.
+     *                                    display tree nodes to
+     * @param array               $path   the current path of the display tree
      */
     protected function buildDisplayTree(
         SwatTreeFlydownNode $tree,
@@ -205,10 +193,8 @@ class SwatGroupedFlydown extends SwatTreeFlydown
         }
     }
 
-
-
     /**
-     * Gets the display tree of this grouped flydown
+     * Gets the display tree of this grouped flydown.
      *
      * The display tree is copied from this grouped flydown's tree. If
      * {@link SwatGroupedFlydown::$show_blank} is true, a blank node is
@@ -234,5 +220,4 @@ class SwatGroupedFlydown extends SwatTreeFlydown
 
         return $display_tree;
     }
-
 }

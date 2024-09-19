@@ -1,26 +1,24 @@
 <?php
 
 /**
- * A page in a {@link SwatNoteBook}
+ * A page in a {@link SwatNoteBook}.
  *
- * @package   Swat
  * @copyright 2007-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ *
  * @see       SwatNoteBook
  */
 class SwatNoteBookPage extends SwatContainer implements SwatNoteBookChild
 {
-
-
     /**
-     * The title of this page
+     * The title of this page.
      *
      * @var string
      */
     public $title;
 
     /**
-     * Optional content type
+     * Optional content type.
      *
      * Default text/plain, use text/xml for XHTML fragments.
      *
@@ -28,12 +26,10 @@ class SwatNoteBookPage extends SwatContainer implements SwatNoteBookChild
      */
     public $title_content_type = 'text/plain';
 
-
-
     /**
-     * Creates a new notebook page
+     * Creates a new notebook page.
      *
-     * @param string $id a non-visable id for this page.
+     * @param string $id a non-visable id for this page
      */
     public function __construct($id = null)
     {
@@ -42,10 +38,8 @@ class SwatNoteBookPage extends SwatContainer implements SwatNoteBookChild
         $this->requires_id = true;
     }
 
-
-
     /**
-     * Displays this notebook page
+     * Displays this notebook page.
      *
      * Displays this notebook page as well as recursively displaying all child-
      * widgets of this page.
@@ -64,33 +58,28 @@ class SwatNoteBookPage extends SwatContainer implements SwatNoteBookChild
         $div_tag->close();
     }
 
-
-
     /**
-     * Gets the notebook pages of this notebook page
+     * Gets the notebook pages of this notebook page.
      *
      * Implements the {@link SwatNoteBookChild::getPages()} interface.
      *
-     * @return array an array containing this page.
+     * @return array an array containing this page
      */
     public function getPages()
     {
         return [$this];
     }
 
-
-
     /**
-     * Gets the array of CSS classes that are applied to this page
+     * Gets the array of CSS classes that are applied to this page.
      *
      * @return array the array of CSS classes that are applied to this
-     *                page.
+     *               page
      */
     protected function getCSSClassNames()
     {
         $classes = ['swat-note-book-page'];
-        $classes = array_merge($classes, parent::getCSSClassNames());
-        return $classes;
-    }
 
+        return array_merge($classes, parent::getCSSClassNames());
+    }
 }

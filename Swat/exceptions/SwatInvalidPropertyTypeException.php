@@ -3,37 +3,32 @@
 /**
  * Thrown when an invalid property type is used.
  *
- * @package   Swat
  * @copyright 2006-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatInvalidPropertyTypeException extends SwatException
 {
-
-
     /**
-     * The name of the type that is invalid
+     * The name of the type that is invalid.
      *
      * @var string
      */
-    protected $type = null;
+    protected $type;
 
     /**
-     * The object the property is invalid for
+     * The object the property is invalid for.
      *
      * @var mixed
      */
-    protected $object = null;
-
-
+    protected $object;
 
     /**
-     * Creates a new invalid class exception
+     * Creates a new invalid class exception.
      *
-     * @param string $message the message of the exception.
-     * @param integer $code the code of the exception.
-     * @param mixed $object the object the property is invalid for.
-     * @param string $property the name of the property that is invalid
+     * @param string     $message the message of the exception
+     * @param int        $code    the code of the exception
+     * @param mixed      $object  the object the property is invalid for
+     * @param mixed|null $type
      */
     public function __construct(
         $message = null,
@@ -46,28 +41,23 @@ class SwatInvalidPropertyTypeException extends SwatException
         $this->type = $type;
     }
 
-
-
     /**
-     * Gets the object the property is invalid for
+     * Gets the object the property is invalid for.
      *
-     * @return mixed the object the property is invalid for.
+     * @return mixed the object the property is invalid for
      */
     public function getObject()
     {
         return $this->object;
     }
 
-
-
     /**
-     * Gets the name of the type that is invalid
+     * Gets the name of the type that is invalid.
      *
-     * @return string the name of the type that is invalid.
+     * @return string the name of the type that is invalid
      */
     public function getType()
     {
         return $this->type;
     }
-
 }

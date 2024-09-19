@@ -1,75 +1,70 @@
 <?php
 
 /**
- * A widget to allow navigation between paged data
+ * A widget to allow navigation between paged data.
  *
  * SwatPagination pages start at page 1, not page 0.
  *
- * @package   Swat
  * @copyright 2004-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatPagination extends SwatControl
 {
-
+    /**
+     * Display part constant for the displaying 'next' link.
+     */
+    public const NEXT = 1;
 
     /**
-     * Display part constant for the displaying 'next' link
+     * Display part constant for displaying the 'previous' link.
      */
-    const NEXT = 1;
-
-    /**
-     * Display part constant for displaying the 'previous' link
-     */
-    const PREV = 2;
+    public const PREV = 2;
 
     /**
      * Display part constant for displaying a textual description of the
-     * current position
+     * current position.
      */
-    const POSITION = 4;
+    public const POSITION = 4;
 
     /**
      * Display part constant for displaying a list of pages close to the
-     * current page
+     * current page.
      */
-    const PAGES = 8;
-
-
+    public const PAGES = 8;
 
     /**
-     * The URI linked by this pagination widget
+     * The URI linked by this pagination widget.
      *
      * The first sprintf placeholder (%s) in the URI will be replaced with
      * the current page number. For example: "mydir/page%s".
      *
      * @var string
      */
-    public $link = null;
+    public $link;
 
     /**
-     * The number of records displayed on a page
+     * The number of records displayed on a page.
      *
-     * @var integer
+     * @var int
      */
     public $page_size = 20;
 
     /**
-     * The total number of records that are available for display
+     * The total number of records that are available for display.
      *
-     * @var integer
+     * @var int
      */
     public $total_records = 0;
 
     /**
-     * The index of the first record being displayed on the current page
+     * The index of the first record being displayed on the current page.
      *
-     * @var integer
+     * @var int
      */
     public $current_record = 0;
 
     /**
-     * The text label displayed in the Next link
+     * The text label displayed in the Next link.
      *
      * Defaults to "Next »".
      *
@@ -78,7 +73,7 @@ class SwatPagination extends SwatControl
     public $next_label;
 
     /**
-     * The text label displayed in the Previous link
+     * The text label displayed in the Previous link.
      *
      * Defaults to "« Previous".
      *
@@ -87,7 +82,7 @@ class SwatPagination extends SwatControl
     public $previous_label;
 
     /**
-     * Displayed pagination parts
+     * Displayed pagination parts.
      *
      * The display parts property is a bitwise combination of the
      * {@link SwatPagination::PREV}, {@link SwatPagination::NEXT},
@@ -105,48 +100,44 @@ class SwatPagination extends SwatControl
      * Defaults to <code>SwatPagination::POSITION | SwatPagination::NEXT |
      * SwatPagination::PREV | SwatPagination::PAGES</code>.
      *
-     * @var integer
+     * @var int
      */
     public $display_parts;
 
-
-
     /**
-     * The next page to display
+     * The next page to display.
      *
-     * @var integer
+     * @var int
      */
     protected $next_page = 0;
 
     /**
-     * The previous page to display
+     * The previous page to display.
      *
-     * @var integer
+     * @var int
      */
     protected $prev_page = 0;
 
     /**
-     * The current page number
+     * The current page number.
      *
-     * @var integer
+     * @var int
      */
     protected $current_page = 1;
 
     /**
-     * The total number of pages in the record set
+     * The total number of pages in the record set.
      *
      * This is not the number of <i>records</i> in the record set.
      *
-     * @var integer
+     * @var int
      */
     protected $total_pages = 0;
 
-
-
     /**
-     * Creates a new pagination widget
+     * Creates a new pagination widget.
      *
-     * @param string $id a non-visible unique id for this widget.
+     * @param string $id a non-visible unique id for this widget
      *
      * @see SwatWidget::__construct()
      */
@@ -159,27 +150,25 @@ class SwatPagination extends SwatControl
         $this->display_parts =
             self::POSITION | self::NEXT | self::PREV | self::PAGES;
 
-        /* These strings include a non-breaking space */
+        // These strings include a non-breaking space
         $this->previous_label = Swat::_('‹ Previous');
         $this->next_label = Swat::_('Next ›');
 
         $this->addStyleSheet('packages/swat/styles/swat-pagination.css');
     }
 
-
-
     /**
      * Gets a human readable summary of the current state of this pagination
-     * widget
+     * widget.
      *
-     * @param $unit string optional. The type of unit being returned. By
-     *                      default this is 'record'.
+     * @param $unit        string optional. The type of unit being returned. By
+     *                     default this is 'record'.
      * @param $unit_plural string optional. The plural version of the
-     *                             <i>$unit</i> parameter. By default this is
-     *                             'records'.
+     *                     <i>$unit</i> parameter. By default this is
+     *                     'records'.
      *
      * @return string a human readable summary of the current state of this
-     *                 pagination widget.
+     *                pagination widget
      */
     public function getResultsMessage($unit = null, $unit_plural = null)
     {
@@ -216,10 +205,8 @@ class SwatPagination extends SwatControl
         return $message;
     }
 
-
-
     /**
-     * Displays this pagination widget
+     * Displays this pagination widget.
      */
     public function display()
     {
@@ -257,14 +244,12 @@ class SwatPagination extends SwatControl
         }
     }
 
-
-
     /**
-     * Set the current page that is displayed
+     * Set the current page that is displayed.
      *
      * Calculates the current_record properties.
      *
-     * @param integer $page The current page being displayed.
+     * @param int $page the current page being displayed
      */
     public function setCurrentPage($page)
     {
@@ -273,22 +258,18 @@ class SwatPagination extends SwatControl
         $this->current_record = ($this->current_page - 1) * $this->page_size;
     }
 
-
-
     /**
-     * Get the current page that is displayed
+     * Get the current page that is displayed.
      *
-     * @return integer The current page being displayed.
+     * @return int the current page being displayed
      */
     public function getCurrentPage()
     {
         return $this->current_page;
     }
 
-
-
     /**
-     * Displays the previous page link
+     * Displays the previous page link.
      */
     protected function displayPrev()
     {
@@ -309,10 +290,8 @@ class SwatPagination extends SwatControl
         }
     }
 
-
-
     /**
-     * Displays the current page position
+     * Displays the current page position.
      *
      * i.e. "1 of 3"
      */
@@ -332,10 +311,8 @@ class SwatPagination extends SwatControl
         $div->display();
     }
 
-
-
     /**
-     * Displays the next page link
+     * Displays the next page link.
      */
     protected function displayNext()
     {
@@ -357,10 +334,8 @@ class SwatPagination extends SwatControl
         }
     }
 
-
-
     /**
-     * Displays a smart list of pages
+     * Displays a smart list of pages.
      */
     protected function displayPages()
     {
@@ -380,15 +355,15 @@ class SwatPagination extends SwatControl
                 // Current page is in the first 6, show the first 10 pages
                 $display = true;
             } elseif (
-                $this->current_page > $this->total_pages - 6 &&
-                $i >= $this->total_pages - 10
+                $this->current_page > $this->total_pages - 6
+                && $i >= $this->total_pages - 10
             ) {
                 // Current page is in the last 6, show the last 10 pages
                 $display = true;
             } elseif (
-                $i < 3 ||
-                $i > $this->total_pages - 2 ||
-                abs($this->current_page - $i) <= 3
+                $i < 3
+                || $i > $this->total_pages - 2
+                || abs($this->current_page - $i) <= 3
             ) {
                 // Always show the first 2, last 2, and middle 6 pages
                 $display = true;
@@ -417,38 +392,32 @@ class SwatPagination extends SwatControl
         }
     }
 
-
-
     /**
-     * Gets the base link for all page links
+     * Gets the base link for all page links.
      *
-     * @return string the base link for all pages.
+     * @return string the base link for all pages
      */
     protected function getLink()
     {
         return $this->link ?? '%s';
     }
 
-
-
     /**
      * Gets the array of CSS classes that are applied to this pagination
-     * widget
+     * widget.
      *
      * @return array the array of CSS classes that are applied to this
-     *                pagination widget.
+     *               pagination widget
      */
     protected function getCSSClassNames()
     {
         $classes = ['swat-pagination'];
-        $classes = array_merge($classes, parent::getCSSClassNames());
-        return $classes;
+
+        return array_merge($classes, parent::getCSSClassNames());
     }
 
-
-
     /**
-     * Calculates page totals
+     * Calculates page totals.
      *
      * Sets the internal total_pages, next_page and prev_page properties.
      */
@@ -457,8 +426,8 @@ class SwatPagination extends SwatControl
         $this->total_pages = ceil($this->total_records / $this->page_size);
 
         if (
-            $this->total_pages <= 1 ||
-            $this->total_pages == $this->current_page
+            $this->total_pages <= 1
+            || $this->total_pages == $this->current_page
         ) {
             $this->next_page = 0;
         } else {
@@ -471,5 +440,4 @@ class SwatPagination extends SwatControl
             $this->prev_page = 0;
         }
     }
-
 }

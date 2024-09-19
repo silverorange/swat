@@ -3,20 +3,17 @@
 require_once 'Demo.php';
 
 /**
- * A demo using fieldsets
+ * A demo using fieldsets.
  *
- * @package   SwatDemo
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class FieldsetDemo extends Demo
 {
-
-
-	public function buildDemoUI(SwatUI $ui)
-	{
-		$radiolist = $ui->getWidget('radio_list');
-		$radiolist->addOptionsByArray([
+    public function buildDemoUI(SwatUI $ui)
+    {
+        $radiolist = $ui->getWidget('radio_list');
+        $radiolist->addOptionsByArray([
             0 => 'Apple',
             1 => 'Orange',
             2 => 'Banana',
@@ -27,8 +24,5 @@ class FieldsetDemo extends Demo
             7 => 'Grapefruit',
             8 => 'Strawberry',
         ]);
-	}
-
+    }
 }
-
-?>

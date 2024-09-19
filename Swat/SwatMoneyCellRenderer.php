@@ -1,25 +1,22 @@
 <?php
 
 /**
- * A currency cell renderer
+ * A currency cell renderer.
  *
- * @package   Swat
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatMoneyCellRenderer extends SwatCellRenderer
 {
-
-
     /**
-     * Optional locale for currency format
+     * Optional locale for currency format.
      *
      * @var string
      */
-    public $locale = null;
+    public $locale;
 
     /**
-     * Monetary value
+     * Monetary value.
      *
      * @var float
      */
@@ -27,7 +24,7 @@ class SwatMoneyCellRenderer extends SwatCellRenderer
 
     /**
      * If {@link SwatMoneyCellRenderer::$international} is false, whether to
-     * render the international currency symbol
+     * render the international currency symbol.
      *
      * If true, displays the international currency symbol. Use of this property
      * is discouraged in favour of using the
@@ -39,31 +36,31 @@ class SwatMoneyCellRenderer extends SwatCellRenderer
      * If {@link SwatMoneyCellRenderer::$international} is true, this property
      * has no effect.
      *
-     * @var boolean
+     * @var bool
      */
     public $display_currency = false;
 
     /**
      * Whether or not to render the currency value using the international
-     * format for the specified locale
+     * format for the specified locale.
      *
      * This uses the international currency symbol of the specified locale
      * instead of the national symbol. For example, the locale en_CA would
      * render $10 as CAD 10.00.
      *
-     * @var boolean
+     * @var bool
      */
     public $international = false;
 
     /**
-     * Number of decimal places to display
+     * Number of decimal places to display.
      *
      * If set to null, the default number of decimal places for the specified
      * locale is used.
      *
-     * @var integer
+     * @var int
      */
-    public $decimal_places = null;
+    public $decimal_places;
 
     /**
      * What to display when value is null.
@@ -73,11 +70,10 @@ class SwatMoneyCellRenderer extends SwatCellRenderer
      *
      * @var string
      */
-    public $null_display_value = null;
-
+    public $null_display_value;
 
     /**
-     * Creates a money cell renderer
+     * Creates a money cell renderer.
      */
     public function __construct()
     {
@@ -88,9 +84,8 @@ class SwatMoneyCellRenderer extends SwatCellRenderer
         );
     }
 
-
     /**
-     * Renders the contents of this cell
+     * Renders the contents of this cell.
      *
      * @see SwatCellRenderer::render()
      */
@@ -121,24 +116,20 @@ class SwatMoneyCellRenderer extends SwatCellRenderer
 
             if (!$this->international && $this->display_currency) {
                 echo '&nbsp;',
-                    SwatString::minimizeEntities(
-                        $locale->getInternationalCurrencySymbol(),
-                    );
+                SwatString::minimizeEntities(
+                    $locale->getInternationalCurrencySymbol(),
+                );
             }
         }
     }
 
-
     /**
-     * Gets currency format to use when rendering
+     * Gets currency format to use when rendering.
      *
      * @see SwatMoneyCellRenderer::render()
      */
     protected function getCurrencyFormat()
     {
-        $format = ['fractional_digits' => $this->decimal_places];
-
-        return $format;
+        return ['fractional_digits' => $this->decimal_places];
     }
-
 }

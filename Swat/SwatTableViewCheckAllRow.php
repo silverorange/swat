@@ -1,18 +1,15 @@
 <?php
 
 /**
- * A an extra row containing a check-all widget
+ * A an extra row containing a check-all widget.
  *
- * @package   Swat
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTableViewCheckAllRow extends SwatTableViewRow
 {
-
-
     /**
-     * Optional checkbox label title
+     * Optional checkbox label title.
      *
      * Defaults to "Check All".
      *
@@ -21,7 +18,7 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
     public $title;
 
     /**
-     * Optional content type for title
+     * Optional content type for title.
      *
      * Defaults to text/plain, use text/xml for XHTML fragments.
      *
@@ -30,21 +27,21 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
     public $content_type = 'text/plain';
 
     /**
-     * Count for all items when displaying an extended-all checkbox
+     * Count for all items when displaying an extended-all checkbox.
      *
      * When the check-all checkbox has been checked, an additional
      * checkbox will appear allowing the user to specify that they wish to
      * select all possible items. This is useful in cases where pagination
      * makes selecting all possible items impossible.
      *
-     * @var integer
+     * @var int
      */
     public $extended_count = 0;
 
     /**
-     * Count for all visible items when displaying an extended-all checkbox
+     * Count for all visible items when displaying an extended-all checkbox.
      *
-     * @var integer
+     * @var int
      */
     public $visible_count = 0;
 
@@ -58,29 +55,25 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
     public $unit;
 
     /**
-     * The ordinal tab index position of the XHTML input tag
+     * The ordinal tab index position of the XHTML input tag.
      *
      * Values 1 or greater will affect the tab index of this widget. A value
      * of 0 or null will use the position of the input tag in the XHTML
      * character stream to determine tab order.
      *
-     * @var integer
+     * @var int
      */
     public $tab_index;
 
-
-
     /**
-     * The check-all widget for this row
+     * The check-all widget for this row.
      *
      * @var SwatCheckAll
      */
     protected $check_all;
 
-
-
     /**
-     * The table-view checkbox column to which this check-all row is bound
+     * The table-view checkbox column to which this check-all row is bound.
      *
      * @var SwatTableViewCheckboxColumn
      */
@@ -88,7 +81,7 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 
     /**
      * The identifier of the checkbox list that controls the check-all widget
-     * of this row
+     * of this row.
      *
      * @var string
      *
@@ -98,24 +91,22 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 
     /**
      * An internal flag that is set to true when embedded widgets have been
-     * created
+     * created.
      *
-     * @var boolean
+     * @var bool
      *
      * @see SwatTableViewCheckAllRow::createEmbeddedWidgets()
      */
     private $widgets_created = false;
 
-
-
     /**
-     * Creates a new table-view check-all row
+     * Creates a new table-view check-all row.
      *
-     * @param SwatTableViewCheckboxColumn $column the table-view checkbox
+     * @param SwatTableViewCheckboxColumn $column  the table-view checkbox
      *                                             column to which this
-     *                                             check-all row is bound.
-     * @param string $list_id the identifier of the checkbox list that controls
-     *                         the check-all widget of this row.
+     *                                             check-all row is bound
+     * @param string                      $list_id the identifier of the checkbox list that controls
+     *                                             the check-all widget of this row
      */
     public function __construct(SwatTableViewCheckboxColumn $column, $list_id)
     {
@@ -124,13 +115,11 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
         $this->list_id = $list_id;
     }
 
-
-
     /**
-     * Gets the SwatHtmlHeadEntry objects needed by this check-all row
+     * Gets the SwatHtmlHeadEntry objects needed by this check-all row.
      *
      * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
-     *                               this check-all row.
+     *                              this check-all row
      *
      * @see SwatUIObject::getHtmlHeadEntrySet()
      */
@@ -144,14 +133,12 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
         return $set;
     }
 
-
-
     /**
      * Gets the SwatHtmlHeadEntry objects that may be needed by this
-     * check-all row
+     * check-all row.
      *
      * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects that may be
-     *                               needed by this check-all row.
+     *                              needed by this check-all row
      *
      * @see SwatUIObject::getAvailableHtmlHeadEntrySet()
      */
@@ -161,13 +148,12 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 
         $set = parent::getAvailableHtmlHeadEntrySet();
         $set->addEntrySet($this->check_all->getAvailableHtmlHeadEntrySet());
+
         return $set;
     }
 
-
-
     /**
-     * Initializes this check-all row
+     * Initializes this check-all row.
      */
     public function init()
     {
@@ -176,10 +162,8 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
         $this->check_all->init();
     }
 
-
-
     /**
-     * Processes this check-all row
+     * Processes this check-all row.
      */
     public function process()
     {
@@ -188,22 +172,18 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
         $this->check_all->process();
     }
 
-
-
     /**
-     * Whether or not the extended-checkbox was checked
+     * Whether or not the extended-checkbox was checked.
      *
-     * @return boolean Whether or not the extended-checkbox was checked
+     * @return bool Whether or not the extended-checkbox was checked
      */
     public function isExtendedSelected()
     {
         return $this->check_all->isExtendedSelected();
     }
 
-
-
     /**
-     * Displays this check-all row
+     * Displays this check-all row.
      */
     public function display()
     {
@@ -227,9 +207,8 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
         foreach ($columns as $column) {
             if ($column === $this->column) {
                 break;
-            } else {
-                $position++;
             }
+            $position++;
         }
 
         if ($position > 0) {
@@ -264,12 +243,10 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
         $tr_tag->close();
     }
 
-
-
     /**
-     * Gets the inline JavaScript required for this check-all row
+     * Gets the inline JavaScript required for this check-all row.
      *
-     * @return string the inline JavaScript required for this check-all row.
+     * @return string the inline JavaScript required for this check-all row
      *
      * @see SwatTableViewRow::getInlineJavaScript()
      */
@@ -287,10 +264,8 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
         );
     }
 
-
-
     /**
-     * Creates internal widgets required for this check-all row
+     * Creates internal widgets required for this check-all row.
      */
     private function createEmbeddedWidgets()
     {
@@ -301,5 +276,4 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
             $this->widgets_created = true;
         }
     }
-
 }

@@ -1,18 +1,15 @@
 <?php
 
 /**
- * A link cell renderer
+ * A link cell renderer.
  *
- * @package   Swat
  * @copyright 2004-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatLinkCellRenderer extends SwatCellRenderer
 {
-
-
     /**
-     * The href attribute in the XHTML anchor tag
+     * The href attribute in the XHTML anchor tag.
      *
      * Optionally uses vsprintf() syntax, for example:
      * <code>
@@ -26,7 +23,7 @@ class SwatLinkCellRenderer extends SwatCellRenderer
     public $link;
 
     /**
-     * The visible content to place within the XHTML anchor tag
+     * The visible content to place within the XHTML anchor tag.
      *
      * Optionally uses vsprintf() syntax, for example:
      * <code>
@@ -40,7 +37,7 @@ class SwatLinkCellRenderer extends SwatCellRenderer
     public $text = '';
 
     /**
-     * Optional content type
+     * Optional content type.
      *
      * Default text/plain, use text/xml for XHTML fragments.
      *
@@ -49,7 +46,7 @@ class SwatLinkCellRenderer extends SwatCellRenderer
     public $content_type = 'text/plain';
 
     /**
-     * A value or array of values to substitute into the text of this cell
+     * A value or array of values to substitute into the text of this cell.
      *
      * The value property may be specified either as an array of values or as
      * a single value. If an array is passed, a call to vsprintf() is done
@@ -60,7 +57,7 @@ class SwatLinkCellRenderer extends SwatCellRenderer
      *
      * @see SwatLinkCellRenderer::$text
      */
-    public $value = null;
+    public $value;
 
     /**
      * A value or array of values to substitute into the link of this cell. The
@@ -71,12 +68,10 @@ class SwatLinkCellRenderer extends SwatCellRenderer
      * @see SwatLinkCellRenderer::$link
      * @see SwatLinkCellRenderer::$value
      */
-    public $link_value = null;
-
-
+    public $link_value;
 
     /**
-     * Renders the contents of this cell
+     * Renders the contents of this cell.
      *
      * @see SwatCellRenderer::render()
      */
@@ -95,26 +90,22 @@ class SwatLinkCellRenderer extends SwatCellRenderer
         }
     }
 
-
-
     /**
-     * Whether or not this link is sensitive
+     * Whether or not this link is sensitive.
      *
      * Depends on the value of the sensitive property and whether or not a
      * link is set.
      *
-     * @return boolean true if this link cell renderer is sensitive and false
-     *                  if it is not.
+     * @return bool true if this link cell renderer is sensitive and false
+     *              if it is not
      */
     protected function isSensitive()
     {
         return $this->sensitive && $this->link !== null;
     }
 
-
-
     /**
-     * Renders this link as sensitive
+     * Renders this link as sensitive.
      */
     protected function renderSensitive()
     {
@@ -126,10 +117,8 @@ class SwatLinkCellRenderer extends SwatCellRenderer
         $anchor_tag->display();
     }
 
-
-
     /**
-     * Renders this link as not sensitive
+     * Renders this link as not sensitive.
      */
     protected function renderInsensitive()
     {
@@ -140,14 +129,10 @@ class SwatLinkCellRenderer extends SwatCellRenderer
         $span_tag->display();
     }
 
-
-
     protected function getTitle()
     {
         return null;
     }
-
-
 
     protected function getText()
     {
@@ -161,7 +146,6 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 
         return $text;
     }
-
 
     protected function getLink()
     {
@@ -183,11 +167,10 @@ class SwatLinkCellRenderer extends SwatCellRenderer
         return $link;
     }
 
-
     /**
-     * Gets the data specific CSS class names for this cell renderer
+     * Gets the data specific CSS class names for this cell renderer.
      *
-     * @return array the array of base CSS class names for this cell renderer.
+     * @return array the array of base CSS class names for this cell renderer
      */
     public function getDataSpecificCSSClassNames()
     {
@@ -199,5 +182,4 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 
         return $classes;
     }
-
 }

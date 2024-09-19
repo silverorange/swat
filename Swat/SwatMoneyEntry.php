@@ -1,36 +1,33 @@
 <?php
 
 /**
- * A money entry widget
+ * A money entry widget.
  *
- * @package   Swat
  * @copyright 2004-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatMoneyEntry extends SwatFloatEntry
 {
-
-
     /**
-     * Optional locale for currency format
+     * Optional locale for currency format.
      *
      * If no locale is specified, the current system locale is used.
      *
      * @var string
      */
-    public $locale = null;
+    public $locale;
 
     /**
-     * Whether to display international currency symbol
+     * Whether to display international currency symbol.
      *
      * If true, displays the international currency symbol after the input box.
      *
-     * @var boolean
+     * @var bool
      */
     public $display_currency = false;
 
     /**
-     * Number of decimal places to accept
+     * Number of decimal places to accept.
      *
      * This also controls how many decimal places are displayed when editing
      * existing values.
@@ -38,14 +35,12 @@ class SwatMoneyEntry extends SwatFloatEntry
      * If set to null, the number of decimal places allowed by the locale is
      * used.
      *
-     * @var integer
+     * @var int
      */
-    public $decimal_places = null;
-
-
+    public $decimal_places;
 
     /**
-     * Displays this money entry widget
+     * Displays this money entry widget.
      *
      * The widget is displayed as an input box and an optional currency symbol.
      */
@@ -65,10 +60,8 @@ class SwatMoneyEntry extends SwatFloatEntry
         }
     }
 
-
-
     /**
-     * Processes this money entry widget
+     * Processes this money entry widget.
      *
      * If the value of this widget is not a monetary value or the number of
      * fractional decimal places is not within the allowed range, an error
@@ -169,14 +162,12 @@ class SwatMoneyEntry extends SwatFloatEntry
         }
     }
 
-
-
     /**
-     * Formats a monetary value to display
+     * Formats a monetary value to display.
      *
-     * @param string $value the value to format for display.
+     * @param string $value the value to format for display
      *
-     * @return string the formatted value.
+     * @return string the formatted value
      */
     protected function getDisplayValue($value)
     {
@@ -192,30 +183,27 @@ class SwatMoneyEntry extends SwatFloatEntry
         return $value;
     }
 
-
-
     /**
-     * Gets the numeric value of this money entry
+     * Gets the numeric value of this money entry.
      *
-     * @param string $value the raw value to use to get the numeric value.
+     * @param string $value the raw value to use to get the numeric value
      *
      * @return mixed the numeric value of this money entry widget or null if no
-     *                numeric value is available.
+     *               numeric value is available
      */
     protected function getNumericValue($value)
     {
         return SwatI18NLocale::get($this->locale)->parseCurrency($value);
     }
 
-
-
     /**
-     * Gets a validation message for this money entry widget
+     * Gets a validation message for this money entry widget.
      *
      * @see SwatEntry::getValidationMessage()
-     * @param string $id the string identifier of the validation message.
      *
-     * @return SwatMessage the validation message.
+     * @param string $id the string identifier of the validation message
+     *
+     * @return SwatMessage the validation message
      */
     protected function getValidationMessage($id)
     {
@@ -243,6 +231,7 @@ class SwatMoneyEntry extends SwatFloatEntry
 
                 $message = new SwatMessage($text, 'error');
                 break;
+
             case 'currency-decimal-places':
                 $text = $this->show_field_title_in_messages
                     ? Swat::_(
@@ -256,6 +245,7 @@ class SwatMoneyEntry extends SwatFloatEntry
 
                 $message = new SwatMessage($text, 'error');
                 break;
+
             case 'no-decimal-places':
                 $text = $this->show_field_title_in_messages
                     ? Swat::_('The %s field must not have any decimal places.')
@@ -263,6 +253,7 @@ class SwatMoneyEntry extends SwatFloatEntry
 
                 $message = new SwatMessage($text, 'error');
                 break;
+
             default:
                 $message = parent::getValidationMessage($id);
                 break;
@@ -271,19 +262,16 @@ class SwatMoneyEntry extends SwatFloatEntry
         return $message;
     }
 
-
-
     /**
-     * Gets the array of CSS classes that are applied to this entry
+     * Gets the array of CSS classes that are applied to this entry.
      *
      * @return array the array of CSS classes that are applied to this
-     *                entry.
+     *               entry
      */
     protected function getCSSClassNames()
     {
         $classes = ['swat-money-entry'];
-        $classes = array_merge($classes, parent::getCSSClassNames());
-        return $classes;
-    }
 
+        return array_merge($classes, parent::getCSSClassNames());
+    }
 }

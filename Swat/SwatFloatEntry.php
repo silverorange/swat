@@ -1,18 +1,15 @@
 <?php
 
 /**
- * A float entry widget
+ * A float entry widget.
  *
- * @package   Swat
  * @copyright 2004-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatFloatEntry extends SwatNumericEntry
 {
-
-
     /**
-     * Checks to make sure value is a number
+     * Checks to make sure value is a number.
      *
      * If the value of this widget is not a number then an error message is
      * attached to this widget.
@@ -34,14 +31,12 @@ class SwatFloatEntry extends SwatNumericEntry
         }
     }
 
-
-
     /**
-     * Formats a float value to display
+     * Formats a float value to display.
      *
-     * @param string $value the value to format for display.
+     * @param string $value the value to format for display
      *
-     * @return string the formatted value.
+     * @return string the formatted value
      */
     protected function getDisplayValue($value)
     {
@@ -59,34 +54,32 @@ class SwatFloatEntry extends SwatNumericEntry
         return $value;
     }
 
-
-
     /**
-     * Gets the float value of this widget
+     * Gets the float value of this widget.
      *
      * This allows each widget to parse raw values how they want to get numeric
      * values.
      *
-     * @param string $value the raw value to use to get the numeric value.
+     * @param string $value the raw value to use to get the numeric value
      *
      * @return mixed the numeric value of this entry widget or null if no
-     *                numeric value is available.
+     *               numeric value is available
      */
     protected function getNumericValue($value)
     {
         $locale = SwatI18NLocale::get();
+
         return $locale->parseFloat($value);
     }
 
-
-
     /**
-     * Gets a validation message for this float entry
+     * Gets a validation message for this float entry.
      *
      * @see SwatEntry::getValidationMessage()
-     * @param string $id the string identifier of the validation message.
      *
-     * @return SwatMessage the validation message.
+     * @param string $id the string identifier of the validation message
+     *
+     * @return SwatMessage the validation message
      */
     protected function getValidationMessage($id)
     {
@@ -108,19 +101,16 @@ class SwatFloatEntry extends SwatNumericEntry
         return $message;
     }
 
-
-
     /**
-     * Gets the array of CSS classes that are applied to this entry
+     * Gets the array of CSS classes that are applied to this entry.
      *
      * @return array the array of CSS classes that are applied to this
-     *                entry.
+     *               entry
      */
     protected function getCSSClassNames()
     {
         $classes = ['swat-float-entry'];
-        $classes = array_merge($classes, parent::getCSSClassNames());
-        return $classes;
-    }
 
+        return array_merge($classes, parent::getCSSClassNames());
+    }
 }

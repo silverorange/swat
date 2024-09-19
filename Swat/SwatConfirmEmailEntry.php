@@ -1,30 +1,25 @@
 <?php
 
 /**
- * An email address confirmation entry widget
+ * An email address confirmation entry widget.
  *
  * Automatically compares the value of the confirmation with the matching
  * email entry widget to see if they match.
  *
- * @package   Swat
  * @copyright 2006-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatConfirmEmailEntry extends SwatEmailEntry
 {
-
-
     /**
-     * A reference to the matching email entry widget
+     * A reference to the matching email entry widget.
      *
      * @var SwatEmailEntry
      */
-    public $email_widget = null;
-
-
+    public $email_widget;
 
     /**
-     * Checks to make sure email addresses match
+     * Checks to make sure email addresses match.
      *
      * Checks to make sure the values of the two email address fields are the
      * same. If an associated email entry widget is not set, an exception is
@@ -59,19 +54,16 @@ class SwatConfirmEmailEntry extends SwatEmailEntry
         }
     }
 
-
-
     /**
-     * Gets the array of CSS classes that are applied to this entry
+     * Gets the array of CSS classes that are applied to this entry.
      *
      * @return array the array of CSS classes that are applied to this
-     *                entry.
+     *               entry
      */
     protected function getCSSClassNames()
     {
         $classes = ['swat-confirm-email-entry'];
-        $classes = array_merge($classes, parent::getCSSClassNames());
-        return $classes;
-    }
 
+        return array_merge($classes, parent::getCSSClassNames());
+    }
 }

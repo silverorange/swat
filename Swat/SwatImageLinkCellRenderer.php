@@ -1,18 +1,15 @@
 <?php
 
 /**
- * A renderer that displays a hyperlinked image
+ * A renderer that displays a hyperlinked image.
  *
- * @package   Swat
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatImageLinkCellRenderer extends SwatImageCellRenderer
 {
-
-
     /**
-     * The href attribute in the XHTML anchor tag
+     * The href attribute in the XHTML anchor tag.
      *
      * Optionally uses vsprintf() syntax, for example:
      * <code>
@@ -26,7 +23,7 @@ class SwatImageLinkCellRenderer extends SwatImageCellRenderer
     public $link;
 
     /**
-     * A value or array of values to substitute into the link of this cell
+     * A value or array of values to substitute into the link of this cell.
      *
      * The value property may be specified either as an array of values or as
      * a single value. If an array is passed, a call to vsprintf() is done
@@ -37,12 +34,10 @@ class SwatImageLinkCellRenderer extends SwatImageCellRenderer
      *
      * @see SwatImageLinkCellRenderer::$link
      */
-    public $link_value = null;
-
-
+    public $link_value;
 
     /**
-     * Renders the contents of this cell
+     * Renders the contents of this cell.
      *
      * @see SwatCellRenderer::render()
      */
@@ -72,5 +67,4 @@ class SwatImageLinkCellRenderer extends SwatImageCellRenderer
             $anchor->close();
         }
     }
-
 }

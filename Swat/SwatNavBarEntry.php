@@ -1,9 +1,8 @@
 <?php
 
 /**
- * Entry for the navbar navigation tool
+ * Entry for the navbar navigation tool.
  *
- * @package   Swat
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  *
@@ -11,17 +10,15 @@
  */
 class SwatNavBarEntry extends SwatObject
 {
-
-
     /**
-     * The visible title of this entry
+     * The visible title of this entry.
      *
      * @var string
      */
     public $title;
 
     /**
-     * The the web address that this navbar entry points to
+     * The the web address that this navbar entry points to.
      *
      * This property is optional. If it is not present this entry will not
      * display as a hyperlink.
@@ -31,7 +28,7 @@ class SwatNavBarEntry extends SwatObject
     public $link;
 
     /**
-     * Optional content type for title
+     * Optional content type for title.
      *
      * Default text/plain, use text/xml for XHTML fragments.
      *
@@ -39,14 +36,12 @@ class SwatNavBarEntry extends SwatObject
      */
     public $content_type = 'text/plain';
 
-
-
     /**
-     * Creates a new navbar entry
+     * Creates a new navbar entry.
      *
-     * @param string $title the title of this entry.
-     * @param string $link the web address this entry points to.
-     * @param string $content_type an optional content type for the entry title.
+     * @param string $title        the title of this entry
+     * @param string $link         the web address this entry points to
+     * @param string $content_type an optional content type for the entry title
      */
     public function __construct(
         $title,
@@ -57,5 +52,4 @@ class SwatNavBarEntry extends SwatObject
         $this->link = $link;
         $this->content_type = $content_type;
     }
-
 }

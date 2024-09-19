@@ -1,25 +1,22 @@
 <?php
 
 /**
- * A block of content in the widget tree
+ * A block of content in the widget tree.
  *
- * @package   Swat
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatContentBlock extends SwatControl
 {
-
-
     /**
-     * User visible textual content of this widget
+     * User visible textual content of this widget.
      *
      * @var string
      */
     public $content = '';
 
     /**
-     * Optional content type
+     * Optional content type.
      *
      * Default text/plain, use text/xml for XHTML fragments.
      *
@@ -27,10 +24,8 @@ class SwatContentBlock extends SwatControl
      */
     public $content_type = 'text/plain';
 
-
-
     /**
-     * Displays this content
+     * Displays this content.
      *
      * Merely performs an echo of the content.
      */
@@ -48,5 +43,4 @@ class SwatContentBlock extends SwatControl
             echo $this->content;
         }
     }
-
 }

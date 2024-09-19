@@ -1,29 +1,26 @@
 <?php
 
 /**
- * Fieldset tag container
+ * Fieldset tag container.
  *
  * An HTML fieldset tag with an optional HTML legend title.
  *
- * @package   Swat
  * @copyright 2004-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
 {
-
-
     /**
-     * Fieldset title
+     * Fieldset title.
      *
      * A visible title for this fieldset, or null.
      *
      * @var string
      */
-    public $title = null;
+    public $title;
 
     /**
-     * Optional content type for the title
+     * Optional content type for the title.
      *
      * Default text/plain, use text/xml for XHTML fragments.
      *
@@ -32,20 +29,18 @@ class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
     public $title_content_type = 'text/plain';
 
     /**
-     * Access key
+     * Access key.
      *
      * Access key for this fieldset legend, for keyboard nagivation.
      *
      * @var string
      */
-    public $access_key = null;
-
-
+    public $access_key;
 
     /**
-     * Creates a new fieldset
+     * Creates a new fieldset.
      *
-     * @param string $id a non-visible unique id for this widget.
+     * @param string $id a non-visible unique id for this widget
      *
      * @see SwatWidget::__construct()
      */
@@ -61,35 +56,29 @@ class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
         $this->addJavaScript('packages/swat/javascript/swat-fieldset.js');
     }
 
-
-
     /**
-     * Gets the title of this fieldset
+     * Gets the title of this fieldset.
      *
      * Implements the {SwatTitleable::getTitle()} interface.
      *
-     * @return the title of this fieldset.
+     * @return the title of this fieldset
      */
     public function getTitle()
     {
         return $this->title;
     }
 
-
-
     /**
-     * Gets the title content-type of this fieldset
+     * Gets the title content-type of this fieldset.
      *
      * Implements the {@link SwatTitleable::getTitleContentType()} interface.
      *
-     * @return string the title content-type of this fieldset.
+     * @return string the title content-type of this fieldset
      */
     public function getTitleContentType()
     {
         return $this->title_content_type;
     }
-
-
 
     public function display()
     {
@@ -122,12 +111,10 @@ class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
         $fieldset_tag->close();
     }
 
-
-
     /**
-     * Gets fieldset specific inline JavaScript
+     * Gets fieldset specific inline JavaScript.
      *
-     * @return string fieldset specific inline JavaScript.
+     * @return string fieldset specific inline JavaScript
      */
     protected function getInlineJavaScript()
     {
@@ -138,18 +125,15 @@ class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
         );
     }
 
-
-
     /**
-     * Gets the array of CSS classes that are applied to this fieldset
+     * Gets the array of CSS classes that are applied to this fieldset.
      *
-     * @return array the array of CSS classes that are applied to this fieldset.
+     * @return array the array of CSS classes that are applied to this fieldset
      */
     protected function getCSSClassNames()
     {
         $classes = ['swat-fieldset'];
-        $classes = array_merge($classes, parent::getCSSClassNames());
-        return $classes;
-    }
 
+        return array_merge($classes, parent::getCSSClassNames());
+    }
 }

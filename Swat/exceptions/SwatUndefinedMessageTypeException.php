@@ -1,32 +1,26 @@
 <?php
 
 /**
- * Thrown when a message type is used that is not defined
+ * Thrown when a message type is used that is not defined.
  *
- * @package   Swat
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatUndefinedMessageTypeException extends SwatException
 {
-
-
     /**
-     * The name of the message type that is undefined
+     * The name of the message type that is undefined.
      *
      * @var string
      */
-    protected $message_type = null;
-
-
+    protected $message_type;
 
     /**
-     * Creates a new undefined message type exception
+     * Creates a new undefined message type exception.
      *
-     * @param string $message the message of the exception.
-     * @param integer $code the code of the exception.
-     * @param string $constant_name the name of the message type that is
-     *                               undefined.
+     * @param string     $message      the message of the exception
+     * @param int        $code         the code of the exception
+     * @param mixed|null $message_type
      */
     public function __construct(
         $message = null,
@@ -37,16 +31,13 @@ class SwatUndefinedMessageTypeException extends SwatException
         $this->message_type = $message_type;
     }
 
-
-
     /**
-     * Gets the name of the message type that is undefined
+     * Gets the name of the message type that is undefined.
      *
-     * @return string the name of the message type that is undefined.
+     * @return string the name of the message type that is undefined
      */
     public function getMessageType()
     {
         return $this->message_type;
     }
-
 }

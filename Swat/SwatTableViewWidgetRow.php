@@ -1,58 +1,51 @@
 <?php
 
 /**
- * A table view row with an optional contained widget
+ * A table view row with an optional contained widget.
  *
- * @package   Swat
  * @copyright 2006-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 {
-
+    /**
+     * Display the widget in the left cell.
+     */
+    public const POSITION_LEFT = 0;
 
     /**
-     * Display the widget in the left cell
+     * Display the widget in the right cell.
      */
-    const POSITION_LEFT = 0;
-
-    /**
-     * Display the widget in the right cell
-     */
-    const POSITION_RIGHT = 1;
-
-
+    public const POSITION_RIGHT = 1;
 
     /**
      * How far from the end of the row the widget should be displayed measured
      * in columns. The end of the row this offset is relative to is detemined
      * by the $postion property.
      *
-     * @var integer
+     * @var int
      */
     public $offset = 0;
 
     /**
-     * How many table-view columns the widget should span
+     * How many table-view columns the widget should span.
      *
-     * @var integer
+     * @var int
      */
     public $span = 1;
 
     /**
-     * Whether to display the widget in the left or right cell of the row
+     * Whether to display the widget in the left or right cell of the row.
      *
      * By default, the widget displays in the left cell. Use the POSITION_*
      * constants to control the widget position within this row.
      *
-     * @var integer
+     * @var int
      */
     public $position = self::POSITION_LEFT;
 
-
-
     /**
-     * The contained widget
+     * The contained widget.
      *
      * @var SwatWidget
      *
@@ -60,17 +53,15 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
      */
     protected $widget;
 
-
-
     /**
-     * Adds a child object
+     * Adds a child object.
      *
      * This method fulfills the {@link SwatUIParent} interface. It is used
      * by {@link SwatUI} when building a widget tree and should not need to be
      * called elsewhere. To set the widget for this row,
      * {@link SwatTableViewWidgetRow::setWidget()}.
      *
-     * @param SwatWidget $child a reference to the child object to add.
+     * @param SwatWidget $child a reference to the child object to add
      *
      * @throws SwatException
      * @throws SwatInvalidClassException
@@ -79,7 +70,7 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
      */
     public function addChild(SwatObject $child)
     {
-        if (!($child instanceof SwatWidget)) {
+        if (!$child instanceof SwatWidget) {
             throw new SwatInvalidClassException(
                 sprintf(
                     'Only SwatWidget objects may be nested within ' .
@@ -100,18 +91,16 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
         $this->setWidget($child);
     }
 
-
-
     /**
-     * Gets descendant UI-objects
+     * Gets descendant UI-objects.
      *
      * @param string $class_name optional class name. If set, only UI-objects
-     *                            that are instances of <i>$class_name</i> are
-     *                            returned.
+     *                           that are instances of <i>$class_name</i> are
+     *                           returned.
      *
      * @return array the descendant UI-objects of this widget row. If
-     *                descendant objects have identifiers, the identifier is
-     *                used as the array key.
+     *               descendant objects have identifiers, the identifier is
+     *               used as the array key.
      *
      * @see SwatUIParent::getDescendants()
      */
@@ -119,9 +108,9 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
     {
         if (
             !(
-                $class_name === null ||
-                class_exists($class_name) ||
-                interface_exists($class_name)
+                $class_name === null
+                || class_exists($class_name)
+                || interface_exists($class_name)
             )
         ) {
             return [];
@@ -149,15 +138,13 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
         return $out;
     }
 
-
-
     /**
-     * Gets the first descendant UI-object of a specific class
+     * Gets the first descendant UI-object of a specific class.
      *
-     * @param string $class_name class name to look for.
+     * @param string $class_name class name to look for
      *
      * @return SwatUIObject the first descendant UI-object or null if no
-     *                       matching descendant is found.
+     *                      matching descendant is found
      *
      * @see SwatUIParent::getFirstDescendant()
      */
@@ -180,16 +167,14 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
         return $out;
     }
 
-
-
     /**
-     * Gets descendant states
+     * Gets descendant states.
      *
      * Retrieves an array of states of all stateful UI-objects in the widget
      * subtree below this action item.
      *
      * @return array an array of UI-object states with UI-object identifiers as
-     *                array keys.
+     *               array keys
      */
     public function getDescendantStates()
     {
@@ -202,16 +187,14 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
         return $states;
     }
 
-
-
     /**
-     * Sets descendant states
+     * Sets descendant states.
      *
      * Sets states on all stateful UI-objects in the widget subtree below this
      * action item.
      *
      * @param array $states an array of UI-object states with UI-object
-     *                       identifiers as array keys.
+     *                      identifiers as array keys
      */
     public function setDescendantStates(array $states)
     {
@@ -222,15 +205,13 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
         }
     }
 
-
-
     /**
-     * Sets the widget contained in this row
+     * Sets the widget contained in this row.
      *
-     * @param SwatWidget $widget the widget to contain in this row.
+     * @param SwatWidget $widget the widget to contain in this row
      *
      * @throws SwatException if the added widget is already the child of
-     *                       another object.
+     *                       another object
      */
     public function setWidget(SwatWidget $widget)
     {
@@ -244,20 +225,16 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
         $widget->parent = $this;
     }
 
-
-
     /**
-     * Gets the widget contained in this row
+     * Gets the widget contained in this row.
      *
      * @return SwatWidget the widget contained in this row or null if this
-     *                    row does not contain a widget.
+     *                    row does not contain a widget
      */
     public function getWidget()
     {
         return $this->widget;
     }
-
-
 
     public function init()
     {
@@ -268,8 +245,6 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
         }
     }
 
-
-
     public function process()
     {
         parent::process();
@@ -278,8 +253,6 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
             $this->widget->process();
         }
     }
-
-
 
     public function display()
     {
@@ -311,16 +284,14 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
         $tr_tag->close();
     }
 
-
-
     /**
-     * Gets the SwatHtmlHeadEntry objects needed by this row
+     * Gets the SwatHtmlHeadEntry objects needed by this row.
      *
      * If this row has not been displayed, an empty set is returned to reduce
      * the number of required HTTP requests.
      *
      * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
-     *                               this row.
+     *                              this row
      */
     public function getHtmlHeadEntrySet()
     {
@@ -333,13 +304,11 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
         return $set;
     }
 
-
-
     /**
-     * Gets the SwatHtmlHeadEntry objects that may be needed by this row
+     * Gets the SwatHtmlHeadEntry objects that may be needed by this row.
      *
      * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects that may be
-     *                               needed by this row.
+     *                              needed by this row
      */
     public function getAvailableHtmlHeadEntrySet()
     {
@@ -352,16 +321,14 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
         return $set;
     }
 
-
-
     /**
-     * Performs a deep copy of the UI tree starting with this UI object
+     * Performs a deep copy of the UI tree starting with this UI object.
      *
      * @param string $id_suffix optional. A suffix to append to copied UI
-     *                           objects in the UI tree.
+     *                          objects in the UI tree.
      *
      * @return SwatUIObject a deep copy of the UI tree starting with this UI
-     *                       object.
+     *                      object
      *
      * @see SwatUIObject::copy()
      */
@@ -378,12 +345,10 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
         return $copy;
     }
 
-
-
     /**
-     * Gathers all messages from this table-view-row
+     * Gathers all messages from this table-view-row.
      *
-     * @return array an array of {@link SwatMessage} objects.
+     * @return array an array of {@link SwatMessage} objects
      */
     public function getMessages()
     {
@@ -396,13 +361,11 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
         return $messages;
     }
 
-
-
     /**
-     * Gets whether or not the widgets in this row have any messages
+     * Gets whether or not the widgets in this row have any messages.
      *
-     * @return boolean true if this table-view row has one or more messages
-     *                  and false if it does not.
+     * @return bool true if this table-view row has one or more messages
+     *              and false if it does not
      */
     public function hasMessage()
     {
@@ -417,8 +380,6 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
         return $has_message;
     }
 
-
-
     protected function displayOffsetCell($offset)
     {
         $td_tag = new SwatHtmlTag('td');
@@ -428,8 +389,6 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
         echo '&nbsp;';
         $td_tag->close();
     }
-
-
 
     protected function displayWidgetCell()
     {
@@ -442,18 +401,15 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
         $td_tag->close();
     }
 
-
-
     /**
-     * Gets the array of CSS classes that are applied to this row
+     * Gets the array of CSS classes that are applied to this row.
      *
-     * @return array the array of CSS classes that are applied to this row.
+     * @return array the array of CSS classes that are applied to this row
      */
     protected function getCSSClassNames()
     {
         $classes = ['swat-table-view-widget-row'];
-        $classes = array_merge($classes, $this->classes);
-        return $classes;
-    }
 
+        return array_merge($classes, $this->classes);
+    }
 }

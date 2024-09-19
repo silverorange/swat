@@ -1,9 +1,8 @@
 <?php
 
 /**
- * A single entry in a {@link SwatActions} widget
+ * A single entry in a {@link SwatActions} widget.
  *
- * @package   Swat
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  *
@@ -11,33 +10,29 @@
  */
 class SwatActionItem extends SwatControl implements SwatUIParent
 {
-
-
     /**
-     * A unique identifier for this action item
+     * A unique identifier for this action item.
      *
      * @var string
      */
     public $id;
 
     /**
-     * A human readable title displayed for this item
+     * A human readable title displayed for this item.
      *
      * @var string
      */
     public $title = '';
 
     /**
-     * A SwatWidget associated with this action item
+     * A SwatWidget associated with this action item.
      *
      * @var SwatWidget
      */
-    public $widget = null;
-
-
+    public $widget;
 
     /**
-     * Initializes this action item
+     * Initializes this action item.
      *
      * This initializes the widget contained in this action item if there is
      * one.
@@ -51,10 +46,8 @@ class SwatActionItem extends SwatControl implements SwatUIParent
         }
     }
 
-
-
     /**
-     * Displays this item
+     * Displays this item.
      *
      * Calls this item's widget display method.
      */
@@ -69,15 +62,13 @@ class SwatActionItem extends SwatControl implements SwatUIParent
         $this->widget->display();
     }
 
-
-
     /**
-     * Sets the widget to use for this item
+     * Sets the widget to use for this item.
      *
      * Each SwatActionItem can have one associated SwatWidget. This method
      * sets the widget for this item.
      *
-     * @param SwatWidget $widget the widget associated with this action.
+     * @param SwatWidget $widget the widget associated with this action
      *
      * @throws SwatException
      */
@@ -94,17 +85,15 @@ class SwatActionItem extends SwatControl implements SwatUIParent
         $widget->parent = $this;
     }
 
-
-
     /**
-     * Adds a child object
+     * Adds a child object.
      *
      * This method fulfills the {@link SwatUIParent} interface. It is used
      * by {@link SwatUI} when building a widget tree and should not need to be
      * called elsewhere. To set the a widget in an action item, use
      * {@link SwatActionItem::setWidget()}.
      *
-     * @param SwatWidget $child a reference to a child object to add.
+     * @param SwatWidget $child a reference to a child object to add
      *
      * @throws SwatInvalidClassException
      *
@@ -125,13 +114,11 @@ class SwatActionItem extends SwatControl implements SwatUIParent
         }
     }
 
-
-
     /**
-     * Gets the SwatHtmlHeadEntry objects needed by this action item
+     * Gets the SwatHtmlHeadEntry objects needed by this action item.
      *
      * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
-     *                               this action item.
+     *                              this action item
      *
      * @see SwatWidget::getHtmlHeadEntrySet()
      */
@@ -146,13 +133,11 @@ class SwatActionItem extends SwatControl implements SwatUIParent
         return $set;
     }
 
-
-
     /**
-     * Gets the SwatHtmlHeadEntry objects that may be needed by this action item
+     * Gets the SwatHtmlHeadEntry objects that may be needed by this action item.
      *
      * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects that may be
-     *                               neededthis action item.
+     *                              neededthis action item
      *
      * @see SwatWidget::getAvailableHtmlHeadEntrySet()
      */
@@ -167,18 +152,16 @@ class SwatActionItem extends SwatControl implements SwatUIParent
         return $set;
     }
 
-
-
     /**
-     * Gets descendant UI-objects
+     * Gets descendant UI-objects.
      *
      * @param string $class_name optional class name. If set, only UI-objects
-     *                            that are instances of <i>$class_name</i> are
-     *                            returned.
+     *                           that are instances of <i>$class_name</i> are
+     *                           returned.
      *
      * @return array the descendant UI-objects of this action item. If
-     *                descendant objects have identifiers, the identifier is
-     *                used as the array key.
+     *               descendant objects have identifiers, the identifier is
+     *               used as the array key.
      *
      * @see SwatUIParent::getDescendants()
      */
@@ -186,9 +169,9 @@ class SwatActionItem extends SwatControl implements SwatUIParent
     {
         if (
             !(
-                $class_name === null ||
-                class_exists($class_name) ||
-                interface_exists($class_name)
+                $class_name === null
+                || class_exists($class_name)
+                || interface_exists($class_name)
             )
         ) {
             return [];
@@ -216,15 +199,13 @@ class SwatActionItem extends SwatControl implements SwatUIParent
         return $out;
     }
 
-
-
     /**
-     * Gets the first descendant UI-object of a specific class
+     * Gets the first descendant UI-object of a specific class.
      *
-     * @param string $class_name class name to look for.
+     * @param string $class_name class name to look for
      *
      * @return SwatUIObject the first descendant widget or null if no matching
-     *                       descendant is found.
+     *                      descendant is found
      *
      * @see SwatUIParent::getFirstDescendant()
      */
@@ -247,16 +228,14 @@ class SwatActionItem extends SwatControl implements SwatUIParent
         return $out;
     }
 
-
-
     /**
-     * Gets descendant states
+     * Gets descendant states.
      *
      * Retrieves an array of states of all stateful UI-objects in the widget
      * subtree below this action item.
      *
      * @return array an array of UI-object states with UI-object identifiers as
-     *                array keys.
+     *               array keys
      */
     public function getDescendantStates()
     {
@@ -269,16 +248,14 @@ class SwatActionItem extends SwatControl implements SwatUIParent
         return $states;
     }
 
-
-
     /**
-     * Sets descendant states
+     * Sets descendant states.
      *
      * Sets states on all stateful UI-objects in the widget subtree below this
      * action item.
      *
      * @param array $states an array of UI-object states with UI-object
-     *                       identifiers as array keys.
+     *                      identifiers as array keys
      */
     public function setDescendantStates(array $states)
     {
@@ -289,16 +266,14 @@ class SwatActionItem extends SwatControl implements SwatUIParent
         }
     }
 
-
-
     /**
-     * Performs a deep copy of the UI tree starting with this UI object
+     * Performs a deep copy of the UI tree starting with this UI object.
      *
      * @param string $id_suffix optional. A suffix to append to copied UI
-     *                           objects in the UI tree.
+     *                          objects in the UI tree.
      *
      * @return SwatUIObject a deep copy of the UI tree starting with this UI
-     *                       object.
+     *                      object
      *
      * @see SwatUIObject::copy()
      */
@@ -314,5 +289,4 @@ class SwatActionItem extends SwatControl implements SwatUIParent
 
         return $copy;
     }
-
 }

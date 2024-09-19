@@ -1,22 +1,19 @@
 <?php
 
 /**
- * A cell renderer for a boolean value
+ * A cell renderer for a boolean value.
  *
- * @package   Swat
  * @copyright 2004-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatBooleanCellRenderer extends SwatCellRenderer
 {
-
-
     /**
-     * Value of this cell
+     * Value of this cell.
      *
      * The boolean value to display in this cell.
      *
-     * @var boolean
+     * @var bool
      */
     public $value;
 
@@ -25,26 +22,26 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
      *
      * @var string
      */
-    public $true_content = null;
+    public $true_content;
 
     /**
      * Optional content to display for a false value.
      *
      * @var string
      */
-    public $false_content = null;
+    public $false_content;
 
     /**
-     * Optional content type
+     * Optional content type.
      *
      * Defaults to text/plain, use text/xml for XHTML fragments.
      *
      * @var string
      */
-    public $content_type = null;
+    public $content_type;
 
     /**
-     * The stock id of this SwatBooleanCellRenderer
+     * The stock id of this SwatBooleanCellRenderer.
      *
      * Specifying a stock id initializes this boolean cell renderer with a set
      * of stock values.
@@ -53,26 +50,24 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
      *
      * @see SwatBooleanCellRenderer::setFromStock()
      */
-    public $stock_id = null;
-
-
+    public $stock_id;
 
     /**
-     * Sets the values of this boolean cell renderer to a stock type
+     * Sets the values of this boolean cell renderer to a stock type.
      *
      * Valid stock type ids are:
      *
      * - check-only
      * - yes-no
      *
-     * @param string $stock_id the identifier of the stock type to use.
-     * @param boolean $overwrite_properties optional. Whether to overwrite
-     *                                       properties if they are already set.
-     *                                       By default, properties are
-     *                                       overwritten.
+     * @param string $stock_id             the identifier of the stock type to use
+     * @param bool   $overwrite_properties optional. Whether to overwrite
+     *                                     properties if they are already set.
+     *                                     By default, properties are
+     *                                     overwritten.
      *
      * @throws SwatUndefinedStockTypeException if an undefined <i>$stock_id</i>
-     *                                         is used.
+     *                                         is used
      */
     public function setFromStock($stock_id, $overwrite_properties = true)
     {
@@ -114,10 +109,8 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
         }
     }
 
-
-
     /**
-     * Renders the contents of this cell
+     * Renders the contents of this cell.
      *
      * @see SwatCellRenderer::render()
      */
@@ -146,30 +139,26 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
         }
     }
 
-
-
     /**
-     * Gets the data specific CSS class names for this cell renderer
+     * Gets the data specific CSS class names for this cell renderer.
      *
      * This is the recommended place for cell-renderer subclasses to add extra
      * hard-coded CSS classes that depend on data-bound properties of this
      * cell-renderer.
      *
-     * @return array the array of base CSS class names for this cell renderer.
+     * @return array the array of base CSS class names for this cell renderer
      */
     public function getDataSpecificCSSClassNames()
     {
         if ((bool) $this->value) {
             return ['swat-boolean-cell-renderer-checked'];
-        } else {
-            return [];
         }
+
+        return [];
     }
 
-
-
     /**
-     * Renders a true value for this boolean cell renderer
+     * Renders a true value for this boolean cell renderer.
      */
     protected function renderTrue()
     {
@@ -180,10 +169,8 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
         }
     }
 
-
-
     /**
-     * Renders a false value for this boolean cell renderer
+     * Renders a false value for this boolean cell renderer.
      */
     protected function renderFalse()
     {
@@ -194,10 +181,8 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
         }
     }
 
-
-
     /**
-     * Renders a checkmark image for this boolean cell renderer
+     * Renders a checkmark image for this boolean cell renderer.
      *
      * This is used when this cell renderer has a
      * {@link SwatBooleanCellRenderer::$stock_id} of 'check-only'.
@@ -211,5 +196,4 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
         $image_tag->width = '14';
         $image_tag->display();
     }
-
 }

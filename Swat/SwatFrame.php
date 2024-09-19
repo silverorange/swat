@@ -1,39 +1,36 @@
 <?php
 
 /**
- * A container with a decorative frame and optional title
+ * A container with a decorative frame and optional title.
  *
- * @package   Swat
  * @copyright 2004-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
 {
-
-
     /**
-     * A visible title for this frame, or null
+     * A visible title for this frame, or null.
      *
      * @var string
      */
-    public $title = null;
+    public $title;
 
     /**
-     * An optional visible subtitle for this frame, or null
+     * An optional visible subtitle for this frame, or null.
      *
      * @var string
      */
-    public $subtitle = null;
+    public $subtitle;
 
     /**
-     * An optional string to separate subtitle from the title
+     * An optional string to separate subtitle from the title.
      *
      * @var string
      */
     public $title_separator = ': ';
 
     /**
-     * Optional content type for the title
+     * Optional content type for the title.
      *
      * Default text/plain, use text/xml for XHTML fragments.
      *
@@ -42,23 +39,21 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
     public $title_content_type = 'text/plain';
 
     /**
-     * Optional header level for the title
+     * Optional header level for the title.
      *
      * Setting this will override the automatic heading level calculation
      * based on nesting of frames.
      *
-     * @var integer
+     * @var int
      */
     public $header_level;
 
-
-
     /**
-     * Gets the title of this frame
+     * Gets the title of this frame.
      *
      * Implements the {@link SwatTitleable::getTitle()} interface.
      *
-     * @return string the title of this frame.
+     * @return string the title of this frame
      */
     public function getTitle()
     {
@@ -73,24 +68,20 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
         return $this->title . ': ' . $this->subtitle;
     }
 
-
-
     /**
-     * Gets the title content-type of this frame
+     * Gets the title content-type of this frame.
      *
      * Implements the {@link SwatTitleable::getTitleContentType()} interface.
      *
-     * @return string the title content-type of this frame.
+     * @return string the title content-type of this frame
      */
     public function getTitleContentType()
     {
         return $this->title_content_type;
     }
 
-
-
     /**
-     * Displays this frame
+     * Displays this frame.
      */
     public function display()
     {
@@ -110,10 +101,8 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
         $outer_div->close();
     }
 
-
-
     /**
-     * Displays this frame's title
+     * Displays this frame's title.
      */
     protected function displayTitle()
     {
@@ -141,10 +130,8 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
         }
     }
 
-
-
     /**
-     * Displays this frame's content
+     * Displays this frame's content.
      */
     protected function displayContent()
     {
@@ -155,21 +142,17 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
         $inner_div->close();
     }
 
-
-
     /**
-     * Gets the array of CSS classes that are applied to this frame
+     * Gets the array of CSS classes that are applied to this frame.
      *
-     * @return array the array of CSS classes that are applied to this frame.
+     * @return array the array of CSS classes that are applied to this frame
      */
     protected function getCSSClassNames()
     {
         $classes = ['swat-frame'];
-        $classes = array_merge($classes, parent::getCSSClassNames());
-        return $classes;
+
+        return array_merge($classes, parent::getCSSClassNames());
     }
-
-
 
     protected function getHeaderLevel()
     {
@@ -195,5 +178,4 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
 
         return $level;
     }
-
 }

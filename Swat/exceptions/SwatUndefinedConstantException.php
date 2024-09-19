@@ -1,31 +1,26 @@
 <?php
 
 /**
- * Thrown when a constant is used that is not defined
+ * Thrown when a constant is used that is not defined.
  *
- * @package   Swat
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatUndefinedConstantException extends SwatException
 {
-
-
     /**
-     * The name of the constant that is undefined
+     * The name of the constant that is undefined.
      *
      * @var string
      */
-    protected $constant_name = null;
-
-
+    protected $constant_name;
 
     /**
-     * Creates a new undefined constant exception
+     * Creates a new undefined constant exception.
      *
-     * @param string $message the message of the exception.
-     * @param integer $code the code of the exception.
-     * @param string $constant_name the name of the constant that is undefined.
+     * @param string $message       the message of the exception
+     * @param int    $code          the code of the exception
+     * @param string $constant_name the name of the constant that is undefined
      */
     public function __construct(
         $message = null,
@@ -36,16 +31,13 @@ class SwatUndefinedConstantException extends SwatException
         $this->constant_name = $constant_name;
     }
 
-
-
     /**
-     * Gets the name of the constant that is undefined
+     * Gets the name of the constant that is undefined.
      *
-     * @return string the name of the constant that is undefined.
+     * @return string the name of the constant that is undefined
      */
     public function getConstantName()
     {
         return $this->constant_name;
     }
-
 }

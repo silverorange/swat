@@ -1,29 +1,24 @@
 <?php
 
 /**
- * A tree node for a flydown
+ * A tree node for a flydown.
  *
  * Contains a flydown option that has a value and a title.
  *
- * @package   Swat
  * @copyright 2006-2016 silverorange
  * @license
  */
 class SwatTreeFlydownNode extends SwatTreeNode
 {
-
-
     /**
-     * The flydown option for this node
+     * The flydown option for this node.
      *
      * @var SwatOption
      */
     protected $flydown_option;
 
-
-
     /**
-     * Creates a new tree flydown node
+     * Creates a new tree flydown node.
      *
      * This method is overloaded to accept either a value-title pair or a new
      * {@link SwatOption} object. Example usage:
@@ -38,12 +33,12 @@ class SwatTreeFlydownNode extends SwatTreeNode
      * </code>
      *
      * @param mixed $param1 either a {@link SwatOption} object or an
-     *                       integer or string representing the value of a new
-     *                       flydown option.
+     *                      integer or string representing the value of a new
+     *                      flydown option
      * @param mixed $param2 if a SwatOption object is passed in for
-     *                       parameter one, this parameter must be ommitted.
-     *                       Otherwise, this is a string title for a new
-     *                       flydown option.
+     *                      parameter one, this parameter must be ommitted.
+     *                      Otherwise, this is a string title for a new
+     *                      flydown option.
      *
      * @throws SwatException
      */
@@ -61,26 +56,22 @@ class SwatTreeFlydownNode extends SwatTreeNode
         }
     }
 
-
-
     /**
-     * Gets the option for this node
+     * Gets the option for this node.
      *
-     * @return SwatOption the option for this node.
+     * @return SwatOption the option for this node
      */
     public function getOption()
     {
         return $this->flydown_option;
     }
 
-
-
     /**
-     * Adds a child node to this node
+     * Adds a child node to this node.
      *
      * The parent of the child node is set to this node.
      *
-     * @param SwatTreeNode $child the child node to add to this node.
+     * @param SwatTreeNode $child the child node to add to this node
      */
     public function addChild($child)
     {
@@ -90,8 +81,6 @@ class SwatTreeFlydownNode extends SwatTreeNode
 
         parent::addChild($child);
     }
-
-
 
     public static function convertFromDataTree(SwatDataTreeNode $tree)
     {
@@ -103,5 +92,4 @@ class SwatTreeFlydownNode extends SwatTreeNode
 
         return $new_tree;
     }
-
 }

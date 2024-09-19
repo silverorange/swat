@@ -7,37 +7,33 @@
  * stacked and open and close like disclosures. It sounds like a ye-olde
  * squeezebox.
  *
- * @package   Swat
  * @copyright 2011-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ *
  * @see       SwatNoteBookPage
  */
 class SwatAccordion extends SwatNoteBook
 {
-
-
     /**
-     * Whether or not to animate the opening/closing of the accordion
+     * Whether or not to animate the opening/closing of the accordion.
      *
-     * @var boolean
+     * @var bool
      */
     public $animate = true;
 
     /**
-     * Whether or not one page of the accordion is always open
+     * Whether or not one page of the accordion is always open.
      *
      * If false, the accordion can collapse to an all-closed state.
      *
-     * @var boolean
+     * @var bool
      */
     public $always_open = false;
 
-
-
     /**
-     * Creates a new accordion view
+     * Creates a new accordion view.
      *
-     * @param string $id a non-visable unique id for this widget.
+     * @param string $id a non-visable unique id for this widget
      */
     public function __construct($id = null)
     {
@@ -52,10 +48,8 @@ class SwatAccordion extends SwatNoteBook
         $this->addJavaScript('packages/swat/javascript/swat-accordion.js');
     }
 
-
-
     /**
-     * Displays this notebook
+     * Displays this notebook.
      */
     public function display()
     {
@@ -125,12 +119,10 @@ class SwatAccordion extends SwatNoteBook
         Swat::displayInlineJavaScript($this->getInlineJavaScript());
     }
 
-
-
     /**
-     * Gets the inline JavaScript used by this accordion view
+     * Gets the inline JavaScript used by this accordion view.
      *
-     * @return string the inline JavaScript used by this accordion view.
+     * @return string the inline JavaScript used by this accordion view
      */
     protected function getInlineJavaScript()
     {
@@ -156,11 +148,8 @@ class SwatAccordion extends SwatNoteBook
         return $javascript;
     }
 
-
-
     protected function getJavaScriptClassName()
     {
         return 'SwatAccordion';
     }
-
 }

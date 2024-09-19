@@ -1,32 +1,29 @@
 <?php
 
 /**
- * A base class for Swat user-interface elements
+ * A base class for Swat user-interface elements.
  *
  * TODO: describe our conventions on how CSS classes and XHTML ids are
  * displayed.
  *
- * @package   Swat
  * @copyright 2006-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatUIObject extends SwatObject
 {
-
-
     /**
-     * The object which contains this object
+     * The object which contains this object.
      *
      * @var SwatUIObject
      */
-    public $parent = null;
+    public $parent;
 
     /**
-     * Visible
+     * Visible.
      *
      * Whether this UI object is displayed. All UI objects should respect this.
      *
-     * @var boolean
+     * @var bool
      *
      * @see SwatUIObject::isVisible()
      */
@@ -34,7 +31,7 @@ abstract class SwatUIObject extends SwatObject
 
     /**
      * A user-specified array of CSS classes that are applied to this
-     * user-interface object
+     * user-interface object.
      *
      * See the class-level documentation for SwatUIObject for details on how
      * CSS classes and XHTML ids are displayed on user-interface objects.
@@ -51,10 +48,8 @@ abstract class SwatUIObject extends SwatObject
      */
     public $data_attributes = [];
 
-
-
     /**
-     * A set of HTML head entries needed by this user-interface element
+     * A set of HTML head entries needed by this user-interface element.
      *
      * Entries are stored in a data object called {@link SwatHtmlHeadEntry}.
      * This property contains a set of such objects.
@@ -63,22 +58,16 @@ abstract class SwatUIObject extends SwatObject
      */
     protected $html_head_entry_set;
 
-
-
     public function __construct()
     {
         $this->html_head_entry_set = new SwatHtmlHeadEntrySet();
     }
 
-
-
     /**
      * Adds a stylesheet to the list of stylesheets needed by this
-     * user-iterface element
+     * user-iterface element.
      *
-     * @param string  $stylesheet the uri of the style sheet.
-     * @param integer $display_order the relative order in which to display
-     *                                this stylesheet head entry.
+     * @param string $stylesheet the uri of the style sheet
      */
     public function addStyleSheet($stylesheet)
     {
@@ -99,15 +88,11 @@ abstract class SwatUIObject extends SwatObject
         );
     }
 
-
-
     /**
      * Adds a JavaScript include to the list of JavaScript includes needed
-     * by this user-interface element
+     * by this user-interface element.
      *
-     * @param string  $java_script the uri of the JavaScript include.
-     * @param integer $display_order the relative order in which to display
-     *                                this JavaScript head entry.
+     * @param string $java_script the uri of the JavaScript include
      */
     public function addJavaScript($java_script)
     {
@@ -128,8 +113,6 @@ abstract class SwatUIObject extends SwatObject
         );
     }
 
-
-
     public function addExternalJavaScript($url)
     {
         if ($this->html_head_entry_set === null) {
@@ -149,13 +132,11 @@ abstract class SwatUIObject extends SwatObject
         );
     }
 
-
-
     /**
      * Adds a comment to the list of HTML head entries needed by this user-
-     * interface element
+     * interface element.
      *
-     * @param string  $comment the contents of the comment to include.
+     * @param string $comment the contents of the comment to include
      */
     public function addComment($comment)
     {
@@ -177,15 +158,15 @@ abstract class SwatUIObject extends SwatObject
     }
 
     /**
-     * Gets the first ancestor object of a specific class
+     * Gets the first ancestor object of a specific class.
      *
      * Retrieves the first ancestor object in the parent path that is a
      * descendant of the specified class name.
      *
-     * @param string $class_name class name to look for.
+     * @param string $class_name class name to look for
      *
      * @return mixed the first ancestor object or null if no matching ancestor
-     *                is found.
+     *               is found
      *
      * @see SwatUIParent::getFirstDescendant()
      */
@@ -206,16 +187,14 @@ abstract class SwatUIObject extends SwatObject
         return $out;
     }
 
-
-
     /**
-     * Gets the SwatHtmlHeadEntry objects needed by this UI object
+     * Gets the SwatHtmlHeadEntry objects needed by this UI object.
      *
      * If this UI object is not visible, an empty set is returned to reduce
      * the number of required HTTP requests.
      *
      * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
-     *                               this UI object.
+     *                              this UI object
      */
     public function getHtmlHeadEntrySet()
     {
@@ -228,31 +207,27 @@ abstract class SwatUIObject extends SwatObject
         return $set;
     }
 
-
-
     /**
-     * Gets the SwatHtmlHeadEntry objects that MAY needed by this UI object
+     * Gets the SwatHtmlHeadEntry objects that MAY needed by this UI object.
      *
      * Even if this object is not displayed, all the resources that may be
      * required to display it are returned.
      *
      * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects that MAY be
-     *                               needed this UI object.
+     *                              needed this UI object
      */
     public function getAvailableHtmlHeadEntrySet()
     {
         return new SwatHtmlHeadEntrySet($this->html_head_entry_set);
     }
 
-
-
     /**
-     * Gets whether or not this UI object is visible
+     * Gets whether or not this UI object is visible.
      *
      * Looks at the visible property of the ancestors of this UI object to
      * determine if this UI object is visible.
      *
-     * @return boolean true if this UI object is visible and false if it is not.
+     * @return bool true if this UI object is visible and false if it is not
      *
      * @see SwatUIObject::$visible
      */
@@ -260,18 +235,17 @@ abstract class SwatUIObject extends SwatObject
     {
         if ($this->parent instanceof SwatUIObject) {
             return $this->parent->isVisible() && $this->visible;
-        } else {
-            return $this->visible;
         }
+
+        return $this->visible;
     }
 
-
-
     /**
-     * Gets this object as a string
+     * Gets this object as a string.
      *
      * @see SwatObject::__toString()
-     * @return string this object represented as a string.
+     *
+     * @return string this object represented as a string
      */
     public function __toString(): string
     {
@@ -280,49 +254,45 @@ abstract class SwatUIObject extends SwatObject
         $this->parent = $parent::class;
 
         return parent::__toString();
-
         // set parent back again
         $this->parent = $parent;
     }
 
-
-
     /**
-     * Performs a deep copy of the UI tree starting with this UI object
+     * Performs a deep copy of the UI tree starting with this UI object.
      *
      * To perform a shallow copy, use PHP's clone keyword.
      *
      * @param string $id_suffix optional. A suffix to append to copied UI
-     *                           objects in the UI tree. This can be used to
-     *                           ensure object ids are unique for a copied UI
-     *                           tree. If not specified, UI objects in the
-     *                           returned copy will have identical ids to the
-     *                           original tree. This can cause problems if both
-     *                           the original and copy are displayed during the
-     *                           same request.
+     *                          objects in the UI tree. This can be used to
+     *                          ensure object ids are unique for a copied UI
+     *                          tree. If not specified, UI objects in the
+     *                          returned copy will have identical ids to the
+     *                          original tree. This can cause problems if both
+     *                          the original and copy are displayed during the
+     *                          same request.
      *
      * @return SwatUIObject a deep copy of the UI tree starting with this UI
-     *                       object. The returned UI object does not have a
-     *                       parent and can be inserted into another UI tree.
+     *                      object. The returned UI object does not have a
+     *                      parent and can be inserted into another UI tree.
      */
     public function copy($id_suffix = '')
     {
         $copy = clone $this;
         $copy->parent = null;
+
         return $copy;
     }
 
-
-
     /**
      * Gets the array of CSS classes that are applied to this user-interface
-     * object
+     * object.
      *
      * User-interface objects aggregate the list of user-specified classes and
      * may add static CSS classes of their own in this method.
      *
      * @return array the array of CSS classes that are applied to this
-     *                user-interface object.
+     *               user-interface object
      *
      * @see SwatUIObject::getCSSClassString()
      */
@@ -342,28 +312,24 @@ abstract class SwatUIObject extends SwatObject
         return $data;
     }
 
-
-
     /**
-     * Gets inline JavaScript used by this user-interface object
+     * Gets inline JavaScript used by this user-interface object.
      *
-     * @return string inline JavaScript used by this user-interface object.
+     * @return string inline JavaScript used by this user-interface object
      */
     protected function getInlineJavaScript()
     {
         return '';
     }
 
-
-
     /**
      * Gets the string representation of this user-interface object's list of
-     * CSS classes
+     * CSS classes.
      *
      * @return string the string representation of the CSS classes that are
-     *                 applied to this user-interface object. If this object
-     *                 has no CSS classes, null is returned rather than a blank
-     *                 string.
+     *                applied to this user-interface object. If this object
+     *                has no CSS classes, null is returned rather than a blank
+     *                string.
      *
      * @see SwatUIObject::getCSSClassNames()
      */
@@ -379,17 +345,15 @@ abstract class SwatUIObject extends SwatObject
         return $class_string;
     }
 
-
-
     /**
-     * Generates a unique id for this UI object
+     * Generates a unique id for this UI object.
      *
      * Gets a unique id that may be used for the id property of this UI object.
      * Each time this method id called, a new unique identifier is generated so
      * you should only call this method once and set it to a property of this
      * object.
      *
-     * @return string a unique identifier for this UI object.
+     * @return string a unique identifier for this UI object
      */
     final protected function getUniqueId()
     {
@@ -401,5 +365,4 @@ abstract class SwatUIObject extends SwatObject
 
         return static::class . $counter;
     }
-
 }

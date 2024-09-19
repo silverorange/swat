@@ -1,24 +1,21 @@
 <?php
 
 /**
- * Abstract base class for control widgets (non-container)
+ * Abstract base class for control widgets (non-container).
  *
- * @package   Swat
  * @copyright 2004-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatControl extends SwatWidget
 {
-
-
     /**
-     * Adds a message to this control
+     * Adds a message to this control.
      *
      * Before the message is added, the content is updated with the name of
      * this controls's parent title field if the parent implements the
      * {@link SwatTitleable} interface.
      *
-     * @param SwatMessage $message the message to add.
+     * @param SwatMessage $message the message to add
      *
      * @see SwatWidget::addMessage()
      */
@@ -57,26 +54,21 @@ abstract class SwatControl extends SwatWidget
         parent::addMessage($message);
     }
 
-
-
     public function printWidgetTree()
     {
         echo static::class, ' ', $this->id;
     }
 
-
-
     /**
-     * Gets an informative note of how to use this control
+     * Gets an informative note of how to use this control.
      *
      * By default, controls return null, meaning no note.
      *
      * @return SwatMessage an informative note of how to use this control or
-     *                      null if this control has no note.
+     *                     null if this control has no note
      */
     public function getNote()
     {
         return null;
     }
-
 }

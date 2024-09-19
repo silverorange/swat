@@ -3,25 +3,20 @@
 /**
  * A flydown (aka combo-box) selection widget for a Yes/No option.
  *
- * @package   Swat
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatYesNoFlydown extends SwatFlydown
 {
-
-
-    const NO = false;
-    const YES = true;
-
-
+    public const NO = false;
+    public const YES = true;
 
     /**
-     * Creates a new yes/no flydown
+     * Creates a new yes/no flydown.
      *
      * Sets the options of this flydown to be yes and no.
      *
-     * @param string $id a non-visible unique id for this widget.
+     * @param string $id a non-visible unique id for this widget
      *
      * @see SwatWidget::__construct()
      */
@@ -31,5 +26,4 @@ class SwatYesNoFlydown extends SwatFlydown
         $this->addOption(self::NO, Swat::_('No'));
         $this->addOption(self::YES, Swat::_('Yes'));
     }
-
 }

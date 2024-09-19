@@ -1,27 +1,24 @@
 <?php
 
 /**
- * A URI entry widget
+ * A URI entry widget.
  *
  * Automatically verifies that the value of the widget is a valid URI.
  *
  * URI validation based on regexp by Diego Perini.
  * See {@link https://gist.github.com/dperini/729294}.
  *
- * @package   Swat
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatUriEntry extends SwatEntry
 {
-
-
     /**
-     * Whether or not to require the scheme for the URI
+     * Whether or not to require the scheme for the URI.
      *
      * If no scheme is specified, the default scheme will be prepended.
      *
-     * @var boolean
+     * @var bool
      */
     public $scheme_required = true;
 
@@ -34,16 +31,14 @@ class SwatUriEntry extends SwatEntry
     public $default_scheme = 'http';
 
     /**
-     * Valid schemes
+     * Valid schemes.
      *
      * @var array
      */
     public $valid_schemes = ['http', 'https', 'ftp'];
 
-
-
     /**
-     * Processes this URI entry
+     * Processes this URI entry.
      *
      * Ensures this URI is formatted correctly. If the URI is not formatted
      * correctly, adds an error message to this widget.
@@ -60,6 +55,7 @@ class SwatUriEntry extends SwatEntry
 
         if ($this->value == '') {
             $this->value = null;
+
             return;
         }
 
@@ -80,15 +76,13 @@ class SwatUriEntry extends SwatEntry
         }
     }
 
-
-
     /**
-     * Validates a URI
+     * Validates a URI.
      *
-     * @param string $value the URI to validate.
+     * @param string $value the URI to validate
      *
-     * @return boolean true if <code>$value</code> is a valid URI and
-     *                 false if it is not.
+     * @return bool true if <code>$value</code> is a valid URI and
+     *              false if it is not
      */
     protected function validateUri($value)
     {
@@ -121,16 +115,14 @@ class SwatUriEntry extends SwatEntry
         return preg_match($regexp, $value) === 1;
     }
 
-
-
     /**
-     * Gets a validation message for this entry
+     * Gets a validation message for this entry.
      *
      * Can be used by sub-classes to change the validation messages.
      *
-     * @param string $id the string identifier of the validation message.
+     * @param string $id the string identifier of the validation message
      *
-     * @return SwatMessage the validation message.
+     * @return SwatMessage the validation message
      */
     protected function getValidationMessage($id)
     {
@@ -149,6 +141,7 @@ class SwatUriEntry extends SwatEntry
                     );
 
                 break;
+
             case 'invalid-uri':
                 $text = $this->show_field_title_in_messages
                     ? Swat::_(
@@ -159,27 +152,24 @@ class SwatUriEntry extends SwatEntry
                     );
 
                 break;
+
             default:
                 return parent::getValidationMessage($id);
         }
 
-        $message = new SwatMessage($text, 'error');
-        return $message;
+        return new SwatMessage($text, 'error');
     }
 
-
-
     /**
-     * Gets the array of CSS classes that are applied to this entry
+     * Gets the array of CSS classes that are applied to this entry.
      *
      * @return array the array of CSS classes that are applied to this
-     *                entry.
+     *               entry
      */
     protected function getCSSClassNames()
     {
         $classes = ['swat-uri-entry'];
-        $classes = array_merge($classes, parent::getCSSClassNames());
-        return $classes;
-    }
 
+        return array_merge($classes, parent::getCSSClassNames());
+    }
 }

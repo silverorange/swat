@@ -1,18 +1,15 @@
 <?php
 
 /**
- * String Tools
+ * String Tools.
  *
- * @package   Swat
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatString extends SwatObject
 {
-
-
     /**
-     * Block level XHTML elements used when filtering strings
+     * Block level XHTML elements used when filtering strings.
      *
      * @var array
      */
@@ -33,14 +30,14 @@ class SwatString extends SwatObject
 
     /**
      * These XHTML elements are not block-level but people often write
-     * markup treating these elements as block-level tags
+     * markup treating these elements as block-level tags.
      *
      * @var array
      */
     public static $breaking_elements = ['li', 'dd', 'dt'];
 
     /**
-     * These XHTML elements are used for tables
+     * These XHTML elements are used for tables.
      *
      * @var array
      */
@@ -56,7 +53,7 @@ class SwatString extends SwatObject
     ];
 
     /**
-     * All XHTML elements
+     * All XHTML elements.
      *
      * Taken from {@link http://www.w3.org/TR/html4/index/elements.html}.
      *
@@ -153,16 +150,21 @@ class SwatString extends SwatObject
 
     /**
      * XHTML elements where the content is pre-formatted and should not be
-     * modified
+     * modified.
      *
      * @var array
      */
     public static $preformatted_elements = ['script', 'style', 'pre'];
 
-
+    /**
+     * Don't allow instantiation of the SwatString object.
+     *
+     * This class contains only static methods and should not be instantiated.
+     */
+    private function __construct() {}
 
     /**
-     * Intelligently converts a text block to XHTML
+     * Intelligently converts a text block to XHTML.
      *
      * The text is converted as follows:
      *
@@ -171,9 +173,9 @@ class SwatString extends SwatObject
      * - unless they are already inside a blocklevel tag
      * - single line breaks are converted to line break tags
      *
-     * @param string $text the text block to convert to XHTML.
+     * @param string $text the text block to convert to XHTML
      *
-     * @return string the text block converted to XHTML.
+     * @return string the text block converted to XHTML
      */
     public static function toXHTML($text)
     {
@@ -227,20 +229,20 @@ class SwatString extends SwatObject
         $blocklevel_then_break =
             '/(<(' . $blocklevel_elements . ')[^<>]*?>)\n/siu';
 
-        $text = preg_replace($blocklevel_then_break, "\\1", $text);
+        $text = preg_replace($blocklevel_then_break, '\\1', $text);
 
         // remove line break from line break followed by an ending block-level
         // tag
         $break_then_ending_blocklevel =
             '/\n(<\/(' . $blocklevel_elements . ')[^<>]*?>)/siu';
 
-        $text = preg_replace($break_then_ending_blocklevel, "\\1", $text);
+        $text = preg_replace($break_then_ending_blocklevel, '\\1', $text);
 
         // remove line break from ending breaking tag followed by a line break
         $ending_breaking_then_break =
             '/(<\/(' . $breaking_elements . ')[^<>]*?>)\n/siu';
 
-        $text = preg_replace($ending_breaking_then_break, "\\1", $text);
+        $text = preg_replace($ending_breaking_then_break, '\\1', $text);
 
         // temporarily remove preformatted content so it is not auto-formatted
         $preformatted_search =
@@ -337,8 +339,8 @@ class SwatString extends SwatObject
                 $num_text = count($text);
                 while ($tag_index < $num_tags || $text_index < $num_text) {
                     if (
-                        isset($tags[$tag_index]) &&
-                        $tags[$tag_index][1] < $text[$text_index][1]
+                        isset($tags[$tag_index])
+                        && $tags[$tag_index][1] < $text[$text_index][1]
                     ) {
                         // assume tags are already formatted
                         $paragraph .= $tags[$tag_index][0];
@@ -384,8 +386,6 @@ class SwatString extends SwatObject
         return $text;
     }
 
-
-
     /**
      * Converts a UTF-8 text string to have the minimal number of entities
      * necessary to output it as valid UTF-8 XHTML without ever double-escaping.
@@ -399,9 +399,9 @@ class SwatString extends SwatObject
      *   - greater than (>) => &gt;
      *   - double quote (") => &quot;
      *
-     * @param string $text the UTF-8 text string to convert.
+     * @param string $text the UTF-8 text string to convert
      *
-     * @return string the UTF-8 text string with minimal entities.
+     * @return string the UTF-8 text string with minimal entities
      */
     public static function minimizeEntities($text)
     {
@@ -410,21 +410,17 @@ class SwatString extends SwatObject
 
         // encode all ampersands (&), less than (<), greater than (>),
         // and double quote (") characters as their XML entities
-        $text = htmlspecialchars($text, ENT_COMPAT, 'UTF-8');
-
-        return $text;
+        return htmlspecialchars($text, ENT_COMPAT, 'UTF-8');
     }
-
-
 
     /**
      * Same as {@link SwatString::minimizeEntities()} but also accepts a list
      * of tags to preserve.
      *
-     * @param string $text the UTF-8 text string to convert.
-     * @param array $tags names of tags that should be preserved.
+     * @param string $text the UTF-8 text string to convert
+     * @param array  $tags names of tags that should be preserved
      *
-     * @return string the UTF-8 text string with minimal entities.
+     * @return string the UTF-8 text string with minimal entities
      */
     public static function minimizeEntitiesWithTags($text, $tags)
     {
@@ -439,6 +435,7 @@ class SwatString extends SwatObject
                     // the stuff in between
                     $output .= self::minimizeEntities($part);
                     break;
+
                 case 1:
                     // a valid tag
                     $output .= $part;
@@ -449,25 +446,23 @@ class SwatString extends SwatObject
         return $output;
     }
 
-
-
     /**
      * Takes a block of text and condenses it into a small fragment of XHTML.
      *
      * Condensing text removes inline XHTML tags and replaces line breaks and
      * block-level elements with special characters.
      *
-     * @param string $text the text to be condensed.
-     * @param integer $max_length the maximum length of the condensed text. If
-     *                             null is specified, there is no maximum
-     *                             length.
-     * @param string $ellipses the ellipses characters to append if the string
-     *                          is shortened. By default, this is a
-     *                          non-breaking space followed by a unicode
-     *                          ellipses character.
+     * @param string $text       the text to be condensed
+     * @param int    $max_length the maximum length of the condensed text. If
+     *                           null is specified, there is no maximum
+     *                           length.
+     * @param string $ellipses   the ellipses characters to append if the string
+     *                           is shortened. By default, this is a
+     *                           non-breaking space followed by a unicode
+     *                           ellipses character.
      *
      * @return string the condensed text. The condensed text is an XHTML
-     *                 formatted string.
+     *                formatted string.
      */
     public static function condense($text, $max_length = 300, $ellipses = ' …')
     {
@@ -521,7 +516,7 @@ class SwatString extends SwatObject
             // check for whitespace that could be condensed.
             // 0xa0 is a guestimate for 0xc2 0xa0 (non-breaking space) because
             // count_chars() does not consider utf-8 encoding.
-            $chars = [0x20, 0x07, 0xa0];
+            $chars = [0x20, 0x07, 0xA0];
             foreach ($chars as $char) {
                 if (isset($counts[$char])) {
                     $count += $counts[$char];
@@ -566,10 +561,8 @@ class SwatString extends SwatObject
         return $text;
     }
 
-
-
     /**
-     * Condenses a string to a name
+     * Condenses a string to a name.
      *
      * The generated name can be used for things like database identifiers and
      * site URI fragments.
@@ -581,11 +574,11 @@ class SwatString extends SwatObject
      * echo SwatString::condenseToName($string);
      * </code>
      *
-     * @param string $string the string to condense to a name.
-     * @param integer $max_length the maximum length of the condensed name in
-     *                             characters.
+     * @param string $string     the string to condense to a name
+     * @param int    $max_length the maximum length of the condensed name in
+     *                           characters
      *
-     * @return string the string condensed into a name.
+     * @return string the string condensed into a name
      */
     public static function condenseToName($string, $max_length = 15)
     {
@@ -679,10 +672,8 @@ class SwatString extends SwatObject
         return $string_out;
     }
 
-
-
     /**
-     * Ellipsizes a string to the right
+     * Ellipsizes a string to the right.
      *
      * The length of a string is calculated as the number of visible characters
      * This method will properly account for any XHTML entities that may be
@@ -702,25 +693,25 @@ class SwatString extends SwatObject
      * echo SwatString::ellipsizeRight($string, 18, ' ...');
      * </code>
      *
-     * @param string $string the string to ellipsize.
-     * @param integer $max_length the maximum length of the returned string.
-     *                             This length does not account for any ellipse
-     *                             characters that may be appended. If the
-     *                             returned value must be below a certain
-     *                             number of characters, pass a blank string in
-     *                             the ellipses parameter.
-     * @param string $ellipses the ellipses characters to append if the string
-     *                          is shortened. By default, this is a
-     *                          non-breaking space followed by a unicode
-     *                          ellipses character.
-     * @param boolean &$flag an optional boolean flag passed by reference to
-     *                        the ellipsize function. If the given string is
-     *                        ellipsized, the flag is set to true. If no
-     *                        ellipsizing takes place, the flag is set to false.
+     * @param string $string     the string to ellipsize
+     * @param int    $max_length the maximum length of the returned string.
+     *                           This length does not account for any ellipse
+     *                           characters that may be appended. If the
+     *                           returned value must be below a certain
+     *                           number of characters, pass a blank string in
+     *                           the ellipses parameter.
+     * @param string $ellipses   the ellipses characters to append if the string
+     *                           is shortened. By default, this is a
+     *                           non-breaking space followed by a unicode
+     *                           ellipses character.
+     * @param bool   &$flag      an optional boolean flag passed by reference to
+     *                           the ellipsize function. If the given string is
+     *                           ellipsized, the flag is set to true. If no
+     *                           ellipsizing takes place, the flag is set to false.
      *
      * @return string the ellipsized string. The ellipsized string may be
-     *                 appended with ellipses characters if it was longer than
-     *                 <code>$max_length</code>.
+     *                appended with ellipses characters if it was longer than
+     *                <code>$max_length</code>.
      */
     public static function ellipsizeRight(
         $string,
@@ -737,6 +728,7 @@ class SwatString extends SwatObject
         if (mb_strlen($string) <= $max_length) {
             self::insertEntities($string, $matches, mb_strlen($string));
             $flag = false;
+
             return $string;
         }
 
@@ -757,13 +749,12 @@ class SwatString extends SwatObject
         $string .= $ellipses;
 
         $flag = true;
+
         return $string;
     }
 
-
-
     /**
-     * Ellipsizes a string in the middle
+     * Ellipsizes a string in the middle.
      *
      * The length of a string is calculated as the number of visible characters
      * This method will properly account for any XHTML entities that may be
@@ -783,22 +774,22 @@ class SwatString extends SwatObject
      * echo SwatString::ellipsizeMiddle($string, 18, ' ... ');
      * </code>
      *
-     * @param string $string the string to ellipsize.
-     * @param integer $max_length the maximum length of the returned string.
-     *                             This length does not account for any ellipse
-     *                             characters that may be appended.
-     * @param string $ellipses the ellipses characters to insert if the string
-     *                          is shortened. By default, this is a unicode
-     *                          ellipses character padded by non-breaking
-     *                          spaces.
-     * @param boolean &$flag an optional boolean flag passed by reference to
-     *                        the ellipsize function. If the given string is
-     *                        ellipsized, the flag is set to true. If no
-     *                        ellipsizing takes place, the flag is set to false.
+     * @param string $string     the string to ellipsize
+     * @param int    $max_length the maximum length of the returned string.
+     *                           This length does not account for any ellipse
+     *                           characters that may be appended.
+     * @param string $ellipses   the ellipses characters to insert if the string
+     *                           is shortened. By default, this is a unicode
+     *                           ellipses character padded by non-breaking
+     *                           spaces.
+     * @param bool   &$flag      an optional boolean flag passed by reference to
+     *                           the ellipsize function. If the given string is
+     *                           ellipsized, the flag is set to true. If no
+     *                           ellipsizing takes place, the flag is set to false.
      *
      * @return string the ellipsized string. The ellipsized string may include
-     *                 ellipses characters in roughly the middle if it was
-     *                 longer than <code>$max_length</code>.
+     *                ellipses characters in roughly the middle if it was
+     *                longer than <code>$max_length</code>.
      */
     public static function ellipsizeMiddle(
         $string,
@@ -815,6 +806,7 @@ class SwatString extends SwatObject
         if (mb_strlen($string) <= $max_length) {
             self::insertEntities($string, $matches, mb_strlen($string));
             $flag = false;
+
             return $string;
         }
 
@@ -883,57 +875,50 @@ class SwatString extends SwatObject
         );
 
         $flag = true;
+
         return $string;
     }
 
-
-
     /**
-     * Removes trailing punctuation from a string
+     * Removes trailing punctuation from a string.
      *
-     * @param string $string the string to format remove punctuation from.
+     * @param string $string the string to format remove punctuation from
      *
-     * @return string the string with trailing punctuation removed.
+     * @return string the string with trailing punctuation removed
      */
     public static function removeTrailingPunctuation($string)
     {
         return preg_replace('/\W+$/su', '', $string);
     }
 
-
-
     /**
-     * Removes leading punctuation from a string
+     * Removes leading punctuation from a string.
      *
-     * @param string $string the string to format remove punctuation from.
+     * @param string $string the string to format remove punctuation from
      *
-     * @return string the string with leading punctuation removed.
+     * @return string the string with leading punctuation removed
      */
     public static function removeLeadingPunctuation($string)
     {
         return preg_replace('/^\W+/su', '', $string);
     }
 
-
-
     /**
-     * Removes both leading and trailing punctuation from a string
+     * Removes both leading and trailing punctuation from a string.
      *
-     * @param string $string the string to format remove punctuation from.
+     * @param string $string the string to format remove punctuation from
      *
-     * @return string the string with leading and trailing punctuation removed.
+     * @return string the string with leading and trailing punctuation removed
      */
     public static function removePunctuation($string)
     {
         $string = self::removeTrailingPunctuation($string);
-        $string = self::removeLeadingPunctuation($string);
-        return $string;
+
+        return self::removeLeadingPunctuation($string);
     }
 
-
-
     /**
-     * Formats a numeric value as currency
+     * Formats a numeric value as currency.
      *
      * Note: This method does not work in some operating systems and in such
      *       cases, this method will throw an exception.
@@ -942,25 +927,25 @@ class SwatString extends SwatObject
      *       instead. The newer method is more flexible and works across more
      *       platforms.
      *
-     * @param float $value the numeric value to format.
-     * @param string $locale optional locale to use to format the value. If no
-     *                        locale is specified, the current locale is used.
-     * @param boolean $display_currency optional flag specifing whether or not
-     *                                   the international currency symbol is
-     *                                   appended to the output. If not
-     *                                   specified, the international currency
-     *                                   symbol is omitted from the output.
-     * @param integer $decimal_places optional number of decimal places to
+     * @param float  $value            the numeric value to format
+     * @param string $locale           optional locale to use to format the value. If no
+     *                                 locale is specified, the current locale is used.
+     * @param bool   $display_currency optional flag specifing whether or not
+     *                                 the international currency symbol is
+     *                                 appended to the output. If not
+     *                                 specified, the international currency
+     *                                 symbol is omitted from the output.
+     * @param int    $decimal_places   optional number of decimal places to
      *                                 display. If not specified, the locale's
      *                                 default number of decimal places is used.
      *
      * @return string a UTF-8 encoded string containing the formatted currency
-     *                 value.
+     *                value
      *
-     * @throws SwatException if the PHP money_format() function is undefined.
-     * @throws SwatException if the given locale could not be set.
+     * @throws SwatException if the PHP money_format() function is undefined
+     * @throws SwatException if the given locale could not be set
      * @throws SwatException if the locale-based output cannot be converted to
-     *                        UTF-8.
+     *                       UTF-8
      *
      * @deprecated Use {@link SwatI18NLocale::formatCurrency()} instead. It is more
      *             flexible and works across more platforms.
@@ -1029,20 +1014,18 @@ class SwatString extends SwatObject
         return $output;
     }
 
-
-
     /**
-     * Gets the international currency symbol of a locale
+     * Gets the international currency symbol of a locale.
      *
      * @param string $locale optional. Locale to get the international currency
-     *                        symbol for. If no locale is specified, the
-     *                        current locale is used.
+     *                       symbol for. If no locale is specified, the
+     *                       current locale is used.
      *
      * @return string the international currency symbol for the specified
-     *                 locale. The symbol is UTF-8 encoded and does not include
-     *                 the spacing character specified in the C99 standard.
+     *                locale. The symbol is UTF-8 encoded and does not include
+     *                the spacing character specified in the C99 standard.
      *
-     * @throws SwatException if the given locale could not be set.
+     * @throws SwatException if the given locale could not be set
      */
     public static function getInternationalCurrencySymbol($locale = null)
     {
@@ -1089,26 +1072,24 @@ class SwatString extends SwatObject
         return $symbol;
     }
 
-
-
     /**
-     * Formats a number using locale-based separators
+     * Formats a number using locale-based separators.
      *
-     * @param float $value the numeric value to format.
-     * @param integer $decimals number of decimal places to display. By
-     *                           default, the full number of decimal places of
-     *                           the value will be displayed.
-     * @param string $locale an optional locale to use to format the value. If
-     *                        no locale is specified, the current locale is
-     *                        used.
-     * @param boolean $show_thousands_separator whether or not to display the
-     *                        thousands separator (default is true).
+     * @param float  $value                    the numeric value to format
+     * @param int    $decimals                 number of decimal places to display. By
+     *                                         default, the full number of decimal places of
+     *                                         the value will be displayed.
+     * @param string $locale                   an optional locale to use to format the value. If
+     *                                         no locale is specified, the current locale is
+     *                                         used.
+     * @param bool   $show_thousands_separator whether or not to display the
+     *                                         thousands separator (default is true)
      *
-     * @return string a UTF-8 encoded string containing the formatted number.
+     * @return string a UTF-8 encoded string containing the formatted number
      *
-     * @throws SwatException if the given locale could not be set.
+     * @throws SwatException if the given locale could not be set
      * @throws SwatException if the locale-based output cannot be converted to
-     *                        UTF-8.
+     *                       UTF-8
      */
     public static function numberFormat(
         $value,
@@ -1172,26 +1153,21 @@ class SwatString extends SwatObject
         return $output;
     }
 
-
-
     /**
-     * Formats an integer as an ordinal number (1st, 2nd, 3rd)
+     * Formats an integer as an ordinal number (1st, 2nd, 3rd).
      *
-     * @param integer $value the numeric value to format.
+     * @param int $value the numeric value to format
      *
      * @see SwatNumber::ordinal()
-     *
-     * @deprecated Use {@link SwatNumber::ordinal()} instead.
+     * @deprecated use {@link SwatNumber::ordinal()} instead
      */
     public static function ordinalNumberFormat($value)
     {
         return SwatNumber::ordinal($value);
     }
 
-
-
     /**
-     * Format bytes in human readible units
+     * Format bytes in human readible units.
      *
      * By default, bytes are formatted using canonical, ambiguous, base-10
      * prefixed units. Bytes may optionally be formatted using unambiguous IEC
@@ -1199,28 +1175,28 @@ class SwatString extends SwatObject
      * Technology's page on binary unit prefixes at
      * {@link http://physics.nist.gov/cuu/Units/binary.html} for details.
      *
-     * @param integer $value the value in bytes to format.
-     * @param integer $magnitude optional. The power of 2 to use as the unit
-     *                            base. This value will be rounded to the
-     *                            nearest ten if specified. If less than zero
-     *                            or not specified, the highest power less
-     *                            than <code>$value</code> will be used.
-     * @param boolean $iec_units optional. Whether or not to use IEC binary
-     *                            multiple prefixed units (Mebibyte). Defaults
-     *                            to using canonical units.
-     * @param integer $significant_digits optional. The number of significant
-     *                                     digits in the formatted result. If
-     *                                     null, the value will be rounded and
-     *                                     formatted one fractional digit.
-     *                                     Otherwise, the value is rounded to
-     *                                     the specified the number of digits.
-     *                                     By default, this is three. If there
-     *                                     are more integer digits than the
-     *                                     specified number of significant
-     *                                     digits, the value is rounded to the
-     *                                     nearest integer.
+     * @param int  $value              the value in bytes to format
+     * @param int  $magnitude          optional. The power of 2 to use as the unit
+     *                                 base. This value will be rounded to the
+     *                                 nearest ten if specified. If less than zero
+     *                                 or not specified, the highest power less
+     *                                 than <code>$value</code> will be used.
+     * @param bool $iec_units          optional. Whether or not to use IEC binary
+     *                                 multiple prefixed units (Mebibyte). Defaults
+     *                                 to using canonical units.
+     * @param int  $significant_digits optional. The number of significant
+     *                                 digits in the formatted result. If
+     *                                 null, the value will be rounded and
+     *                                 formatted one fractional digit.
+     *                                 Otherwise, the value is rounded to
+     *                                 the specified the number of digits.
+     *                                 By default, this is three. If there
+     *                                 are more integer digits than the
+     *                                 specified number of significant
+     *                                 digits, the value is rounded to the
+     *                                 nearest integer.
      *
-     * @return string the byte value formated according to IEC units.
+     * @return string the byte value formated according to IEC units
      */
     public static function byteFormat(
         $value,
@@ -1236,7 +1212,7 @@ class SwatString extends SwatObject
                 30 => 'GiB',
                 20 => 'MiB',
                 10 => 'KiB',
-                0 => 'bytes',
+                0  => 'bytes',
             ];
         } else {
             $units = [
@@ -1246,7 +1222,7 @@ class SwatString extends SwatObject
                 30 => 'GB',
                 20 => 'MB',
                 10 => 'KB',
-                0 => 'bytes',
+                0  => 'bytes',
             ];
         }
 
@@ -1303,19 +1279,17 @@ class SwatString extends SwatObject
         return $formatted_value . ' ' . $units[$unit_magnitude];
     }
 
-
-
     /**
      * Pads a string in a UTF-8 safe way.
      *
-     * @param string $input the string to pad.
-     * @param int $pad_length length in characters to pad to.
-     * @param string $pad_string string to use for padding.
-     * @param int $pad_type type of padding to use: <code>STR_PAD_LEFT</code>,
-     *                       <code>STR_PAD_RIGHT</code>, or
-     *                       <code>STR_PAD_BOTH</code>.
+     * @param string $input      the string to pad
+     * @param int    $pad_length length in characters to pad to
+     * @param string $pad_string string to use for padding
+     * @param int    $pad_type   type of padding to use: <code>STR_PAD_LEFT</code>,
+     *                           <code>STR_PAD_RIGHT</code>, or
+     *                           <code>STR_PAD_BOTH</code>
      *
-     * @return string the padded string.
+     * @return string the padded string
      */
     public static function pad(
         $input,
@@ -1365,10 +1339,9 @@ class SwatString extends SwatObject
         } else {
             $output = $input;
         }
+
         return $output;
     }
-
-
 
     /**
      * Convert a locale-formatted number and return it as an integer.
@@ -1381,13 +1354,13 @@ class SwatString extends SwatObject
      * If the number is too large to fit in PHP's integer range (depends on
      * system architecture), an exception is thrown.
      *
-     * @param string $string the string to convert.
+     * @param string $string the string to convert
      *
-     * @return integer the converted value or null if it could not be
-     *                  converted.
+     * @return int the converted value or null if it could not be
+     *             converted
      *
      * @throws SwatException if the converted number is too large to fit in an
-     *                        integer.
+     *                       integer
      */
     public static function toInteger($string)
     {
@@ -1433,16 +1406,14 @@ class SwatString extends SwatObject
         return $value;
     }
 
-
-
     /**
      * Convert a locale-formatted number and return it as an float.
      *
      * If the string is not an float, the method returns null.
      *
-     * @param string $string the string to convert.
+     * @param string $string the string to convert
      *
-     * @return float The converted value.
+     * @return float the converted value
      */
     public static function toFloat($string)
     {
@@ -1471,23 +1442,21 @@ class SwatString extends SwatObject
         return is_numeric($value) ? floatval($value) : null;
     }
 
-
-
     /**
      * Convert an iterable object or array into a human-readable, delimited
      * list.
      *
-     * @param array|Iterator $iterator the object to convert to a list.
-     * @param string $conjunction the list's conjunction. Usually 'and' or
-     *                            'or'.
-     * @param string $delimiter the list delimiter. If list items should
-     *                          additionally be padded with a space, the delimiter
-     *                          should also include the space.
-     * @param boolean $display_final_delimiter whether or not the final list
-     *                          item should be separated from the list with a
-     *                          delimiter.
+     * @param array|Iterator $iterator                the object to convert to a list
+     * @param string         $conjunction             the list's conjunction. Usually 'and' or
+     *                                                'or'.
+     * @param string         $delimiter               the list delimiter. If list items should
+     *                                                additionally be padded with a space, the delimiter
+     *                                                should also include the space.
+     * @param bool           $display_final_delimiter whether or not the final list
+     *                                                item should be separated from the list with a
+     *                                                delimiter
      *
-     * @return string The formatted list.
+     * @return string the formatted list
      *
      * @throws SwatException if the iterator value is not an array or Iterator
      *
@@ -1504,7 +1473,7 @@ class SwatString extends SwatObject
             $iterator = new ArrayIterator($iterator);
         }
 
-        if (!($iterator instanceof Iterator)) {
+        if (!$iterator instanceof Iterator) {
             throw new SwatException('Value is not an Iterator or array');
         }
 
@@ -1539,8 +1508,6 @@ class SwatString extends SwatObject
         return $list;
     }
 
-
-
     /**
      * Gets the parts representing a time period matching a desired interval
      * format.
@@ -1561,11 +1528,11 @@ class SwatString extends SwatObject
      * As this method applies on seconds, no time zone considerations are
      * made. Years are assumed to be 365 days. Months are assumed to be 30 days.
      *
-     * @param integer $seconds seconds to format.
-     * @param integer $interval_parts inclusive or bitwise set of parts to
-     *                                 return.
+     * @param int $seconds        seconds to format
+     * @param int $interval_parts inclusive or bitwise set of parts to
+     *                            return
      *
-     * @return array An array of time period parts.
+     * @return array an array of time period parts
      */
     public static function getTimePeriodParts($seconds, $interval_parts = null)
     {
@@ -1658,8 +1625,6 @@ class SwatString extends SwatObject
         return $parts;
     }
 
-
-
     /**
      * Gets the parts to construct a human-readable string representing a time
      * period.
@@ -1680,11 +1645,11 @@ class SwatString extends SwatObject
      * As this method applies on seconds, no time zone considerations are
      * made. Years are assumed to be 365 days. Months are assumed to be 30 days.
      *
-     * @param integer $seconds seconds to format.
-     * @param integer $interval_parts inclusive or bitwise set of parts to
-     *                                 return.
+     * @param int $seconds        seconds to format
+     * @param int $interval_parts inclusive or bitwise set of parts to
+     *                            return
      *
-     * @return array An array of human-readable time period string parts.
+     * @return array an array of human-readable time period string parts
      */
     public static function getHumanReadableTimePeriodParts(
         $seconds,
@@ -1753,10 +1718,8 @@ class SwatString extends SwatObject
         return $parts;
     }
 
-
-
     /**
-     * Gets a human-readable string representing a time period
+     * Gets a human-readable string representing a time period.
      *
      * This method formats seconds as a time period. Given an example value
      * of 161740805, the formatted value "5 years, 3 months, 2 days and 5
@@ -1765,22 +1728,21 @@ class SwatString extends SwatObject
      * As this method applies on seconds, no time zone considerations are
      * made. Years are assumed to be 365 days. Months are assumed to be 30 days.
      *
-     * @param integer $seconds seconds to format.
-     * @param boolean $largest_part optional. If true, only the largest
-     *                               matching date part is returned. For the
-     *                               above example, "5 years" is returned.
+     * @param int  $seconds      seconds to format
+     * @param bool $largest_part optional. If true, only the largest
+     *                           matching date part is returned. For the
+     *                           above example, "5 years" is returned.
      *
-     * @return string A human-readable time period.
+     * @return string a human-readable time period
      */
     public static function toHumanReadableTimePeriod(
         $seconds,
         $largest_part = false,
     ) {
         $parts = self::getHumanReadableTimePeriodParts($seconds);
+
         return self::toHumanReadableTimePeriodString($parts, $largest_part);
     }
-
-
 
     /**
      * Gets a human-readable string representing a time period that includes
@@ -1794,12 +1756,12 @@ class SwatString extends SwatObject
      * As this method applies on seconds, no time zone considerations are
      * made. Years are assumed to be 365 days. Months are assumed to be 30 days.
      *
-     * @param integer $seconds seconds to format.
-     * @param boolean $largest_part optional. If true, only the largest
-     *                               matching date part is returned. For the
-     *                               above example, "5 years" is returned.
+     * @param int  $seconds      seconds to format
+     * @param bool $largest_part optional. If true, only the largest
+     *                           matching date part is returned. For the
+     *                           above example, "5 years" is returned.
      *
-     * @return string A human-readable time period.
+     * @return string a human-readable time period
      */
     public static function toHumanReadableTimePeriodWithWeeks(
         $seconds,
@@ -1821,8 +1783,6 @@ class SwatString extends SwatObject
         return self::toHumanReadableTimePeriodString($parts, $largest_part);
     }
 
-
-
     /**
      * Gets a human-readable string representing a time period that includes
      * weeks and days as one time period part, and always returns the largest
@@ -1834,9 +1794,9 @@ class SwatString extends SwatObject
      * As this method applies on seconds, no time zone considerations are
      * made. Years are assumed to be 365 days. Months are assumed to be 30 days.
      *
-     * @param integer $seconds seconds to format.
+     * @param int $seconds seconds to format
      *
-     * @return string A human-readable time period.
+     * @return string a human-readable time period
      */
     public static function toHumanReadableTimePeriodWithWeeksAndDays($seconds)
     {
@@ -1853,7 +1813,7 @@ class SwatString extends SwatObject
             $interval_parts,
         );
 
-        if (isset($parts['weeks']) && isset($parts['days'])) {
+        if (isset($parts['weeks'], $parts['days'])) {
             // reuse the weeks array key, to keep it in the correct position.
             $parts['weeks'] = self::toList([$parts['weeks'], $parts['days']]);
 
@@ -1863,19 +1823,17 @@ class SwatString extends SwatObject
         return self::toHumanReadableTimePeriodString($parts, true);
     }
 
-
-
     /**
-     * Gets a unique hash of a string
+     * Gets a unique hash of a string.
      *
      * The hashing is as unique as md5 but the hash string is shorter than md5.
      * This method is useful if hash strings will be visible to end-users and
      * shorter hash strings are desired.
      *
-     * @param string $string the string to get the unique hash for.
+     * @param string $string the string to get the unique hash for
      *
      * @return string the unique hash of the given string. The returned string
-     *                 is safe to use inside a URI.
+     *                is safe to use inside a URI.
      */
     public static function hash($string)
     {
@@ -1887,15 +1845,12 @@ class SwatString extends SwatObject
 
         // use modified Base64 for URL varient
         $hash = str_replace('+', '*', $hash);
-        $hash = str_replace('/', '-', $hash);
 
-        return $hash;
+        return str_replace('/', '-', $hash);
     }
 
-
-
     /**
-     * Gets a salt value of the specified length
+     * Gets a salt value of the specified length.
      *
      * Useful for securing passwords or other one-way encrypted fields that
      * may be succeptable to a dictionary attack.
@@ -1904,9 +1859,9 @@ class SwatString extends SwatObject
      * ASCII characters except the null character (0x00) may be included in
      * the returned string.
      *
-     * @param integer $length the desired length of the salt.
+     * @param int $length the desired length of the salt
      *
-     * @return string a salt value of the specified length.
+     * @return string a salt value of the specified length
      */
     public static function getSalt($length)
     {
@@ -1918,18 +1873,16 @@ class SwatString extends SwatObject
         return $salt;
     }
 
-
-
     /**
-     * Gets a salt value for crypt(3)
+     * Gets a salt value for crypt(3).
      *
      * This method generates a random ASCII string of the sepcified length.
      * Only the following characters, [./0-9A-Za-z], are included in the
      * returned string.
      *
-     * @param integer $length the desired length of the crypt(3) salt.
+     * @param int $length the desired length of the crypt(3) salt
      *
-     * @return string a salt value of the specified length.
+     * @return string a salt value of the specified length
      */
     public static function getCryptSalt($length)
     {
@@ -1952,23 +1905,22 @@ class SwatString extends SwatObject
         return $salt;
     }
 
-
-
     /**
-     * Removes all XHTML tags from a string
+     * Removes all XHTML tags from a string.
      *
      * This method is similar to the built-in
      * {@link http://php.net/manual/en/function.strip-tags.php strip_tags}
      * function in PHP but this method only strips XHTML tags. All other tags
      * are left intact.
      *
-     * @param string $string the string to remove XHTML tags from.
+     * @param string $string the string to remove XHTML tags from
      *
-     * @return string the given string with all XHTML tags removed.
+     * @return string the given string with all XHTML tags removed
      */
     public static function stripXHTMLTags($string)
     {
         $elements = implode('|', self::$xhtml_elements);
+
         return preg_replace(
             '/<\/?(' . $elements . ')[^<>]*?>/siu',
             '',
@@ -1976,19 +1928,17 @@ class SwatString extends SwatObject
         );
     }
 
-
-
     /**
-     * Replaces all URI's in a string with anchor markup tags
+     * Replaces all URI's in a string with anchor markup tags.
      *
      * This method does not know if a URI is already inside markup so it is
      * best to only use it on plain text.
      *
      * Only "http" and "https" URI's are currently supported.
      *
-     * @param string $string the string to replace URI's in.
+     * @param string $string the string to replace URI's in
      *
-     * @return string the given string with all URI's wrapped in anchor tags.
+     * @return string the given string with all URI's wrapped in anchor tags
      */
     public static function linkify($string)
     {
@@ -1999,20 +1949,18 @@ class SwatString extends SwatObject
         );
     }
 
-
-
     /**
-     * Serializes and signs a value using a salt
+     * Serializes and signs a value using a salt.
      *
      * By signing serialized data, it is possible to detect tampering of
      * serialized data. This is useful if serialized data is accepted from
      * user editable <code>$_GET</code>, <code>$_POST</code> or
      * <code>$_COOKIE data</code>.
      *
-     * @param mixed $data the data to serialize.
-     * @param string $salt the signature salt.
+     * @param mixed  $data the data to serialize
+     * @param string $salt the signature salt
      *
-     * @return string the signed serialized value.
+     * @return string the signed serialized value
      *
      * @see SwatString::signedSerialize()
      */
@@ -2024,19 +1972,17 @@ class SwatString extends SwatObject
         return $signature_data . '|' . $serialized_data;
     }
 
-
-
     /**
-     * Unserializes a signed serialized value
+     * Unserializes a signed serialized value.
      *
-     * @param string $data the signed serialized data.
+     * @param string $data the signed serialized data
      * @param string $salt the signature salt. This must be the same salt value
-     *                      used to serialize the value.
+     *                     used to serialize the value.
      *
-     * @return mixed the unserialized value.
+     * @return mixed the unserialized value
      *
      * @throws SwatInvalidSerializedDataException if the signed serialized data
-     *                                            has been tampered with.
+     *                                            has been tampered with
      *
      * @see SwatString::signedSerialize()
      */
@@ -2066,20 +2012,18 @@ class SwatString extends SwatObject
         return unserialize($serialized_data);
     }
 
-
-
     /**
-     * Safely quotes a PHP string into a JavaScript string
+     * Safely quotes a PHP string into a JavaScript string.
      *
      * Strings are always quoted using single quotes. The characters documented
      * at {@link http://code.google.com/p/doctype/wiki/ArticleXSSInJavaScript}
      * are escaped to prevent XSS attacks.
      *
-     * @param string $string the PHP string to quote as a JavaScript string.
+     * @param string $string the PHP string to quote as a JavaScript string
      *
      * @return string the quoted JavaScript string. The quoted string is
-     *                 wrapped in single quotation marks and is safe to display
-     *                 in inline JavaScript.
+     *                wrapped in single quotation marks and is safe to display
+     *                in inline JavaScript.
      */
     public static function quoteJavaScriptString($string)
     {
@@ -2121,43 +2065,37 @@ class SwatString extends SwatObject
         $string = str_replace($search, $replace, $string);
 
         // quote string
-        $string = "'" . $string . "'";
-
-        return $string;
+        return "'" . $string . "'";
     }
 
-
-
     /**
-     * Checks whether or not a string is valid UTF-8
+     * Checks whether or not a string is valid UTF-8.
      *
-     * @param string $string the string to check.
+     * @param string $string the string to check
      *
-     * @return boolean true if the string is valid UTF-8 and false if it is not.
+     * @return bool true if the string is valid UTF-8 and false if it is not
      */
     public static function validateUtf8($string)
     {
         return mb_detect_encoding($string, 'UTF-8', true) === 'UTF-8';
     }
 
-
-
     /**
-     * Validates an email address
+     * Validates an email address.
      *
      * This doesn't use the PHP 5.2.x filter_var() function since it allows
      * addresses without TLD's since 5.2.9. If/when they add a flag to allow to
      * validate with TLD's, we can start using it again.
      *
-     * @param string $value the email address to validate.
+     * @param string $value the email address to validate
      *
-     * @return boolean true if <i>$value</i> is a valid email address and
-     *                  false if it is not.
+     * @return bool true if <i>$value</i> is a valid email address and
+     *              false if it is not
      */
     public static function validateEmailAddress($value)
     {
-        $valid_name_word = '[-!#$%&\'*+.\\/0-9=?A-Z^_`{|}~]+';
-        $valid_domain_word = '[-!#$%&\'*+\\/0-9=?A-Z^_`{|}~]+';
+        $valid_name_word = '[-!#$%&\'*+.\/0-9=?A-Z^_`{|}~]+';
+        $valid_domain_word = '[-!#$%&\'*+\/0-9=?A-Z^_`{|}~]+';
         $valid_address_regexp =
             '/^' .
             $valid_name_word .
@@ -2167,23 +2105,19 @@ class SwatString extends SwatObject
             $valid_domain_word .
             ')+$/ui';
 
-        $valid = preg_match($valid_address_regexp, $value) === 1;
-
-        return $valid;
+        return preg_match($valid_address_regexp, $value) === 1;
     }
 
-
-
     /**
-     * Escapes a binary string making it safe to display using ASCII encoding
+     * Escapes a binary string making it safe to display using ASCII encoding.
      *
      * Newlines, tabs and returns are encoded as \n, \t and \r. Other
      * bytes are hexadecimal encoded (e.g. \xA6). Escaping the binary string
      * makes it valid UTF-8 as well as valid ASCII.
      *
-     * @param string $string the string to escape.
+     * @param string $string the string to escape
      *
-     * @return string the escaped, ASCII encoded string.
+     * @return string the escaped, ASCII encoded string
      */
     public static function escapeBinary($string)
     {
@@ -2212,8 +2146,6 @@ class SwatString extends SwatObject
         return $escaped;
     }
 
-
-
     /**
      * Gets a human-readable string representing a time period from an array of
      * human readable date parts.
@@ -2225,13 +2157,15 @@ class SwatString extends SwatObject
      * As this method applies on seconds, no time zone considerations are
      * made. Years are assumed to be 365 days. Months are assumed to be 30 days.
      *
-     * @param array $parts array of date period parts.
-     *                      @see SwatString::getHumanReadableTimePeriodParts()
-     * @param boolean $largest_part optional. If true, only the largest
-     *                               matching date part is returned. For the
-     *                               above example, "5 years" is returned.
+     * @param array $parts array of date period parts
      *
-     * @return string A human-readable time period.
+     *                      @see SwatString::getHumanReadableTimePeriodParts()
+     *
+     * @param bool $largest_part optional. If true, only the largest
+     *                           matching date part is returned. For the
+     *                           above example, "5 years" is returned.
+     *
+     * @return string a human-readable time period
      */
     protected static function toHumanReadableTimePeriodString(
         array $parts,
@@ -2244,17 +2178,15 @@ class SwatString extends SwatObject
         return self::toList($parts);
     }
 
-
-
     /**
-     * Strips entities from a string remembering their positions
+     * Strips entities from a string remembering their positions.
      *
      * Stripped entities are replaces with a single special character. All
      * parameters are passed by reference and nothing is returned by this
      * function.
      *
-     * @param string $string the string to strip entites from.
-     * @param array $matches the array to store matches in.
+     * @param string $string  the string to strip entites from
+     * @param array  $matches the array to store matches in
      */
     private static function stripEntities(&$string, &$matches)
     {
@@ -2265,21 +2197,19 @@ class SwatString extends SwatObject
         $string = preg_replace($reg_exp, '*', $string);
     }
 
-
-
     /**
-     * Re-inserts stripped entities into a string in the correct positions
+     * Re-inserts stripped entities into a string in the correct positions.
      *
      * The first two parameters are passed by reference and nothing is returned
      * by this function.
      *
-     * @param string $string the string to re-insert entites into.
-     * @param array $matches the array of stored matches.
-     * @param integer $hole_start ignore inserting entities between here
-     *                             and hole_end.
-     * @param integer $hole_end ignore inserting entities between here
-     *                             and hole_start.
-     * @param integer $hole_length the length of the new contents of the hole.
+     * @param string $string      the string to re-insert entites into
+     * @param array  $matches     the array of stored matches
+     * @param int    $hole_start  ignore inserting entities between here
+     *                            and hole_end
+     * @param int    $hole_end    ignore inserting entities between here
+     *                            and hole_start
+     * @param int    $hole_length the length of the new contents of the hole
      */
     private static function insertEntities(
         &$string,
@@ -2326,7 +2256,6 @@ class SwatString extends SwatObject
         }
     }
 
-
     private static function parseNegativeNotation($string)
     {
         $lc = localeconv();
@@ -2339,20 +2268,21 @@ class SwatString extends SwatObject
                 }
                 break;
 
-            // negative sign trails number: 5.00-
+                // negative sign trails number: 5.00-
             case 2:
                 if (
-                    $lc['negative_sign'] != '' &&
-                    mb_strpos($string, $lc['negative_sign']) !== false
+                    $lc['negative_sign'] != ''
+                    && mb_strpos($string, $lc['negative_sign']) !== false
                 ) {
                     return '-' . str_replace($lc['negative_sign'], '', $string);
                 }
                 break;
-            // negative sign prefixes number: -5.00
+
+                // negative sign prefixes number: -5.00
             default:
                 if (
-                    $lc['negative_sign'] != '' &&
-                    mb_strpos($string, $lc['negative_sign']) !== false
+                    $lc['negative_sign'] != ''
+                    && mb_strpos($string, $lc['negative_sign']) !== false
                 ) {
                     return str_replace($lc['negative_sign'], '-', $string);
                 }
@@ -2360,8 +2290,6 @@ class SwatString extends SwatObject
 
         return $string;
     }
-
-
 
     private static function getDecimalPrecision($value)
     {
@@ -2373,16 +2301,4 @@ class SwatString extends SwatObject
             ? mb_strlen($value) - $decimal_pos - mb_strlen($lc['decimal_point'])
             : 0;
     }
-
-
-
-    /**
-     * Don't allow instantiation of the SwatString object
-     *
-     * This class contains only static methods and should not be instantiated.
-     */
-    private function __construct()
-    {
-    }
-
 }

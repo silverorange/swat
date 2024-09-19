@@ -1,140 +1,135 @@
 <?php
 
 /**
- * An image cropping widget
+ * An image cropping widget.
  *
  * This widget uses JavaScript to present an adjustable boundry to define how
  * an image should be cropped.
  *
- * @package   Swat
  * @copyright 2008-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatImageCropper extends SwatInputControl
 {
-
-
     /**
-     * Image URI
+     * Image URI.
      *
      * @var string
      */
     public $image_uri;
 
     /**
-     * Width of the image to display
+     * Width of the image to display.
      *
-     * @var integer
+     * @var int
      */
     public $image_width;
 
     /**
-     * Height of the image to display
+     * Height of the image to display.
      *
-     * @var integer
+     * @var int
      */
     public $image_height;
 
     /**
-     * Optional width:height ratio to enforce for the cropped area
+     * Optional width:height ratio to enforce for the cropped area.
      *
      * @var float
      */
     public $crop_ratio;
 
     /**
-     * Width of the crop bounding box
+     * Width of the crop bounding box.
      *
-     * @var integer
+     * @var int
      */
     public $crop_width;
 
     /**
-     * Height of the crop bounding box
+     * Height of the crop bounding box.
      *
-     * @var integer
+     * @var int
      */
     public $crop_height;
 
     /**
-     * Position of the left side of the crop bounding box
+     * Position of the left side of the crop bounding box.
      *
-     * @var integer
+     * @var int
      */
     public $crop_left;
 
     /**
-     * Position of the top side of the crop bounding box
+     * Position of the top side of the crop bounding box.
      *
-     * @var integer
+     * @var int
      */
     public $crop_top;
 
     /**
-     * Minimum width of the crop bounding box
+     * Minimum width of the crop bounding box.
      *
-     * @var integer
+     * @var int
      */
     public $min_width = 50;
 
     /**
-     * Minimum height of the crop bounding box
+     * Minimum height of the crop bounding box.
      *
-     * @var integer
+     * @var int
      */
     public $min_height = 50;
 
     /**
-     * Alias for {@link SwatImageCropper::$crop_ratio}
+     * Alias for {@link SwatImageCropper::$crop_ratio}.
      *
      * @var float
      *
-     * @deprecated Use {@link SwatImageCropper::$crop_ratio} instead.
+     * @deprecated use {@link SwatImageCropper::$crop_ratio} instead
      */
     public $crop_box_ratio;
 
     /**
-     * Alias for {@link SwatImageCropper::$crop_width}
+     * Alias for {@link SwatImageCropper::$crop_width}.
      *
-     * @var integer
+     * @var int
      *
-     * @deprecated Use {@link SwatImageCropper::$crop_width} instead.
+     * @deprecated use {@link SwatImageCropper::$crop_width} instead
      */
     public $crop_box_width;
 
     /**
-     * Alias for {@link SwatImageCropper::$crop_height}
+     * Alias for {@link SwatImageCropper::$crop_height}.
      *
-     * @var integer
+     * @var int
      *
-     * @deprecated Use {@link SwatImageCropper::$crop_height} instead.
+     * @deprecated use {@link SwatImageCropper::$crop_height} instead
      */
     public $crop_box_height;
 
     /**
-     * Alias for {@link SwatImageCropper::$crop_left}
+     * Alias for {@link SwatImageCropper::$crop_left}.
      *
-     * @var integer
+     * @var int
      *
-     * @deprecated Use {@link SwatImageCropper::$crop_left} instead.
+     * @deprecated use {@link SwatImageCropper::$crop_left} instead
      */
     public $crop_box_left;
 
     /**
-     * Alias for {@link SwatImageCropper::$crop_top}
+     * Alias for {@link SwatImageCropper::$crop_top}.
      *
-     * @var integer
+     * @var int
      *
-     * @deprecated Use {@link SwatImageCropper::$crop_top} instead.
+     * @deprecated use {@link SwatImageCropper::$crop_top} instead
      */
     public $crop_box_top;
 
-
-
     /**
-     * Creates a new image cropper
+     * Creates a new image cropper.
      *
-     * @param string $id a non-visible unique id for this widget.
+     * @param string $id a non-visible unique id for this widget
      *
      * @see SwatWidget::__construct()
      */
@@ -149,8 +144,6 @@ class SwatImageCropper extends SwatInputControl
 
         $this->addJavaScript('packages/swat/javascript/swat-image-cropper.js');
     }
-
-
 
     public function process()
     {
@@ -170,10 +163,8 @@ class SwatImageCropper extends SwatInputControl
         $this->crop_box_top = $this->crop_top;
     }
 
-
-
     /**
-     * Displays this image cropper
+     * Displays this image cropper.
      */
     public function display()
     {
@@ -226,12 +217,10 @@ class SwatImageCropper extends SwatInputControl
         Swat::displayInlineJavaScript($this->getInlineJavaScript());
     }
 
-
-
     /**
-     * Gets the inline JavaScript required by this image cropper
+     * Gets the inline JavaScript required by this image cropper.
      *
-     * @return string the inline JavaScript required by this image cropper.
+     * @return string the inline JavaScript required by this image cropper
      */
     protected function getInlineJavaScript()
     {
@@ -277,17 +266,15 @@ class SwatImageCropper extends SwatInputControl
         }
 
         return sprintf(
-            "%1\$s_obj = new SwatImageCropper(" . "'%1\$s', {%2\$s});",
+            '%1$s_obj = new SwatImageCropper(' . "'%1\$s', {%2\$s});",
             $this->id,
             $options_string,
         );
     }
 
-
-
     /**
      * Automatically sets crop box dimensions if they are not specified and
-     * constrains crop box dimensions to image size
+     * constrains crop box dimensions to image size.
      *
      * Crop dimensions are automatically set as at 50% and centered on the
      * image if they are not specified. If the specified crop dimensions are
@@ -386,5 +373,4 @@ class SwatImageCropper extends SwatInputControl
             $this->crop_height = $this->image_height - $this->crop_top;
         }
     }
-
 }

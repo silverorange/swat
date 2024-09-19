@@ -3,29 +3,23 @@
 /**
  * This is a table view column that gets its own row.
  *
- * @package   Swat
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTableViewSpanningColumn extends SwatTableViewColumn
 {
-
-
     /**
-     * The number of columns to offset to the right
+     * The number of columns to offset to the right.
      *
-     * @var integer
+     * @var int
      */
     public $offset = 0;
 
-
-
     /**
      * Renders each cell renderer in this column inside a wrapping XHTML
-     * element
+     * element.
      *
-     * @param mixed $data the data object being used to render the cell
-     *                     renderers of this field.
+     * @param mixed $row
      *
      * @throws SwatException
      */
@@ -60,13 +54,11 @@ class SwatTableViewSpanningColumn extends SwatTableViewColumn
         $td_tag->close();
     }
 
-
-
     /**
-     * Gets how many XHTML table columns this column object spans on display
+     * Gets how many XHTML table columns this column object spans on display.
      *
-     * @return integer the number of XHTML table columns this column object
-     *                  spans on display.
+     * @return int the number of XHTML table columns this column object
+     *             spans on display
      */
     public function getXhtmlColspan()
     {
@@ -80,5 +72,4 @@ class SwatTableViewSpanningColumn extends SwatTableViewColumn
 
         return $colspan;
     }
-
 }
