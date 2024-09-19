@@ -14,7 +14,7 @@
  */
 class SwatConfirmationButton extends SwatButton
 {
-    // {{{ public function __construct()
+
 
     /**
      * Creates a new confirmation button widget

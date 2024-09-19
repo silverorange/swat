@@ -210,7 +210,6 @@ class SwatCheckboxEntryList extends SwatCheckboxList
         return $messages;
     }
 
-    // {{{ public function hasMessage()
 
     /**
      * Checks for the presence of messages
@@ -237,7 +236,6 @@ class SwatCheckboxEntryList extends SwatCheckboxList
         return $has_message;
     }
 
-    // {{{ public function getEntryValue()
 
     /**
      * Gets the value of an entry widget in this checkbox entry list
@@ -259,7 +257,6 @@ class SwatCheckboxEntryList extends SwatCheckboxList
         return $entry_value;
     }
 
-    // {{{ public function setEntryValue()
 
     /**
      * Sets the value of an entry widget in this checkbox entry list
@@ -293,7 +290,6 @@ class SwatCheckboxEntryList extends SwatCheckboxList
         $this->getEntryWidget($option_value)->getFirst()->value = $entry_value;
     }
 
-    // {{{ public function setEntryValuesByArray()
 
     /**
      * Sets the values of multiple entry widgets
@@ -318,7 +314,6 @@ class SwatCheckboxEntryList extends SwatCheckboxList
         }
     }
 
-    // {{{ protected function getInlineJavaScript()
 
     /**
      * Gets the inline JavaScript for this checkbox entry list
@@ -345,7 +340,6 @@ class SwatCheckboxEntryList extends SwatCheckboxList
         return $javascript;
     }
 
-    // {{{ protected function getCSSClassNames()
 
     /**
      * Gets the array of CSS classes that are applied to this checkbox entry
@@ -361,7 +355,6 @@ class SwatCheckboxEntryList extends SwatCheckboxList
         return $classes;
     }
 
-    // {{{ protected function hasEntryWidget()
 
     /**
      * Checks if this checkbox entry list has an entry widget for a given
@@ -377,7 +370,6 @@ class SwatCheckboxEntryList extends SwatCheckboxList
         return isset($this->entry_widgets[$option_value]);
     }
 
-    // {{{ protected function getEntryWidget()
 
     /**
      * Gets a widget tree for the entry widget of this checkbox entry list
@@ -407,7 +399,6 @@ class SwatCheckboxEntryList extends SwatCheckboxList
         return $this->entry_widgets[$option_value];
     }
 
-    // {{{ protected function createEntryWidget()
 
     /**
      * Creates an entry widget of this checkbox entry list

@@ -1938,7 +1938,6 @@ class SwatTableView extends SwatView implements SwatUIParent
         return $rows;
     }
 
-    // {{{ public function getFirstRowByClass()
 
     /**
      * Gets the first extra row of the specified class from this table-view
@@ -1967,7 +1966,6 @@ class SwatTableView extends SwatView implements SwatUIParent
         return $my_row;
     }
 
-    // {{{ protected function validateRow()
 
     /**
      * Ensures a row added to this table-view is valid for this table-view
@@ -2003,7 +2001,6 @@ class SwatTableView extends SwatView implements SwatUIParent
         }
     }
 
-    // {{{ protected function insertRow()
 
     /**
      * Helper method to insert rows into this table-view

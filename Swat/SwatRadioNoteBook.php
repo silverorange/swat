@@ -615,7 +615,6 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
         $container->close();
     }
 
-    // {{{ protected function getInlineJavaScript()
 
     /**
      * Gets the inline JavaScript used by this notebook

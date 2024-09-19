@@ -162,7 +162,6 @@ class SwatLinkCellRenderer extends SwatCellRenderer
         return $text;
     }
 
-    // {{{ protected function getLink()
 
     protected function getLink()
     {
@@ -184,7 +183,6 @@ class SwatLinkCellRenderer extends SwatCellRenderer
         return $link;
     }
 
-    // {{{ public function getDataSpecificCSSClassNames()
 
     /**
      * Gets the data specific CSS class names for this cell renderer

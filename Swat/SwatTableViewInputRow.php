@@ -19,7 +19,7 @@
  */
 class SwatTableViewInputRow extends SwatTableViewRow
 {
-    // {{{ public properties
+
 
     /**
      * The text to display in the link to enter a new row
@@ -57,7 +57,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
      */
     public $show_row_messages = true;
 
-    // {{{ private properties
 
     /**
      * The tool-link to create another row
@@ -96,7 +95,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
      */
     private $replicators = [];
 
-    // {{{ public function __construct()
 
     /**
      * Creates a new input row
@@ -113,7 +111,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         );
     }
 
-    // {{{ public function init()
 
     /**
      * Initializes this input row
@@ -161,7 +158,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         }
     }
 
-    // {{{ public function process()
 
     /**
      * Processes this input row
@@ -181,7 +177,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         }
     }
 
-    // {{{ public function addInputCell()
 
     /**
      * Adds an input cell to this row from a column
@@ -202,7 +197,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         $this->input_cells[$column_id] = $cell;
     }
 
-    // {{{ public function display()
 
     /**
      * Displays this row
@@ -244,7 +238,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         $this->displayEnterAnotherRow();
     }
 
-    // {{{ public function addReplication()
 
     /**
      * Add a replicator id
@@ -258,7 +251,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         return end($this->replicators);
     }
 
-    // {{{ public function getReplicators()
 
     /**
      * Gets the replicator ids of this input row
@@ -278,7 +270,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         return $this->replicators;
     }
 
-    // {{{ public function getWidget()
 
     /**
      * Gets a particular widget in this row
@@ -315,7 +306,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         );
     }
 
-    // {{{ public function getPrototypeWidget()
 
     /**
      * Gets the prototype widget for a column attached to this row
@@ -350,7 +340,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         );
     }
 
-    // {{{ public function removeReplicatedRow()
 
     /**
      * Removes a row from this input row by its replicator id
@@ -368,7 +357,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         }
     }
 
-    // {{{ public function getVisibleByCount()
 
     /**
      * Gets whether or not to show this row based on a count of rows
@@ -387,7 +375,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         return $this->visible;
     }
 
-    // {{{ public function rowHasMessage()
 
     /**
      * Gets whether or not a given replicated row has messages
@@ -412,7 +399,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         return $row_has_message;
     }
 
-    // {{{ public function getMessages()
 
     /**
      * Gathers all messages from this table-view row
@@ -435,7 +421,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         return $messages;
     }
 
-    // {{{ public function hasMessage()
 
     /**
      * Gets whether or not the widgets in this row have any messages
@@ -459,7 +444,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         return $has_message;
     }
 
-    // {{{ public function getInlineJavaScript()
 
     /**
      * Creates a JavaScript object to control the client behaviour of this
@@ -497,7 +481,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         );
     }
 
-    // {{{ public function getHtmlHeadEntrySet()
 
     /**
      * Gets the SwatHtmlHeadEntry objects needed by this input row
@@ -517,7 +500,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         return $set;
     }
 
-    // {{{ public function getAvailableHtmlHeadEntrySet()
 
     /**
      * Gets the SwatHtmlHeadEntry objects that may be needed by this input row
@@ -539,7 +521,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         return $set;
     }
 
-    // {{{ private function getId()
 
     private function getId()
     {
@@ -552,7 +533,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         return $id;
     }
 
-    // {{{ private function displayInputRows()
 
     /**
      * Displays the actual XHTML input rows for this input row
@@ -654,7 +634,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         }
     }
 
-    // {{{ private function createEmbeddedWidgets()
 
     /**
      * Instantiates the tool-link for this input row
@@ -672,7 +651,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         }
     }
 
-    // {{{ private function displayEnterAnotherRow()
 
     /**
      * Displays the enter-another-row row
@@ -736,7 +714,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         $tr_tag->close();
     }
 
-    // {{{ private function getRowString()
 
     /**
      * Gets this input row as an XHTML table row with the row identifier as a
@@ -784,7 +761,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
         return ob_get_clean();
     }
 
-    // {{{ private function getForm()
 
     /**
      * Gets the form this row's view is contained in
