@@ -758,7 +758,7 @@ class SwatForm extends SwatDisplayableContainer
 
             if ($value === self::ENCODING_8BIT_VALUE) {
                 // convert from our 8-bit encoding to utf-8
-                foreach ($raw_data as $key => &$value) {
+                foreach ($raw_data as &$value) {
                     if (!mb_check_encoding($value, $this->_8bit_encoding)) {
                         // The 8-bit data is not valid for the 8-bit character
                         // encoding. This can happen, for example, if robots

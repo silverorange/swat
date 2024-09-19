@@ -1436,7 +1436,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
             return true;
         }
 
-        foreach ($this->objects as $name => $object) {
+        foreach ($this->objects as $object) {
             if ($object->isModified()) {
                 return true;
             }

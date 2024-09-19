@@ -991,7 +991,7 @@ class SwatDBDataObject extends SwatObject implements
         $this->db = $db;
         $set[$key] = true;
 
-        foreach ($this->sub_data_objects as $name => $object) {
+        foreach ($this->sub_data_objects as $object) {
             if ($object instanceof SwatDBRecordable) {
                 $object->setDatabase($db, $set);
             }

@@ -812,7 +812,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
             }
 
             $cloned_object = null;
-            foreach ($prototype_descendants as $index => $prototype_object) {
+            foreach ($prototype_descendants as $prototype_object) {
                 if ($object === $prototype_object) {
                     $cloned_object =
                         $this->widgets[$this->replicator_id][$object->id];
