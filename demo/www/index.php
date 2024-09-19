@@ -7,7 +7,7 @@ require_once __DIR__.'/../include/DemoApplication.php';
 
 SwatException::setupHandler();
 
-$app = new DemoApplication('demo');
+$app = new DemoApplication();
 
 try {
 	$app->run();
