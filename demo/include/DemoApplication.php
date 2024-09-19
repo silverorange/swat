@@ -13,7 +13,8 @@ class DemoApplication
 {
 
 
-	private $ui;
+	private $layout_ui;
+    private $demo_ui;
 	private $demo;
 
 	private $available_demos = [
