@@ -47,9 +47,8 @@ class SwatDBReadaheadIterator extends SwatObject
     /**
      * Creates a new readahead iterator.
      *
-     * @param array|Iterator either an array or Iterator object to use for
-     *                        readahead iteration
-     * @param mixed $iterator
+     * @param array|Iterator $iterator either an array or Iterator object to use for
+     *                                 readahead iteration
      *
      * @throws InvalidArgumentException if the <i>$iterator</i> is not an array
      *                                  or an Iterator

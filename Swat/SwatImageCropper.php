@@ -266,7 +266,7 @@ class SwatImageCropper extends SwatInputControl
         }
 
         return sprintf(
-            '%1$s_obj = new SwatImageCropper(' . "'%1\$s', {%2\$s});",
+            '%1$s_obj = new SwatImageCropper(\'%1$s\', {%2$s});',
             $this->id,
             $options_string,
         );

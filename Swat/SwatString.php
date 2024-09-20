@@ -1167,7 +1167,7 @@ class SwatString extends SwatObject
     }
 
     /**
-     * Format bytes in human readible units.
+     * Format bytes in human-readable units.
      *
      * By default, bytes are formatted using canonical, ambiguous, base-10
      * prefixed units. Bytes may optionally be formatted using unambiguous IEC
@@ -2261,15 +2261,13 @@ class SwatString extends SwatObject
         $lc = localeconv();
 
         switch ($lc['n_sign_posn']) {
-            // negative sign shown as: (5.00)
-            case 0:
+            case 0: // negative sign shown as: (5.00)
                 if (mb_strpos($string, '(') !== false) {
                     return '-' . str_replace(['(', ')'], [], $string);
                 }
                 break;
 
-                // negative sign trails number: 5.00-
-            case 2:
+            case 2: // negative sign trails number: 5.00-
                 if (
                     $lc['negative_sign'] != ''
                     && mb_strpos($string, $lc['negative_sign']) !== false
@@ -2278,8 +2276,7 @@ class SwatString extends SwatObject
                 }
                 break;
 
-                // negative sign prefixes number: -5.00
-            default:
+            default: // negative sign prefixes number: -5.00
                 if (
                     $lc['negative_sign'] != ''
                     && mb_strpos($string, $lc['negative_sign']) !== false

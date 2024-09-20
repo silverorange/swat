@@ -812,13 +812,13 @@ class SwatForm extends SwatDisplayableContainer
         if ($this->_8bit_encoding !== null) {
             // The character encoding detection field is intentionally not using
             // SwatHtmlTag to avoid minimizing entities.
-            echo '<input type="hidden" ',
-            'name="',
-            self::ENCODING_FIELD,
-            '" ',
-            'value="',
-            self::ENCODING_ENTITY_VALUE,
-            '" />';
+            echo '<input type="hidden" ' .
+                'name="' .
+                self::ENCODING_FIELD .
+                '" ' .
+                'value="' .
+                self::ENCODING_ENTITY_VALUE .
+                '" />';
         }
 
         foreach ($this->hidden_fields as $name => $value) {
@@ -1003,8 +1003,9 @@ class SwatForm extends SwatDisplayableContainer
         $value = str_replace('\\', '\\\\', $value);
         $value = str_replace("\x00", '\x00', $value);
         $value = str_replace("\x0a", '\x0a', $value);
+        $value = str_replace("\x0d", '\x0d', $value);
 
-        return str_replace("\x0d", '\x0d', $value);
+        return $value;
     }
 
     /**

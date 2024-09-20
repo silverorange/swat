@@ -6,7 +6,11 @@
  * @copyright 2005-2024 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecordable, SwatDBMarshallable, SwatDBFlushable
+class SwatDBDataObject extends SwatObject implements
+    Serializable,
+    SwatDBRecordable,
+    SwatDBMarshallable,
+    SwatDBFlushable
 {
     /**
      * @var MDB2

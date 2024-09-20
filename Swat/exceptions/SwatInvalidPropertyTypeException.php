@@ -10,10 +10,8 @@ class SwatInvalidPropertyTypeException extends SwatException
 {
     /**
      * The name of the type that is invalid.
-     *
-     * @var string
      */
-    protected $type;
+    protected ?string $type = null;
 
     /**
      * The object the property is invalid for.
@@ -25,10 +23,10 @@ class SwatInvalidPropertyTypeException extends SwatException
     /**
      * Creates a new invalid class exception.
      *
-     * @param string     $message the message of the exception
-     * @param int        $code    the code of the exception
-     * @param mixed      $object  the object the property is invalid for
-     * @param mixed|null $type
+     * @param string  $message the message of the exception
+     * @param int     $code    the code of the exception
+     * @param mixed   $object  the object the property is invalid for
+     * @param ?string $type
      */
     public function __construct(
         $message = null,
@@ -54,9 +52,9 @@ class SwatInvalidPropertyTypeException extends SwatException
     /**
      * Gets the name of the type that is invalid.
      *
-     * @return string the name of the type that is invalid
+     * @return ?string the name of the type that is invalid
      */
-    public function getType()
+    public function getType(): ?string
     {
         return $this->type;
     }

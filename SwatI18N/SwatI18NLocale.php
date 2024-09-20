@@ -1294,7 +1294,7 @@ class SwatI18NLocale extends SwatObject
     }
 
     /**
-     * Recursivly converts the character encoding of all strings in an array.
+     * Recursively converts the character encoding of all strings in an array.
      *
      * @param string $from  the character encoding to convert from
      * @param string $to    the character encoding to convert to

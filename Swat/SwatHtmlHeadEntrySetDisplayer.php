@@ -95,14 +95,11 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 
     /**
      * Displays the contents of the set of HTML head entries inline.
-     *
-     * @param mixed      $path
-     * @param mixed|null $type
      */
     public function displayInline(
         SwatHtmlHeadEntrySet $set,
-        $path,
-        $type = null,
+        string $path,
+        ?string $type = null,
     ) {
         $entries = $set->toArray();
 

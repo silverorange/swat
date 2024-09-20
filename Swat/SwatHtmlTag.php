@@ -204,18 +204,14 @@ class SwatHtmlTag extends SwatObject
      * This should never be called directly, but is invoked indirectly when
      * accessing properties of a tag object.
      *
-     * @param mixed $attribute
+     * @param string $attribute the name of attribute to get
      *
      * @return mixed the value of the attribute. If the attribute is not set,
      *               null is returned.
      */
-    public function __get($attribute)
+    public function __get(string $attribute)
     {
-        if (isset($this->attributes[$attribute])) {
-            return $this->attributes[$attribute];
-        }
-
-        return null;
+        return $this->attributes[$attribute] ?? null;
     }
 
     /**
@@ -273,11 +269,11 @@ class SwatHtmlTag extends SwatObject
 
         foreach ($this->attributes as $attribute => $value) {
             if ($value !== null) {
-                echo ' ',
-                $attribute,
-                '="',
-                SwatString::minimizeEntities($value),
-                '"';
+                echo ' ' .
+                    $attribute .
+                    '="' .
+                    SwatString::minimizeEntities($value) .
+                    '"';
             }
         }
 

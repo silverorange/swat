@@ -675,12 +675,11 @@ class SwatUI extends SwatObject
      * Also does error notification in the event of a missing or unknown type
      * attribute.
      *
-     * @param string $name  the name of the property
-     * @param string $value the value of the property
-     * @param string $type  the type of the value
-     * @param bool translatable whether the property is translatable
+     * @param string       $name         the name of the property
+     * @param string       $value        the value of the property
+     * @param string       $type         the type of the value
+     * @param bool         $translatable whether the property is translatable
      * @param SwatUIObject $object       the object the property applies to
-     * @param mixed        $translatable
      *
      * @return mixed the value of the property as an appropriate PHP datatype
      *

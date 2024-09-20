@@ -452,7 +452,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
         $row_string = str_replace('&quot;', '&amp;quot;', $row_string);
         $row_string = str_replace('&lt;', '&amp;lt;', $row_string);
         $row_string = SwatString::minimizeEntities($row_string);
-        $row_string = str_replace("'", "\\'", $row_string);
+        $row_string = str_replace("'", "\'", $row_string);
 
         // encode newlines for JavaScript string
         $row_string = str_replace("\n", '\n', $row_string);

@@ -135,7 +135,7 @@ class SwatTreeFlydown extends SwatFlydown
             $tree = SwatTreeFlydownNode::convertFromDataTree($tree);
         } elseif (!$tree instanceof SwatTreeFlydownNode) {
             throw new SwatInvalidClassException(
-                'Tree must be an intance of ' .
+                'Tree must be an instance of ' .
                     'either SwatDataTreeNode or SwatTreeFlydownNode.',
                 0,
                 $tree,

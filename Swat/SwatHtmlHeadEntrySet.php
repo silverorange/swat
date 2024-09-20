@@ -113,7 +113,7 @@ class SwatHtmlHeadEntrySet implements Countable, IteratorAggregate
      *
      * Fulfills the IteratorAggregate interface.
      *
-     * @return iterable an iterator over the entries in this set
+     * @return Traversable an iterator over the entries in this set
      */
     public function getIterator(): Traversable
     {

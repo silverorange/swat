@@ -32,8 +32,6 @@ class SwatDBClassMap extends SwatObject
      */
     private static $search_paths = ['.'];
 
-    // deprecated API
-
     /**
      * Singleton instance.
      *

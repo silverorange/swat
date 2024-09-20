@@ -10,17 +10,15 @@ class SwatUndefinedMessageTypeException extends SwatException
 {
     /**
      * The name of the message type that is undefined.
-     *
-     * @var string
      */
-    protected $message_type;
+    protected ?string $message_type = null;
 
     /**
      * Creates a new undefined message type exception.
      *
-     * @param string     $message      the message of the exception
-     * @param int        $code         the code of the exception
-     * @param mixed|null $message_type
+     * @param string  $message      the message of the exception
+     * @param int     $code         the code of the exception
+     * @param ?string $message_type
      */
     public function __construct(
         $message = null,
@@ -34,9 +32,9 @@ class SwatUndefinedMessageTypeException extends SwatException
     /**
      * Gets the name of the message type that is undefined.
      *
-     * @return string the name of the message type that is undefined
+     * @return ?string the name of the message type that is undefined
      */
-    public function getMessageType()
+    public function getMessageType(): ?string
     {
         return $this->message_type;
     }

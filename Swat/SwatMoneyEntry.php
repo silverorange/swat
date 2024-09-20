@@ -35,7 +35,7 @@ class SwatMoneyEntry extends SwatFloatEntry
      * If set to null, the number of decimal places allowed by the locale is
      * used.
      *
-     * @var int
+     * @var ?int
      */
     public $decimal_places;
 
