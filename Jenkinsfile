@@ -27,7 +27,7 @@ pipeline {
                 sh '''
                     master_sha=$(git rev-parse origin/master)
                     newest_sha=$(git rev-parse HEAD)
-                    composer run phpcs
+                    composer run phpcs \
                     $(git diff --diff-filter=ACRM --name-only $master_sha...$newest_sha)
                 '''
             }
