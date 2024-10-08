@@ -19,7 +19,7 @@ class SwatDBClassMap
      * The array has keys of the 'from class name' and values of the
      * 'to class name'.
      *
-     * @var array
+     * @var array<class-string, class-string>
      */
     private static array $map = [];
 
@@ -43,13 +43,13 @@ class SwatDBClassMap
      * <i>$from_class_name</i> is already mapped to another class the old
      * mapping is overwritten.
      *
-     * @param string $from_class_name the class name to map from.
-     * @param string $to_class_name the class name to map to. The mapped class
-     *                               must be a subclass of the
-     *                               <i>$from_class_name</i> otherwise class
-     *                               resolution using
-     *                               {@link SwatDBClassMap::get()} will throw
-     *                               an exception.
+     * @param class-string $from_class_name the class name to map from.
+     * @param class-string $to_class_name the class name to map to. The mapped
+     *                                    class must be a subclass of the
+     *                                    <i>$from_class_name</i> otherwise
+     *                                    class resolution using
+     *                                    {@link SwatDBClassMap::get()} will
+     *                                    throw an exception.
      *
      * @throws SwatException if the added mapping creates a circular dependency.
      */
@@ -86,11 +86,11 @@ class SwatDBClassMap
     /**
      * Resolves a class name from the class map
      *
-     * @param string $from_class_name the name of the class to resolve.
+     * @param class-string $from_class_name the name of the class to resolve.
      *
-     * @return string the resolved class name. If no class mapping exists for
-     *                 for the given class name, the same class name is
-     *                 returned.
+     * @return class-string the resolved class name. If no class mapping exists
+     *                      for the given class name, the same class name is
+     *                      returned.
      *
      * @throws SwatInvalidClassException if a mapped class is not a subclass of
      *                                    its original class.
