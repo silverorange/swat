@@ -1891,16 +1891,18 @@ class SwatTableView extends SwatView
      *                                        the row is inserted at the
      *                                        beginning or the end of this
      *                                        table-view's list of extra rows.
-     * @param bool             $after         optional. If true and a reference row is specified,
-     *                                        the row is inserted immediately before the
-     *                                        reference row. If true and no reference row is
-     *                                        specified, the row is inserted at the beginning
-     *                                        of the extra row list. If false and a reference
-     *                                        row is specified, the row is inserted immediately
-     *                                        after the reference row. If false and no
-     *                                        reference row is specified, the row is inserted
-     *                                        at the end of the extra row list. Defaults to
-     *                                        false.
+     * @param bool             $after         optional. If true and a reference
+     *                                        row is specified, the row is inserted
+     *                                        immediately before the reference row.
+     *                                        If true and no reference row is
+     *                                        specified, the row is inserted at the
+     *                                        beginning of the extra row list.
+     *                                        If false and a reference row is specified,
+     *                                        the row is inserted immediately
+     *                                        after the reference row. If false
+     *                                        and no reference row is specified,
+     *                                        the row is inserted at the end of
+     *                                        the extra row list. Defaults to false.
      *
      * @throws SwatWidgetNotFoundException if the reference row does not exist
      *                                     in this table-view
