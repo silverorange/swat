@@ -47,7 +47,7 @@ class SwatXHTMLTextarea extends SwatTextarea
 
             $xhtml_template =
                 $doctype .
-                <<<'EOB'
+                <<<'XHTML'
                     <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
                     	<head>
                     		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
@@ -60,7 +60,7 @@ class SwatXHTMLTextarea extends SwatTextarea
                     	</body>
                     </html>
 
-                    EOB;
+                    XHTML;
         }
 
         parent::process();

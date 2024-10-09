@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
+use Rector\Php73\Rector\String_\SensitiveHereNowDocRector;
 use Rector\Php80\Rector\Catch_\RemoveUnusedVariableInCatchRector;
 use Rector\Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector;
 use Rector\Php80\Rector\FunctionLike\MixedTypeRector;
@@ -32,6 +33,7 @@ return RectorConfig::configure()
         MixedTypeRector::class,
         NullToStrictStringFuncCallArgRector::class,
         RemoveUnusedVariableInCatchRector::class,
+        SensitiveHereNowDocRector::class,
     ])
     // See https://getrector.com/documentation/integration-to-new-project
     // for other configuration settings

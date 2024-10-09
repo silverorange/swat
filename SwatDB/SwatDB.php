@@ -291,17 +291,19 @@ class SwatDB extends SwatObject
      * @param string             $table    the database table to query
      * @param string             $field    The name of the database field to query.
      *                                     Can be given in the form type:name where
-     *                                     type is a standard MDB2 datatype. If type
-     *                                     is omitted, then integer is assumed for this
-     *                                     field.
-     * @param string             $id_field The name of the database field that contains the
-     *                                     the id.  If not null this will be used to
-     *                                     construct a where clause to limit results. Can
-     *                                     be given in the form type:name where type is
-     *                                     a standard MDB2 datatype. If type is omitted,
-     *                                     then integer is assumed for this field.
-     * @param mixed              $id       The value to look for in the $id_field. The type
-     *                                     should correspond to the type of $id_field.
+     *                                     type is a standard MDB2 datatype. If
+     *                                     type is omitted, then integer is assumed
+     *                                     for this field.
+     * @param string             $id_field The name of the database field that
+     *                                     contains the id.  If not null this will
+     *                                     be used to construct a where clause to
+     *                                     limit results. Can be given in the form
+     *                                     type:name where type is a standard MDB2
+     *                                     datatype. If type is omitted, then integer
+     *                                     is assumed for this field.
+     * @param mixed              $id       The value to look for in the $id_field.
+     *                                     The type should correspond to the type
+     *                                     of $id_field.
      *
      * @return mixed the value queried for a single result
      *

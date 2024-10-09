@@ -91,7 +91,7 @@ class SwatHtmlHeadEntrySet implements Countable, IteratorAggregate
         $this->entries = array_merge($this->entries, $set->entries);
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         return $this->entries;
     }
