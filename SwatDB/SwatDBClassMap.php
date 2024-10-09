@@ -19,7 +19,12 @@ class SwatDBClassMap
      * @var array<class-string, class-string>
      */
     private static array $map = [];
-  
+
+    /**
+     * The class map is a static object and should not be instantiated.
+     */
+    private function __construct() {}
+
     /**
      * Maps a class name to another class name.
      *
@@ -108,9 +113,4 @@ class SwatDBClassMap
 
         return $to_class_name;
     }
-
-    /**
-     * The class map is a static object and should not be instantiated
-     */
-    private function __construct() {}
 }
