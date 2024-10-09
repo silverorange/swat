@@ -1,37 +1,31 @@
 <?php
 
 /**
- * A container to show and hide child widgets
+ * A container to show and hide child widgets.
  *
- * @package   Swat
  * @copyright 2004-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDisclosure extends SwatDisplayableContainer
 {
-    // {{{ public properties
-
     /**
-     * A visible title for the label shown beside the disclosure triangle
+     * A visible title for the label shown beside the disclosure triangle.
      *
      * @var string
      */
     public $title = '';
 
     /**
-     * The initial state of the disclosure
+     * The initial state of the disclosure.
      *
-     * @var boolean
+     * @var bool
      */
     public $open = true;
 
-    // }}}
-    // {{{ public function __construct()
-
     /**
-     * Creates a new disclosure container
+     * Creates a new disclosure container.
      *
-     * @param string $id a non-visible unique id for this widget.
+     * @param string $id a non-visible unique id for this widget
      *
      * @see SwatWidget::__construct()
      */
@@ -47,11 +41,8 @@ class SwatDisclosure extends SwatDisplayableContainer
         $this->addStyleSheet('packages/swat/styles/swat-disclosure.css');
     }
 
-    // }}}
-    // {{{ public function display()
-
     /**
-     * Displays this disclosure container
+     * Displays this disclosure container.
      *
      * Creates appropriate divs and outputs closed or opened based on the
      * initial state.
@@ -92,9 +83,6 @@ class SwatDisclosure extends SwatDisplayableContainer
         $control_div->close();
     }
 
-    // }}}
-    // {{{ protected function getControlDivTag()
-
     protected function getControlDivTag()
     {
         $div = new SwatHtmlTag('div');
@@ -104,9 +92,6 @@ class SwatDisclosure extends SwatDisplayableContainer
         return $div;
     }
 
-    // }}}
-    // {{{ protected function getContainerDivTag()
-
     protected function getContainerDivTag()
     {
         $div = new SwatHtmlTag('div');
@@ -115,18 +100,10 @@ class SwatDisclosure extends SwatDisplayableContainer
         return $div;
     }
 
-    // }}}
-    // {{{ protected function getAnimateDivTag()
-
     protected function getAnimateDivTag()
     {
-        $div = new SwatHtmlTag('div');
-
-        return $div;
+        return new SwatHtmlTag('div');
     }
-
-    // }}}
-    // {{{ protected function getPaddingDivTag()
 
     protected function getPaddingDivTag()
     {
@@ -135,9 +112,6 @@ class SwatDisclosure extends SwatDisplayableContainer
 
         return $div;
     }
-
-    // }}}
-    // {{{ protected function getInputTag()
 
     protected function getInputTag()
     {
@@ -150,9 +124,6 @@ class SwatDisclosure extends SwatDisplayableContainer
         return $input;
     }
 
-    // }}}
-    // {{{ protected function getSpanTag()
-
     protected function getSpanTag()
     {
         $title = strval($this->title);
@@ -164,34 +135,29 @@ class SwatDisclosure extends SwatDisplayableContainer
         return $span;
     }
 
-    // }}}
-    // {{{ protected function getJavaScriptClass()
-
     /**
-     * Gets the name of the JavaScript class to instantiate for this disclosure
+     * Gets the name of the JavaScript class to instantiate for this disclosure.
      *
      * Sub-classes of this class may want to return a sub-class of the default
      * JavaScript disclosure class.
      *
      * @return string the name of the JavaScript class to instantiate for this
-     *                 disclosure. Defaults to 'SwatDisclosure'.
+     *                disclosure. Defaults to 'SwatDisclosure'.
      */
     protected function getJavaScriptClass()
     {
         return 'SwatDisclosure';
     }
 
-    // }}}
-    // {{{ protected function getInlineJavaScript()
-
     /**
-     * Gets disclosure specific inline JavaScript
+     * Gets disclosure specific inline JavaScript.
      *
-     * @return string disclosure specific inline JavaScript.
+     * @return string disclosure specific inline JavaScript
      */
     protected function getInlineJavaScript()
     {
         $open = $this->open ? 'true' : 'false';
+
         return sprintf(
             "var %s_obj = new %s('%s', %s);",
             $this->id,
@@ -201,14 +167,11 @@ class SwatDisclosure extends SwatDisplayableContainer
         );
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
-
     /**
-     * Gets the array of CSS classes that are applied to this disclosure
+     * Gets the array of CSS classes that are applied to this disclosure.
      *
      * @return array the array of CSS classes that are applied to this
-     *                disclosure.
+     *               disclosure
      */
     protected function getCSSClassNames()
     {
@@ -218,9 +181,6 @@ class SwatDisclosure extends SwatDisplayableContainer
             'swat-disclosure-control-opened',
         ];
 
-        $classes = array_merge($classes, parent::getCSSClassNames());
-        return $classes;
+        return array_merge($classes, parent::getCSSClassNames());
     }
-
-    // }}}
 }

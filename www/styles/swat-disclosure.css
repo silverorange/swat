@@ -4,61 +4,61 @@
  * Since disclosures can be nested, closed styles must follow open styles.
  */
 .swat-disclosure {
-	position: relative; /* IE hack */
+  position: relative; /* IE hack */
 }
 
 .swat-disclosure-control-opened,
 .swat-disclosure-control-closed {
-	min-height: 2.4em;
+  min-height: 2.4em;
 }
 
 .swat-disclosure-span,
 .swat-disclosure-anchor-opened,
 .swat-disclosure-anchor-closed {
-	position: relative;
-	display: inline-block; /* Give "layout" IE hack. */
-	top: 0.7em;
-	margin: 0 10px 0 5px;
-	padding: 0 5px 0 22px;
-	color: #666;
-	background-color: #fff;
+  position: relative;
+  display: inline-block; /* Give "layout" IE hack. */
+  top: 0.7em;
+  margin: 0 10px 0 5px;
+  padding: 0 5px 0 22px;
+  color: #666;
+  background-color: #fff;
 }
 
 .swat-disclosure-anchor-opened,
 .swat-disclosure-anchor-closed {
-	text-decoration: none;
+  text-decoration: none;
 }
 
 .swat-disclosure-anchor-opened {
-	background-image: url(../images/swat-disclosure-open.png);
-	background-position: 2px 0;
-	background-repeat: no-repeat;
+  background-image: url(../images/swat-disclosure-open.png);
+  background-position: 2px 0;
+  background-repeat: no-repeat;
 }
 
 .swat-disclosure-anchor-closed {
-	background-image: url(../images/swat-disclosure-closed.png);
-	background-position: 2px 1px;
-	background-repeat: no-repeat;
+  background-image: url(../images/swat-disclosure-closed.png);
+  background-position: 2px 1px;
+  background-repeat: no-repeat;
 }
 
 .swat-disclosure-span {
-	padding-left: 5px;
+  padding-left: 5px;
 }
 
 .swat-disclosure-control-opened .swat-disclosure-container {
-	display: block;
-	border: 1px solid #ddd;
-	min-height: 0; /* IE7 hack to prevent disappearing borders */
+  display: block;
+  border: 1px solid #ddd;
+  min-height: 0; /* IE7 hack to prevent disappearing borders */
 }
 
 .swat-disclosure-control-closed .swat-disclosure-container {
-	display: none;
+  display: none;
 }
 
 .swat-disclosure-control-opened .swat-disclosure-padding-container {
-	padding: 16px;
+  padding: 16px;
 }
 
 .swat-disclosure-control-closed .swat-disclosure-padding-container {
-	padding: 0;
+  padding: 0;
 }

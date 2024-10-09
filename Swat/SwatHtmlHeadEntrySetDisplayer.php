@@ -1,53 +1,42 @@
 <?php
 
 /**
- * Displays HTML head entries
+ * Displays HTML head entries.
  *
  * This class manages all the sorting, combining and displaying of HTML head
  * entries.
  *
- * @package   Swat
  * @copyright 2010-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 {
-    // {{{ protected properties
-
     /**
      * @var Concentrate_Concentrator
      */
     protected $concentrator;
 
-    // }}}
-    // {{{ public function __construct()
-
     /**
-     * Creates a new HTML head entry collection
-     *
-     * @param Concentrate_Concentrator $concentrator
+     * Creates a new HTML head entry collection.
      */
     public function __construct(Concentrate_Concentrator $concentrator)
     {
         $this->concentrator = $concentrator;
     }
 
-    // }}}
-    // {{{ public function display()
-
     /**
-     * Displays a set of HTML head entries
+     * Displays a set of HTML head entries.
      *
-     * @param SwatHtmlHeadEntrySet $set the HTML head entry set to display.
-     * @param string $uri_prefix an optional URI prefix to prepend to all the
-     *                            displayed HTML head entries.
-     * @param string $tag an optional tag to suffix the URI with. This is
-     *                     suffixed as a HTTP get var and can be used to
-     *                     explicitly refresh the browser cache.
-     * @param boolean $combine whether or not to combine files. Defaults to
-     *                          false.
-     * @param boolean $minify whether or not to minify files. Defaults to
-     *                         false.
+     * @param SwatHtmlHeadEntrySet $set        the HTML head entry set to display
+     * @param string               $uri_prefix an optional URI prefix to prepend to all the
+     *                                         displayed HTML head entries
+     * @param string               $tag        an optional tag to suffix the URI with. This is
+     *                                         suffixed as a HTTP get var and can be used to
+     *                                         explicitly refresh the browser cache.
+     * @param bool                 $combine    whether or not to combine files. Defaults to
+     *                                         false.
+     * @param bool                 $minify     whether or not to minify files. Defaults to
+     *                                         false.
      */
     public function display(
         SwatHtmlHeadEntrySet $set,
@@ -104,16 +93,13 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
         echo "\n";
     }
 
-    // }}}
-    // {{{ public function displayInline()
-
     /**
-     * Displays the contents of the set of HTML head entries inline
+     * Displays the contents of the set of HTML head entries inline.
      */
     public function displayInline(
         SwatHtmlHeadEntrySet $set,
-        $path,
-        $type = null,
+        string $path,
+        ?string $type = null,
     ) {
         $entries = $set->toArray();
 
@@ -138,15 +124,10 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
         echo "\n";
     }
 
-    // }}}
-    // {{{ protected function getCombinedEntries()
-
     /**
-     * Gets the entries of this set accounting for combining
+     * Gets the entries of this set accounting for combining.
      *
-     * @param array $entries
-     *
-     * @return array the entries of this set accounting for combinations.
+     * @return array the entries of this set accounting for combinations
      */
     protected function getCombinedEntries(array $entries)
     {
@@ -168,21 +149,16 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
         $entries = array_intersect_key($entries, array_flip($info['files']));
 
         return [
-            'entries' => $entries,
+            'entries'  => $entries,
             'superset' => $info['superset'],
         ];
     }
 
-    // }}}
-    // {{{ protected function getSortedEntries()
-
     /**
-     * Gets the entries of this set sorted by their correct display order
-     *
-     * @param array $original_entries
+     * Gets the entries of this set sorted by their correct display order.
      *
      * @return array the entries of this set sorted by their correct display
-     *               order.
+     *               order
      */
     protected function getSortedEntries(array $original_entries)
     {
@@ -193,8 +169,8 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
         $count = 0;
         foreach ($original_entries as $uri => $entry) {
             $entries[] = [
-                'order' => $count,
-                'uri' => $uri,
+                'order'  => $count,
+                'uri'    => $uri,
                 'object' => $entry,
             ];
             $count++;
@@ -212,26 +188,23 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
         return $sorted_entries;
     }
 
-    // }}}
-    // {{{ protected function compareEntries()
-
     /**
      * Compares two {@link SwatHtmlHeadEntry} objects to get their display
-     * order
+     * order.
      *
      * @param array $a left side of comparison. A two element array containing
-     *                  the keys 'order' and 'object'. The 'order' key contains
-     *                  the native ordering of the entry and the 'object' key
-     *                  contains the entry object.
+     *                 the keys 'order' and 'object'. The 'order' key contains
+     *                 the native ordering of the entry and the 'object' key
+     *                 contains the entry object.
      * @param array $b right side of comparison. A two element array containing
-     *                  the keys 'order' and 'object'. The 'order' key contains
-     *                  the native ordering of the entry and the 'object' key
-     *                  contains the entry object.
+     *                 the keys 'order' and 'object'. The 'order' key contains
+     *                 the native ordering of the entry and the 'object' key
+     *                 contains the entry object.
      *
-     * @return integer a tri-value where -1 means the left side is less than
-     *                  the right side, 1 means the left side is greater than
-     *                  the right side and 0 means the left side and right
-     *                  side are equivalent.
+     * @return int a tri-value where -1 means the left side is less than
+     *             the right side, 1 means the left side is greater than
+     *             the right side and 0 means the left side and right
+     *             side are equivalent
      */
     protected function compareEntries(array $a, array $b)
     {
@@ -268,19 +241,16 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
         return 0;
     }
 
-    // }}}
-    // {{{ protected function compareTypes()
-
     /**
-     * Compares two HTML head entry types
+     * Compares two HTML head entry types.
      *
-     * @param string $a left side of comparison.
-     * @param string $b right side of comparison.
+     * @param string $a left side of comparison
+     * @param string $b right side of comparison
      *
-     * @return integer a tri-value where -1 means the left side is less than
-     *                  the right side, 1 means the left side is greater than
-     *                  the right side and 0 means the left side and right
-     *                  side are equivalent.
+     * @return int a tri-value where -1 means the left side is less than
+     *             the right side, 1 means the left side is greater than
+     *             the right side and 0 means the left side and right
+     *             side are equivalent
      */
     protected function compareTypes($a, $b)
     {
@@ -306,11 +276,8 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
         return 0;
     }
 
-    // }}}
-    // {{{ protected function getTypeOrder()
-
     /**
-     * Gets the order in which HTML head entry types should be displayed
+     * Gets the order in which HTML head entry types should be displayed.
      *
      * This order is dependent on the way browsers parallelize requests and is
      * chosen to give the greatest amount of parallelization.
@@ -323,28 +290,25 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
     protected function getTypeOrder()
     {
         return [
-            'SwatStyleSheetHtmlHeadEntry' => 0,
-            'SwatLessStyleSheetHtmlHeadEntry' => 0, // Consider same as CSS
-            'SwatLinkHtmlHeadEntry' => 1,
+            'SwatStyleSheetHtmlHeadEntry'       => 0,
+            'SwatLessStyleSheetHtmlHeadEntry'   => 0, // Consider same as CSS
+            'SwatLinkHtmlHeadEntry'             => 1,
             'SwatInlineJavaScriptHtmlHeadEntry' => 2,
-            'SwatJavaScriptHtmlHeadEntry' => 3,
-            'SwatCommentHtmlHeadEntry' => 4,
-            '__unknown__' => 5,
+            'SwatJavaScriptHtmlHeadEntry'       => 3,
+            'SwatCommentHtmlHeadEntry'          => 4,
+            '__unknown__'                       => 5,
         ];
     }
 
-    // }}}
-    // {{{ protected function checkForConflicts()
-
     /**
-     * Check for conflicts in a set of HTML head entry URIs
+     * Check for conflicts in a set of HTML head entry URIs.
      *
      * If a conflict is detected, an exception is thrown explaining the
      * conflict.
      *
-     * @param array $uris the HTML head entry URIs to check.
+     * @param array $uris the HTML head entry URIs to check
      *
-     * @throws SwatException if one or more conflicts are present.
+     * @throws SwatException if one or more conflicts are present
      */
     protected function checkForConflicts(array $uris)
     {
@@ -361,6 +325,7 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 
                 $count++;
             }
+
             throw new SwatException(
                 'Could not display head entries because the following ' .
                     'conflicts were detected: ' .
@@ -368,6 +333,4 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
             );
         }
     }
-
-    // }}}
 }

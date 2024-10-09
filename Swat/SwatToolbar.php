@@ -1,20 +1,17 @@
 <?php
 
 /**
- * A toolbar container for a group of related {@link SwatToolLink} objects
+ * A toolbar container for a group of related {@link SwatToolLink} objects.
  *
- * @package   Swat
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatToolbar extends SwatDisplayableContainer
 {
-    // {{{ public function __construct()
-
     /**
-     * Creates a new toolbar
+     * Creates a new toolbar.
      *
-     * @param string $id a non-visible unique id for this widget.
+     * @param string $id a non-visible unique id for this widget
      *
      * @see SwatWidget::__construct()
      */
@@ -25,12 +22,9 @@ class SwatToolbar extends SwatDisplayableContainer
         $this->addStyleSheet('packages/swat/styles/swat-toolbar.css');
     }
 
-    // }}}
-    // {{{ public function display()
-
     /**
      * Displays this toolbar as an unordered list with each sub-item
-     * as a list item
+     * as a list item.
      */
     public function display()
     {
@@ -49,11 +43,8 @@ class SwatToolbar extends SwatDisplayableContainer
         $toolbar_ul->close();
     }
 
-    // }}}
-    // {{{ public function setToolLinkValues()
-
     /**
-     * Sets the value of all {@link SwatToolLink} objects within this toolbar
+     * Sets the value of all {@link SwatToolLink} objects within this toolbar.
      *
      * This is usually more convenient than setting all the values by hand
      * if the values are dynamic.
@@ -67,16 +58,13 @@ class SwatToolbar extends SwatDisplayableContainer
         }
     }
 
-    // }}}
-    // {{{ public function getToolLinks()
-
     /**
-     * Gets the tool links of this toolbar
+     * Gets the tool links of this toolbar.
      *
      * Returns an the array of {@link SwatToolLink} objects contained
      * by this toolbar.
      *
-     * @return array the tool links contained by this toolbar.
+     * @return array the tool links contained by this toolbar
      */
     public function getToolLinks()
     {
@@ -90,11 +78,8 @@ class SwatToolbar extends SwatDisplayableContainer
         return $tools;
     }
 
-    // }}}
-    // {{{ protected function displayChildren()
-
     /**
-     * Displays the child widgets of this container
+     * Displays the child widgets of this container.
      */
     protected function displayChildren()
     {
@@ -108,13 +93,10 @@ class SwatToolbar extends SwatDisplayableContainer
         }
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
-
     /**
-     * Gets the array of CSS classes that are applied to this tool bar
+     * Gets the array of CSS classes that are applied to this tool bar.
      *
-     * @return array the array of CSS classes that are applied to this tool bar.
+     * @return array the array of CSS classes that are applied to this tool bar
      */
     protected function getCSSClassNames()
     {
@@ -127,9 +109,6 @@ class SwatToolbar extends SwatDisplayableContainer
             }
         }
 
-        $classes = array_merge($classes, parent::getCSSClassNames());
-        return $classes;
+        return array_merge($classes, parent::getCSSClassNames());
     }
-
-    // }}}
 }

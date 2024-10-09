@@ -1,28 +1,22 @@
 <?php
 
 /**
- * List of selectable options
+ * List of selectable options.
  *
- * @package   Swat
  * @copyright 2007-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatSelectList extends SwatCheckboxList
 {
-    // {{{ public properties
-
     /**
-     * Optional number of rows in the select list
+     * Optional number of rows in the select list.
      *
-     * @var integer
+     * @var int
      */
     public $size;
 
-    // }}}
-    // {{{ public function display()
-
     /**
-     * Displays this select list
+     * Displays this select list.
      */
     public function display()
     {
@@ -60,15 +54,12 @@ class SwatSelectList extends SwatCheckboxList
         $select_tag->close();
     }
 
-    // }}}
-    // {{{ public function getNote()
-
     /**
      * Gets a note letting the user know the select list can select multiple
-     * options
+     * options.
      *
      * @return SwatMessage a note letting the user know the select list can
-     *                      select multiple options.
+     *                     select multiple options
      *
      * @see SwatControl::getNote()
      */
@@ -80,6 +71,4 @@ class SwatSelectList extends SwatCheckboxList
 
         return new SwatMessage($message);
     }
-
-    // }}}
 }

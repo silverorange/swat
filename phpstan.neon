@@ -1,0 +1,22 @@
+# Project configuration for phpstan static analysis.
+#
+# Commit this file to your project's repository.
+#
+# See https://phpstan.org/config-reference for all options
+
+parameters:
+  # Change this to the appropriate PHP version of your project
+  phpVersion: 80200
+  # Change this to the appropriate level for your project
+  level: 0
+  errorFormat: table
+  # Set the paths to the PHP code you want to analyze
+  paths:
+    - demo
+    - po
+    - Swat
+    - SwatDB
+    - SwatI18N
+  # Some helpful settings that make clickable links for your IDE in the output
+  editorUrl: '%%file%%:%%line%%'
+  editorUrlTitle: '%%file%%:%%line%%'

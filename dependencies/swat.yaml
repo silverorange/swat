@@ -23,7 +23,6 @@ Swat:
     - SwatYUI
 
   Provides:
-
     # JavaScript resources
     packages/swat/javascript/swat-accordion.js:
     packages/swat/javascript/swat-actions.js:
@@ -33,7 +32,6 @@ Swat:
         - packages/swat/javascript/swat-z-index-manager.js
     packages/swat/javascript/swat-cascade.js:
     packages/swat/javascript/swat-change-order.js:
-    packages/swat/javascript/swat-date-entry.js:
     packages/swat/javascript/swat-check-all.js:
       OptionalDepends:
         - packages/swat/javascript/swat-checkbox-cell-renderer.js

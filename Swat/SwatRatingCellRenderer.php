@@ -1,48 +1,39 @@
 <?php
 
 /**
- * A rating cell renderer
+ * A rating cell renderer.
  *
- * @package   Swat
  * @copyright 2010-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatRatingCellRenderer extends SwatNumericCellRenderer
 {
-    // {{{ constants
-
-    const ROUND_FLOOR = 1;
-    const ROUND_CEIL = 2;
-    const ROUND_UP = 3;
-    const ROUND_NONE = 4;
-    const ROUND_HALF = 5;
-
-    // }}}
-    // {{{ public properties
+    public const ROUND_FLOOR = 1;
+    public const ROUND_CEIL = 2;
+    public const ROUND_UP = 3;
+    public const ROUND_NONE = 4;
+    public const ROUND_HALF = 5;
 
     /**
      * Maximum value a rating can be.
      *
-     * @var integer
+     * @var int
      */
     public $maximum_value = 5;
 
     /**
-     * Number of digits to display after the decimal point
+     * Number of digits to display after the decimal point.
      *
      * If null, the native number of digits displayed by PHP is used. The native
      * number of digits could be a relatively large number of digits for uneven
      * fractions.
      *
-     * @var integer
+     * @var int
      */
     public $round_mode = self::ROUND_FLOOR;
 
-    // }}}
-    // {{{ public function render()
-
     /**
-     * Renders the contents of this cell
+     * Renders the contents of this cell.
      *
      * @see SwatCellRenderer::render()
      */
@@ -90,35 +81,15 @@ class SwatRatingCellRenderer extends SwatNumericCellRenderer
         }
     }
 
-    // }}}
-    // {{{ protected function getDisplayValue()
-
     public function getDisplayValue()
     {
-        switch ($this->round_mode) {
-            case self::ROUND_FLOOR:
-                $value = floor($this->value);
-                break;
-
-            case self::ROUND_CEIL:
-                $value = ceil($this->value);
-                break;
-
-            case self::ROUND_UP:
-                $value = round($this->value, $this->precision);
-                break;
-
-            case self::ROUND_NONE:
-                $value = $this->value;
-                break;
-
-            case self::ROUND_HALF:
-                $value = round($this->value * 2) / 2;
-                break;
-        }
-
-        return $value;
+        return match ($this->round_mode) {
+            self::ROUND_FLOOR => floor($this->value),
+            self::ROUND_CEIL  => ceil($this->value),
+            self::ROUND_UP    => round($this->value, $this->precision),
+            self::ROUND_NONE  => $this->value,
+            self::ROUND_HALF  => round($this->value * 2) / 2,
+            default           => $this->value,
+        };
     }
-
-    // }}}
 }

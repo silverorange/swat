@@ -1,30 +1,24 @@
 <?php
 
 /**
- * A time zone selection widget
+ * A time zone selection widget.
  *
- * @package   Swat
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 {
-    // {{{ public properties
-
     /**
-     * Time zone identifier
+     * Time zone identifier.
      *
      * The id of the selected time zone.
      *
      * @var string
      */
-    public $value = null;
-
-    // }}}
-    // {{{ private properties
+    public $value;
 
     /**
-     * Time zone areas available for this time zone entry widget
+     * Time zone areas available for this time zone entry widget.
      *
      * This is an array of flydown options. Areas are usually continents.
      *
@@ -33,7 +27,7 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
     private $areas = [];
 
     /**
-     * Time zone regions available for this time zone entry widget
+     * Time zone regions available for this time zone entry widget.
      *
      * This is an array of flydown options. Regions are usually cities.
      *
@@ -41,13 +35,10 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
      */
     private $regions = [];
 
-    // }}}
-    // {{{ public function __construct()
-
     /**
-     * Creates a new time zone selector widget
+     * Creates a new time zone selector widget.
      *
-     * @param string $id a non-visible unique id for this widget.
+     * @param string $id a non-visible unique id for this widget
      *
      * @see SwatWidget::__construct()
      */
@@ -73,11 +64,8 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
         $this->setAreas($time_zone_list);
     }
 
-    // }}}
-    // {{{ public function display()
-
     /**
-     * Displays this time zone entry widget
+     * Displays this time zone entry widget.
      *
      * Outputs a cascading list of time zones.
      */
@@ -107,11 +95,8 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
         $div_tag->close();
     }
 
-    // }}}
-    // {{{ public function process()
-
     /**
-     * Processes this time zone entry widget
+     * Processes this time zone entry widget.
      *
      * If any validation type errors occur, an error message is attached to
      * this entry widget.
@@ -126,8 +111,8 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
         if ($areas_flydown->value === 'UTC') {
             $this->value = 'UTC';
         } elseif (
-            $areas_flydown->value === null ||
-            $regions_flydown->value === null
+            $areas_flydown->value === null
+            || $regions_flydown->value === null
         ) {
             $this->value = null;
         } else {
@@ -137,7 +122,8 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 
         if (!$this->required && $this->value === null && $this->isSensitive()) {
             return;
-        } elseif ($this->value === null) {
+        }
+        if ($this->value === null) {
             $message = Swat::_('The %s field is required.');
             $this->addMessage(new SwatMessage($message, 'error'));
         } else {
@@ -150,13 +136,10 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
         }
     }
 
-    // }}}
-    // {{{ public function getState()
-
     /**
-     * Gets the current state of this time zone entry widget
+     * Gets the current state of this time zone entry widget.
      *
-     * @return string the current state of this time zone entry widget.
+     * @return string the current state of this time zone entry widget
      *
      * @see SwatState::getState()
      */
@@ -165,13 +148,10 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
         return $this->value;
     }
 
-    // }}}
-    // {{{ public function setState()
-
     /**
-     * Sets the current state of this time zone entry widget
+     * Sets the current state of this time zone entry widget.
      *
-     * @param string $state the new state of this time zone entry widget.
+     * @param string $state the new state of this time zone entry widget
      *
      * @see SwatState::setState()
      */
@@ -180,28 +160,22 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
         $this->value = $state;
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
-
     /**
      * Gets the array of CSS classes that are applied to this time zone entry
-     * widget
+     * widget.
      *
      * @return array the array of CSS classes that are applied to this time
-     *                zone entry widget.
+     *               zone entry widget
      */
     protected function getCSSClassNames()
     {
         $classes = ['swat-time zone-entry'];
-        $classes = array_merge($classes, parent::getCSSClassNames());
-        return $classes;
+
+        return array_merge($classes, parent::getCSSClassNames());
     }
 
-    // }}}
-    // {{{ protected function createCompositeWidgets()
-
     /**
-     * Creates all internal widgets required for this time zone entry
+     * Creates all internal widgets required for this time zone entry.
      */
     protected function createCompositeWidgets()
     {
@@ -219,19 +193,17 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
         $this->addCompositeWidget($regions_flydown, 'regions_flydown');
     }
 
-    // }}}
-    // {{{ private function parseAreaWhitelist()
-
     /**
-     * Parses a whitelist of valid areas
+     * Parses a whitelist of valid areas.
      *
      * Filters the full list of areas down to a select list and returns a
      * tree-structured array of areas, regions, and subregions.
      *
-     * @param array area_whitelist an array of valid area names.
+     * @param array area_whitelist an array of valid area names
+     * @param mixed $area_whitelist
      *
      * @return array a tree-structured array of areas regions and subregions
-     *                inside the specified whitelist of areas.
+     *               inside the specified whitelist of areas
      */
     private function parseAreaWhitelist($area_whitelist)
     {
@@ -257,16 +229,13 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
         return $areas;
     }
 
-    // }}}
-    // {{{ private function setAreas()
-
     /**
-     * Sets areas
+     * Sets areas.
      *
      * Builds the class variable array $areas.
      *
      * @param array $time_zone_list a tree structured array of areas and
-     *                               regions.
+     *                              regions
      */
     private function setAreas($time_zone_list)
     {
@@ -285,15 +254,12 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
         }
     }
 
-    // }}}
-    // {{{ private function setRegions()
-
     /**
      * Builds the internal array of {@link SwatOption} objects for the
-     * specified regions
+     * specified regions.
      *
-     * @param array $regions an array of regions.
-     * @param string $area the region's area.
+     * @param array  $regions an array of regions
+     * @param string $area    the region's area
      */
     private function setRegions($regions, $area)
     {
@@ -318,17 +284,14 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
         }
     }
 
-    // }}}
-    // {{{ private function getArea()
-
     /**
-     * Gets an area from a time zone identifier
+     * Gets an area from a time zone identifier.
      *
      * Returns the area part of a full time zone.
      *
-     * @param string $time_zone the time zone identifier to get the area from.
+     * @param string $time_zone the time zone identifier to get the area from
      *
-     * @return string an area name.
+     * @return string an area name
      */
     private function getArea($time_zone)
     {
@@ -344,16 +307,13 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
         return $area;
     }
 
-    // }}}
-    // {{{ private function getRegion()
-
     /**
-     * Gets a region from a time zone identifier
+     * Gets a region from a time zone identifier.
      *
      * @param string $time_zone the time zone identifier from which to get the
-     *                           region.
+     *                          region
      *
-     * @return string the region part of a full time zone indentifier.
+     * @return string the region part of a full time zone indentifier
      */
     private function getRegion($time_zone)
     {
@@ -369,16 +329,13 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
         return $region;
     }
 
-    // }}}
-    // {{{ private function getRegionTitle()
-
     /**
      * Gets a formatted region title from the region part of a time zone
-     * identifier
+     * identifier.
      *
-     * @param string $region the region part of the time zone identifier.
+     * @param string $region the region part of the time zone identifier
      *
-     * @return string the formatted region title.
+     * @return string the formatted region title
      */
     private function getRegionTitle($region)
     {
@@ -392,6 +349,4 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 
         return $title;
     }
-
-    // }}}
 }

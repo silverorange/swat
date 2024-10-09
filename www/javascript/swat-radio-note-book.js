@@ -21,13 +21,13 @@ class SwatRadioNoteBook {
     for (var i = 0; i < unfiltered_options.length; i++) {
       if (unfiltered_options[i].name == this.id) {
         this.options.push(unfiltered_options[i]);
-        (function() {
+        (function () {
           var option = unfiltered_options[i];
           var index = count;
           option.addEventListener('click', () => {
             this.setPageWithAnimation(this.pages[index]);
           });
-        }.call(this));
+        }).call(this);
         count++;
       }
     }

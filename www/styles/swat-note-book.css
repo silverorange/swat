@@ -1,7 +1,7 @@
 /* label and content borders */
 .yui-navset .yui-nav li a,
 .yui-navset .yui-content {
-	border: 1px solid #dcceb2;
+  border: 1px solid #dcceb2;
 }
 
 /* active tab, tab hover, tab focus, and content bgcolor */
@@ -9,102 +9,102 @@
 .yui-navset .yui-nav a:hover,
 .yui-navset .yui-nav a:focus,
 .yui-navset .yui-content {
-	background-color: #fff;
+  background-color: #fff;
 }
 
 /* active tab, tab hover, tab focus background */
 .yui-navset .yui-nav .selected a,
 .yui-navset .yui-nav a:hover,
 .yui-navset .yui-nav a:focus {
-	background-image: url(../images/swat-notebook-tab-top-active.png);
-	background-position: top left;
-	background-repeat: repeat-x;
+  background-image: url(../images/swat-notebook-tab-top-active.png);
+  background-position: top left;
+  background-repeat: repeat-x;
 }
 
 .yui-navset .yui-nav a {
-	background-color: #f6f2ea;
-	background-image: url(../images/swat-notebook-tab-top.png);
-	background-position: top left;
-	background-repeat: repeat-x;
+  background-color: #f6f2ea;
+  background-image: url(../images/swat-notebook-tab-top.png);
+  background-position: top left;
+  background-repeat: repeat-x;
 }
 
 /* tab padding */
 .yui-navset .yui-nav li em {
-	padding: 0.5em;
+  padding: 0.5em;
 }
 
 /* turn off outline on focused links */
 .yui-navset .yui-nav a:focus {
-	outline-style: none;
+  outline-style: none;
 }
 
 /* defaults to orientation "top" */
 .yui-navset .yui-nav .selected a {
-	border-bottom-width: 0; /* no bottom border for active tab */
-	padding-bottom: 1px; /* to match height of other tabs */
+  border-bottom-width: 0; /* no bottom border for active tab */
+  padding-bottom: 1px; /* to match height of other tabs */
 }
 
 .yui-navset .yui-content {
-	margin-top: -1px; /* for active tab overlap */
-	padding: 1em;
+  margin-top: -1px; /* for active tab overlap */
+  padding: 1em;
 }
 
 /* overrides for other orientations */
 
 .yui-navset-bottom .yui-nav .selected a {
-	border-width: 0 1px 1px; /* no top border for active tab */
-	padding: 1px 0 0; /* to match height of other tabs */
+  border-width: 0 1px 1px; /* no top border for active tab */
+  padding: 1px 0 0; /* to match height of other tabs */
 }
 
 .yui-navset-bottom .yui-content {
-	margin: 0 0 -1px; /* for active tab overlap */
+  margin: 0 0 -1px; /* for active tab overlap */
 }
 
 .yui-navset-left .yui-nav li.selected a {
-	border-width: 1px 0 1px 1px; /* no right border for active tab */
-	padding: 0 1px 0 0; /* to match width of other tabs */
+  border-width: 1px 0 1px 1px; /* no right border for active tab */
+  padding: 0 1px 0 0; /* to match width of other tabs */
 }
 
 .yui-navset-left .yui-content {
-	margin: 0 0 0 -1px; /* for active tab overlap */
+  margin: 0 0 0 -1px; /* for active tab overlap */
 }
 
 .yui-navset-right .yui-nav li.selected a {
-	border-width: 1px 1px 1px 0; /* no left border for active tab */
-	padding: 0 0 0 1px; /* to match width of other tabs */
+  border-width: 1px 1px 1px 0; /* no left border for active tab */
+  padding: 0 0 0 1px; /* to match width of other tabs */
 }
 
 .yui-navset-right .yui-content {
-	margin:0 -1px 0 0; /* for active tab overlap */
+  margin: 0 -1px 0 0; /* for active tab overlap */
 }
 
 /* active tab, tab hover, tab focus background */
 .yui-navset-bottom .yui-nav .selected a,
 .yui-navset-bottom .yui-nav a:hover,
 .yui-navset-bottom .yui-nav a:focus {
-	background-image: url(../images/swat-notebook-tab-bottom-active.png);
-	background-position: bottom left;
+  background-image: url(../images/swat-notebook-tab-bottom-active.png);
+  background-position: bottom left;
 }
 
 .yui-navset-bottom .yui-nav a {
-	background-image: url(../images/swat-notebook-tab-bottom.png);
-	background-position: bottom left;
+  background-image: url(../images/swat-notebook-tab-bottom.png);
+  background-position: bottom left;
 }
 
 /* active tab, tab hover, tab focus background */
 .yui-navset-left .yui-nav .selected a,
 .yui-navset-left .yui-nav a:hover,
 .yui-navset-left .yui-nav a:focus {
-	background-image: url(../images/swat-notebook-tab-left-active.png);
-	background-position: top left;
-	background-repeat: no-repeat;
+  background-image: url(../images/swat-notebook-tab-left-active.png);
+  background-position: top left;
+  background-repeat: no-repeat;
 }
 
 /* active tab, tab hover, tab focus background */
 .yui-navset-right .yui-nav .selected a,
 .yui-navset-right .yui-nav a:hover,
 .yui-navset-right .yui-nav a:focus {
-	background-image: url(../images/swat-notebook-tab-right-active.png);
-	background-position: top right;
-	background-repeat: no-repeat;
+  background-image: url(../images/swat-notebook-tab-right-active.png);
+  background-position: top right;
+  background-repeat: no-repeat;
 }

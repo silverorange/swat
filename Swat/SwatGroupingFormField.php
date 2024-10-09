@@ -1,25 +1,22 @@
 <?php
 
 /**
- * A grouping form field
+ * A grouping form field.
  *
  * A specialized form field that semantically groups controls in an
  * XHTML 'fieldset' tag.
  *
- * @package   Swat
  * @copyright 2006-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatGroupingFormField extends SwatFormField
 {
-    // {{{ protected function getTitleTag()
-
     /**
      * Get a SwatHtmlTag to display the title.
      *
      * Subclasses can change this to change their appearance.
      *
-     * @return SwatHtmlTag a tag object containing the title.
+     * @return SwatHtmlTag a tag object containing the title
      */
     protected function getTitleTag()
     {
@@ -29,11 +26,8 @@ class SwatGroupingFormField extends SwatFormField
         return $legend_tag;
     }
 
-    // }}}
-    // {{{ public function display()
-
     /**
-     * Displays this form field
+     * Displays this form field.
      *
      * Associates a label with the first widget of this container.
      */
@@ -66,21 +60,17 @@ class SwatGroupingFormField extends SwatFormField
         $container_tag->close();
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
-
     /**
-     * Gets the array of CSS classes that are applied to this footer form field
+     * Gets the array of CSS classes that are applied to this footer form field.
      *
      * @return array the array of CSS classes that are applied to this footer
-     *                form field.
+     *               form field
      */
     protected function getCSSClassNames()
     {
         $classes = parent::getCSSClassNames();
         array_unshift($classes, 'swat-grouping-form-field');
+
         return $classes;
     }
-
-    // }}}
 }

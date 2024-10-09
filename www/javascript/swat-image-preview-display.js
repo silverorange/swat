@@ -34,7 +34,7 @@ class SwatImagePreviewDisplay {
     var image_wrapper = document.getElementById(this.id + '_wrapper');
     if (image_wrapper.tagName == 'A') {
       image_wrapper.href = '#view';
-      image_wrapper.addEventListener('click', e => {
+      image_wrapper.addEventListener('click', (e) => {
         e.preventDefault();
         if (!this.opened) {
           this.onOpen.fire('thumbnail');
@@ -61,7 +61,7 @@ class SwatImagePreviewDisplay {
         image_link.appendChild(span_tag);
       }
 
-      image_link.addEventListener('click', e => {
+      image_link.addEventListener('click', (e) => {
         e.preventDefault();
         if (!this.opened) {
           this.onOpen.fire('thumbnail');
@@ -102,7 +102,7 @@ class SwatImagePreviewDisplay {
 
     SwatZIndexManager.raiseElement(this.preview_mask);
 
-    this.preview_mask.addEventListener('click', e => {
+    this.preview_mask.addEventListener('click', (e) => {
       e.preventDefault();
       if (this.opened) {
         this.onClose.fire('overlayMask');
@@ -158,7 +158,7 @@ class SwatImagePreviewDisplay {
 
     SwatZIndexManager.raiseElement(this.preview_container);
 
-    this.preview_container.addEventListener('click', e => {
+    this.preview_container.addEventListener('click', (e) => {
       e.preventDefault();
       if (this.opened) {
         this.onClose.fire('container');

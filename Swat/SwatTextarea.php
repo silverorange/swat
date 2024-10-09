@@ -1,73 +1,70 @@
 <?php
 
 /**
- * A multi-line text entry widget
+ * A multi-line text entry widget.
  *
- * @package   Swat
  * @copyright 2004-2022 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTextarea extends SwatInputControl implements SwatState
 {
-    // {{{ public properties
-
     /**
-     * Text content of the widget
+     * Text content of the widget.
      *
      * @var string
      */
-    public $value = null;
+    public $value;
 
     /**
-     * Rows
+     * Rows.
      *
      * The number of rows for the XHTML textarea tag.
      *
-     * @var integer
+     * @var int
      */
     public $rows = 10;
 
     /**
-     * Columns
+     * Columns.
      *
      * The number of columns for the XHTML textarea tag.
      *
-     * @var integer
+     * @var int
      */
     public $cols = 50;
 
     /**
-     * Access key
+     * Access key.
      *
      * Access key for this textarea, for keyboard nagivation.
      *
      * @var string
      */
-    public $access_key = null;
+    public $access_key;
 
     /**
-     * Tab index
+     * Tab index.
      *
      * The ordinal tab index position of the XHTML textarea tag, or null.
      * Values 1 or greater will affect the tab index of this widget. A value
      * of 0 or null will use the position of this textarea in the XHTML
      * character stream to determine tab order.
      *
-     * @var integer
+     * @var int
      */
-    public $tab_index = null;
+    public $tab_index;
 
     /**
      * Maximum number of allowable characters or null if any number of
-     * characters may be entered
+     * characters may be entered.
      *
-     * @var integer
+     * @var int
      */
-    public $maxlength = null;
+    public $maxlength;
 
     /**
      * A string containing characters that are ignored when calculating the
-     * length this textarea's value
+     * length this textarea's value.
      *
      * By default, no characters are ignored when calculating the length of
      * this textarea's value.
@@ -77,9 +74,9 @@ class SwatTextarea extends SwatInputControl implements SwatState
     public $maxlength_ignored_characters = '';
 
     /**
-     * Whether or not this textarea is dynamically resizeable
+     * Whether or not this textarea is dynamically resizeable.
      *
-     * @var boolean
+     * @var bool
      */
     public $resizeable = true;
 
@@ -88,26 +85,23 @@ class SwatTextarea extends SwatInputControl implements SwatState
      *
      * If read-only, the textarea will not allow editing its contents
      *
-     * @var boolean
+     * @var bool
      */
     public $read_only = false;
 
     /**
-     * Some text hinting to the user what should be entered in this entry
+     * Some text hinting to the user what should be entered in this entry.
      *
      * @var string
      */
     public $placeholder;
 
-    // }}}
-    // {{{ public function __construct()
-
     /**
-     * Creates a new textarea widget
+     * Creates a new textarea widget.
      *
      * Sets the widget title to a default value.
      *
-     * @param string $id a non-visible unique id for this widget.
+     * @param string $id a non-visible unique id for this widget
      *
      * @see SwatWidget::__construct()
      */
@@ -117,11 +111,8 @@ class SwatTextarea extends SwatInputControl implements SwatState
         $this->addStyleSheet('packages/swat/styles/swat-textarea.css');
     }
 
-    // }}}
-    // {{{ public function display()
-
     /**
-     * Displays this textarea
+     * Displays this textarea.
      *
      * Outputs an appropriate XHTML tag.
      */
@@ -143,11 +134,8 @@ class SwatTextarea extends SwatInputControl implements SwatState
         $div_tag->close();
     }
 
-    // }}}
-    // {{{ public function process()
-
     /**
-     * Processes this textarea
+     * Processes this textarea.
      *
      * If a validation error occurs, an error message is attached to this
      * widget.
@@ -183,13 +171,10 @@ class SwatTextarea extends SwatInputControl implements SwatState
         }
     }
 
-    // }}}
-    // {{{ public function getState()
-
     /**
-     * Gets the current state of this textarea
+     * Gets the current state of this textarea.
      *
-     * @return boolean the current state of this textarea.
+     * @return bool the current state of this textarea
      *
      * @see SwatState::getState()
      */
@@ -198,13 +183,10 @@ class SwatTextarea extends SwatInputControl implements SwatState
         return $this->value;
     }
 
-    // }}}
-    // {{{ public function setState()
-
     /**
-     * Sets the current state of this textarea
+     * Sets the current state of this textarea.
      *
-     * @param boolean $state the new state of this textarea.
+     * @param bool $state the new state of this textarea
      *
      * @see SwatState::setState()
      */
@@ -213,16 +195,13 @@ class SwatTextarea extends SwatInputControl implements SwatState
         $this->value = $state;
     }
 
-    // }}}
-    // {{{ public function getFocusableHtmlId()
-
     /**
      * Gets the id attribute of the XHTML element displayed by this widget
-     * that should receive focus
+     * that should receive focus.
      *
      * @return string the id attribute of the XHTML element displayed by this
-     *                 widget that should receive focus or null if there is
-     *                 no such element.
+     *                widget that should receive focus or null if there is
+     *                no such element
      *
      * @see SwatWidget::getFocusableHtmlId()
      */
@@ -231,19 +210,16 @@ class SwatTextarea extends SwatInputControl implements SwatState
         return $this->visible ? $this->id : null;
     }
 
-    // }}}
-    // {{{ protected function getTextareaTag()
-
     /**
-     * Gets the textarea tag used to display this textarea control
+     * Gets the textarea tag used to display this textarea control.
      *
      * @return SwatHtmlTag the textarea tag used to display this textarea
-     *                     control.
+     *                     control
      */
     protected function getTextareaTag()
     {
         // textarea tags cannot be self-closing when using HTML parser on XHTML
-        $value = $this->value === null ? '' : $this->value;
+        $value = $this->value ?? '';
 
         // escape value for display because we actually want to show entities
         // for editing
@@ -276,13 +252,10 @@ class SwatTextarea extends SwatInputControl implements SwatState
         return $textarea_tag;
     }
 
-    // }}}
-    // {{{ protected function getValueLength()
-
     /**
-     * Gets the computed length of the value of this textarea
+     * Gets the computed length of the value of this textarea.
      *
-     * @return integer the length of the value of this textarea
+     * @return int the length of the value of this textarea
      */
     protected function getValueLength()
     {
@@ -294,16 +267,14 @@ class SwatTextarea extends SwatInputControl implements SwatState
         } else {
             $length = mb_strlen($this->value);
         }
+
         return $length;
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
-
     /**
-     * Gets the array of CSS classes that are applied to this textarea
+     * Gets the array of CSS classes that are applied to this textarea.
      *
-     * @return array the array of CSS classes that are applied to this textarea.
+     * @return array the array of CSS classes that are applied to this textarea
      */
     protected function getCSSClassNames()
     {
@@ -315,6 +286,4 @@ class SwatTextarea extends SwatInputControl implements SwatState
 
         return array_merge($classes, parent::getCSSClassNames());
     }
-
-    // }}}
 }

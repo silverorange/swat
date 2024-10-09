@@ -1,33 +1,27 @@
 <?php
 
 /**
- * Thrown when an object does not implement a required interface
+ * Thrown when an object does not implement a required interface.
  *
- * @package   Swat
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDoesNotImplementException extends SwatException
 {
-    // {{{ protected properties
-
     /**
-     * The object that does not implement a required interface
+     * The object that does not implement a required interface.
      *
      * @var mixed
      */
-    protected $object = null;
-
-    // }}}
-    // {{{ public function __construct()
+    protected $object;
 
     /**
-     * Creates a new does not implement exception
+     * Creates a new does not implement exception.
      *
-     * @param string $message the message of the exception.
-     * @param integer $code the code of the exception.
-     * @param mixed $object the object that does not implement a required
-     *                       interface.
+     * @param string $message the message of the exception
+     * @param int    $code    the code of the exception
+     * @param mixed  $object  the object that does not implement a required
+     *                        interface
      */
     public function __construct($message = null, $code = 0, $object = null)
     {
@@ -35,18 +29,13 @@ class SwatDoesNotImplementException extends SwatException
         $this->object = $object;
     }
 
-    // }}}
-    // {{{ public function getObject()
-
     /**
-     * Gets the object that does not implement a required interface
+     * Gets the object that does not implement a required interface.
      *
-     * @return mixed the object that does not implement a required interface.
+     * @return mixed the object that does not implement a required interface
      */
     public function getObject()
     {
         return $this->object;
     }
-
-    // }}}
 }

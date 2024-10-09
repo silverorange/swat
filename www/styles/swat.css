@@ -1,323 +1,331 @@
-.swat-hidden { display: none; }
+.swat-hidden {
+  display: none;
+}
 
-.swat-clear { clear: both; }
+.swat-clear {
+  clear: both;
+}
 
-img.swat-image-cell-renderer { vertical-align: middle; }
+img.swat-image-cell-renderer {
+  vertical-align: middle;
+}
 
 .swat-none {
-	color: #888;
+  color: #888;
 }
 
 option.swat-blank-option,
 option.swat-flydown-option-divider {
-	color: #888;
+  color: #888;
 }
-
 
 /* SwatFrame */
 
 .swat-frame {
-	margin: 1em 0;
-	border: 1px solid #dcceb2;
-	background: #fff url(../images/swat-frame-background.png) top right no-repeat;
+  margin: 1em 0;
+  border: 1px solid #dcceb2;
+  background: #fff url(../images/swat-frame-background.png) top right no-repeat;
 }
 
 .swat-frame .swat-frame-title {
-	margin: 1px 1px 0 1px;
-	padding: 2px 6px;
-	color: #6b5d40;
-	background: #f8f6f0 url(../images/swat-frame-header.png) bottom left repeat-x;
+  margin: 1px 1px 0 1px;
+  padding: 2px 6px;
+  color: #6b5d40;
+  background: #f8f6f0 url(../images/swat-frame-header.png) bottom left repeat-x;
 }
 
 .swat-frame-contents {
-	padding: 16px;
+  padding: 16px;
 }
 
 .swat-frame .swat-frame-subtitle {
-	font-weight: normal;
+  font-weight: normal;
 }
-
 
 /* SwatForm */
 
-.swat-form { margin: 0; padding: 0; }
+.swat-form {
+  margin: 0;
+  padding: 0;
+}
 
 .swat-form label {
-	font-weight: bold;
-	color: #333;
-	cursor: default; /* For Konqueror */
+  font-weight: bold;
+  color: #333;
+  cursor: default; /* For Konqueror */
 }
 
 .swat-form .swat-insensitive label {
-	color: #999;
+  color: #999;
 }
 
 label.swat-control {
-	font-weight: normal;
-	display: inline;
+  font-weight: normal;
+  display: inline;
 }
 
-span.swat-required, span.swat-optional {
-	font-weight: normal;
-	color: #c4a000;
+span.swat-required,
+span.swat-optional {
+  font-weight: normal;
+  color: #c4a000;
 }
 
 .swat-note {
-	font-size: 85%;
-	color: #666;
+  font-size: 85%;
+  color: #666;
 }
 
 ul.swat-note {
-	margin: 0;
-	padding: 0.3em 0 0 1.5em;
+  margin: 0;
+  padding: 0.3em 0 0 1.5em;
 }
 
-div.swat-note { padding-top: 0.3em; }
+div.swat-note {
+  padding-top: 0.3em;
+}
 
 .swat-note ul {
-	margin: 0.3em 0;
-	padding-left: 2em;
+  margin: 0.3em 0;
+  padding-left: 2em;
 }
 
 .swat-form-field-checkbox {
-	margin: 0 0 0.5em 0;
+  margin: 0 0 0.5em 0;
 }
 
 .swat-form-field-checkbox .swat-form-field-contents {
-	display: inline;
-	margin-right: 0.3em;
+  display: inline;
+  margin-right: 0.3em;
 }
 
 .swat-form-field-checkbox input {
-	vertical-align: middle;
+  vertical-align: middle;
 }
 
 .swat-checkbox-list .swat-checkbox-list-column {
-	float: left;
-	padding-right: 1em;
+  float: left;
+  padding-right: 1em;
 }
 
 .swat-checkbox-list ul,
 .swat-checkbox-tree ul,
 ul.swat-radio-list {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 
 .swat-checkbox-list ul li,
 .swat-checkbox-tree ul li,
 ul.swat-radio-list li {
-	list-style-type: none;
+  list-style-type: none;
 }
 
 .swat-checkbox-list input,
 .swat-checkbox-tree input,
 .swat-radio-list input {
-	vertical-align: middle;
+  vertical-align: middle;
 }
 
 .swat-checkbox-tree ul li ul li {
-	margin-left: 1em;
+  margin-left: 1em;
 }
 
 .swat-check-all input {
-	vertical-align: middle;
+  vertical-align: middle;
 }
 
 .swat-check-all label {
-	display: inline;
+  display: inline;
 }
 
 .swat-extended-check-all {
-	padding: 10px;
-	margin: 10px;
-	background-color: #fffbc9;
+  padding: 10px;
+  margin: 10px;
+  background-color: #fffbc9;
 }
 
 .swat-extended-check-all input {
-	margin: 0 5px;
-	vertical-align: text-bottom;
+  margin: 0 5px;
+  vertical-align: text-bottom;
 }
 
 .swat-extended-check-all label {
-	margin: 0 5px 0 0;
+  margin: 0 5px 0 0;
 }
 
 /* SwatFieldset */
 
 .swat-fieldset,
 .swat-grouping-form-field-fieldset {
-	border: 1px solid #ccc;
-	margin-bottom: 1em;
-	padding: 0 1em 1em 1em;
-	position: relative;
+  border: 1px solid #ccc;
+  margin-bottom: 1em;
+  padding: 0 1em 1em 1em;
+  position: relative;
 }
 
 .swat-fieldset legend,
 .swat-grouping-form-field legend {
-	font-weight: bold;
-	color: #666;
-	padding: 0 0.3em;
-	line-height: 2;
+  font-weight: bold;
+  color: #666;
+  padding: 0 0.3em;
+  line-height: 2;
 }
 
 .swat-grouping-form-field .swat-form-field {
-	padding-top: 1em;
+  padding-top: 1em;
 }
 
 .swat-grouping-form-field .swat-form-field label {
-	color: #666;
-	font-weight: normal;
+  color: #666;
+  font-weight: normal;
 }
-
 
 /* Swat Date Entry and SwatTimeEntry*/
 
 .swat-date-entry,
 .swat-time-entry {
-	white-space: nowrap;
+  white-space: nowrap;
 }
-
 
 /* Swat Actions */
 
 .swat-actions {
-	text-align: left;
+  text-align: left;
 }
 
 .swat-actions-controls {
-	margin-bottom: 0.5em;
+  margin-bottom: 0.5em;
 }
 
 .swat-actions,
 .swat-header-form-field,
 .swat-footer-form-field {
-	padding: 1em 0;
+  padding: 1em 0;
 }
 
 .swat-frame .swat-actions,
 .swat-frame .swat-header-form-field,
 .swat-frame .swat-footer-form-field {
-	background: #f1ebdf url(../images/swat-form-footer.png) top left repeat-x;
-	padding: 1em;
-	margin: 15px -15px -15px -15px;
-	position: relative;
+  background: #f1ebdf url(../images/swat-form-footer.png) top left repeat-x;
+  padding: 1em;
+  margin: 15px -15px -15px -15px;
+  position: relative;
 }
 
 .swat-frame .swat-header-form-field {
-	background: #f7f5f3 url(../images/swat-form-header.png) top left repeat-x;
-	margin: -15px -15px 15px -15px;
-	background-position: bottom left;
+  background: #f7f5f3 url(../images/swat-form-header.png) top left repeat-x;
+  margin: -15px -15px 15px -15px;
+  background-position: bottom left;
 }
 
 .swat-actions label {
-	display: inline;
+  display: inline;
 }
 
 .swat-actions-note {
-	color: #666;
-	font-size: 85%;
-	padding-top: 0.3em;
+  color: #666;
+  font-size: 85%;
+  padding-top: 0.3em;
 }
 
 .swat-actions .swat-button-apply {
-	font-weight: bold;
-	color: #333;
+  font-weight: bold;
+  color: #333;
 }
 
 /* Swat Buttons */
 
 .swat-header-form-field input.swat-primary,
 .swat-footer-form-field input.swat-primary {
-	font-weight: bold;
+  font-weight: bold;
 }
 
 .swat-header-form-field .swat-button,
 .swat-footer-form-field .swat-button,
 .swat-header-form-field .swat-reset-button,
 .swat-footer-form-field .swat-reset-button {
-	margin-right: 0.5em;
+  margin-right: 0.5em;
 }
 
 .swat-button-compact {
-	font-size: 80%;
-	padding: 0;
-	border-width: 1px;
+  font-size: 80%;
+  padding: 0;
+  border-width: 1px;
 }
 
 .swat-nowrap {
-	white-space: nowrap;
+  white-space: nowrap;
 }
 
 .swat-button,
 .swat-reset-button {
-	vertical-align: middle;
+  vertical-align: middle;
 }
 
 .swat-button-processing-throbber {
-	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-	filter: alpha(opacity=0);
-	opacity: 0;
-	padding-left: 20px;
-	margin-left: 0.5em;
-	background: url(../images/swat-button-throbber.gif) no-repeat 0 0;
-	display: inline-block; /* This is needed for IE8 opacity to work */
+  -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=0)';
+  filter: alpha(opacity=0);
+  opacity: 0;
+  padding-left: 20px;
+  margin-left: 0.5em;
+  background: url(../images/swat-button-throbber.gif) no-repeat 0 0;
+  display: inline-block; /* This is needed for IE8 opacity to work */
 }
 
 .swat-image-button {
-	cursor: pointer;
-	cursor: hand;
+  cursor: pointer;
+  cursor: hand;
 }
 
 input.swat-insensitive {
-	cursor: default;
+  cursor: default;
 }
 
 /* SwatFormField */
 
 .swat-form-field {
-	margin: 0 0 0.5em 0;
+  margin: 0 0 0.5em 0;
 }
 
 blockquote.swat-db-debug {
-	border: 1px solid #666;
+  border: 1px solid #666;
 }
 
 /* SwatAbstractOverlay */
 
 .swat-overlay {
-	background: #fff;
-	border: 1px solid #ccc;
-	padding: 0;
-	margin: 0;
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 0;
+  margin: 0;
 }
 
 .swat-overlay-close-div {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
 }
 
 .swat-overlay .hd {
-	text-align: right;
-	padding: 2px;
+  text-align: right;
+  padding: 2px;
 }
 
 .swat-overlay-close-link {
-	font-weight: bold;
+  font-weight: bold;
 }
 
 /* SwatRemoveInputCell */
 
 .swat-remove-input-cell-remove {
-	width: 22px;
-	height: 22px;
-	display: inline-block;
-	background: transparent url(../images/list-remove.png) no-repeat top left;
-	overflow: hidden;
-	text-indent: 110%;
-	white-space: nowrap;
+  width: 22px;
+  height: 22px;
+  display: inline-block;
+  background: transparent url(../images/list-remove.png) no-repeat top left;
+  overflow: hidden;
+  text-indent: 110%;
+  white-space: nowrap;
 }

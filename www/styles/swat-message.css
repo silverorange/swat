@@ -1,80 +1,100 @@
 /* SwatMessage */
 
 .swat-message-notification {
-	zoom: 1; /* IE hack */
-	border-color: #f0dca1;
-	background-color: #fffbc9;
-	background-image: url(../images/tango/48/dialog-information.png);
+  zoom: 1; /* IE hack */
+  border-color: #f0dca1;
+  background-color: #fffbc9;
+  background-image: url(../images/tango/48/dialog-information.png);
 }
 
 .swat-message-warning {
-	zoom: 1; /* IE hack */
-	border-color: #facd00;
-	background-color: #ff9;
-	background-image: url(../images/tango/48/dialog-warning.png);
+  zoom: 1; /* IE hack */
+  border-color: #facd00;
+  background-color: #ff9;
+  background-image: url(../images/tango/48/dialog-warning.png);
 }
 
 .swat-message-error {
-	zoom: 1; /* IE hack */
-	border-color: #dc6e66;
-	background-color: #ffe3e0;
-	background-image: url(../images/tango/48/dialog-error.png);
+  zoom: 1; /* IE hack */
+  border-color: #dc6e66;
+  background-color: #ffe3e0;
+  background-image: url(../images/tango/48/dialog-error.png);
 }
 
 .swat-message-system-error {
-	zoom: 1; /* IE hack */
-	border-color: #dc6e66;
-	background-color: #f33;
-	background-image: url(../images/tango/48/dialog-error.png);
+  zoom: 1; /* IE hack */
+  border-color: #dc6e66;
+  background-color: #f33;
+  background-image: url(../images/tango/48/dialog-error.png);
 }
 
 .swat-message-cart {
-	border-color: #f0dca1;
-	background-color: #fffbc9;
-	color: #7b4b09;
-	background-image: url(../images/swat-message-cart.png);
+  border-color: #f0dca1;
+  background-color: #fffbc9;
+  color: #7b4b09;
+  background-image: url(../images/swat-message-cart.png);
 }
 
-.swat-message-notification .swat-message-primary-content { color: #7b4b09; }
-.swat-message-warning      .swat-message-primary-content { color: #533a15; }
-.swat-message-error        .swat-message-primary-content { color: #e31b0c; }
-.swat-message-system-error .swat-message-primary-content { color: #fff; }
-.swat-message-cart         .swat-message-primary-content { color: #7b4b09; }
+.swat-message-notification .swat-message-primary-content {
+  color: #7b4b09;
+}
+.swat-message-warning .swat-message-primary-content {
+  color: #533a15;
+}
+.swat-message-error .swat-message-primary-content {
+  color: #e31b0c;
+}
+.swat-message-system-error .swat-message-primary-content {
+  color: #fff;
+}
+.swat-message-cart .swat-message-primary-content {
+  color: #7b4b09;
+}
 
-.swat-message-notification .swat-message-secondary-content { color: #947140; }
-.swat-message-warning      .swat-message-secondary-content { color: #947140; }
-.swat-message-error        .swat-message-secondary-content { color: #d44034; }
-.swat-message-system-error .swat-message-secondary-content { color: #eee; }
-.swat-message-cart         .swat-message-secondary-content { color: #947140; }
-
+.swat-message-notification .swat-message-secondary-content {
+  color: #947140;
+}
+.swat-message-warning .swat-message-secondary-content {
+  color: #947140;
+}
+.swat-message-error .swat-message-secondary-content {
+  color: #d44034;
+}
+.swat-message-system-error .swat-message-secondary-content {
+  color: #eee;
+}
+.swat-message-cart .swat-message-secondary-content {
+  color: #947140;
+}
 
 /* SwatFormField Messages */
 
 .swat-form-field-messages,
 .swat-table-view-input-row-messages {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 
 .swat-form-field-messages .swat-message,
 .swat-table-view-input-row-messages .swat-message {
-	color: #c00;
-	font-size: 85%;
-	padding: 4px 4px 4px 24px;
-	margin: 0.5em 0 0 0;
-	list-style-type: none;
-	background: transparent url(../images/tango/16/dialog-error.png) 4px 4px no-repeat;
+  color: #c00;
+  font-size: 85%;
+  padding: 4px 4px 4px 24px;
+  margin: 0.5em 0 0 0;
+  list-style-type: none;
+  background: transparent url(../images/tango/16/dialog-error.png) 4px 4px
+    no-repeat;
 }
 
 .swat-form-field-with-messages {
-	position: relative;
-	border: 1px solid #c00;
-	background: #ffe3e0;
-	padding: 0.5em;
-	margin: 0.5em 0;
+  position: relative;
+  border: 1px solid #c00;
+  background: #ffe3e0;
+  padding: 0.5em;
+  margin: 0.5em 0;
 }
 
 .swat-form-field-with-messages .swat-grouping-form-field-fieldset {
-	margin-bottom: 0;
+  margin-bottom: 0;
 }

@@ -1,60 +1,68 @@
 /* AdminTitleLinkCellRenderer Styles */
 
 .swat-table-view td.admin-title-link-cell-renderer {
-	padding: 0;
+  padding: 0;
 }
 
 .swat-table-view th.admin-title-link-cell-renderer {
-	padding-left: 36px;
+  padding-left: 36px;
 }
 
 td.admin-title-link-cell-renderer a.admin-title-link-cell-renderer:link,
 td.admin-title-link-cell-renderer a.admin-title-link-cell-renderer:visited {
-	display: block;
-	border: 1px solid transparent;
+  display: block;
+  border: 1px solid transparent;
 }
 
 td.admin-title-link-cell-renderer a.admin-title-link-cell-renderer:hover {
-	background: #f6f2ea url(../images/admin-title-link-cell-renderer-background.png) top repeat-x;
-	border: 1px solid #f0eade;
+  background: #f6f2ea
+    url(../images/admin-title-link-cell-renderer-background.png) top repeat-x;
+  border: 1px solid #f0eade;
 }
 
 td.admin-title-link-cell-renderer a.admin-title-link-cell-renderer:active {
-	background: #f3efe5;
+  background: #f3efe5;
 }
 
 span.admin-title-link-cell-renderer-contents {
-	display: block;
-	padding: 0.4em 0.2em 0.4em 36px;
-	background-image: url(../images/admin-generic-document.png);
-	background-position: 4px 50%;
-	background-repeat: no-repeat;
+  display: block;
+  padding: 0.4em 0.2em 0.4em 36px;
+  background-image: url(../images/admin-generic-document.png);
+  background-position: 4px 50%;
+  background-repeat: no-repeat;
 }
 
-a.admin-title-link-cell-renderer-document span.admin-title-link-cell-renderer-contents {
-	background-image: url(../images/admin-generic-document.png);
+a.admin-title-link-cell-renderer-document
+  span.admin-title-link-cell-renderer-contents {
+  background-image: url(../images/admin-generic-document.png);
 }
 
-a.admin-title-link-cell-renderer-document-with-contents span.admin-title-link-cell-renderer-contents {
-	background-image: url(../images/admin-document-with-contents.png);
+a.admin-title-link-cell-renderer-document-with-contents
+  span.admin-title-link-cell-renderer-contents {
+  background-image: url(../images/admin-document-with-contents.png);
 }
 
-a.admin-title-link-cell-renderer-edit span.admin-title-link-cell-renderer-contents {
-	background-image: url(../images/admin-edit.png);
+a.admin-title-link-cell-renderer-edit
+  span.admin-title-link-cell-renderer-contents {
+  background-image: url(../images/admin-edit.png);
 }
 
-a.admin-title-link-cell-renderer-folder-with-contents span.admin-title-link-cell-renderer-contents {
-	background-image: url(../images/admin-folder-with-contents.png);
+a.admin-title-link-cell-renderer-folder-with-contents
+  span.admin-title-link-cell-renderer-contents {
+  background-image: url(../images/admin-folder-with-contents.png);
 }
 
-a.admin-title-link-cell-renderer-folder span.admin-title-link-cell-renderer-contents {
-	background-image: url(../images/admin-folder.png);
+a.admin-title-link-cell-renderer-folder
+  span.admin-title-link-cell-renderer-contents {
+  background-image: url(../images/admin-folder.png);
 }
 
-a.admin-title-link-cell-renderer-person span.admin-title-link-cell-renderer-contents {
-	background-image: url(../images/admin-person.png);
+a.admin-title-link-cell-renderer-person
+  span.admin-title-link-cell-renderer-contents {
+  background-image: url(../images/admin-person.png);
 }
 
-a.admin-title-link-cell-renderer-product span.admin-title-link-cell-renderer-contents {
-	background-image: url(../images/admin-product.png);
+a.admin-title-link-cell-renderer-product
+  span.admin-title-link-cell-renderer-contents {
+  background-image: url(../images/admin-product.png);
 }

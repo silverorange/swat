@@ -1,37 +1,36 @@
 <?php
 
 /**
- * A component in the Yahoo UI Library
+ * A component in the Yahoo UI Library.
  *
  * This class is used internally by the {@link SwatYUI} class and is not meant
  * to be used by itself.
  *
- * @package   Swat
  * @copyright 2006-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ *
  * @see       SwatYUI
  */
 class SwatYUIComponent extends SwatObject
 {
-    // {{{ private properties
-
     private $id;
     private $dependencies = [];
-    private $html_head_entries = [];
-    private $beta = false;
-
-    // }}}
-    // {{{ public function __construct()
 
     /**
-     * Creates a new YUI component
+     * @var array<string, SwatHtmlHeadEntrySet>
+     */
+    private array $html_head_entry_set = [];
+    private $beta = false;
+
+    /**
+     * Creates a new YUI component.
      *
-     * @param string $id the identifier of this YUI component. This corresponds
-     *                    to a directory name under the <i>build</i> directory
-     *                    in the YUI distribution.
-     * @param boolean $beta optional. Whether or not this component is in beta.
-     *                       Beta components have a slightly different naming
-     *                       convention.
+     * @param string $id   the identifier of this YUI component. This corresponds
+     *                     to a directory name under the <i>build</i> directory
+     *                     in the YUI distribution.
+     * @param bool   $beta optional. Whether or not this component is in beta.
+     *                     Beta components have a slightly different naming
+     *                     convention.
      */
     public function __construct($id, $beta = false)
     {
@@ -45,24 +44,18 @@ class SwatYUIComponent extends SwatObject
         $this->html_head_entry_set['min'] = new SwatHtmlHeadEntrySet();
     }
 
-    // }}}
-    // {{{ public function addDependency()
-
     /**
-     * Adds a YUI component dependency to this YUI component
+     * Adds a YUI component dependency to this YUI component.
      *
-     * @param SwatYUIComponent the YUI component this component depends on.
+     * @param SwatYUIComponent the YUI component this component depends on
      */
     public function addDependency(SwatYUIComponent $component)
     {
         $this->dependencies[] = $component;
     }
 
-    // }}}
-    // {{{ public function addJavaScript()
-
     /**
-     * Adds a {@link SwatJavaScriptHtmlHeadEntry} to this YUI component
+     * Adds a {@link SwatJavaScriptHtmlHeadEntry} to this YUI component.
      *
      * YUI component JavaScript is distributed in three modes:
      * - debug
@@ -73,13 +66,13 @@ class SwatYUIComponent extends SwatObject
      * of these three modes.
      *
      * @param string $component_directory optional. The YUI component directory
-     *                                     the JavaScript exists in. If the
-     *                                     directory is not specified, this
-     *                                     component's id is used.
-     * @param string $filename optional. The filename of the YUI JavaScript for
-     *                          this component. If not specified, the name of
-     *                          the component is used. Do not specify the file
-     *                          extension or the -min/-debug suffix here.
+     *                                    the JavaScript exists in. If the
+     *                                    directory is not specified, this
+     *                                    component's id is used.
+     * @param string $filename            optional. The filename of the YUI JavaScript for
+     *                                    this component. If not specified, the name of
+     *                                    the component is used. Do not specify the file
+     *                                    extension or the -min/-debug suffix here.
      */
     public function addJavaScript($component_directory = '', $filename = '')
     {
@@ -92,8 +85,8 @@ class SwatYUIComponent extends SwatObject
         }
 
         $modes = [
-            'min' => '-min',
-            'debug' => '-debug',
+            'min'    => '-min',
+            'debug'  => '-debug',
             'normal' => '',
         ];
 
@@ -119,11 +112,8 @@ class SwatYUIComponent extends SwatObject
         }
     }
 
-    // }}}
-    // {{{ public function addStyleSheet()
-
     /**
-     * Adds a {@link SwatStyleSheetHtmlHeadEntry} to this YUI component
+     * Adds a {@link SwatStyleSheetHtmlHeadEntry} to this YUI component.
      *
      * YUI component style sheets are distributed in three modes:
      * - min
@@ -133,17 +123,17 @@ class SwatYUIComponent extends SwatObject
      * these two modes.
      *
      * @param string $component_directory optional. The YUI component directory
-     *                                     the style sheet exists in. If the
-     *                                     directory is not specified, this
-     *                                     component's id is used.
-     * @param string $filename optional. The filename of the YUI style-sheet for
-     *                          this component. If not specified, the name of
-     *                          the component is used. Do not specify the file
-     *                          extension or the -min  suffix here.
-     * @param boolean $has_min_version optional. Whether or not the style-sheet
-     *                                  for this component has a minimized
-     *                                  version in the YUI distribution.
-     *                                  Defaults to true.
+     *                                    the style sheet exists in. If the
+     *                                    directory is not specified, this
+     *                                    component's id is used.
+     * @param string $filename            optional. The filename of the YUI style-sheet for
+     *                                    this component. If not specified, the name of
+     *                                    the component is used. Do not specify the file
+     *                                    extension or the -min  suffix here.
+     * @param bool   $has_min_version     optional. Whether or not the style-sheet
+     *                                    for this component has a minimized
+     *                                    version in the YUI distribution.
+     *                                    Defaults to true.
      */
     public function addStyleSheet(
         $component_directory = '',
@@ -159,8 +149,8 @@ class SwatYUIComponent extends SwatObject
         }
 
         $modes = [
-            'min' => '-min',
-            'debug' => '',
+            'min'    => '-min',
+            'debug'  => '',
             'normal' => '',
         ];
 
@@ -177,15 +167,14 @@ class SwatYUIComponent extends SwatObject
         }
     }
 
-    // }}}
-    // {{{ public function getHtmlHeadEntrySet()
-
     /**
      * Gets the set of {@link SwatHtmlHeadEntry} objects required for this
-     * YUI component
+     * YUI component.
+     *
+     * @param mixed $mode
      *
      * @return SwatHtmlHeadEntrySet the set of {@link SwatHtmlHeadEntry}
-     *                               objects required for this YUI component.
+     *                              objects required for this YUI component
      */
     public function getHtmlHeadEntrySet($mode = 'min')
     {
@@ -199,6 +188,4 @@ class SwatYUIComponent extends SwatObject
 
         return $set;
     }
-
-    // }}}
 }

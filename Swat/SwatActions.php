@@ -1,58 +1,49 @@
 <?php
 
 /**
- * Actions widget
+ * Actions widget.
  *
- * @package   Swat
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatActions extends SwatControl implements SwatUIParent
 {
-    // {{{ public properties
-
     /**
-     * Selected action
+     * Selected action.
      *
      * The currently selected action item, or null.
      *
      * @var SwatActionItem
      */
-    public $selected = null;
+    public $selected;
 
     /**
-     * Show blank
+     * Show blank.
      *
      * Whether to show an inital blank option in the flydown.
      *
-     * @var boolean
+     * @var bool
      */
     public $show_blank = true;
 
     /**
-     * Auto-reset
+     * Auto-reset.
      *
      * Whether to auto reset the action flydown to the default action
      * after processing.
      *
-     * @var boolean
+     * @var bool
      */
     public $auto_reset = true;
 
-    // }}}
-    // {{{ protected properties
-
     /**
-     * The available actions for this actions selector indexed by id
+     * The available actions for this actions selector indexed by id.
      *
      * This array only contains actions that have a non-null id.
      *
      * @var array
      */
     protected $action_items_by_id = [];
-
-    // }}}
-    // {{{ private properties
 
     /**
      * The available actions for this actions selector.
@@ -62,7 +53,7 @@ class SwatActions extends SwatControl implements SwatUIParent
     private $action_items = [];
 
     /**
-     * The view containing items acted upon by this actions control
+     * The view containing items acted upon by this actions control.
      *
      * @var SwatView
      *
@@ -71,7 +62,7 @@ class SwatActions extends SwatControl implements SwatUIParent
     private $view;
 
     /**
-     * The selector used to select items acted upon by this actions control
+     * The selector used to select items acted upon by this actions control.
      *
      * @var SwatViewSelector
      *
@@ -79,13 +70,10 @@ class SwatActions extends SwatControl implements SwatUIParent
      */
     private $selector;
 
-    // }}}
-    // {{{ public function __construct()
-
     /**
-     * Creates a new actions list
+     * Creates a new actions list.
      *
-     * @param string $id a non-visible unique id for this widget.
+     * @param string $id a non-visible unique id for this widget
      *
      * @see SwatWidget::__construct()
      */
@@ -99,11 +87,8 @@ class SwatActions extends SwatControl implements SwatUIParent
         $this->addStyleSheet('packages/swat/styles/swat-actions.css');
     }
 
-    // }}}
-    // {{{ public function init()
-
     /**
-     * Initializes this action item
+     * Initializes this action item.
      *
      * This initializes the action items contained in this actions list.
      */
@@ -116,11 +101,8 @@ class SwatActions extends SwatControl implements SwatUIParent
         }
     }
 
-    // }}}
-    // {{{ public function display()
-
     /**
-     * Displays this list of actions
+     * Displays this list of actions.
      *
      * Internal widgets are automatically created if they do not exist.
      * Javascript is displayed, then the display methods of the internal
@@ -149,10 +131,10 @@ class SwatActions extends SwatControl implements SwatUIParent
         // flydown is never reset if there is a selected item and the selected
         // items has a widget with one or more messages.
         if (
-            $this->auto_reset &&
-            ($this->selected === null ||
-                $this->selected->widget === null ||
-                !$this->selected->widget->hasMessage())
+            $this->auto_reset
+            && ($this->selected === null
+                || $this->selected->widget === null
+                || !$this->selected->widget->hasMessage())
         ) {
             $flydown->reset();
         }
@@ -206,11 +188,8 @@ class SwatActions extends SwatControl implements SwatUIParent
         Swat::displayInlineJavaScript($this->getInlineJavaScript());
     }
 
-    // }}}
-    // {{{ public function process()
-
     /**
-     * Figures out what action item is selected
+     * Figures out what action item is selected.
      *
      * This method creates internal widgets if they do not exist, and then
      * determines what SwatActionItem was selected by the user by calling
@@ -234,15 +213,12 @@ class SwatActions extends SwatControl implements SwatUIParent
         }
     }
 
-    // }}}
-    // {{{ public function addActionItem()
-
     /**
-     * Adds an action item
+     * Adds an action item.
      *
      * Adds a SwatActionItem to this SwatActions widget.
      *
-     * @param SwatActionItem $item a reference to the item to add.
+     * @param SwatActionItem $item a reference to the item to add
      *
      * @see SwatActionItem
      */
@@ -256,18 +232,15 @@ class SwatActions extends SwatControl implements SwatUIParent
         }
     }
 
-    // }}}
-    // {{{ public function addChild()
-
     /**
-     * Adds a child object
+     * Adds a child object.
      *
      * This method fulfills the {@link SwatUIParent} interface. It is used
      * by {@link SwatUI} when building a widget tree and should not need to be
      * called elsewhere. To add an action item to an actions object use
      * {@link SwatActions::addActionItem()}.
      *
-     * @param SwatActionItem $child a reference to a child object to add.
+     * @param SwatActionItem $child a reference to a child object to add
      *
      * @throws SwatInvalidClassException
      *
@@ -288,14 +261,11 @@ class SwatActions extends SwatControl implements SwatUIParent
         }
     }
 
-    // }}}
-    // {{{ public function getHtmlHeadEntrySet()
-
     /**
-     * Gets the SwatHtmlHeadEntry objects needed by this actions list
+     * Gets the SwatHtmlHeadEntry objects needed by this actions list.
      *
      * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
-     *                               this actions list.
+     *                              this actions list
      *
      * @see SwatWidget::getHtmlHeadEntrySet()
      */
@@ -310,15 +280,12 @@ class SwatActions extends SwatControl implements SwatUIParent
         return $set;
     }
 
-    // }}}
-    // {{{ public function getAvailableHtmlHeadEntrySet()
-
     /**
      * Gets the SwatHtmlHeadEntry objects that may be needed by this actions
-     * list
+     * list.
      *
      * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects that may be
-     *                               needed by this actions list.
+     *                              needed by this actions list
      *
      * @see SwatWidget::getAvailableHtmlHeadEntrySet()
      */
@@ -333,11 +300,8 @@ class SwatActions extends SwatControl implements SwatUIParent
         return $set;
     }
 
-    // }}}
-    // {{{ public function getActionItems()
-
     /**
-     * Gets the array of current SwatActions
+     * Gets the array of current SwatActions.
      *
      * @return array of SwatActionItems
      *
@@ -348,19 +312,16 @@ class SwatActions extends SwatControl implements SwatUIParent
         return $this->action_items;
     }
 
-    // }}}
-    // {{{ public function getDescendants()
-
     /**
-     * Gets descendant UI-objects
+     * Gets descendant UI-objects.
      *
      * @param string $class_name optional class name. If set, only UI-objects
-     *                            that are instances of <i>$class_name</i> are
-     *                            returned.
+     *                           that are instances of <i>$class_name</i> are
+     *                           returned.
      *
      * @return array the descendant UI-objects of this actions widget. If
-     *                descendant objects have identifiers, the identifier is
-     *                used as the array key.
+     *               descendant objects have identifiers, the identifier is
+     *               used as the array key.
      *
      * @see SwatUIParent::getDescendants()
      */
@@ -368,9 +329,9 @@ class SwatActions extends SwatControl implements SwatUIParent
     {
         if (
             !(
-                $class_name === null ||
-                class_exists($class_name) ||
-                interface_exists($class_name)
+                $class_name === null
+                || class_exists($class_name)
+                || interface_exists($class_name)
             )
         ) {
             return [];
@@ -398,16 +359,13 @@ class SwatActions extends SwatControl implements SwatUIParent
         return $out;
     }
 
-    // }}}
-    // {{{ public function getFirstDescendant()
-
     /**
-     * Gets the first descendant UI-object of a specific class
+     * Gets the first descendant UI-object of a specific class.
      *
-     * @param string $class_name class name to look for.
+     * @param string $class_name class name to look for
      *
      * @return SwatUIObject the first descendant UI-object or null if no
-     *                       matching descendant is found.
+     *                      matching descendant is found
      *
      * @see SwatUIParent::getFirstDescendant()
      */
@@ -436,17 +394,14 @@ class SwatActions extends SwatControl implements SwatUIParent
         return $out;
     }
 
-    // }}}
-    // {{{ public function getDescendantStates()
-
     /**
-     * Gets descendant states
+     * Gets descendant states.
      *
      * Retrieves an array of states of all stateful UI-objects in the widget
      * subtree below this actions widget.
      *
      * @return array an array of UI-object states with UI-object identifiers as
-     *                array keys.
+     *               array keys
      */
     public function getDescendantStates()
     {
@@ -459,17 +414,14 @@ class SwatActions extends SwatControl implements SwatUIParent
         return $states;
     }
 
-    // }}}
-    // {{{ public function setDescendantStates()
-
     /**
-     * Sets descendant states
+     * Sets descendant states.
      *
      * Sets states on all stateful UI-objects in the widget subtree below this
      * actions widget.
      *
      * @param array $states an array of UI-object states with UI-object
-     *                       identifiers as array keys.
+     *                      identifiers as array keys
      */
     public function setDescendantStates(array $states)
     {
@@ -480,29 +432,26 @@ class SwatActions extends SwatControl implements SwatUIParent
         }
     }
 
-    // }}}
-    // {{{ public function setViewSelector()
-
     /**
-     * Sets the optional view and selector of this actions control
+     * Sets the optional view and selector of this actions control.
      *
      * If a view and selector are specified for this actions control,
      * submitting the form is prevented until one or more items in the view
      * are selected by the selector.
      *
-     * @param SwatView $view the view items must be selected in. Specify null
-     *                        to remove any existing view selector.
+     * @param SwatView         $view     the view items must be selected in. Specify null
+     *                                   to remove any existing view selector.
      * @param SwatViewSelector $selector optional. The selector in the view
-     *                                    that must select the items. If not
-     *                                    specified, the first selector in the
-     *                                    view is used.
+     *                                   that must select the items. If not
+     *                                   specified, the first selector in the
+     *                                   view is used.
      *
      * @throws SwatException if no selector is specified and the the specified
-     *                       view does not have a selector.
+     *                       view does not have a selector
      */
     public function setViewSelector(
         SwatView $view,
-        SwatViewSelector $selector = null,
+        ?SwatViewSelector $selector = null,
     ) {
         if ($view === null) {
             $selector = null;
@@ -523,17 +472,14 @@ class SwatActions extends SwatControl implements SwatUIParent
         $this->selector = $selector;
     }
 
-    // }}}
-    // {{{ public function copy()
-
     /**
-     * Performs a deep copy of the UI tree starting with this UI object
+     * Performs a deep copy of the UI tree starting with this UI object.
      *
      * @param string $id_suffix optional. A suffix to append to copied UI
-     *                           objects in the UI tree.
+     *                          objects in the UI tree.
      *
      * @return SwatUIObject a deep copy of the UI tree starting with this UI
-     *                       object.
+     *                      object
      *
      * @see SwatUIObject::copy()
      */
@@ -556,14 +502,11 @@ class SwatActions extends SwatControl implements SwatUIParent
         return $copy;
     }
 
-    // }}}
-    // {{{ public function hasMessage()
-
     /**
-     * Checks for the presence of messages
+     * Checks for the presence of messages.
      *
-     * @return boolean true if this widget or the selected action's widget has
-     *                       one or more messages.
+     * @return bool true if this widget or the selected action's widget has
+     *              one or more messages
      *
      * @see SwatWidget::hasMessage()
      */
@@ -572,9 +515,9 @@ class SwatActions extends SwatControl implements SwatUIParent
         $has_message = parent::hasMessage();
 
         if (
-            $this->selected !== null &&
-            $this->selected->widget !== null &&
-            $this->selected->widget->hasMessage()
+            $this->selected !== null
+            && $this->selected->widget !== null
+            && $this->selected->widget->hasMessage()
         ) {
             $has_message = true;
         }
@@ -582,11 +525,8 @@ class SwatActions extends SwatControl implements SwatUIParent
         return $has_message;
     }
 
-    // }}}
-    // {{{ protected function displayButton()
-
     /**
-     * Displays the button for this action list
+     * Displays the button for this action list.
      *
      * Subclasses may override this method to display more buttons.
      */
@@ -597,12 +537,9 @@ class SwatActions extends SwatControl implements SwatUIParent
         $button->display();
     }
 
-    // }}}
-    // {{{ protected function createCompositeWidgets()
-
     /**
      * Creates and the composite flydown and button widgets of this actions
-     * control
+     * control.
      */
     protected function createCompositeWidgets()
     {
@@ -615,14 +552,11 @@ class SwatActions extends SwatControl implements SwatUIParent
         $this->addCompositeWidget($button, 'apply_button');
     }
 
-    // }}}
-    // {{{ protected function getInlineJavaScript()
-
     /**
-     * Gets inline JavaScript required to show and hide selected action items
+     * Gets inline JavaScript required to show and hide selected action items.
      *
      * @return string inline JavaScript required to show and hide selected
-     *                 action items.
+     *                action items
      */
     protected function getInlineJavaScript()
     {
@@ -671,14 +605,11 @@ class SwatActions extends SwatControl implements SwatUIParent
         return $javascript;
     }
 
-    // }}}
-    // {{{ protected function getInlineJavaScriptTranslations()
-
     /**
      * Gets translatable string resources for the JavaScript object for
-     * this widget
+     * this widget.
      *
-     * @return string translatable JavaScript string resources for this widget.
+     * @return string translatable JavaScript string resources for this widget
      */
     protected function getInlineJavaScriptTranslations()
     {
@@ -701,21 +632,16 @@ class SwatActions extends SwatControl implements SwatUIParent
         );
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
-
     /**
-     * Gets the array of CSS classes that are applied to this actions list
+     * Gets the array of CSS classes that are applied to this actions list.
      *
      * @return array the array of CSS classes that are applied to this actions
-     *                list.
+     *               list
      */
     protected function getCSSClassNames()
     {
         $classes = ['swat-actions'];
-        $classes = array_merge($classes, parent::getCSSClassNames());
-        return $classes;
-    }
 
-    // }}}
+        return array_merge($classes, parent::getCSSClassNames());
+    }
 }

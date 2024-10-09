@@ -1,35 +1,29 @@
 <?php
 
 /**
- * Thrown when a integer causes an arithmetic/buffer overflow
+ * Thrown when a integer causes an arithmetic/buffer overflow.
  *
- * @package   Swat
  * @copyright 2007-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatIntegerOverflowException extends OverflowException
 {
-    // {{{ protected properties
-
     /**
-     * Sign
+     * Sign.
      *
      * The sign of the integer, either positive or negative
      *
-     * @var integer
+     * @var int
      */
-    protected $sign = null;
-
-    // }}}
-    // {{{ public function __construct()
+    protected $sign;
 
     /**
-     * Creates a new invalid type exception
+     * Creates a new invalid type exception.
      *
-     * @param string $message the message of the exception.
-     * @param integer $code the code of the exception.
-     * @param integer $sign the sign of the integer, either positive or
-     *                negative.
+     * @param string $message the message of the exception
+     * @param int    $code    the code of the exception
+     * @param int    $sign    the sign of the integer, either positive or
+     *                        negative
      */
     public function __construct($message = null, $code = 0, $sign = 1)
     {
@@ -38,18 +32,13 @@ class SwatIntegerOverflowException extends OverflowException
         $this->sign = $sign;
     }
 
-    // }}}
-    // {{{ public function getSign()
-
     /**
-     * Gets the sign of the integer
+     * Gets the sign of the integer.
      *
-     * @return integer The sign of the integer, either positive or negative.
+     * @return int the sign of the integer, either positive or negative
      */
     public function getSign()
     {
         return $this->sign;
     }
-
-    // }}}
 }

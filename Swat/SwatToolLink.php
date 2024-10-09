@@ -1,18 +1,15 @@
 <?php
 
 /**
- * A a tool link in the widget tree
+ * A a tool link in the widget tree.
  *
- * @package   Swat
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatToolLink extends SwatControl
 {
-    // {{{ public properties
-
     /**
-     * The href attribute in the XHTML anchor tag
+     * The href attribute in the XHTML anchor tag.
      *
      * Optionally uses vsprintf() syntax, for example:
      * <code>
@@ -23,26 +20,26 @@ class SwatToolLink extends SwatControl
      *
      * @see SwatToolLink::$value
      */
-    public $link = null;
+    public $link;
 
     /**
-     * The title of this link
+     * The title of this link.
      *
      * @var string
      */
-    public $title = null;
+    public $title;
 
     /**
      * Optional content type for the title of the link
      *     default text/plain
-     *     use text/xml for XHTML fragments
+     *     use text/xml for XHTML fragments.
      *
      * @var string
      */
     public $content_type = 'text/plain';
 
     /**
-     * A value or array of values to substitute into the link of this cell
+     * A value or array of values to substitute into the link of this cell.
      *
      * The value property may be specified either as an array of values or as
      * a single value. If an array is passed, a call to vsprintf() is done
@@ -53,10 +50,10 @@ class SwatToolLink extends SwatControl
      *
      * @see SwatToolLink::$link
      */
-    public $value = null;
+    public $value;
 
     /**
-     * The stock id of this tool link
+     * The stock id of this tool link.
      *
      * Specifying a stock id initializes this tool link with a set of
      * stock values.
@@ -65,51 +62,45 @@ class SwatToolLink extends SwatControl
      *
      * @see SwatToolLink::setFromStock()
      */
-    public $stock_id = null;
+    public $stock_id;
 
     /**
-     * Access key for this link
+     * Access key for this link.
      *
      * Specifying an access key makes this tool link keyboard-accessible.
      *
      * @var string
      */
-    public $access_key = null;
+    public $access_key;
 
     /**
-     * An optional tooltip for this element
+     * An optional tooltip for this element.
      *
      * An optional string that will be displayed when the element is moused
      * over. Setting the tooltip property to null will display no tooltip.
      *
      * @var string
      */
-    public $tooltip = null;
+    public $tooltip;
 
     /**
-     * An optional target attribute in the XHTML anchor tag
+     * An optional target attribute in the XHTML anchor tag.
      *
      * @var string
      */
-    public $target = null;
-
-    // }}}
-    // {{{ protected properties
+    public $target;
 
     /**
-     * A CSS class set by the stock_id of this tool link
+     * A CSS class set by the stock_id of this tool link.
      *
      * @var string
      */
-    protected $stock_class = null;
-
-    // }}}
-    // {{{ public function __construct()
+    protected $stock_class;
 
     /**
-     * Creates a new toollink
+     * Creates a new toollink.
      *
-     * @param string $id a non-visible unique id for this widget.
+     * @param string $id a non-visible unique id for this widget
      *
      * @see SwatWidget::__construct()
      */
@@ -120,11 +111,8 @@ class SwatToolLink extends SwatControl
         $this->addStyleSheet('packages/swat/styles/swat-tool-link.css');
     }
 
-    // }}}
-    // {{{ public function init()
-
     /**
-     * Initializes this widget
+     * Initializes this widget.
      *
      * Loads properties from stock if $stock_id is set.
      *
@@ -139,11 +127,8 @@ class SwatToolLink extends SwatControl
         }
     }
 
-    // }}}
-    // {{{ public function display()
-
     /**
-     * Displays this tool link
+     * Displays this tool link.
      */
     public function display()
     {
@@ -180,11 +165,8 @@ class SwatToolLink extends SwatControl
         $tag->close();
     }
 
-    // }}}
-    // {{{ public function setFromStock()
-
     /**
-     * Sets the values of this tool link to a stock type
+     * Sets the values of this tool link to a stock type.
      *
      * Valid stock type ids are:
      *
@@ -199,9 +181,9 @@ class SwatToolLink extends SwatControl
      * - print
      * - email
      *
-     * @param string $stock_id the identifier of the stock type to use.
-     * @param boolean $overwrite_properties whether to overwrite properties if
-     *                                       they are already set.
+     * @param string $stock_id             the identifier of the stock type to use
+     * @param bool   $overwrite_properties whether to overwrite properties if
+     *                                     they are already set
      *
      * @throws SwatUndefinedStockTypeException
      */
@@ -278,14 +260,11 @@ class SwatToolLink extends SwatControl
         $this->stock_class = $class;
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
-
     /**
-     * Gets the array of CSS classes that are applied to this tool link
+     * Gets the array of CSS classes that are applied to this tool link.
      *
      * @return array the array of CSS classes that are applied to this tool
-     *                link.
+     *               link
      */
     protected function getCSSClassNames()
     {
@@ -299,19 +278,14 @@ class SwatToolLink extends SwatControl
             $classes[] = $this->stock_class;
         }
 
-        $classes = array_merge($classes, $this->classes);
-
-        return $classes;
+        return array_merge($classes, $this->classes);
     }
 
-    // }}}
-    // {{{ protected function getSensitiveTag()
-
     /**
-     * Gets the tag used to display this tool link when it is sensitive
+     * Gets the tag used to display this tool link when it is sensitive.
      *
      * @return SwatHtmlTag the tag used to display this tool link when it is
-     *                      sensitive.
+     *                     sensitive
      */
     protected function getSensitiveTag()
     {
@@ -341,14 +315,11 @@ class SwatToolLink extends SwatControl
         return $tag;
     }
 
-    // }}}
-    // {{{ protected function getInsensitiveTag()
-
     /**
-     * Gets the tag used to display this tool link when it is not sensitive
+     * Gets the tag used to display this tool link when it is not sensitive.
      *
      * @return SwatHtmlTag the tag used to display this tool link when it is
-     *                      not sensitive.
+     *                     not sensitive
      */
     protected function getInsensitiveTag()
     {
@@ -363,6 +334,4 @@ class SwatToolLink extends SwatControl
 
         return $tag;
     }
-
-    // }}}
 }

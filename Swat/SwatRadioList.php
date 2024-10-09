@@ -1,37 +1,31 @@
 <?php
 
 /**
- * A radio list selection widget
+ * A radio list selection widget.
  *
- * @package   Swat
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatRadioList extends SwatFlydown
 {
-    // {{{ private properties
-
     /**
-     * Used for displaying radio buttons
+     * Used for displaying radio buttons.
      *
      * @var SwatHtmlTag
      */
     private $input_tag;
 
     /**
-     * Used for displaying radio button labels
+     * Used for displaying radio button labels.
      *
      * @var SwatHtmlTag
      */
     private $label_tag;
 
-    // }}}
-    // {{{ public function __construct()
-
     /**
-     * Creates a new radiolist
+     * Creates a new radiolist.
      *
-     * @param string $id a non-visible unique id for this widget.
+     * @param string $id a non-visible unique id for this widget
      *
      * @see SwatWidget::__construct()
      */
@@ -45,11 +39,8 @@ class SwatRadioList extends SwatFlydown
         $this->addStyleSheet('packages/swat/styles/swat-radio-list.css');
     }
 
-    // }}}
-    // {{{ public function display()
-
     /**
-     * Displays this radio list
+     * Displays this radio list.
      */
     public function display()
     {
@@ -68,6 +59,7 @@ class SwatRadioList extends SwatFlydown
         if (count($options) === 1 && $this->collapse_single) {
             // get first and only element
             $this->displaySingle(current($options));
+
             return;
         }
 
@@ -124,13 +116,10 @@ class SwatRadioList extends SwatFlydown
         $ul_tag->close();
     }
 
-    // }}}
-    // {{{ protected function processValue()
-
     /**
-     * Processes the value of this radio list from user-submitted form data
+     * Processes the value of this radio list from user-submitted form data.
      *
-     * @return boolean true if the value was processed from form data
+     * @return bool true if the value was processed from form data
      */
     protected function processValue()
     {
@@ -159,15 +148,12 @@ class SwatRadioList extends SwatFlydown
         return true;
     }
 
-    // }}}
-    // {{{ protected function displayDivider()
-
     /**
-     * Displays a divider option in this radio list
+     * Displays a divider option in this radio list.
      *
-     * @param SwatOption $option the divider option to display.
-     * @param integer $index the numeric index of the option in this list.
-     *                        Starts at 0.
+     * @param SwatOption $option the divider option to display
+     * @param int        $index  the numeric index of the option in this list.
+     *                           Starts at 0.
      */
     protected function displayDivider(SwatOption $option, $index)
     {
@@ -181,15 +167,12 @@ class SwatRadioList extends SwatFlydown
         $span_tag->display();
     }
 
-    // }}}
-    // {{{ protected function displayOption()
-
     /**
-     * Displays an option in the radio list
+     * Displays an option in the radio list.
      *
-     * @param SwatOption $option the option to display.
-     * @param integer $index the numeric index of the option in this list.
-     *                        Starts at 0.
+     * @param SwatOption $option the option to display
+     * @param int        $index  the numeric index of the option in this list.
+     *                           Starts at 0.
      */
     protected function displayOption(SwatOption $option, $index)
     {
@@ -238,15 +221,12 @@ class SwatRadioList extends SwatFlydown
         echo '</span>';
     }
 
-    // }}}
-    // {{{ protected function displayOptionLabel()
-
     /**
-     * Displays an option in the radio list
+     * Displays an option in the radio list.
      *
-     * @param SwatOption $option the option for which to display the label.
-     * @param integer $index the numeric index of the option in this list.
-     *                        Starts at 0.
+     * @param SwatOption $option the option for which to display the label
+     * @param int        $index  the numeric index of the option in this list.
+     *                           Starts at 0.
      */
     protected function displayOptionLabel(SwatOption $option, $index)
     {
@@ -260,21 +240,16 @@ class SwatRadioList extends SwatFlydown
         $this->label_tag->display();
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
-
     /**
-     * Gets the array of CSS classes that are applied to this radio list
+     * Gets the array of CSS classes that are applied to this radio list.
      *
      * @return array the array of CSS classes that are applied to this radio
-     *                list.
+     *               list
      */
     protected function getCSSClassNames()
     {
         $classes = ['swat-radio-list'];
-        $classes = array_merge($classes, parent::getCSSClassNames());
-        return $classes;
-    }
 
-    // }}}
+        return array_merge($classes, parent::getCSSClassNames());
+    }
 }

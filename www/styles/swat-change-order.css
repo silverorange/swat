@@ -1,46 +1,46 @@
 .swat-change-order-item {
-	background-color: #fff;
-	margin: 0;
-	padding: 3px;
-	cursor: default;
+  background-color: #fff;
+  margin: 0;
+  padding: 3px;
+  cursor: default;
 }
 
 .swat-change-order-item-active {
-	background-color: Highlight;
-	color: HighlightText;
+  background-color: Highlight;
+  color: HighlightText;
 }
 
 .swat-change-order-item .swat-change-order-item-grippy {
-	display: block;
-	float: right;
-	width: 24px;
-	background-image: url(../images/swat-change-order-item-grippy.png);
-	background-repeat: no-repeat;
-	background-position: 100% 50%;
-	margin: -1px -3px -1px 0;
-	cursor: move;
+  display: block;
+  float: right;
+  width: 24px;
+  background-image: url(../images/swat-change-order-item-grippy.png);
+  background-repeat: no-repeat;
+  background-position: 100% 50%;
+  margin: -1px -3px -1px 0;
+  cursor: move;
 }
 
 .ie7 .swat-change-order-item .swat-change-order-item-grippy {
-	display: none;
+  display: none;
 }
 
 .swat-change-order-item-shadow {
-	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
-	filter: alpha(opacity=60);
-	opacity: 0.6;
-	position: absolute;
+  -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=60)';
+  filter: alpha(opacity=60);
+  opacity: 0.6;
+  position: absolute;
 }
 
 div.swat-change-order-item:hover {
 }
 
 .swat-insensitive .swat-change-order-item {
-	background: #eee;
+  background: #eee;
 }
 
 .swat-insensitive .swat-change-order-item-active {
-	background: #888;
+  background: #888;
 }
 
 .swat-insensitive div.swat-change-order-item:hover {
@@ -50,29 +50,29 @@ div.swat-change-order-item:hover {
 }
 
 .swat-change-order-list {
-	border-color: ButtonShadow;
-	border: 1px solid;
-	margin: 2px;
-	overflow: auto;
-	list-style: none;
-	padding: 0;
-	float: left;
-	position: relative;
+  border-color: ButtonShadow;
+  border: 1px solid;
+  margin: 2px;
+  overflow: auto;
+  list-style: none;
+  padding: 0;
+  float: left;
+  position: relative;
 }
 
 .swat-change-order-buttons {
-	position: relative;
-	float: left;
-	text-align: center;
+  position: relative;
+  float: left;
+  text-align: center;
 }
 
 .swat-change-order-buttons input {
-	margin: 0.5em;
-	width: 7em;
+  margin: 0.5em;
+  width: 7em;
 }
 
 .swat-change-order-buttons input.swat-change-order-top,
 .swat-change-order-buttons input.swat-change-order-bottom {
-	font-size: 85%;
-	width: 10em;
+  font-size: 85%;
+  width: 10em;
 }

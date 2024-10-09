@@ -47,7 +47,7 @@ class SwatAccordion {
       }
 
       var that = this;
-      (function() {
+      (function () {
         var the_page = page;
         page.toggleLink.addEventListener('click', () => {
           if (!that.always_open && the_page === that.current_page) {

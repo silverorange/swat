@@ -97,7 +97,7 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay {
         anchor.href = '#';
         anchor.appendChild(text);
 
-        anchor.addEventListener('click', e => {
+        anchor.addEventListener('click', (e) => {
           this.selectColor(e);
         });
 

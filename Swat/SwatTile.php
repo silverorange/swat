@@ -1,43 +1,36 @@
 <?php
 
 /**
- * A tile in a {@link SwatTileView}
+ * A tile in a {@link SwatTileView}.
  *
- * @package   Swat
  * @copyright 2007-2016 silverorange
+ *
  * @lisence   http://www.gnu.org/copyleft/lesser.html LGPL Lisence 2.1
+ *
  * @see       SwatTileView
  */
 class SwatTile extends SwatCellRendererContainer
 {
-    // {{{ public properties
-
     /**
      * Whether or not to include CSS classes from the first cell renderer
-     * of this tile in this tile's CSS classes
+     * of this tile in this tile's CSS classes.
      *
      * @see SwatTile::getCSSClassNames()
      */
     public $show_renderer_classes = true;
 
-    // }}}
-    // {{{ protected properties
-
     /**
-     * Messages affixed to this tile
+     * Messages affixed to this tile.
      *
      * @var array
      */
     protected $messages = [];
 
-    // }}}
-    // {{{ public function display()
-
     /**
-     * Displays this tile using a data object
+     * Displays this tile using a data object.
      *
      * @param mixed $data a data object used to display the cell renderers in
-     *                     this tile.
+     *                    this tile
      */
     public function display($data)
     {
@@ -49,11 +42,8 @@ class SwatTile extends SwatCellRendererContainer
         $this->displayRenderers($data);
     }
 
-    // }}}
-    // {{{ public function init()
-
     /**
-     * Initializes this tile
+     * Initializes this tile.
      *
      * This initializes the tile contained in the tile view
      */
@@ -64,11 +54,8 @@ class SwatTile extends SwatCellRendererContainer
         }
     }
 
-    // }}}
-    // {{{ public function process()
-
     /**
-     * Processes this tile
+     * Processes this tile.
      *
      * Processes each renderer contained in the tile
      */
@@ -79,13 +66,10 @@ class SwatTile extends SwatCellRendererContainer
         }
     }
 
-    // }}}
-    // {{{ public function getMessages()
-
     /**
-     * Gathers all messages from this tile
+     * Gathers all messages from this tile.
      *
-     * @return array an array of {@link SwatMessage} objects.
+     * @return array an array of {@link SwatMessage} objects
      */
     public function getMessages()
     {
@@ -98,13 +82,10 @@ class SwatTile extends SwatCellRendererContainer
         return $messages;
     }
 
-    // }}}
-    // {{{ public function addMessages()
-
     /**
-     * Adds a message to this tile
+     * Adds a message to this tile.
      *
-     * @param SwatMessage the message to add.
+     * @param SwatMessage the message to add
      *
      * @see SwatMessage
      */
@@ -113,14 +94,11 @@ class SwatTile extends SwatCellRendererContainer
         $this->messages[] = $message;
     }
 
-    // }}}
-    // {{{ public function hasMessage()
-
     /**
-     * Gets whether or not this tile has any messages
+     * Gets whether or not this tile has any messages.
      *
-     * @return boolean true if this tile has one or more messages and
-     *                 false if it does not.
+     * @return bool true if this tile has one or more messages and
+     *              false if it does not
      */
     public function hasMessage()
     {
@@ -136,14 +114,11 @@ class SwatTile extends SwatCellRendererContainer
         return $has_message;
     }
 
-    // }}}
-    // {{{ protected function setupRenderers()
-
     /**
-     * Sets properties of renderers using data from current row
+     * Sets properties of renderers using data from current row.
      *
      * @param mixed $data the data object being used to render the cell
-     *                     renderers of this field.
+     *                    renderers of this field
      */
     protected function setupRenderers($data)
     {
@@ -162,14 +137,11 @@ class SwatTile extends SwatCellRendererContainer
         }
     }
 
-    // }}}
-    // {{{ protected function displayRenderers()
-
     /**
-     * Renders cell renderers
+     * Renders cell renderers.
      *
      * @param mixed $data the data object being used to render the cell
-     *                     renderers of this field.
+     *                    renderers of this field
      */
     protected function displayRenderers($data)
     {
@@ -180,11 +152,8 @@ class SwatTile extends SwatCellRendererContainer
         $div_tag->close();
     }
 
-    // }}}
-    // {{{ protected function displayRenderersInternal()
-
     /**
-     * Renders each cell renderer in this tile
+     * Renders each cell renderer in this tile.
      *
      * If there is one cell renderer in this tile, it is rendered by itself.
      * If there is more than one cell renderer in this tile, cell renderers
@@ -192,7 +161,7 @@ class SwatTile extends SwatCellRendererContainer
      * separation between multiple cell renderers within a single tile.
      *
      * @param mixed $data the data object being used to render the cell
-     *                     renderers of this field.
+     *                    renderers of this field
      */
     protected function displayRenderersInternal($data)
     {
@@ -228,11 +197,8 @@ class SwatTile extends SwatCellRendererContainer
         }
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
-
     /**
-     * Gets the array of CSS classes that are applied to this tile
+     * Gets the array of CSS classes that are applied to this tile.
      *
      * CSS classes are added to this tile in the following order:
      *
@@ -248,7 +214,7 @@ class SwatTile extends SwatCellRendererContainer
      *    this tile if this tile has data mappings applied,
      * 6. user-specified CSS classes on the first cell renderer in this tile.
      *
-     * @return array the array of CSS classes that are applied to this tile.
+     * @return array the array of CSS classes that are applied to this tile
      *
      * @see SwatCellRenderer::getInheritanceCSSClassNames()
      * @see SwatCellRenderer::getBaseCSSClassNames()
@@ -264,8 +230,8 @@ class SwatTile extends SwatCellRendererContainer
 
         $first_renderer = $this->renderers->getFirst();
         if (
-            $this->show_renderer_classes &&
-            $first_renderer instanceof SwatCellRenderer
+            $this->show_renderer_classes
+            && $first_renderer instanceof SwatCellRenderer
         ) {
             // renderer inheritance classes
             $classes = array_merge(
@@ -294,21 +260,16 @@ class SwatTile extends SwatCellRendererContainer
         return $classes;
     }
 
-    // }}}
-    // {{{ protected function getBaseCSSClassNames()
-
     /**
-     * Gets the base CSS class names of this tile
+     * Gets the base CSS class names of this tile.
      *
      * This is the recommended place for column subclasses to add extra hard-
      * coded CSS classes.
      *
-     * @return array the array of base CSS class names for this tile.
+     * @return array the array of base CSS class names for this tile
      */
     protected function getBaseCSSClassNames()
     {
         return ['swat-tile'];
     }
-
-    // }}}
 }
