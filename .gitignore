@@ -8,6 +8,7 @@ node_modules/
 .DS_Store
 .env
 .idea/
+.php-cs-fixer.cache
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
