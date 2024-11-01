@@ -113,4 +113,38 @@ class SwatDBClassMap
 
         return $to_class_name;
     }
+
+    // }}}
+
+    /**
+     * Resolves a class name from the class map and returns a new instance of
+     * that class.
+     *
+     * @template T
+     * @param class-string<T> $from_class_name the name of the class to resolve
+     * @param mixed ...$params extra parameters to pass to the new class constructor
+     * @return T a new instance of the resolved class
+     *
+     * @throws SwatInvalidClassException if a mapped class is not a subclass of
+     *                                   its original class
+     */
+    public static function new(
+        string $from_class_name,
+        mixed ...$params,
+    ): string {
+        $class = self::get($from_class_name);
+
+        return new $class(...$params);
+    }
+
+    // {{{ private function __construct()
+
+    /**
+     * The class map is a static object and should not be instantiated
+     */
+    private function __construct()
+    {
+    }
+
+    // }}}
 }
