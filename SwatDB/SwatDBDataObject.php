@@ -21,13 +21,6 @@ class SwatDBDataObject extends SwatObject implements
     protected $id_field;
 
     /**
-     * A class-mapping object.
-     *
-     * @var SwatDBClassMap
-     */
-    protected $class_map;
-
-    /**
      * @var bool
      */
     protected $read_only = false;
@@ -100,7 +93,6 @@ class SwatDBDataObject extends SwatObject implements
      */
     public function __construct($data = null, $read_only = false)
     {
-        $this->class_map = SwatDBClassMap::instance();
         $this->read_only = $read_only;
 
         $this->init();
@@ -1463,7 +1455,6 @@ class SwatDBDataObject extends SwatObject implements
 
     public function __unserialize(array $data): void
     {
-        $this->wakeup();
         $this->init();
 
         // Ignore properties that shouldn't have been serialized. These
@@ -1605,11 +1596,6 @@ class SwatDBDataObject extends SwatObject implements
                 }
             }
         }
-    }
-
-    protected function wakeup()
-    {
-        $this->class_map = SwatDBClassMap::instance();
     }
 
     protected function getSerializableSubDataObjects()
