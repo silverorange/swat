@@ -136,7 +136,7 @@ class SwatDBClassMap
     public static function new(
         string $from_class_name,
         mixed ...$params,
-    ): string {
+    ): object {
         $class = self::get($from_class_name);
 
         return new $class(...$params);
