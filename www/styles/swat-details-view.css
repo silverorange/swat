@@ -1,26 +1,25 @@
 /* SwatDetailsView */
 
 .swat-details-view td {
-	width: 70%;
+  width: 70%;
 }
 
 .swat-details-view-field th,
 .swat-details-view-vertical-field th,
 .swat-details-view-vertical-field .swat-details-view-field-header {
-	vertical-align: top;
-	text-align: left;
-	font-weight: bold;
-	color: #666;
-	width: 30%;
+  vertical-align: top;
+  text-align: left;
+  font-weight: bold;
+  color: #666;
+  width: 30%;
 }
 
 .swat-details-view-field th {
-	text-align: right;
+  text-align: right;
 }
 
 .swat-details-view-field ul {
-	margin: 0;
-	padding: 0 0 0 1.5em;
-	list-style-type: circle;
+  margin: 0;
+  padding: 0 0 0 1.5em;
+  list-style-type: circle;
 }
-

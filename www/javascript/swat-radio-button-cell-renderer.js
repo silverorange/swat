@@ -25,10 +25,10 @@ class SwatRadioButtonCellRenderer {
         this.radio_list.push(input_nodes[i]);
         this.updateNode(input_nodes[i]);
 
-        input_nodes[i].addEventListener('click', e => {
+        input_nodes[i].addEventListener('click', (e) => {
           this.handleClick(e);
         });
-        input_nodes[i].addEventListener('dblclick', e => {
+        input_nodes[i].addEventListener('dblclick', (e) => {
           this.handleClick(e);
         });
       }

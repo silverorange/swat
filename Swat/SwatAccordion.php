@@ -7,38 +7,33 @@
  * stacked and open and close like disclosures. It sounds like a ye-olde
  * squeezebox.
  *
- * @package   Swat
  * @copyright 2011-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ *
  * @see       SwatNoteBookPage
  */
 class SwatAccordion extends SwatNoteBook
 {
-    // {{{ public properties
-
     /**
-     * Whether or not to animate the opening/closing of the accordion
+     * Whether or not to animate the opening/closing of the accordion.
      *
-     * @var boolean
+     * @var bool
      */
     public $animate = true;
 
     /**
-     * Whether or not one page of the accordion is always open
+     * Whether or not one page of the accordion is always open.
      *
      * If false, the accordion can collapse to an all-closed state.
      *
-     * @var boolean
+     * @var bool
      */
     public $always_open = false;
 
-    // }}}
-    // {{{ public function __construct()
-
     /**
-     * Creates a new accordion view
+     * Creates a new accordion view.
      *
-     * @param string $id a non-visable unique id for this widget.
+     * @param string $id a non-visable unique id for this widget
      */
     public function __construct($id = null)
     {
@@ -53,11 +48,8 @@ class SwatAccordion extends SwatNoteBook
         $this->addJavaScript('packages/swat/javascript/swat-accordion.js');
     }
 
-    // }}}
-    // {{{ public function display()
-
     /**
-     * Displays this notebook
+     * Displays this notebook.
      */
     public function display()
     {
@@ -94,7 +86,7 @@ class SwatAccordion extends SwatNoteBook
             $li_tag->open();
 
             // toggle link
-            $title = $page->title === null ? '' : $page->title;
+            $title = $page->title ?? '';
             $wrapper_span = new SwatHtmlTag('span');
             $wrapper_span->tabindex = '0';
             $wrapper_span->{'aria-role'} = 'tab';
@@ -127,13 +119,10 @@ class SwatAccordion extends SwatNoteBook
         Swat::displayInlineJavaScript($this->getInlineJavaScript());
     }
 
-    // }}}
-    // {{{ protected function getInlineJavaScript()
-
     /**
-     * Gets the inline JavaScript used by this accordion view
+     * Gets the inline JavaScript used by this accordion view.
      *
-     * @return string the inline JavaScript used by this accordion view.
+     * @return string the inline JavaScript used by this accordion view
      */
     protected function getInlineJavaScript()
     {
@@ -159,13 +148,8 @@ class SwatAccordion extends SwatNoteBook
         return $javascript;
     }
 
-    // }}}
-    // {{{ protected function getJavaScriptClassName()
-
     protected function getJavaScriptClassName()
     {
         return 'SwatAccordion';
     }
-
-    // }}}
 }

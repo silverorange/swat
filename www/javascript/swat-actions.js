@@ -26,7 +26,7 @@ class SwatActions {
       document.createTextNode(SwatActions.dismiss_text)
     );
 
-    message_dismiss.addEventListener('click', e => {
+    message_dismiss.addEventListener('click', (e) => {
       e.preventDefault();
       this.handleMessageClose();
     });
@@ -49,7 +49,7 @@ class SwatActions {
       this.handleChange();
     });
 
-    button.addEventListener('click', e => {
+    button.addEventListener('click', (e) => {
       this.handleButtonClick(e);
     });
   }

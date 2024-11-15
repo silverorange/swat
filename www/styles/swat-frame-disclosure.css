@@ -7,25 +7,25 @@
 
 .swat-frame-disclosure .swat-frame-title .swat-disclosure-anchor-opened,
 .swat-frame-disclosure .swat-frame-title .swat-disclosure-anchor-closed {
-	top: 0;
-	margin: 0;
-	padding: 0 5px 0 24px;
-	color: #666;
-	background-color: transparent;
-	background-position: 2px 50%;
+  top: 0;
+  margin: 0;
+  padding: 0 5px 0 24px;
+  color: #666;
+  background-color: transparent;
+  background-position: 2px 50%;
 }
 
 .swat-frame-disclosure .swat-disclosure-anchor-opened:hover,
 .swat-frame-disclosure .swat-disclosure-anchor-closed:hover {
-	color: #333;
+  color: #333;
 }
 
 .swat-frame-disclosure .swat-frame-disclosure-container,
 .swat-disclosure-control-opened .swat-frame-disclosure-container {
-	border: 0;
+  border: 0;
 }
 
 .swat-frame-disclosure-control-opened,
 .swat-frame-disclosure-control-closed {
-	min-height: 0;
+  min-height: 0;
 }

@@ -1,52 +1,43 @@
 <?php
 
 /**
- * A container that replicates itself and its children
+ * A container that replicates itself and its children.
  *
- * @package   Swat
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatReplicableContainer extends SwatDisplayableContainer implements
-    SwatReplicable
+class SwatReplicableContainer extends SwatDisplayableContainer implements SwatReplicable
 {
-    // {{{ public properties
-
     /**
-     * An array of unique id => title pairs, one for each replication
+     * An array of unique id => title pairs, one for each replication.
      *
      * The ids are used to suffix the original widget ids to create unique
      * ids for the replicated widgets. Some sub-classes use the titles on
      * containers such as fieldsets which surround the replicated widgets.
      *
      * @var array
+     *
      * @deprecated Use a SwatReplicableContainer::$replication_ids instead
      */
-    public $replicators = null;
+    public $replicators;
 
     /**
-     * An array of unique ids, one for each replication
+     * An array of unique ids, one for each replication.
      *
      * The ids are used to suffix the original widget ids to create unique
      * ids for the replicated widgets.
      *
      * @var array
      */
-    public $replication_ids = null;
-
-    // }}}
-    // {{{ private properties
+    public $replication_ids;
 
     private $widgets = [];
     private $prototype_widgets = [];
 
-    // }}}
-    // {{{ public function __construct()
-
     /**
-     * Creates a new replicator container
+     * Creates a new replicator container.
      *
-     * @param string $id a non-visible unique id for this widget.
+     * @param string $id a non-visible unique id for this widget
      *
      * @see SwatWidget::__construct()
      */
@@ -56,11 +47,8 @@ class SwatReplicableContainer extends SwatDisplayableContainer implements
         $this->requires_id = true;
     }
 
-    // }}}
-    // {{{ public function init()
-
     /**
-     * Initilizes this replicable container
+     * Initilizes this replicable container.
      *
      * Goes through the internal widgets, clones them, and adds them to the
      * widget tree.
@@ -87,9 +75,6 @@ class SwatReplicableContainer extends SwatDisplayableContainer implements
 
         parent::init();
     }
-
-    // }}}
-    // {{{ public function addReplication()
 
     public function addReplication($id)
     {
@@ -123,17 +108,14 @@ class SwatReplicableContainer extends SwatDisplayableContainer implements
         }
     }
 
-    // }}}
-    // {{{ public function getWidget()
-
     /**
-     * Retrives a reference to a replicated widget
+     * Retrives a reference to a replicated widget.
      *
-     * @param string $widget_id the unique id of the original widget
+     * @param string $widget_id     the unique id of the original widget
      * @param string $replicator_id the replicator id of the replicated widget
      *
      * @return SwatWidget a reference to the replicated widget, or null if the
-     *                     widget is not found.
+     *                    widget is not found
      */
     public function getWidget($widget_id, $replicator_id)
     {
@@ -145,6 +127,4 @@ class SwatReplicableContainer extends SwatDisplayableContainer implements
 
         return $widget;
     }
-
-    // }}}
 }

@@ -84,8 +84,8 @@ class SwatMessageDisplayMessage {
       marginBottom: 0
     };
 
-    var height = this.message_div.firstElementChild.getBoundingClientRect()
-      .height;
+    var height =
+      this.message_div.firstElementChild.getBoundingClientRect().height;
 
     // collapse margins
     if (this.message_div.nextSibling) {

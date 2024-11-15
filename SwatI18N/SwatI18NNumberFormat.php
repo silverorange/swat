@@ -1,45 +1,40 @@
 <?php
 
 /**
- * Information for formatting numeric values
+ * Information for formatting numeric values.
  *
- * @package   SwatI18N
  * @copyright 2007-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ *
  * @see       SwatLocale::formatNumber()
  * @see       SwatLocale::getNumberFormat()
  */
 class SwatI18NNumberFormat extends SwatObject
 {
-    // {{{ public properties
-
     /**
-     * Decimal point character
+     * Decimal point character.
      *
      * @var string
      */
     public $decimal_separator;
 
     /**
-     * Thousands separator
+     * Thousands separator.
      *
      * @var string
      */
     public $thousands_separator;
 
     /**
-     * Numeric groupings
+     * Numeric groupings.
      *
      * @var array
      */
     public $grouping;
 
-    // }}}
-    // {{{ public function override()
-
     /**
      * Gets a new number format object with certain properties overridden from
-     * specified values
+     * specified values.
      *
      * The override information is specified as an associative array with
      * array keys representing property names of this formatting object and
@@ -54,13 +49,13 @@ class SwatI18NNumberFormat extends SwatObject
      * </code>
      *
      * @param array $format the format information with which to override thss
-     *                       format.
+     *                      format
      *
      * @return SwatI18NNumberFormat a copy of this number format with the
-     *                               specified properties set to the new values.
+     *                              specified properties set to the new values
      *
      * @throws SwatException if any of the array keys do not match a formatting
-     *                       property of this property.
+     *                       property of this property
      */
     public function override(array $format)
     {
@@ -80,20 +75,17 @@ class SwatI18NNumberFormat extends SwatObject
 
         foreach ($format as $key => $value) {
             if ($value !== null) {
-                $new_format->$key = $value;
+                $new_format->{$key} = $value;
             }
         }
 
         return $new_format;
     }
 
-    // }}}
-    // {{{ public function __toString()
-
     /**
-     * Gets a string representation of this format
+     * Gets a string representation of this format.
      *
-     * @return string a string representation of this format.
+     * @return string a string representation of this format
      */
     public function __toString(): string
     {
@@ -113,6 +105,4 @@ class SwatI18NNumberFormat extends SwatObject
 
         return $string;
     }
-
-    // }}}
 }

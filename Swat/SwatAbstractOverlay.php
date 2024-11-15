@@ -12,37 +12,31 @@
  * and add the new java-script class using the
  * SwatAbstractOverlay::getInlineJavaScript() method.
  *
- * @package   Swat
  * @copyright 2010-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatAbstractOverlay extends SwatInputControl implements SwatState
 {
-    // {{{ public properties
-
     /**
-     * Access key
+     * Access key.
      *
      * Access key for this overlay control, for keyboard nagivation.
      *
      * @var string
      */
-    public $access_key = null;
+    public $access_key;
 
     /**
-     * Widget value
+     * Widget value.
      *
      * @var string
      */
-    public $value = null;
-
-    // }}}
-    // {{{ public function __construct()
+    public $value;
 
     /**
-     * Creates a new overlay widget
+     * Creates a new overlay widget.
      *
-     * @param string $id a non-visible unique id for this widget.
+     * @param string $id a non-visible unique id for this widget
      *
      * @see SwatWidget::__construct()
      */
@@ -64,11 +58,8 @@ abstract class SwatAbstractOverlay extends SwatInputControl implements SwatState
         );
     }
 
-    // }}}
-    // {{{ public function display()
-
     /**
-     * Displays this overlay widget
+     * Displays this overlay widget.
      */
     public function display()
     {
@@ -97,13 +88,10 @@ abstract class SwatAbstractOverlay extends SwatInputControl implements SwatState
         Swat::displayInlineJavaScript($this->getInlineJavaScript());
     }
 
-    // }}}
-    // {{{ public function getState()
-
     /**
-     * Gets the current state of this simple color selector widget
+     * Gets the current state of this simple color selector widget.
      *
-     * @return string the current state of this simple color selector widget.
+     * @return string the current state of this simple color selector widget
      *
      * @see SwatState::getState()
      */
@@ -112,13 +100,10 @@ abstract class SwatAbstractOverlay extends SwatInputControl implements SwatState
         return $this->value;
     }
 
-    // }}}
-    // {{{ public function setState()
-
     /**
-     * Sets the current state of this simple color selector widget
+     * Sets the current state of this simple color selector widget.
      *
-     * @param string $state the new state of this simple color selector widget.
+     * @param string $state the new state of this simple color selector widget
      *
      * @see SwatState::setState()
      */
@@ -127,13 +112,10 @@ abstract class SwatAbstractOverlay extends SwatInputControl implements SwatState
         $this->value = $state;
     }
 
-    // }}}
-    // {{{ abstract protected function getInlineJavaScript()
-
     /**
-     * Gets inline JavaScript
+     * Gets inline JavaScript.
      *
-     * @return string overlay inline JavaScript.
+     * @return string overlay inline JavaScript
      */
     protected function getInlineJavaScript()
     {
@@ -142,6 +124,4 @@ abstract class SwatAbstractOverlay extends SwatInputControl implements SwatState
             SwatString::quoteJavaScriptString(Swat::_('Close')),
         );
     }
-
-    // }}}
 }

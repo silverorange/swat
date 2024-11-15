@@ -1,7 +1,7 @@
 <?php
 
 /**
- * A file upload widget
+ * A file upload widget.
  *
  * Note: Mime-type detection is done with the
  * {@link http://pecl.php.net/package/Fileinfo Fileinfo} extension if avaiable.
@@ -10,28 +10,25 @@
  * mime-type detection is supported by the server, mime-types are returned as
  * 'application/octet-stream'.
  *
- * @package   Swat
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatFileEntry extends SwatInputControl
 {
-    // {{{ public properties
-
     /**
      * The size in characters of the XHTML form input, or null if no width is
-     * specified
+     * specified.
      *
-     * @var integer
+     * @var int
      */
     public $size = 40;
 
     /**
-     * Array of mime types to accept as uploads
+     * Array of mime types to accept as uploads.
      *
      * @var array
      */
-    public $accept_mime_types = null;
+    public $accept_mime_types;
 
     /**
      * Associative array of human-readable file types indexed by mime type.
@@ -49,56 +46,50 @@ class SwatFileEntry extends SwatInputControl
     public $human_file_types = [];
 
     /**
-     * Display acceptable mime-types as a note in this entry's parent
+     * Display acceptable mime-types as a note in this entry's parent.
      *
-     * @var boolean
+     * @var bool
      */
     public $display_mime_types = true;
 
     /**
-     * Access key
+     * Access key.
      *
      * Access key for this file entry control, for keyboard nagivation.
      *
      * @var string
      */
-    public $access_key = null;
+    public $access_key;
 
     /**
-     * Tab index
+     * Tab index.
      *
      * The ordinal tab index position of the XHTML input tag, or null.
      * Values 1 or greater will affect the tab index of this widget. A value
      * of 0 or null will use the position of the input tag in the XHTML
      * character stream to determine tab order.
      *
-     * @var integer
+     * @var int
      */
-    public $tab_index = null;
+    public $tab_index;
 
     /**
-     * Display maximum file upload size
+     * Display maximum file upload size.
      *
-     * @var boolean
+     * @var bool
      */
     public $display_maximum_upload_size = false;
 
-    // }}}
-    // {{{ protected properties
-
     /**
      * Stores the relevant part of the $_FILES array for this widget after
-     * the widget's parent is processed
+     * the widget's parent is processed.
      *
      * @var array
      */
-    protected $file = null;
-
-    // }}}
-    // {{{ private properties
+    protected $file;
 
     /**
-     * The mime type of the uploaded file
+     * The mime type of the uploaded file.
      *
      * If possible, this is the mime type detected by the server, not the mime
      * type specified by the web-browser. This is only the mime type specified
@@ -109,11 +100,8 @@ class SwatFileEntry extends SwatInputControl
      */
     private $mime_type;
 
-    // }}}
-    // {{{ public function display()
-
     /**
-     * Displays this entry widget
+     * Displays this entry widget.
      *
      * Outputs an appropriate XHTML tag.
      */
@@ -154,11 +142,8 @@ class SwatFileEntry extends SwatInputControl
         }
     }
 
-    // }}}
-    // {{{ public function process()
-
     /**
-     * Processes this file entry widget
+     * Processes this file entry widget.
      *
      * If any validation type errors occur, an error message is attached to
      * this entry widget.
@@ -184,8 +169,8 @@ class SwatFileEntry extends SwatInputControl
                 $this->addMessage($this->getValidationMessage('required'));
             }
         } elseif (
-            $_FILES[$this->id]['error'] === UPLOAD_ERR_INI_SIZE ||
-            $_FILES[$this->id]['error'] === UPLOAD_ERR_FORM_SIZE
+            $_FILES[$this->id]['error'] === UPLOAD_ERR_INI_SIZE
+            || $_FILES[$this->id]['error'] === UPLOAD_ERR_FORM_SIZE
         ) {
             $this->addMessage($this->getValidationMessage('too-large'));
         } else {
@@ -196,11 +181,8 @@ class SwatFileEntry extends SwatInputControl
         }
     }
 
-    // }}}
-    // {{{ public function getNote()
-
     /**
-     * Gets a note specifying the mime types this file entry accepts
+     * Gets a note specifying the mime types this file entry accepts.
      *
      * The file types are only returned if
      * {@link SwatFileEntry::$display_mime_types} is set to true and
@@ -209,8 +191,8 @@ class SwatFileEntry extends SwatInputControl
      * human-readable file types where possible.
      *
      * @return SwatMessage a note listing the accepted mime-types for this
-     *                      file entry widget or null if any mime-type is
-     *                      accepted.
+     *                     file entry widget or null if any mime-type is
+     *                     accepted
      *
      * @see SwatControl::getNote()
      */
@@ -235,27 +217,21 @@ class SwatFileEntry extends SwatInputControl
         return $message;
     }
 
-    // }}}
-    // {{{ public function isUploaded()
-
     /**
-     * Is file uploaded
+     * Is file uploaded.
      *
-     * @return boolean whether or not a file was uploaded with this file entry.
+     * @return bool whether or not a file was uploaded with this file entry
      */
     public function isUploaded()
     {
         return $this->file !== null;
     }
 
-    // }}}
-    // {{{ public function getFileName()
-
     /**
-     * Gets the original file name of the uploaded file
+     * Gets the original file name of the uploaded file.
      *
      * @return mixed the original filename of the uploaded file or null if no
-     *                file was uploaded.
+     *               file was uploaded
      *
      * @see SwatFileEntry::getTempFileName()
      */
@@ -264,9 +240,6 @@ class SwatFileEntry extends SwatInputControl
         return $this->isUploaded() ? $this->file['name'] : null;
     }
 
-    // }}}
-    // {{{ public function getUniqueFileName()
-
     /**
      * Gets a unique file name for the uploaded file for the given path.
      *
@@ -274,6 +247,7 @@ class SwatFileEntry extends SwatInputControl
      * a number will be appended to the end of the file name to make it unique.
      *
      * @param string path where the file is to be saved
+     * @param mixed $path
      *
      * @return string the unique file name
      *
@@ -283,21 +257,18 @@ class SwatFileEntry extends SwatInputControl
     {
         if (is_dir($path)) {
             return $this->generateUniqueFileName($path);
-        } else {
-            throw new SwatException(
-                "Path '{$path}' is not a " . 'directory or does not exist.',
-            );
         }
+
+        throw new SwatException(
+            "Path '{$path}' is not a directory or does not exist.",
+        );
     }
 
-    // }}}
-    // {{{ public function getTempFileName()
-
     /**
-     * Gets the temporary name of the uploaded file
+     * Gets the temporary name of the uploaded file.
      *
      * @return mixed the temporary name of the uploaded file or null if no
-     *                file was uploaded.
+     *               file was uploaded
      *
      * @see SwatFileEntry::getFileName()
      */
@@ -306,28 +277,22 @@ class SwatFileEntry extends SwatInputControl
         return $this->isUploaded() ? $this->file['tmp_name'] : null;
     }
 
-    // }}}
-    // {{{ public function getSize()
-
     /**
-     * Gets the size of the uploaded file in bytes
+     * Gets the size of the uploaded file in bytes.
      *
      * @return mixed the size of the uploaded file in bytes or null if no file
-     *                was uploaded.
+     *               was uploaded
      */
     public function getSize()
     {
         return $this->isUploaded() ? $this->file['size'] : null;
     }
 
-    // }}}
-    // {{{ public function getMimeType()
-
     /**
-     * Gets the mime type of the uploaded file
+     * Gets the mime type of the uploaded file.
      *
      * @return mixed the mime type of the uploaded file or null if no file was
-     *                uploaded.
+     *               uploaded
      */
     public function getMimeType()
     {
@@ -361,22 +326,19 @@ class SwatFileEntry extends SwatInputControl
         return $this->mime_type;
     }
 
-    // }}}
-    // {{{ public function saveFile()
-
     /**
-     * Saves the uploaded file to the server
+     * Saves the uploaded file to the server.
      *
-     * @param string $dst_dir the directory on the server to save the uploaded
-     *                        file in.
+     * @param string $dst_dir      the directory on the server to save the uploaded
+     *                             file in
      * @param string $dst_filename an optional filename to save the file under.
      *                             If no filename is specified, the file is
      *                             saved with the original filename.
      *
-     * @return boolean true if the file was saved correctly and false if there
-     *                  was an error or no file was uploaded.
+     * @return bool true if the file was saved correctly and false if there
+     *              was an error or no file was uploaded
      *
-     * @throws SwatException if the destination directory does not exist.
+     * @throws SwatException if the destination directory does not exist
      */
     public function saveFile($dst_dir, $dst_filename = null)
     {
@@ -393,24 +355,21 @@ class SwatFileEntry extends SwatInputControl
                 $this->file['tmp_name'],
                 $dst_dir . '/' . $dst_filename,
             );
-        } else {
-            throw new SwatException(
-                "Destination of '{$dst_dir}' is not a " .
-                    'directory or does not exist.',
-            );
         }
-    }
 
-    // }}}
-    // {{{ public function getFocusableHtmlId()
+        throw new SwatException(
+            "Destination of '{$dst_dir}' is not a " .
+                'directory or does not exist.',
+        );
+    }
 
     /**
      * Gets the id attribute of the XHTML element displayed by this widget
-     * that should receive focus
+     * that should receive focus.
      *
      * @return string the id attribute of the XHTML element displayed by this
-     *                 widget that should receive focus or null if there is
-     *                 no such element.
+     *                widget that should receive focus or null if there is
+     *                no such element
      *
      * @see SwatWidget::getFocusableHtmlId()
      */
@@ -419,19 +378,16 @@ class SwatFileEntry extends SwatInputControl
         return $this->visible ? $this->id : null;
     }
 
-    // }}}
-    // {{{ public static function getMaximumFileUploadSize()
-
     /**
      * Returns the size (in bytes) of the upload size limit of the PHP
-     * configuration
+     * configuration.
      *
      * The maximum upload size is calculated based on the php ini values for
      * <code>upload_max_filesize</code> and <code>post_max_size</code>. Be
      * aware that web server and POST data settings can also affect the
      * maximum upload size limit.
      *
-     * @return integer the maximum upload size in bytes.
+     * @return int the maximum upload size in bytes
      */
     public static function getMaximumFileUploadSize()
     {
@@ -441,17 +397,14 @@ class SwatFileEntry extends SwatInputControl
         );
     }
 
-    // }}}
-    // {{{ protected function getValidationMessage()
-
     /**
-     * Gets a validation message for this file entry
+     * Gets a validation message for this file entry.
      *
      * Can be used by sub-classes to change the validation messages.
      *
-     * @param string $id the string identifier of the validation message.
+     * @param string $id the string identifier of the validation message
      *
-     * @return SwatMessage the validation message.
+     * @return SwatMessage the validation message
      */
     protected function getValidationMessage($id)
     {
@@ -520,27 +473,21 @@ class SwatFileEntry extends SwatInputControl
         return $message;
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
-
     /**
-     * Gets the array of CSS classes that are applied to this file entry widget
+     * Gets the array of CSS classes that are applied to this file entry widget.
      *
      * @return array the array of CSS classes that are applied to this file
-     *                entry widget.
+     *               entry widget
      */
     protected function getCSSClassNames()
     {
         $classes = ['swat-file-entry'];
-        $classes = array_merge($classes, parent::getCSSClassNames());
-        return $classes;
+
+        return array_merge($classes, parent::getCSSClassNames());
     }
 
-    // }}}
-    // {{{ protected function hasValidMimeType()
-
     /**
-     * Whether or not the uploaded file's mime type is valid
+     * Whether or not the uploaded file's mime type is valid.
      *
      * Gets whether or not the upload file's mime type matches the accepted
      * mime types of this widget. Valid mime types for this widget are stored in
@@ -551,7 +498,7 @@ class SwatFileEntry extends SwatInputControl
      * Some container formats may have multiple mime-types. In this case, if
      * any of the contained types are valid, we consider the file valid.
      *
-     * @return boolean whether or not this file's mime type is valid.
+     * @return bool whether or not this file's mime type is valid
      */
     protected function hasValidMimeType()
     {
@@ -563,8 +510,8 @@ class SwatFileEntry extends SwatInputControl
             // valid.
             $mime_types = explode(' ', $this->getMimeType());
             if (
-                is_array($this->accept_mime_types) &&
-                count($this->accept_mime_types) > 0
+                is_array($this->accept_mime_types)
+                && count($this->accept_mime_types) > 0
             ) {
                 $types = array_intersect($mime_types, $this->accept_mime_types);
                 $valid = count($types) > 0;
@@ -576,9 +523,6 @@ class SwatFileEntry extends SwatInputControl
         return $valid;
     }
 
-    // }}}
-    // {{{ protected function getMaximumUploadSizeText()
-
     protected function getMaximumUploadSizeText()
     {
         return sprintf(
@@ -587,13 +531,10 @@ class SwatFileEntry extends SwatInputControl
         );
     }
 
-    // }}}
-    // {{{ protected function getFinfo()
-
     /**
-     * Gets a new finfo resource
+     * Gets a new finfo resource.
      *
-     * @return mixed the magic database resource or FALSE on failure.
+     * @return mixed the magic database resource or FALSE on failure
      */
     protected function getFinfo()
     {
@@ -608,9 +549,6 @@ class SwatFileEntry extends SwatInputControl
         return new finfo($mime_constant);
     }
 
-    // }}}
-    // {{{ protected function getDisplayableTypes()
-
     /**
      * Gets a unique array of acceptable human-readable file and mime types for
      * display.
@@ -619,16 +557,14 @@ class SwatFileEntry extends SwatInputControl
      * exists within it, we display the corresponding human-readable file type.
      * Otherwise we fall back to the mime type.
      *
-     * @return array unique mime and human-readable file types.
+     * @return array unique mime and human-readable file types
      */
     protected function getDisplayableTypes()
     {
         $displayable_types = [];
 
         foreach ($this->accept_mime_types as $mime_type) {
-            $displayable_type = isset($this->human_file_types[$mime_type])
-                ? $this->human_file_types[$mime_type]
-                : $mime_type;
+            $displayable_type = $this->human_file_types[$mime_type] ?? $mime_type;
 
             // Use the value as the key to de-dupe.
             $displayable_types[$displayable_type] = $displayable_type;
@@ -636,9 +572,6 @@ class SwatFileEntry extends SwatInputControl
 
         return $displayable_types;
     }
-
-    // }}}
-    // {{{ private function generateUniqueFileName()
 
     private function generateUniqueFileName($path, $count = 0)
     {
@@ -664,9 +597,6 @@ class SwatFileEntry extends SwatInputControl
         return $file_name;
     }
 
-    // }}}
-    // {{{ private static function parseFileUploadSize()
-
     private static function parseFileUploadSize($ini_value)
     {
         if (is_numeric($ini_value)) {
@@ -676,20 +606,23 @@ class SwatFileEntry extends SwatInputControl
             $value = (int) mb_substr($ini_value, 0, -1);
 
             // No breaks on purpose. We want the values to fall through.
-            // "no break" comments below are for PSR coding style
             switch ($size) {
                 case 'P':
                     $value *= 1024;
-                // no break
+                    // no break
+
                 case 'T':
                     $value *= 1024;
-                // no break
+                    // no break
+
                 case 'G':
                     $value *= 1024;
-                // no break
+                    // no break
+
                 case 'M':
                     $value *= 1024;
-                // no break
+                    // no break
+
                 case 'K':
                     $value *= 1024;
                     break;
@@ -698,6 +631,4 @@ class SwatFileEntry extends SwatInputControl
 
         return $value;
     }
-
-    // }}}
 }

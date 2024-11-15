@@ -14,7 +14,7 @@ class SwatButton {
       this.initThrobber();
     }
 
-    this.button.addEventListener('click', e => {
+    this.button.addEventListener('click', (e) => {
       this.handleClick(e);
     });
   }

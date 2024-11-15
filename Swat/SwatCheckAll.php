@@ -1,18 +1,15 @@
 <?php
 
 /**
- * A "check all" JavaScript powered checkbox
+ * A "check all" JavaScript powered checkbox.
  *
- * @package   Swat
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatCheckAll extends SwatCheckbox
 {
-    // {{{ public properties
-
     /**
-     * Optional checkbox label title
+     * Optional checkbox label title.
      *
      * Defaults to "Check All".
      *
@@ -21,7 +18,7 @@ class SwatCheckAll extends SwatCheckbox
     public $title;
 
     /**
-     * Optional content type for title
+     * Optional content type for title.
      *
      * Defaults to text/plain, use text/xml for XHTML fragments.
      *
@@ -30,21 +27,21 @@ class SwatCheckAll extends SwatCheckbox
     public $content_type = 'text/plain';
 
     /**
-     * Count for all items when displaying an extended-all checkbox
+     * Count for all items when displaying an extended-all checkbox.
      *
      * When the check-all checkbox has been checked, an additional
      * checkbox will appear allowing the user to specify that they wish to
      * select all possible items. This is useful in cases where pagination
      * makes selecting all possible items impossible.
      *
-     * @var integer
+     * @var int
      */
     public $extended_count = 0;
 
     /**
-     * Count for all visible items when displaying an extended-all checkbox
+     * Count for all visible items when displaying an extended-all checkbox.
      *
-     * @var integer
+     * @var int
      */
     public $visible_count = 0;
 
@@ -57,15 +54,12 @@ class SwatCheckAll extends SwatCheckbox
      */
     public $unit;
 
-    // }}}
-    // {{{ public function __construct()
-
     /**
-     * Creates a new check-all widget
+     * Creates a new check-all widget.
      *
      * Sets the widget title to a default value.
      *
-     * @param string $id a non-visible unique id for this widget.
+     * @param string $id a non-visible unique id for this widget
      *
      * @see SwatWidget::__construct()
      */
@@ -78,24 +72,18 @@ class SwatCheckAll extends SwatCheckbox
         $this->addJavaScript('packages/swat/javascript/swat-check-all.js');
     }
 
-    // }}}
-    // {{{ public function isExtendedSelected()
-
     /**
-     * Whether or not the extended-checkbox was checked
+     * Whether or not the extended-checkbox was checked.
      *
-     * @return boolean Whether or not the extended-checkbox was checked
+     * @return bool Whether or not the extended-checkbox was checked
      */
     public function isExtendedSelected()
     {
         return $this->getCompositeWidget('extended_checkbox')->value;
     }
 
-    // }}}
-    // {{{ public function display()
-
     /**
-     * Displays this check-all widget
+     * Displays this check-all widget.
      */
     public function display()
     {
@@ -138,13 +126,10 @@ class SwatCheckAll extends SwatCheckbox
         Swat::displayInlineJavaScript($this->getInlineJavaScript());
     }
 
-    // }}}
-    // {{{ protected function getExtendedTitle()
-
     protected function getExtendedTitle()
     {
         $locale = SwatI18NLocale::get();
-        $entity = $this->unit === null ? Swat::_('items') : $this->unit;
+        $entity = $this->unit ?? Swat::_('items');
 
         $checkbox = $this->getCompositeWidget('extended_checkbox');
         $checkbox->tabindex = $this->tab_index;
@@ -176,29 +161,23 @@ class SwatCheckAll extends SwatCheckbox
         );
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
-
     /**
-     * Gets the array of CSS classes that are applied to this check-all widget
+     * Gets the array of CSS classes that are applied to this check-all widget.
      *
      * @return array the array of CSS classes that are applied to this
-     *               check-all widget.
+     *               check-all widget
      */
     protected function getCSSClassNames()
     {
         $classes = ['swat-check-all'];
-        $classes = array_merge($classes, parent::getCSSClassNames());
-        return $classes;
+
+        return array_merge($classes, parent::getCSSClassNames());
     }
 
-    // }}}
-    // {{{ protected function getInlineJavaScript()
-
     /**
-     * Gets the inline JavaScript for this check-all widget
+     * Gets the inline JavaScript for this check-all widget.
      *
-     * @return string the inline JavaScript for this check-all widget.
+     * @return string the inline JavaScript for this check-all widget
      */
     protected function getInlineJavaScript()
     {
@@ -209,14 +188,9 @@ class SwatCheckAll extends SwatCheckbox
         );
     }
 
-    // }}}
-    // {{{ protected function createCompositeWidgets()
-
     protected function createCompositeWidgets()
     {
         $extended_checkbox = new SwatCheckbox();
         $this->addCompositeWidget($extended_checkbox, 'extended_checkbox');
     }
-
-    // }}}
 }
