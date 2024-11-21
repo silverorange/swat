@@ -540,22 +540,6 @@ class SwatUI extends SwatObject
                         $parsed_object->id,
                     );
                 }
-                // make sure id only contains characters valid
-                // for JS variables and CSS identifiers
-                if (
-                    !preg_match(
-                        '/^[a-zA-Z]+[a-zA-Z0-9_]*$/',
-                        $parsed_object->id,
-                    )
-                ) {
-                    throw new SwatInvalidPropertyException(
-                        'A widget has an invalid value for its id: ' .
-                            "'{$parsed_object->id}'",
-                        0,
-                        $parsed_object,
-                        'id',
-                    );
-                }
             } elseif (
                 !class_exists('SwatWidget') ||
                 !$parsed_object instanceof SwatWidget
