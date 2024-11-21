@@ -180,6 +180,8 @@ abstract class SwatWidget extends SwatUIObject
             $this->id = $this->getUniqueId();
         }
 
+        $this->validateId();
+
         if ($this->stylesheet !== null) {
             $this->addStyleSheet($this->stylesheet);
         }
@@ -527,6 +529,36 @@ abstract class SwatWidget extends SwatUIObject
      * @todo document me
      */
     abstract public function printWidgetTree();
+
+    // }}}
+    // {{{ protected function validateId()
+
+    /**
+     * Ensures the id for this widget is valid
+     *
+     * If an id is set for a widget, it must start with a lower-case or
+     * upper-case letter and be composed of only lower or upper-case letters,
+     * numbers, and underscores.
+     *
+     * @return void
+     * @throws SwatInvalidPropertyException
+     */
+    protected function validateId(): void
+    {
+        // Make sure id only contains characters valid for JS variables and
+        // CSS identifiers.
+        if (
+            $this->id !== null &&
+            !preg_match('/^[a-zA-Z][a-zA-Z0-9_]*$/', $this->id)
+        ) {
+            throw new SwatInvalidPropertyException(
+                'A widget has an invalid value for its id: ' . "'{$this->id}'",
+                0,
+                $this,
+                'id',
+            );
+        }
+    }
 
     // }}}
     // {{{ protected function getCSSClassNames()
