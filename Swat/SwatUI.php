@@ -527,7 +527,6 @@ class SwatUI extends SwatObject
     ) {
         if ($element_name == 'widget') {
             if (
-                class_exists('SwatWidget') &&
                 $parsed_object instanceof SwatWidget &&
                 $parsed_object->id !== null
             ) {
@@ -540,10 +539,7 @@ class SwatUI extends SwatObject
                         $parsed_object->id,
                     );
                 }
-            } elseif (
-                !class_exists('SwatWidget') ||
-                !$parsed_object instanceof SwatWidget
-            ) {
+            } elseif (!$parsed_object instanceof SwatWidget) {
                 $class_name = get_class($parsed_object);
 
                 throw new SwatInvalidClassException(
@@ -554,10 +550,7 @@ class SwatUI extends SwatObject
                 );
             }
         } elseif ($element_name == 'object') {
-            if (
-                class_exists('SwatWidget') &&
-                $parsed_object instanceof SwatWidget
-            ) {
+            if ($parsed_object instanceof SwatWidget) {
                 $class_name = get_class($parsed_object);
 
                 throw new SwatInvalidClassException(
