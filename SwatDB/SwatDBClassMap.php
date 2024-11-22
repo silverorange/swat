@@ -57,14 +57,12 @@ class SwatDBClassMap
     public static function add(
         string $from_class_name,
         string $to_class_name,
-    ): void
-    {
+    ): void {
         // check for subclass
         if (!is_subclass_of($to_class_name, $from_class_name)) {
             throw new SwatInvalidClassException(
                 sprintf(
-                    'Invalid ' .
-                    'class-mapping detected. %s is not a subclass of %s.',
+                    'Invalid class-mapping detected. %s is not a subclass of %s.',
                     $to_class_name,
                     $from_class_name,
                 ),
@@ -126,9 +124,8 @@ class SwatDBClassMap
      */
     public static function new(
         string $from_class_name,
-        mixed  ...$params,
-    ): object
-    {
+        mixed ...$params,
+    ): object {
         $class = self::get($from_class_name);
 
         return new $class(...$params);
@@ -137,5 +134,7 @@ class SwatDBClassMap
     /**
      * The class map is a static object and should not be instantiated
      */
-    private function __construct() {}
+    private function __construct()
+    {
+    }
 }
