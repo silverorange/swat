@@ -431,9 +431,9 @@ class SwatDBDataObject extends SwatObject implements
      * database as a new row. This method recursively duplicates
      * sub-dataobjects which were registered with <i>$autosave</i> set to true.
      *
-     * @return SwatDBDataobject a duplicate of this object.
+     * @return static a duplicate of this object.
      */
-    public function duplicate()
+    public function duplicate(): static
     {
         $class = get_class($this);
         $new_object = new $class();
