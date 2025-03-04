@@ -117,9 +117,11 @@ class SwatDBClassMap
      * that class.
      *
      * @param class-string<TParent> $from_class_name The name of the class to resolve
-     * @param mixed                 ...$params       Extra parameters to pass to the new class constructor
+     * @param mixed                 ...$params       Extra parameters to pass to
+     *                                               the new class constructor
      *
-     * @return TChild|TParent A new instance of the resolved class, or the given class if no mapping exists
+     * @return TChild|TParent A new instance of the resolved class,
+     *                        or the given class if no mapping exists
      */
     public static function new(string $from_class_name, mixed ...$params)
     {

@@ -80,9 +80,12 @@ class SwatDB extends SwatObject
      *                                               for the columns of the
      *                                               result set.
      *
-     * @return ($wrapper is null ? MDB2_Result_Common : TWrapper)  A recordset containing the query result. If <i>$wrapper</i>
-     *               is specified as null, a MDB2_Result_Common object is
-     *               returned.
+     * @return ($wrapper is null ? MDB2_Result_Common : TWrapper)  A recordset containing
+     *                                                             the query result. If
+     *                                                             <i>$wrapper</i> is
+     *                                                             specified as null, a
+     *                                                             MDB2_Result_Common object
+     *                                                             is returned.
      *
      * @throws SwatDBException
      */
