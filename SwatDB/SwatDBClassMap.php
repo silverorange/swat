@@ -121,10 +121,8 @@ class SwatDBClassMap
      *
      * @return TChild|TParent A new instance of the resolved class, or the given class if no mapping exists
      */
-    public static function new(
-        string $from_class_name,
-        mixed ...$params,
-    ) {
+    public static function new(string $from_class_name, mixed ...$params)
+    {
         $class = self::get($from_class_name);
 
         return new $class(...$params);
@@ -133,5 +131,7 @@ class SwatDBClassMap
     /**
      * The class map is a static object and should not be instantiated.
      */
-    private function __construct() {}
+    private function __construct()
+    {
+    }
 }
