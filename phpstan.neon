@@ -1,0 +1,8 @@
+parameters:
+  level: 0
+  paths:
+    - Swat
+    - SwatDB
+    - SwatI18N
+  editorUrl: '%%relFile%%:%%line%%'
+  editorUrlTitle: '%%relFile%%:%%line%%'

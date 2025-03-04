@@ -1,21 +1,20 @@
 <?php
 
 /**
- * Maps class names to overridden class names
+ * Maps class names to overridden class names.
  *
  * This is a static class and should not be instantiated.
  *
- * @package   SwatDB
- * @copyright 2006-2024 silverorange
+ * @copyright 2006-2025 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  *
- * @template TParent of object
+ * @template TParent
  * @template TChild of TParent
  */
 class SwatDBClassMap
 {
     /**
-     * An associative array of class-mappings
+     * An associative array of class-mappings.
      *
      * The array has keys of the 'from class name' and values of the
      * 'to class name'.
@@ -25,7 +24,7 @@ class SwatDBClassMap
     private static array $map = [];
 
     /**
-     * Maps a class name to another class name
+     * Maps a class name to another class name.
      *
      * Subsequent calls to {@link SwatDBClassMap::get()} using the
      * <i>$from_class_name</i> will return the <i>$to_class_name</i>. Class
@@ -41,18 +40,18 @@ class SwatDBClassMap
      * <i>$from_class_name</i> is already mapped to another class the old
      * mapping is overwritten.
      *
-     * @param class-string<TParent> $from_class_name the class name to map from.
-     * @param class-string<TChild> $to_class_name the class name to map to.
-     *                                             The mapped class must be a
-     *                                             subclass of the
-     *                                             <i>$from_class_name</i> otherwise
-     *                                             class resolution using
-     *                                             {@link SwatDBClassMap::get()}
-     *                                             will throw an exception.
+     * @param class-string<TParent> $from_class_name The class name to map from
+     * @param class-string<TChild>  $to_class_name   The class name to map to.
+     *                                               The mapped class must be a
+     *                                               subclass of the
+     *                                               <i>$from_class_name</i> otherwise
+     *                                               class resolution using
+     *                                               {@link SwatDBClassMap::get()}
+     *                                               will throw an exception.
      *
-     * @throws SwatInvalidClassException if <i>$to_class_name</i> is not a subclass
-     * *                                   of <i>$from_class_name</i>.
-     * @throws SwatException if the added mapping creates a circular dependency.
+     * @throws SwatInvalidClassException If <i>$to_class_name</i> is not a subclass
+     *                                   of <i>$from_class_name</i>
+     * @throws SwatException             If the added mapping creates a circular dependency
      */
     public static function add(
         string $from_class_name,
@@ -93,13 +92,13 @@ class SwatDBClassMap
     }
 
     /**
-     * Resolves a class name from the class map
+     * Resolves a class name from the class map.
      *
-     * @param class-string<TParent> $from_class_name the name of the class to resolve.
+     * @param class-string<TParent> $from_class_name The name of the class to resolve
      *
-     * @return class-string<TChild> the resolved class name. If no class mapping
-     *                              exists for the given class name, the same
-     *                              class name is returned.
+     * @return class-string<TChild|TParent> The resolved class name. If no class mapping
+     *                                      exists for the given class name, the same
+     *                                      class name is returned.
      */
     public static function get(string $from_class_name): string
     {
@@ -117,22 +116,22 @@ class SwatDBClassMap
      * Resolves a class name from the class map and returns a new instance of
      * that class.
      *
-     * @param class-string<TParent> $from_class_name the name of the class to resolve
-     * @param mixed ...$params extra parameters to pass to the new class constructor
+     * @param class-string<TParent> $from_class_name The name of the class to resolve
+     * @param mixed                 ...$params       Extra parameters to pass to
+     *                                               the new class constructor
      *
-     * @return object<TChild> a new instance of the resolved class
+     * @return TChild|TParent A new instance of the resolved class,
+     *                        or the given class if no mapping exists
      */
-    public static function new(
-        string $from_class_name,
-        mixed ...$params,
-    ): object {
+    public static function new(string $from_class_name, mixed ...$params)
+    {
         $class = self::get($from_class_name);
 
         return new $class(...$params);
     }
 
     /**
-     * The class map is a static object and should not be instantiated
+     * The class map is a static object and should not be instantiated.
      */
     private function __construct()
     {

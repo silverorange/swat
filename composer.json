@@ -51,7 +51,8 @@
 		"silverorange/yui": "^1.0.11"
 	},
 	"require-dev": {
-		"silverorange/coding-standard": "^1.0.0"
+		"silverorange/coding-standard": "^1.0.0",
+		"phpstan/phpstan": "^2.1"
 	},
 	"autoload": {
 		"classmap": [ "Swat/", "SwatDB/", "SwatI18N/" ]

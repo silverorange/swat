@@ -6,7 +6,7 @@
  * Static convenience methods for working with a database.
  *
  * @package   SwatDB
- * @copyright 2005-2016 silverorange
+ * @copyright 2005-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDB extends SwatObject
@@ -64,9 +64,11 @@ class SwatDB extends SwatObject
     /**
      * Performs an SQL query
      *
+     * @template TWrapper of SwatDBRecordsetWrapper
+     *
      * @param MDB2_Driver_Common            $db      the database connection.
      * @param string                        $sql     the SQL to execute.
-     * @param string|SwatDBRecordsetWrapper $wrapper optional. The object or
+     * @param class-string<TWrapper>|TWrapper|null   $wrapper optional. The object or
      *                                               name of class with which
      *                                               to wrap the result set. If
      *                                               not specified,
@@ -74,22 +76,25 @@ class SwatDB extends SwatObject
      *                                               is used. Specify
      *                                               <kbd>null</kbd> to return
      *                                               an unwrapped MDB2 result.
-     * @param array                         $types   optional. An array of MDB2 datatypes
+     * @param ?array                        $types   optional. An array of MDB2 datatypes
      *                                               for the columns of the
      *                                               result set.
      *
-     * @return mixed A recordset containing the query result. If <i>$wrapper</i>
-     *               is specified as null, a MDB2_Result_Common object is
-     *               returned.
+     * @return ($wrapper is null ? MDB2_Result_Common : TWrapper)  A recordset containing
+     *                                                             the query result. If
+     *                                                             <i>$wrapper</i> is
+     *                                                             specified as null, a
+     *                                                             MDB2_Result_Common object
+     *                                                             is returned.
      *
      * @throws SwatDBException
      */
     public static function query(
-        $db,
-        $sql,
-        $wrapper = 'SwatDBDefaultRecordsetWrapper',
-        $types = null,
-    ) {
+        MDB2_Driver_Common $db,
+        string $sql,
+        SwatDBRecordsetWrapper|string|null $wrapper = SwatDBDefaultRecordsetWrapper::class,
+        ?array $types = null,
+    ): SwatDBRecordsetWrapper|MDB2_Result_Common {
         $mdb2_types = $types === null ? true : $types;
 
         $rs = self::executeQuery($db, 'query', [
@@ -102,10 +107,12 @@ class SwatDB extends SwatObject
         // Wrap results. Do it here instead of in MDB2 so we can wrap using
         // an existing object instance.
         if (is_string($wrapper)) {
-            $rs = new $wrapper($rs);
-        } elseif ($wrapper instanceof SwatDBRecordsetWrapper) {
+            return new $wrapper($rs);
+        }
+
+        if ($wrapper instanceof SwatDBRecordsetWrapper) {
             $wrapper->initializeFromResultSet($rs);
-            $rs = $wrapper;
+            return $wrapper;
         }
 
         return $rs;
