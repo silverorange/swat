@@ -3,8 +3,7 @@
 /**
  * All public properties correspond to database fields
  *
- * @package   SwatDB
- * @copyright 2005-2024 silverorange
+ * @copyright 2005-2025 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDBDataObject extends SwatObject implements
@@ -49,6 +48,11 @@ class SwatDBDataObject extends SwatObject implements
      * @var array
      */
     private $date_properties = [];
+
+    /**
+     * @var array<string, {type: string, class: class-string<\UnitEnum>}>
+     */
+    private array $enum_properties = [];
 
     /**
      * @var boolean
@@ -596,13 +600,17 @@ class SwatDBDataObject extends SwatObject implements
             // existing dataobject can leave out of date values on properties
             // when those values were updated to null.
             if (array_key_exists($name, $row)) {
-                if (
-                    in_array($name, $this->date_properties) &&
-                    $row[$name] !== null
-                ) {
-                    $this->$name = new SwatDate($row[$name]);
+                if ($row[$name] === null) {
+                    $this->{$name} = null;
+                } elseif (in_array($name, $this->date_properties)) {
+                    $this->{$name} = new SwatDate($row[$name]);
+                } elseif (array_key_exists($name, $this->enum_properties)) {
+                    $this->{$name} = $this->makeEnumFromValue(
+                        $this->enum_properties[$name]['class'],
+                        $row[$name],
+                    );
                 } else {
-                    $this->$name = $row[$name];
+                    $this->{$name} = $row[$name];
                 }
             }
         }
@@ -617,6 +625,111 @@ class SwatDBDataObject extends SwatObject implements
     }
 
     // }}}
+
+    /**
+     * Takes the name of an enum class and a value that should represent one
+     * of that enum's cases, and returns an instance of that case.
+     *
+     * @template TEnumClass of UnitEnum
+     *
+     * @param class-string<TEnumClass> $classname
+     *
+     * @return TEnumClass
+     *
+     * @throws SwatDBException
+     */
+    protected function makeEnumFromValue(
+        string $classname,
+        mixed $value,
+    ): UnitEnum {
+        try {
+            $reflection = new ReflectionEnum($classname);
+        } catch (ReflectionException $e) {
+            throw new SwatDBException(
+                sprintf(
+                    '"%s" does not appear to be an enum class.',
+                    $classname,
+                ),
+            );
+        }
+
+        // handle backed enums
+        if ($reflection->isBacked()) {
+            try {
+                return $classname::from($value);
+            } catch (ValueError $e) {
+                throw new SwatDBException(
+                    sprintf(
+                        'Can not create an "%s" backed enum instance from the value "%s"',
+                        $classname,
+                        $value,
+                    ),
+                );
+            }
+        }
+
+        // handle unit enums
+        try {
+            return $reflection->getCase($value)->getValue();
+        } catch (ReflectionException $e) {
+            throw new SwatDBException(
+                sprintf(
+                    'Can not create an "%s" unit enum instance from the value "%s"',
+                    $classname,
+                    $value,
+                ),
+            );
+        }
+    }
+
+    /**
+     * Registers one of the fields in this object as an enum.
+     *
+     * @param string $field the field name
+     * @param string $type the native DB type (in Postgres, this would be the enum name)
+     * @param string $classname the PHP class to which this field should be cast
+     */
+    public function registerEnumProperty(
+        string $field,
+        string $type,
+        string $classname,
+    ): void {
+        $this->enum_properties[$field] = [
+            'type' => $type,
+            'class' => $classname,
+        ];
+    }
+
+    /**
+     * Configures the database to map enum fields to text when selecting values.
+     *
+     * This allows you to do `SELECT * FROM ...` without needing to explicitly cast each field.
+     */
+    private function setEnumCallbackMapping(MDB2_Driver_Common &$db)
+    {
+        $map = $db->getOption('nativetype_map_callback') ?? [];
+
+        foreach ($this->enum_properties as $field => $enum_data) {
+            if (!enum_exists($enum_data['class'])) {
+                throw new SwatDBException(
+                    sprintf(
+                        'The mapping class "%s" for field "%s" is not an enum',
+                        $enum_data['class'],
+                        $field,
+                    ),
+                );
+            }
+            $map[$enum_data['type']] = fn($db, $field) => [
+                ['text'],
+                null,
+                null,
+                false,
+            ];
+        }
+
+        $db->setOption('nativetype_map_callback', $map);
+    }
+
     // {{{ protected function generatePropertyHashes()
 
     /**
@@ -1013,6 +1126,8 @@ class SwatDBDataObject extends SwatObject implements
      */
     public function setDatabase(MDB2_Driver_Common $db, array $set = [])
     {
+        $this->setEnumCallbackMapping($db);
+
         $key = spl_object_hash($this);
 
         if (isset($set[$key])) {
@@ -1296,6 +1411,10 @@ class SwatDBDataObject extends SwatObject implements
 
             if ($type == 'date') {
                 $value = $value->getDate();
+            } elseif ($type == 'enum') {
+                $type = 'text';
+                $value =
+                    $value instanceof BackedEnum ? $value->value : $value->name;
             }
 
             $fields[] = sprintf('%s:%s', $type, $name);
@@ -1454,6 +1573,8 @@ class SwatDBDataObject extends SwatObject implements
             case 'object':
                 if ($value instanceof SwatDate) {
                     return 'date';
+                } elseif ($value instanceof UnitEnum) {
+                    return 'enum';
                 }
                 return 'text';
             case 'string':
@@ -1640,6 +1761,7 @@ class SwatDBDataObject extends SwatObject implements
             'internal_property_accessible',
             'internal_property_classes',
             'date_properties',
+            'enum_properties',
         ];
 
         foreach ($data as $property => $value) {
