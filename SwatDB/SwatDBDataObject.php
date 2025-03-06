@@ -1413,7 +1413,8 @@ class SwatDBDataObject extends SwatObject implements
                 $value = $value->getDate();
             } elseif ($type == 'enum') {
                 $type = 'text';
-                $value = $value->name;
+                $value =
+                    $value instanceof BackedEnum ? $value->value : $value->name;
             }
 
             $fields[] = sprintf('%s:%s', $type, $name);
