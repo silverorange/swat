@@ -3,7 +3,7 @@
 	"description": "Web application toolkit.",
 	"type": "library",
 	"keywords": [ "swat", "toolkit", "widget" ],
-	"homepage": "https://code.silverorange.com/swat",
+	"homepage": "https://github.com/silverorange.com/swat",
 	"license": "LGPL-2.1",
 	"authors": [
 		{
@@ -29,7 +29,11 @@
 		{
 			"name": "Steven Garrity",
 			"email": "steven@silverorange.com"
-		}
+		},
+        {
+            "name": "Colin Viebrock",
+            "email": "colin@viebrock.com"
+        }
 	],
 	"repositories": [
 		{
