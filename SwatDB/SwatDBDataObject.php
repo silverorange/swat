@@ -1011,8 +1011,6 @@ class SwatDBDataObject extends SwatObject implements
      */
     public function setDatabase(MDB2_Driver_Common $db, array $set = [])
     {
-        $this->setEnumCallbackMapping($db);
-
         $key = spl_object_hash($this);
 
         if (isset($set[$key])) {
@@ -1296,10 +1294,6 @@ class SwatDBDataObject extends SwatObject implements
 
             if ($type == 'date') {
                 $value = $value->getDate();
-            } elseif ($type == 'enum') {
-                $type = 'text';
-                $value =
-                    $value instanceof BackedEnum ? $value->value : $value->name;
             }
 
             $fields[] = sprintf('%s:%s', $type, $name);
