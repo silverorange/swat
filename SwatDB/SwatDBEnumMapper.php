@@ -47,7 +47,7 @@ class SwatDBEnumMapper
      *
      * @var TEnumMap
      */
-    static array $map = [];
+    protected static array $map = [];
 
     /**
      * Load the mapping into the static class.
@@ -108,7 +108,10 @@ class SwatDBEnumMapper
     /**
      * Main entry point used by MDB2 to manage custom field types and data mapping.
      *
-     * @return ($method is 'convertResult' ? TEnumClass : ($method is 'compareDefinition' ? array : string))
+     * @return ($method is 'convertResult'
+     *      ? TEnumClass
+     *      : ($method is 'compareDefinition' ? array : string)
+     *  )
      *
      * @throws SwatDBException
      */
