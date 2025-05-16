@@ -8,48 +8,25 @@ pipeline {
             }
         }
 
-        stage('Install Yarn Dependencies') {
+        stage('Install NPM Dependencies') {
             environment {
-                YARN_CACHE_FOLDER = "${env.WORKSPACE}/yarn-cache/${env.BUILD_NUMBER}"
+                PNPM_CACHE_FOLDER = "${env.WORKSPACE}/pnpm-cache/${env.BUILD_NUMBER}"
             }
             steps {
-                sh 'yarn install'
+                sh 'n -d exec engine corepack enable pnpm'
+                sh 'n -d exec engine pnpm install'
             }
         }
 
-        stage('Lint Modified Files') {
-            when {
-                not {
-                    branch 'master'
-                }
-            }
+        stage('Check PHP Coding Style') {
             steps {
-                sh '''
-                    master_sha=$(git rev-parse origin/master)
-                    newest_sha=$(git rev-parse HEAD)
-                    ./vendor/bin/phpcs \
-                    --standard=SilverorangeTransitionalPrettier \
-                    --tab-width=4 \
-                    --encoding=utf-8 \
-                    --warning-severity=0 \
-                    --extensions=php \
-                    $(git diff --diff-filter=ACRM --name-only $master_sha...$newest_sha)
-                '''
+                sh 'composer run phpcs'
             }
         }
 
-        stage('Lint Entire Project') {
-            when {
-                branch 'master'
-            }
+        stage('Check Formating') {
             steps {
-                sh './vendor/bin/phpcs'
-            }
-        }
-
-        stage('Check if Pretty') {
-            steps {
-                sh 'yarn check-if-pretty'
+                sh 'n -d exec engine pnpm prettier'
             }
         }
     }
