@@ -1,9 +1,8 @@
 <?php
 
 /**
- * A date entry widget
+ * A date entry widget.
  *
- * @package   Swat
  * @copyright 2004-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
@@ -11,24 +10,24 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 {
     // {{{ class constants
 
-    const YEAR = 1;
-    const MONTH = 2;
-    const DAY = 4;
-    const TIME = 8;
-    const CALENDAR = 16;
+    public const YEAR = 1;
+    public const MONTH = 2;
+    public const DAY = 4;
+    public const TIME = 8;
+    public const CALENDAR = 16;
 
     // }}}
     // {{{ public properties
 
     /**
-     * Date of this date entry widget
+     * Date of this date entry widget.
      *
      * @var SwatDate
      */
-    public $value = null;
+    public $value;
 
     /**
-     * Required date parts
+     * Required date parts.
      *
      * Bitwise combination of {@link SwatDateEntry::YEAR},
      * {@link SwatDateEntry::MONTH}, {@link SwatDateEntry::DAY} and
@@ -41,12 +40,12 @@ class SwatDateEntry extends SwatInputControl implements SwatState
      * $date->required_parts = SwatDateEntry::MONTH | SwatDateEntry::DAY;
      * </code>
      *
-     * @var integer
+     * @var int
      */
     public $required_parts;
 
     /**
-     * Displayed date parts
+     * Displayed date parts.
      *
      * Bitwise combination of {@link SwatDateEntry::YEAR},
      * {@link SwatDateEntry::MONTH}, {@link SwatDateEntry::DAY},
@@ -59,12 +58,12 @@ class SwatDateEntry extends SwatInputControl implements SwatState
      * $date->display_parts = SwatDateEntry::YEAR | SwatDateEntry::MONTH;
      * </code>
      *
-     * @var integer
+     * @var int
      */
     public $display_parts;
 
     /**
-     * Start date of the valid range (inclusive)
+     * Start date of the valid range (inclusive).
      *
      * Defaults to 20 years in the past.
      *
@@ -73,7 +72,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
     public $valid_range_start;
 
     /**
-     * End date of the valid range (exclusive)
+     * End date of the valid range (exclusive).
      *
      * Defaults to 20 years in the future.
      *
@@ -82,25 +81,25 @@ class SwatDateEntry extends SwatInputControl implements SwatState
     public $valid_range_end;
 
     /**
-     * Whether the numeric month code is displayed in the month flydown
+     * Whether the numeric month code is displayed in the month flydown.
      *
      * This is useful for credit card date entry
      *
-     * @var boolean
+     * @var bool
      */
     public $show_month_number = false;
 
     /**
-     * Whether or not this time entry should auto-complete to the current date
+     * Whether or not this time entry should auto-complete to the current date.
      *
-     * @var boolean
+     * @var bool
      */
     public $use_current_date = true;
 
     /**
      * Whether or not the displayed parts should show their blank titles.
      *
-     * @var boolean
+     * @var bool
      */
     public $show_blank_titles = true;
 
@@ -108,12 +107,12 @@ class SwatDateEntry extends SwatInputControl implements SwatState
     // {{{ public function __construct()
 
     /**
-     * Creates a new date entry widget
+     * Creates a new date entry widget.
      *
      * Sets default required and display parts and sets default valid range
      * for this date entry.
      *
-     * @param string $id a non-visible unique id for this widget.
+     * @param string $id a non-visible unique id for this widget
      *
      * @see SwatWidget::__construct()
      */
@@ -122,8 +121,8 @@ class SwatDateEntry extends SwatInputControl implements SwatState
         parent::__construct($id);
 
         $this->required_parts = self::YEAR | self::MONTH | self::DAY;
-        $this->display_parts =
-            self::YEAR | self::MONTH | self::DAY | self::CALENDAR;
+        $this->display_parts
+            = self::YEAR | self::MONTH | self::DAY | self::CALENDAR;
 
         $this->setValidRange(-20, 20);
 
@@ -138,7 +137,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
     // {{{ public function __clone()
 
     /**
-     * Clones the valid date range of this date entry
+     * Clones the valid date range of this date entry.
      */
     public function __clone()
     {
@@ -150,15 +149,15 @@ class SwatDateEntry extends SwatInputControl implements SwatState
     // {{{ public function setValidRange()
 
     /**
-     * Set the valid date range
+     * Set the valid date range.
      *
      * Convenience method to set the valid date range by year offsets.
      *
-     * @param integer $start_offset offset from the current year in years used
-     *                               to set the starting year of the valid
-     *                               range.
-     * @param integer $end_offset offset from the current year in years used
-     *                             to set the ending year of the valid range.
+     * @param int $start_offset offset from the current year in years used
+     *                          to set the starting year of the valid
+     *                          range
+     * @param int $end_offset   offset from the current year in years used
+     *                          to set the ending year of the valid range
      */
     public function setValidRange($start_offset, $end_offset)
     {
@@ -183,7 +182,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
     // {{{ public function display()
 
     /**
-     * Displays this date entry
+     * Displays this date entry.
      *
      * Creates internal widgets if they do not exits then displays required
      * JavaScript, then displays internal widgets.
@@ -264,7 +263,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
     // {{{ public function process()
 
     /**
-     * Processes this date entry
+     * Processes this date entry.
      *
      * Creates internal widgets if they do not exist and then assigns their
      * values based on the date entered by the user. If the date is not valid,
@@ -399,9 +398,9 @@ class SwatDateEntry extends SwatInputControl implements SwatState
     // {{{ public function getState()
 
     /**
-     * Gets the current state of this date entry widget
+     * Gets the current state of this date entry widget.
      *
-     * @return boolean the current state of this date entry widget.
+     * @return bool the current state of this date entry widget
      *
      * @see SwatState::getState()
      */
@@ -409,18 +408,18 @@ class SwatDateEntry extends SwatInputControl implements SwatState
     {
         if ($this->value === null) {
             return null;
-        } else {
-            return $this->value->getDate();
         }
+
+        return $this->value->getDate();
     }
 
     // }}}
     // {{{ public function setState()
 
     /**
-     * Sets the current state of this date entry widget
+     * Sets the current state of this date entry widget.
      *
-     * @param boolean $state the new state of this date entry widget.
+     * @param bool $state the new state of this date entry widget
      *
      * @see SwatState::setState()
      */
@@ -433,10 +432,10 @@ class SwatDateEntry extends SwatInputControl implements SwatState
     // {{{ public function isValid()
 
     /**
-     * Checks if the entered date is within the valid range
+     * Checks if the entered date is within the valid range.
      *
-     * @return boolean true if the entered date is within the valid range and
-     *                  false if the entered date is not within the valid range.
+     * @return bool true if the entered date is within the valid range and
+     *              false if the entered date is not within the valid range
      */
     public function isValid()
     {
@@ -447,9 +446,9 @@ class SwatDateEntry extends SwatInputControl implements SwatState
     // {{{ protected function getInlineJavaScript()
 
     /**
-     * Gets the inline JavaScript required for this control
+     * Gets the inline JavaScript required for this control.
      *
-     * @return string the inline JavaScript required for this control.
+     * @return string the inline JavaScript required for this control
      */
     protected function getInlineJavaScript()
     {
@@ -542,16 +541,16 @@ class SwatDateEntry extends SwatInputControl implements SwatState
     // {{{ protected function getCSSClassNames()
 
     /**
-     * Gets the array of CSS classes that are applied to this date entry widget
+     * Gets the array of CSS classes that are applied to this date entry widget.
      *
      * @return array the array of CSS classes that are applied to this date
-     *                entry widget.
+     *               entry widget
      */
     protected function getCSSClassNames()
     {
         $classes = ['swat-date-entry'];
-        $classes = array_merge($classes, parent::getCSSClassNames());
-        return $classes;
+
+        return array_merge($classes, parent::getCSSClassNames());
     }
 
     // }}}
@@ -559,15 +558,16 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 
     /**
      * Checks if the entered date is valid with respect to the valid start
-     * date
+     * date.
      *
-     * @return boolean true if the entered date is on or after the valid start
-     *                  date and false if the entered date is before the valid
-     *                  start date.
+     * @return bool true if the entered date is on or after the valid start
+     *              date and false if the entered date is before the valid
+     *              start date
      */
     protected function isStartDateValid()
     {
         $this->valid_range_start->setTZById('UTC');
+
         return SwatDate::compare(
             $this->value,
             $this->valid_range_start,
@@ -579,24 +579,25 @@ class SwatDateEntry extends SwatInputControl implements SwatState
     // {{{ protected function isEndDateValid()
 
     /**
-     * Checks if the entered date is valid with respect to the valid end date
+     * Checks if the entered date is valid with respect to the valid end date.
      *
-     * @return boolean true if the entered date is before the valid end date
-     *                  and false if the entered date is on or after the valid
-     *                  end date.
+     * @return bool true if the entered date is before the valid end date
+     *              and false if the entered date is on or after the valid
+     *              end date
      */
     protected function isEndDateValid()
     {
         $this->valid_range_end->setTZById('UTC');
-        return SwatDate::compare($this->value, $this->valid_range_end, true) <
-            0;
+
+        return SwatDate::compare($this->value, $this->valid_range_end, true)
+            < 0;
     }
 
     // }}}
     // {{{ protected function validateRanges()
 
     /**
-     * Makes sure the date the user entered is within the valid range
+     * Makes sure the date the user entered is within the valid range.
      *
      * If the date is not within the valid range, this method attaches an
      * error message to this date entry.
@@ -606,8 +607,8 @@ class SwatDateEntry extends SwatInputControl implements SwatState
         if (!$this->isStartDateValid()) {
             $message = sprintf(
                 Swat::_(
-                    'The date you have entered is invalid. ' .
-                        'It must be on or after %s.',
+                    'The date you have entered is invalid. '
+                        . 'It must be on or after %s.',
                 ),
                 $this->getFormattedDate($this->valid_range_start),
             );
@@ -616,8 +617,8 @@ class SwatDateEntry extends SwatInputControl implements SwatState
         } elseif (!$this->isEndDateValid()) {
             $message = sprintf(
                 Swat::_(
-                    'The date you have entered is invalid. ' .
-                        'It must be before %s.',
+                    'The date you have entered is invalid. '
+                        . 'It must be before %s.',
                 ),
                 $this->getFormattedDate($this->valid_range_end),
             );
@@ -630,7 +631,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
     // {{{ protected function createCompositeWidgets()
 
     /**
-     * Creates the composite widgets used by this date entry
+     * Creates the composite widgets used by this date entry.
      *
      * @see SwatWidget::createCompositeWidgets()
      */
@@ -667,9 +668,9 @@ class SwatDateEntry extends SwatInputControl implements SwatState
     // {{{ protected function createYearFlydown()
 
     /**
-     * Creates the year flydown for this date entry
+     * Creates the year flydown for this date entry.
      *
-     * @return SwatFlydown the year flydown for this date entry.
+     * @return SwatFlydown the year flydown for this date entry
      */
     protected function createYearFlydown()
     {
@@ -700,9 +701,9 @@ class SwatDateEntry extends SwatInputControl implements SwatState
     // {{{ protected function getYearBlankValueTitle()
 
     /**
-     * Gets the blank value to use for the year flydown option
+     * Gets the blank value to use for the year flydown option.
      *
-     * @return string the blank value to use for the year flydown.
+     * @return string the blank value to use for the year flydown
      */
     protected function getYearBlankValueTitle()
     {
@@ -713,9 +714,9 @@ class SwatDateEntry extends SwatInputControl implements SwatState
     // {{{ protected function createMonthFlydown()
 
     /**
-     * Creates the month flydown for this date entry
+     * Creates the month flydown for this date entry.
      *
-     * @return SwatFlydown the month flydown for this date entry.
+     * @return SwatFlydown the month flydown for this date entry
      */
     protected function createMonthFlydown()
     {
@@ -757,9 +758,9 @@ class SwatDateEntry extends SwatInputControl implements SwatState
     // {{{ protected function getMonthBlankValueTitle()
 
     /**
-     * Gets the blank value to use for the month flydown option
+     * Gets the blank value to use for the month flydown option.
      *
-     * @return string the blank value to use for the month flydown.
+     * @return string the blank value to use for the month flydown
      */
     protected function getMonthBlankValueTitle()
     {
@@ -770,11 +771,11 @@ class SwatDateEntry extends SwatInputControl implements SwatState
     // {{{ protected function getMonthOptionText()
 
     /**
-     * Gets the title of a month flydown option
+     * Gets the title of a month flydown option.
      *
-     * @param integer $month the numeric identifier of the month.
+     * @param int $month the numeric identifier of the month
      *
-     * @return string the option text of the month.
+     * @return string the option text of the month
      */
     protected function getMonthOptionText($month)
     {
@@ -795,9 +796,9 @@ class SwatDateEntry extends SwatInputControl implements SwatState
     // {{{ protected function createDayFlydown()
 
     /**
-     * Creates the day flydown for this date entry
+     * Creates the day flydown for this date entry.
      *
-     * @return SwatFlydown the day flydown for this date entry.
+     * @return SwatFlydown the day flydown for this date entry
      */
     protected function createDayFlydown()
     {
@@ -853,9 +854,9 @@ class SwatDateEntry extends SwatInputControl implements SwatState
     // {{{ protected function getDayBlankValueTitle()
 
     /**
-     * Gets the blank value to use for the day flydown option
+     * Gets the blank value to use for the day flydown option.
      *
-     * @return string the blank value to use for the day flydown.
+     * @return string the blank value to use for the day flydown
      */
     protected function getDayBlankValueTitle()
     {
@@ -866,14 +867,15 @@ class SwatDateEntry extends SwatInputControl implements SwatState
     // {{{ protected function createTimeEntry()
 
     /**
-     * Creates the time entry widget for this date entry
+     * Creates the time entry widget for this date entry.
      *
-     * @return SwatTimeEntry the time entry widget for this date entry.
+     * @return SwatTimeEntry the time entry widget for this date entry
      */
     protected function createTimeEntry()
     {
         $time_entry = new SwatTimeEntry($this->id . '_time_entry');
         $time_entry->classes = ['swat-date-entry-time'];
+
         return $time_entry;
     }
 
@@ -881,9 +883,9 @@ class SwatDateEntry extends SwatInputControl implements SwatState
     // {{{ protected function createCalendar()
 
     /**
-     * Creates the calendar widget for this date entry
+     * Creates the calendar widget for this date entry.
      *
-     * @return SwatCalendar the calendar widget for this date entry.
+     * @return SwatCalendar the calendar widget for this date entry
      */
     protected function createCalendar()
     {
@@ -891,6 +893,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
         $calendar->classes = ['swat-date-entry-calendar'];
         $calendar->valid_range_start = $this->valid_range_start;
         $calendar->valid_range_end = $this->valid_range_end;
+
         return $calendar;
     }
 
@@ -898,16 +901,16 @@ class SwatDateEntry extends SwatInputControl implements SwatState
     // {{{ private function getFormattedDate()
 
     /**
-     * Formats a date for this date entry
+     * Formats a date for this date entry.
      *
      * Returns a date string formatted according to the properties of this
      * date entry widget. This is used primarily for returning formatted
      * valid start and valid end dates for user error messages.
      *
-     * @param SwatDate $date the date object to format.
+     * @param SwatDate $date the date object to format
      *
      * @return string a date formatted according to the properties of this date
-     *                 entry.
+     *                entry
      */
     private function getFormattedDate(SwatDate $date)
     {
@@ -941,7 +944,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
     // {{{ private function getDatePartOrder()
 
     /**
-     * Gets the order of date parts for the current locale
+     * Gets the order of date parts for the current locale.
      *
      * Note: The technique used within this method does not work correcty for
      * RTL languages that display month names, month abbreviations or weekday
@@ -949,7 +952,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
      * date parts incorrectly ordered.
      *
      * @return array an array containg the values 'd', 'm' and 'y' in the
-     *                correct order for the current locale.
+     *               correct order for the current locale
      */
     private function getDatePartOrder()
     {
@@ -967,8 +970,8 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 
         $matches = [];
         if (
-            preg_match('/(%d|%e)/', $format, $matches, PREG_OFFSET_CAPTURE) ===
-            1
+            preg_match('/(%d|%e)/', $format, $matches, PREG_OFFSET_CAPTURE)
+            === 1
         ) {
             $day = $matches[0][1];
         }
@@ -987,8 +990,8 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 
         $matches = [];
         if (
-            preg_match('/(%[Yy])/', $format, $matches, PREG_OFFSET_CAPTURE) ===
-            1
+            preg_match('/(%[Yy])/', $format, $matches, PREG_OFFSET_CAPTURE)
+            === 1
         ) {
             $year = $matches[0][1];
         }

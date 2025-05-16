@@ -1,12 +1,11 @@
 <?php
 
 /**
- * Pop-up calendar widget
+ * Pop-up calendar widget.
  *
  * This widget uses JavaScript to display a popup date selector. It is used
  * inside the {@link SwatDateEntry} widget but can be used by itself as well.
  *
- * @package   Swat
  * @copyright 2004-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
@@ -32,9 +31,9 @@ class SwatCalendar extends SwatControl
     // {{{ public function __construct()
 
     /**
-     * Creates a new calendar
+     * Creates a new calendar.
      *
-     * @param string $id a non-visible unique id for this widget.
+     * @param string $id a non-visible unique id for this widget
      *
      * @see SwatWidget::__construct()
      */
@@ -58,7 +57,7 @@ class SwatCalendar extends SwatControl
     // {{{ public function display()
 
     /**
-     * Displays this calendar widget
+     * Displays this calendar widget.
      */
     public function display()
     {
@@ -98,23 +97,23 @@ class SwatCalendar extends SwatControl
     // {{{ protected function getCSSClassNames()
 
     /**
-     * Gets the array of CSS classes that are applied to this calendar widget
+     * Gets the array of CSS classes that are applied to this calendar widget.
      *
      * @return array the array of CSS classes that are applied to this calendar
-     *                widget.
+     *               widget
      */
     protected function getCSSClassNames()
     {
         $classes = ['swat-calendar'];
-        $classes = array_merge($classes, parent::getCSSClassNames());
-        return $classes;
+
+        return array_merge($classes, parent::getCSSClassNames());
     }
 
     // }}}
     // {{{ protected function getInlineJavaScript()
 
     /**
-     * Gets inline calendar JavaScript
+     * Gets inline calendar JavaScript.
      *
      * Inline JavaScript is the majority of the calendar code.
      */
@@ -162,9 +161,9 @@ class SwatCalendar extends SwatControl
 
     /**
      * Gets translatable string resources for the JavaScript object for
-     * this widget
+     * this widget.
      *
-     * @return string translatable JavaScript string resources for this widget.
+     * @return string translatable JavaScript string resources for this widget
      */
     protected function getInlineJavaScriptTranslations()
     {
@@ -202,15 +201,15 @@ class SwatCalendar extends SwatControl
         $open_toggle_text = Swat::_('open calendar');
         $close_toggle_text = Swat::_('close calendar');
 
-        return "SwatCalendar.week_names = {$week_names};\n" .
-            "SwatCalendar.month_names = {$month_names};\n" .
-            "SwatCalendar.prev_alt_text = '{$prev_alt_text}';\n" .
-            "SwatCalendar.next_alt_text = '{$next_alt_text}';\n" .
-            "SwatCalendar.close_text = '{$close_text}';\n" .
-            "SwatCalendar.nodate_text = '{$nodate_text}';\n" .
-            "SwatCalendar.today_text = '{$today_text}';\n" .
-            "SwatCalendar.open_toggle_text = '{$open_toggle_text}';\n" .
-            "SwatCalendar.close_toggle_text = '{$close_toggle_text}';\n";
+        return "SwatCalendar.week_names = {$week_names};\n"
+            . "SwatCalendar.month_names = {$month_names};\n"
+            . "SwatCalendar.prev_alt_text = '{$prev_alt_text}';\n"
+            . "SwatCalendar.next_alt_text = '{$next_alt_text}';\n"
+            . "SwatCalendar.close_text = '{$close_text}';\n"
+            . "SwatCalendar.nodate_text = '{$nodate_text}';\n"
+            . "SwatCalendar.today_text = '{$today_text}';\n"
+            . "SwatCalendar.open_toggle_text = '{$open_toggle_text}';\n"
+            . "SwatCalendar.close_toggle_text = '{$close_toggle_text}';\n";
     }
 
     // }}}

@@ -1,9 +1,8 @@
 <?php
 
 /**
- * Thrown when a widget is not found
+ * Thrown when a widget is not found.
  *
- * @package   Swat
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
@@ -12,21 +11,21 @@ class SwatWidgetNotFoundException extends SwatException
     // {{{ protected properties
 
     /**
-     * The widget id that was searched for
+     * The widget id that was searched for.
      *
      * @var string
      */
-    protected $widget_id = null;
+    protected $widget_id;
 
     // }}}
     // {{{ public function __construct()
 
     /**
-     * Creates a new widget not found exception
+     * Creates a new widget not found exception.
      *
-     * @param string $message the message of the exception.
-     * @param integer $code the code of the exception.
-     * @param string $widget_id the widget id that was searched for.
+     * @param string $message   the message of the exception
+     * @param int    $code      the code of the exception
+     * @param string $widget_id the widget id that was searched for
      */
     public function __construct($message = null, $code = 0, $widget_id = null)
     {
@@ -38,9 +37,9 @@ class SwatWidgetNotFoundException extends SwatException
     // {{{ public function getWidgetId()
 
     /**
-     * Gets the widget id that was searched for
+     * Gets the widget id that was searched for.
      *
-     * @return string the widget id that was searched for.
+     * @return string the widget id that was searched for
      */
     public function getWidgetId()
     {

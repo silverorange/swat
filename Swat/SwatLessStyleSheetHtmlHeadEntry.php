@@ -1,9 +1,8 @@
 <?php
 
 /**
- * Stores and outputs an HTML head entry for a LESS stylesheet include
+ * Stores and outputs an HTML head entry for a LESS stylesheet include.
  *
- * @package   Swat
  * @copyright 2012-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
@@ -17,8 +16,8 @@ class SwatLessStyleSheetHtmlHeadEntry extends SwatStyleSheetHtmlHeadEntry
 
         // append tag if it is set
         if ($tag !== null) {
-            $uri =
-                mb_strpos($uri, '?') === false
+            $uri
+                = mb_strpos($uri, '?') === false
                     ? $uri . '?' . $tag
                     : $uri . '&' . $tag;
         }

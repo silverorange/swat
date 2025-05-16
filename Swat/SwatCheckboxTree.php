@@ -1,9 +1,8 @@
 <?php
 
 /**
- * A checkbox array widget formatted into a tree
+ * A checkbox array widget formatted into a tree.
  *
- * @package   Swat
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
@@ -14,28 +13,28 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
     /**
      * A regular checkbox tree. Nothing speical is tracked.
      */
-    const DEPENDENT_NONE = 'none';
+    public const DEPENDENT_NONE = 'none';
 
     /**
-     * A checkbox tree widget with which tracks option dependency
+     * A checkbox tree widget with which tracks option dependency.
      *
      * Any time a checkbox is checked all dependant parent options,
      * all the way to the root, will also be checked.
      */
-    const DEPENDENT_PARENT = 'parent';
+    public const DEPENDENT_PARENT = 'parent';
 
     /**
-     * A checkbox tree widget with which tracks option dependency
+     * A checkbox tree widget with which tracks option dependency.
      *
      * Any time a checkbox is checked all child options will also be checked.
      */
-    const DEPENDENT_CHILD = 'child';
+    public const DEPENDENT_CHILD = 'child';
 
     // }}}
     // {{{ public properties
 
     /**
-     * Used to determine the type of dependency tracking
+     * Used to determine the type of dependency tracking.
      *
      * @var string
      */
@@ -45,40 +44,40 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
     // {{{ protected properties
 
     /**
-     * Checkbox tree structure
+     * Checkbox tree structure.
      *
      * An tree structure of {@link SwatTreeNode} objects.
      * This structure overwrites the public options property.
      *
      * @var SwatDataTreeNode
      */
-    protected $tree = null;
+    protected $tree;
 
     /**
-     * A label tag used for displaying tree nodes
+     * A label tag used for displaying tree nodes.
      *
      * @var SwatHtmltag
      *
      * @see SwatCheckboxTree::displayNode()
      */
-    protected $label_tag = null;
+    protected $label_tag;
 
     /**
-     * An input tag used for displaying tree nodes
+     * An input tag used for displaying tree nodes.
      *
      * @var SwatHtmltag
      *
      * @see SwatCheckboxTree::displayNode()
      */
-    protected $input_tag = null;
+    protected $input_tag;
 
     // }}}
     // {{{ public function __construct()
 
     /**
-     * Creates a new checkbox list
+     * Creates a new checkbox list.
      *
-     * @param string $id a non-visible unique id for this widget.
+     * @param string $id a non-visible unique id for this widget
      *
      * @see SwatCheckboxList::__construct()
      */
@@ -93,15 +92,15 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
     // {{{ public function process()
 
     /**
-     * Processes this checkbox list widget
+     * Processes this checkbox list widget.
      */
     public function process()
     {
         parent::process();
 
         if (
-            $this->dependency_type === self::DEPENDENT_CHILD ||
-            $this->dependency_type === self::DEPENDENT_PARENT
+            $this->dependency_type === self::DEPENDENT_CHILD
+            || $this->dependency_type === self::DEPENDENT_PARENT
         ) {
             // This is just used to ensure that users can't fake invalid
             // selections by using the browers inspector or other such things
@@ -158,9 +157,9 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
     // {{{ public function setTree()
 
     /**
-     * Sets the tree to use for display
+     * Sets the tree to use for display.
      *
-     * @param SwatDataTreeNode $tree the tree to use for display.
+     * @param SwatDataTreeNode $tree the tree to use for display
      */
     public function setTree(SwatDataTreeNode $tree)
     {
@@ -172,7 +171,7 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 
     /**
      * Gets the tree collection of {@link SwatTreeNode} objects for this
-     * tree flydown
+     * tree flydown.
      *
      * @return SwatTreeNode Tree of nodes
      */
@@ -186,13 +185,13 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 
     protected function validate(SwatDataTreeNode $node, $is_parent_selected)
     {
-        $is_selected =
-            $node->value === null
+        $is_selected
+            = $node->value === null
                 ? $is_parent_selected
                 : in_array($node->value, $this->values);
 
-        $condition =
-            $this->dependency_type === self::DEPENDENT_CHILD
+        $condition
+            = $this->dependency_type === self::DEPENDENT_CHILD
                 ? !$is_parent_selected && $is_selected
                 : $is_parent_selected && !$is_selected;
 
@@ -209,17 +208,19 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
     // {{{ protected function getJavaScriptClassName()
 
     /**
-     * Get the name of the JavaScript class for this widget
+     * Get the name of the JavaScript class for this widget.
      *
-     * @return string JavaScript class name.
+     * @return string javaScript class name
      */
     protected function getJavaScriptClassName()
     {
         switch ($this->dependency_type) {
             case self::DEPENDENT_CHILD:
                 return 'SwatCheckboxChildDependencyTree';
+
             case self::DEPENDENT_PARENT:
                 return 'SwatCheckboxParentDependencyTree';
+
             default:
                 return 'SwatCheckboxTree';
         }
@@ -229,29 +230,29 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
     // {{{ protected function getCSSClassNames()
 
     /**
-     * Gets the array of CSS classes that are applied to this checkbox tree
+     * Gets the array of CSS classes that are applied to this checkbox tree.
      *
      * @return array the array of CSS classes that are applied to this checkbox
-     *                tree.
+     *               tree
      */
     protected function getCSSClassNames()
     {
         $classes = ['swat-checkbox-tree'];
-        $classes = array_merge($classes, parent::getCSSClassNames());
-        return $classes;
+
+        return array_merge($classes, parent::getCSSClassNames());
     }
 
     // }}}
     // {{{ private function displayNode()
 
     /**
-     * Displays a node in a tree as a checkbox input
+     * Displays a node in a tree as a checkbox input.
      *
-     * @param SwatDataTreeNode $node the node to display.
-     * @param integer $nodes the current number of nodes.
-     * @param string $parent_index the path of the parent node.
+     * @param SwatDataTreeNode $node         the node to display
+     * @param int              $nodes        the current number of nodes
+     * @param string           $parent_index the path of the parent node
      *
-     * @return integer the number of checkable nodes in the tree.
+     * @return int the number of checkable nodes in the tree
      */
     private function displayNode(
         SwatDataTreeNode $node,

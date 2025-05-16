@@ -1,9 +1,8 @@
 <?php
 
 /**
- * A frame-like container to show and hide child widgets
+ * A frame-like container to show and hide child widgets.
  *
- * @package   Swat
  * @copyright 2006-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
@@ -12,9 +11,9 @@ class SwatFrameDisclosure extends SwatDisclosure
     // {{{ public function __construct()
 
     /**
-     * Creates a new frame disclosure container
+     * Creates a new frame disclosure container.
      *
-     * @param string $id a non-visible unique id for this widget.
+     * @param string $id a non-visible unique id for this widget
      *
      * @see SwatWidget::__construct()
      */
@@ -29,7 +28,7 @@ class SwatFrameDisclosure extends SwatDisclosure
     // {{{ public function display()
 
     /**
-     * Displays this frame disclosure container
+     * Displays this frame disclosure container.
      *
      * Creates appropriate divs and outputs closed or opened based on the
      * initial state.
@@ -95,8 +94,8 @@ class SwatFrameDisclosure extends SwatDisclosure
     protected function getContainerDivTag()
     {
         $div = new SwatHtmlTag('div');
-        $div->class =
-            'swat-disclosure-container swat-frame-disclosure-container';
+        $div->class
+            = 'swat-disclosure-container swat-frame-disclosure-container';
 
         return $div;
     }
@@ -108,6 +107,7 @@ class SwatFrameDisclosure extends SwatDisclosure
     {
         $span_tag = parent::getSpanTag();
         $span_tag->class = null;
+
         return $span_tag;
     }
 
@@ -115,13 +115,13 @@ class SwatFrameDisclosure extends SwatDisclosure
     // {{{ protected function getJavaScriptClass()
 
     /**
-     * Gets the name of the JavaScript class to instantiate for this disclosure
+     * Gets the name of the JavaScript class to instantiate for this disclosure.
      *
      * Subclasses of this class may want to return a sub-class of the default
      * JavaScript disclosure class.
      *
      * @return string the name of the JavaScript class to instantiate for this
-     *                 frame disclosure.
+     *                frame disclosure
      */
     protected function getJavaScriptClass()
     {
@@ -132,10 +132,10 @@ class SwatFrameDisclosure extends SwatDisclosure
     // {{{ protected function getCSSClassNames()
 
     /**
-     * Gets the array of CSS classes that are applied to this disclosure
+     * Gets the array of CSS classes that are applied to this disclosure.
      *
      * @return array the array of CSS classes that are applied to this
-     *                disclosure.
+     *               disclosure
      */
     protected function getCSSClassNames()
     {
@@ -144,8 +144,8 @@ class SwatFrameDisclosure extends SwatDisclosure
         $classes[] = 'swat-disclosure-control-opened';
         $classes[] = 'swat-frame-disclosure-control-opened';
         $classes[] = 'swat-frame-disclosure';
-        $classes = array_merge($classes, parent::getCSSClassNames());
-        return $classes;
+
+        return array_merge($classes, parent::getCSSClassNames());
     }
 
     // }}}

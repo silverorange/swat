@@ -3,7 +3,6 @@
 /**
  * A text renderer.
  *
- * @package   Swat
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
@@ -12,7 +11,7 @@ class SwatDateCellRenderer extends SwatCellRenderer
     // {{{ public properties
 
     /**
-     * Date to render
+     * Date to render.
      *
      * This may either be a {@link SwatDate} object, or may be an
      * ISO-formatted date string that can be passed into the SwatDate
@@ -20,10 +19,10 @@ class SwatDateCellRenderer extends SwatCellRenderer
      *
      * @var string|SwatDate
      */
-    public $date = null;
+    public $date;
 
     /**
-     * Format
+     * Format.
      *
      * Either a {@link SwatDate} format mask, or class constant. Class
      * constants are preferable for sites that require translation.
@@ -33,30 +32,30 @@ class SwatDateCellRenderer extends SwatCellRenderer
     public $format = SwatDate::DF_DATE_TIME;
 
     /**
-     * Time zone format
+     * Time zone format.
      *
      * A time zone format class constant from SwatDate.
      *
-     * @var integer
+     * @var int
      */
-    public $time_zone_format = null;
+    public $time_zone_format;
 
     /**
-     * The time zone to render the date in
+     * The time zone to render the date in.
      *
      * The time zone may be specified either as a valid time zone identifier
      * or as a DateTimeZone object. If the render time zone is null, no
      * time zone conversion is performed.
      *
-     * @var string|DateTimeZone
+     * @var DateTimeZone|string
      */
-    public $display_time_zone = null;
+    public $display_time_zone;
 
     // }}}
     // {{{ public function render()
 
     /**
-     * Renders the contents of this cell
+     * Renders the contents of this cell.
      *
      * @see SwatCellRenderer::render()
      */
@@ -87,8 +86,8 @@ class SwatDateCellRenderer extends SwatCellRenderer
                 $date->convertTZById($this->display_time_zone);
             } elseif ($this->display_time_zone !== null) {
                 throw new InvalidArgumentException(
-                    'The $display_time_zone must be either a string or a ' .
-                        'DateTimeZone object.',
+                    'The $display_time_zone must be either a string or a '
+                        . 'DateTimeZone object.',
                 );
             }
 

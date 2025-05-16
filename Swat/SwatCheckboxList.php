@@ -1,9 +1,8 @@
 <?php
 
 /**
- * A checkbox list widget
+ * A checkbox list widget.
  *
- * @package   Swat
  * @copyright 2005-2021 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
@@ -12,7 +11,7 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
     // {{{ private properties
 
     /**
-     * Used for displaying checkbox labels
+     * Used for displaying checkbox labels.
      *
      * @var SwatHtmlTag
      */
@@ -22,7 +21,7 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
     // {{{ public properties
 
     /**
-     * List values
+     * List values.
      *
      * The values of the selected items.
      *
@@ -31,14 +30,14 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
     public $values = [];
 
     /**
-     * Whether to show the check all box
+     * Whether to show the check all box.
      *
-     * @var boolean
+     * @var bool
      */
     public $show_check_all = true;
 
     /**
-     * Defines the columns in which this list is displayed
+     * Defines the columns in which this list is displayed.
      *
      * If unspecified, the list will be displayed in one column.
      *
@@ -48,7 +47,7 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
      * integers it specifies the number of checkboxes to display in each
      * column.
      *
-     * @var integer or array of integers
+     * @var int or array of integers
      */
     public $columns = 1;
 
@@ -56,9 +55,9 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
     // {{{ public function __construct()
 
     /**
-     * Creates a new checkbox list
+     * Creates a new checkbox list.
      *
-     * @param string $id a non-visible unique id for this widget.
+     * @param string $id a non-visible unique id for this widget
      *
      * @see SwatWidget::__construct()
      */
@@ -76,7 +75,7 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
     // {{{ public function init()
 
     /**
-     * Initializes this checkbox list
+     * Initializes this checkbox list.
      *
      * @throws SwatException if there are duplicate values in the options array
      */
@@ -103,7 +102,7 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
     // {{{ public function display()
 
     /**
-     * Displays this checkbox list
+     * Displays this checkbox list.
      *
      * The check-all widget is only displayed if more than one checkable item
      * is displayed.
@@ -151,8 +150,8 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 
                 $current_column++;
                 $current_option = 0;
-                $maximum_options =
-                    count($columns) > 0
+                $maximum_options
+                    = count($columns) > 0
                         ? array_shift($columns)
                         : $maximum_options;
 
@@ -192,7 +191,7 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
     // {{{ public function process()
 
     /**
-     * Processes this checkbox list widget
+     * Processes this checkbox list widget.
      */
     public function process()
     {
@@ -205,9 +204,9 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
         $this->processValues();
 
         if (
-            $this->required &&
-            count($this->values) == 0 &&
-            $this->isSensitive()
+            $this->required
+            && count($this->values) == 0
+            && $this->isSensitive()
         ) {
             $this->addMessage($this->getValidationMessage('required'));
         }
@@ -231,9 +230,9 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
     // {{{ public function setState()
 
     /**
-     * Sets the current state of this checkbox list
+     * Sets the current state of this checkbox list.
      *
-     * @param array $state the new state of this checkbox list.
+     * @param array $state the new state of this checkbox list
      *
      * @see SwatState::setState()
      */
@@ -246,9 +245,9 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
     // {{{ public function getState()
 
     /**
-     * Gets the current state of this checkbox list
+     * Gets the current state of this checkbox list.
      *
-     * @return array the current state of this checkbox list.
+     * @return array the current state of this checkbox list
      *
      * @see SwatState::getState()
      */
@@ -261,7 +260,7 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
     // {{{ protected function processValues()
 
     /**
-     * Processes the values of this checkbox list from raw form data
+     * Processes the values of this checkbox list from raw form data.
      */
     protected function processValues()
     {
@@ -285,11 +284,11 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
     // {{{ protected function displayOption()
 
     /**
-     * Helper method to display a single option of this checkbox list
+     * Helper method to display a single option of this checkbox list.
      *
-     * @param SwatOption $option the option to display.
-     * @param integer $index a numeric index indicating which option is being
-     *                        displayed. Starts as 0.
+     * @param SwatOption $option the option to display
+     * @param int        $index  a numeric index indicating which option is being
+     *                           displayed. Starts as 0.
      */
     protected function displayOption(SwatOption $option, $index)
     {
@@ -324,11 +323,11 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
     // {{{ protected function displayOptionLabel()
 
     /**
-     * Displays an option in the checkbox list
+     * Displays an option in the checkbox list.
      *
-     * @param SwatOption $option the option for which to display the label.
-     * @param integer $index the numeric index of the option in this list.
-     *                        Starts at 0.
+     * @param SwatOption $option the option for which to display the label
+     * @param int        $index  the numeric index of the option in this list.
+     *                           Starts at 0.
      */
     protected function displayOptionLabel(SwatOption $option, $index)
     {
@@ -373,9 +372,9 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
     // {{{ protected function getInlineJavaScript()
 
     /**
-     * Gets the inline JavaScript for this checkbox list
+     * Gets the inline JavaScript for this checkbox list.
      *
-     * @return string the inline JavaScript for this checkbox list.
+     * @return string the inline JavaScript for this checkbox list
      */
     protected function getInlineJavaScript()
     {
@@ -403,9 +402,9 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
     // {{{ protected function getJavaScriptClassName()
 
     /**
-     * Get the name of the JavaScript class for this widget
+     * Get the name of the JavaScript class for this widget.
      *
-     * @return string JavaScript class name.
+     * @return string javaScript class name
      */
     protected function getJavaScriptClassName()
     {
@@ -416,23 +415,23 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
     // {{{ protected function getCSSClassNames()
 
     /**
-     * Gets the array of CSS classes that are applied to this checkbox list
+     * Gets the array of CSS classes that are applied to this checkbox list.
      *
      * @return array the array of CSS classes that are applied to this checkbox
-     *                list.
+     *               list
      */
     protected function getCSSClassNames()
     {
         $classes = ['swat-checkbox-list'];
-        $classes = array_merge($classes, parent::getCSSClassNames());
-        return $classes;
+
+        return array_merge($classes, parent::getCSSClassNames());
     }
 
     // }}}
     // {{{ protected function createCompositeWidgets()
 
     /**
-     * Creates and adds composite widgets of this widget
+     * Creates and adds composite widgets of this widget.
      *
      * Created composite widgets should be added in this method using
      * {@link SwatWidget::addCompositeWidget()}.

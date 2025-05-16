@@ -1,23 +1,22 @@
 <?php
 
 /**
- * A view selector cell renderer displayed as a radio button
+ * A view selector cell renderer displayed as a radio button.
  *
  * Only one row may be selected by this selector. If you need to select
  * multiple rows, use {@link SwatCheckboxCellRenderer}.
  *
- * @package   Swat
  * @copyright 2007-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ *
  * @see       SwatViewSelector
  */
-class SwatRadioButtonCellRenderer extends SwatCellRenderer implements
-    SwatViewSelector
+class SwatRadioButtonCellRenderer extends SwatCellRenderer implements SwatViewSelector
 {
     // {{{ public properties
 
     /**
-     * Identifier of this radio button cell renderer
+     * Identifier of this radio button cell renderer.
      *
      * Identifier must be unique within this cell renderer's parent cell
      * renderer container. This property is required and can not be a
@@ -28,7 +27,7 @@ class SwatRadioButtonCellRenderer extends SwatCellRenderer implements
     public $id;
 
     /**
-     * Value of this cell's radio button
+     * Value of this cell's radio button.
      *
      * This property is intended to be data-mapped to the current row
      * identifier in a record set.
@@ -38,7 +37,7 @@ class SwatRadioButtonCellRenderer extends SwatCellRenderer implements
     public $value;
 
     /**
-     * Optional title of the label for the rendered radio button
+     * Optional title of the label for the rendered radio button.
      *
      * If no title is specified (default) there is no label displayed with
      * the  radio button.
@@ -48,7 +47,7 @@ class SwatRadioButtonCellRenderer extends SwatCellRenderer implements
     public $title;
 
     /**
-     * Optional content type for radio button label title
+     * Optional content type for radio button label title.
      *
      * Defaults to text/plain, use text/xml for XHTML fragments.
      *
@@ -61,7 +60,7 @@ class SwatRadioButtonCellRenderer extends SwatCellRenderer implements
 
     /**
      * The selected value populated during the processing of this cell
-     * renderer
+     * renderer.
      *
      * This property is used to track the selected state of radio buttons when
      * rendering for a particular value.
@@ -74,7 +73,7 @@ class SwatRadioButtonCellRenderer extends SwatCellRenderer implements
     // {{{ public function __construct()
 
     /**
-     * Creates a new radio button cell renderer
+     * Creates a new radio button cell renderer.
      */
     public function __construct()
     {
@@ -96,7 +95,7 @@ class SwatRadioButtonCellRenderer extends SwatCellRenderer implements
     // {{{ public function process()
 
     /**
-     * Processes this radio button cell renderer
+     * Processes this radio button cell renderer.
      */
     public function process()
     {
@@ -120,7 +119,7 @@ class SwatRadioButtonCellRenderer extends SwatCellRenderer implements
     // {{{ public function render()
 
     /**
-     * Renders this radio button cell renderer
+     * Renders this radio button cell renderer.
      */
     public function render()
     {
@@ -169,11 +168,11 @@ class SwatRadioButtonCellRenderer extends SwatCellRenderer implements
     // {{{ public function getId()
 
     /**
-     * Gets the identifier of this checkbox cell renderer
+     * Gets the identifier of this checkbox cell renderer.
      *
      * Satisfies the {@link SwatViewSelector} interface.
      *
-     * @return string the identifier of this checkbox cell renderer.
+     * @return string the identifier of this checkbox cell renderer
      */
     public function getId()
     {
@@ -184,10 +183,10 @@ class SwatRadioButtonCellRenderer extends SwatCellRenderer implements
     // {{{ public function getInlineJavaScript()
 
     /**
-     * Gets the inline JavaScript required by this radio button cell renderer
+     * Gets the inline JavaScript required by this radio button cell renderer.
      *
      * @return string the inline JavaScript required by this radio button cell
-     *                 renderer.
+     *                renderer
      */
     public function getInlineJavaScript()
     {
@@ -210,13 +209,13 @@ class SwatRadioButtonCellRenderer extends SwatCellRenderer implements
     // {{{ public function copy()
 
     /**
-     * Performs a deep copy of the UI tree starting with this UI object
+     * Performs a deep copy of the UI tree starting with this UI object.
      *
      * @param string $id_suffix optional. A suffix to append to copied UI
-     *                           objects in the UI tree.
+     *                          objects in the UI tree.
      *
      * @return SwatUIObject a deep copy of the UI tree starting with this UI
-     *                       object.
+     *                      object
      *
      * @see SwatUIObject::copy()
      */
@@ -235,13 +234,13 @@ class SwatRadioButtonCellRenderer extends SwatCellRenderer implements
     // {{{ private function getForm()
 
     /**
-     * Gets the form this radio button cell renderer is contained in
+     * Gets the form this radio button cell renderer is contained in.
      *
      * @return SwatForm the form this radio button cell renderer is contained
-     *                   in.
+     *                  in
      *
      * @throws SwatException if this radio button cell renderer does not have a
-     *                       SwatForm ancestor.
+     *                       SwatForm ancestor
      */
     private function getForm()
     {
@@ -249,8 +248,8 @@ class SwatRadioButtonCellRenderer extends SwatCellRenderer implements
 
         if ($form === null) {
             throw new SwatException(
-                'SwatRadioButtonCellRenderer must have ' .
-                    'a SwatForm ancestor in the UI tree.',
+                'SwatRadioButtonCellRenderer must have '
+                    . 'a SwatForm ancestor in the UI tree.',
             );
         }
 

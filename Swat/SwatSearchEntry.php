@@ -1,9 +1,8 @@
 <?php
 
 /**
- * A single line search entry widget
+ * A single line search entry widget.
  *
- * @package   Swat
  * @copyright 2007-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
@@ -12,7 +11,7 @@ class SwatSearchEntry extends SwatEntry
     // {{{ public properties
 
     /**
-     * An XHTML name for this search entry widget
+     * An XHTML name for this search entry widget.
      *
      * The name is used as the XHTML form element name. This is useful for
      * HTTP GET forms where the input name is displayed in the request URI.
@@ -41,7 +40,7 @@ class SwatSearchEntry extends SwatEntry
     // {{{ public function display()
 
     /**
-     * Displays this search entry
+     * Displays this search entry.
      *
      * Outputs an appropriate XHTML tag and JavaScript.
      */
@@ -60,13 +59,13 @@ class SwatSearchEntry extends SwatEntry
     // {{{ protected function getInlineJavaScript()
 
     /**
-     * Gets the inline JavaScript for this entry to function
+     * Gets the inline JavaScript for this entry to function.
      *
      * The inline JavaScript creates an instance of the
      * SwatSearchEntry widget with the name $this->id_'obj'.
      *
      * @return string the inline JavaScript required for this control to
-     *                function.
+     *                function
      */
     protected function getInlineJavaScript()
     {
@@ -91,26 +90,26 @@ class SwatSearchEntry extends SwatEntry
     // {{{ protected function getCSSClassNames()
 
     /**
-     * Gets the array of CSS classes that are applied to this entry
+     * Gets the array of CSS classes that are applied to this entry.
      *
      * @return array the array of CSS classes that are applied to this
-     *                entry.
+     *               entry
      */
     protected function getCSSClassNames()
     {
         $classes = ['swat-search-entry'];
-        $classes = array_merge($classes, parent::getCSSClassNames());
-        return $classes;
+
+        return array_merge($classes, parent::getCSSClassNames());
     }
 
     // }}}
     // {{{ protected function getRawValue()
 
     /**
-     * Gets the raw value entered by the user before processing
+     * Gets the raw value entered by the user before processing.
      *
      * @return string the raw value entred by the user before processing or
-     *                 null if no value was entered by the user.
+     *                null if no value was entered by the user
      */
     protected function getRawValue()
     {
@@ -133,13 +132,13 @@ class SwatSearchEntry extends SwatEntry
     // {{{ protected function hasRawValue()
 
     /**
-     * Gets whether or not a value was submitted by the user for this entry
+     * Gets whether or not a value was submitted by the user for this entry.
      *
      * Note: Users can submit a value of nothing and this method will return
      * true. This method only returns false if no data was submitted at all.
      *
-     * @return boolean true if a value was submitted by the user for this entry
-     *                  and false if no value was submitted by the user.
+     * @return bool true if a value was submitted by the user for this entry
+     *              and false if no value was submitted by the user
      */
     protected function hasRawValue()
     {

@@ -1,9 +1,8 @@
 <?php
 
 /**
- * A rating cell renderer
+ * A rating cell renderer.
  *
- * @package   Swat
  * @copyright 2010-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
@@ -11,11 +10,11 @@ class SwatRatingCellRenderer extends SwatNumericCellRenderer
 {
     // {{{ constants
 
-    const ROUND_FLOOR = 1;
-    const ROUND_CEIL = 2;
-    const ROUND_UP = 3;
-    const ROUND_NONE = 4;
-    const ROUND_HALF = 5;
+    public const ROUND_FLOOR = 1;
+    public const ROUND_CEIL = 2;
+    public const ROUND_UP = 3;
+    public const ROUND_NONE = 4;
+    public const ROUND_HALF = 5;
 
     // }}}
     // {{{ public properties
@@ -23,18 +22,18 @@ class SwatRatingCellRenderer extends SwatNumericCellRenderer
     /**
      * Maximum value a rating can be.
      *
-     * @var integer
+     * @var int
      */
     public $maximum_value = 5;
 
     /**
-     * Number of digits to display after the decimal point
+     * Number of digits to display after the decimal point.
      *
      * If null, the native number of digits displayed by PHP is used. The native
      * number of digits could be a relatively large number of digits for uneven
      * fractions.
      *
-     * @var integer
+     * @var int
      */
     public $round_mode = self::ROUND_FLOOR;
 
@@ -42,7 +41,7 @@ class SwatRatingCellRenderer extends SwatNumericCellRenderer
     // {{{ public function render()
 
     /**
-     * Renders the contents of this cell
+     * Renders the contents of this cell.
      *
      * @see SwatCellRenderer::render()
      */

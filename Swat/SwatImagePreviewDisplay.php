@@ -1,12 +1,11 @@
 <?php
 
 /**
- * Image preview display control
+ * Image preview display control.
  *
  * This control displays an image and uses a lightbox-like effect to display
  * another image when the first image is clicked.
  *
- * @package   Swat
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
@@ -15,7 +14,7 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
     // {{{ public properties
 
     /**
-     * Preview Image
+     * Preview Image.
      *
      * The src attribute in the XHTML img tag.
      *
@@ -24,7 +23,7 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
     public $preview_image;
 
     /**
-     * Optional array of values to substitute into the preview image property
+     * Optional array of values to substitute into the preview image property.
      *
      * Uses vsprintf() syntax, for example:
      *
@@ -38,32 +37,32 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
     public $preview_image_values = [];
 
     /**
-     * Preview Image height
+     * Preview Image height.
      *
      * The height attribute in the XHTML img tag.
      *
-     * @var integer
+     * @var int
      */
-    public $preview_height = null;
+    public $preview_height;
 
     /**
-     * Preview Image width
+     * Preview Image width.
      *
      * The width attribute in the XHTML img tag.
      *
-     * @var integer
+     * @var int
      */
-    public $preview_width = null;
+    public $preview_width;
 
     /**
-     * Whether or not to show a resize icon next to the image
+     * Whether or not to show a resize icon next to the image.
      *
-     * @var boolean
+     * @var bool
      */
     public $show_icon = true;
 
     /**
-     * Whether or not to visibly display the title below the image
+     * Whether or not to visibly display the title below the image.
      *
      * By default no visible title is displayed.
      *
@@ -72,12 +71,12 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
      * the {@link SwatImageDisplay::$title} property of this image preview
      * display.
      *
-     * @var boolean
+     * @var bool
      */
     public $show_title = false;
 
     /**
-     * The href attribute in the XHTML anchor tag
+     * The href attribute in the XHTML anchor tag.
      *
      * If JavaScript is not enabled, the image preview display will link to
      * this location
@@ -94,7 +93,7 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
     public $link;
 
     /**
-     * A value or array of values to substitute into the link
+     * A value or array of values to substitute into the link.
      *
      * The value property may be specified either as an array of values or as
      * a single value. If an array is passed, a call to vsprintf() is done
@@ -105,48 +104,48 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
      *
      * @see SwatImagePreviewDisplay::$link
      */
-    public $link_value = null;
+    public $link_value;
 
     /**
-     * Optional container width (default is the image width + padding)
+     * Optional container width (default is the image width + padding).
      */
-    public $container_width = null;
+    public $container_width;
 
     /**
-     * Optional container height (default is the image height + padding)
+     * Optional container height (default is the image height + padding).
      */
-    public $container_height = null;
+    public $container_height;
 
     /**
      * Optional title to display above the large image when the preview is
-     * opened
+     * opened.
      *
      * @var string
      */
-    public $preview_title = null;
+    public $preview_title;
 
     /**
      * Only show the preview image when the preview area is smaller or equal to
      * the original area.
      *
-     * @var boolean
+     * @var bool
      */
     public $show_preview_when_smaller = false;
 
     /**
-     * Close text
+     * Close text.
      *
      * @var string
      */
-    public $close_text = null;
+    public $close_text;
 
     // }}}
     // {{{ public function __construct()
 
     /**
-     * Creates a new image preview display
+     * Creates a new image preview display.
      *
-     * @param string $id a non-visible unique id for this widget.
+     * @param string $id a non-visible unique id for this widget
      *
      * @see SwatWidget::__construct()
      */
@@ -178,7 +177,7 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
     // {{{ public function display()
 
     /**
-     * Displays this image
+     * Displays this image.
      */
     public function display()
     {
@@ -225,8 +224,8 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
     /**
      * Checks whether the preview exists, and whether it should be displayed.
      *
-     * @return boolean True if the preview should be displayed, false if it
-     *                  should not.
+     * @return bool true if the preview should be displayed, false if it
+     *              should not
      */
     protected function isPreviewDisplayable()
     {
@@ -235,8 +234,8 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 
         $difference = ($preview_area - $image_area) / $image_area;
 
-        return $this->preview_image != '' &&
-            ($this->show_preview_when_smaller || $difference >= 0.2);
+        return $this->preview_image != ''
+            && ($this->show_preview_when_smaller || $difference >= 0.2);
     }
 
     // }}}
@@ -244,14 +243,14 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 
     /**
      * Gets the name of the JavaScript class to instantiate for this image
-     * preview display
+     * preview display.
      *
      * Sub-classes of this class may want to return a sub-class of the default
      * JavaScript image preview class.
      *
      * @return string the name of the JavaScript class to instantiate for this
-     *                 image preview display. Defaults to
-     *                 'SwatImagePreviewDisplay'.
+     *                image preview display. Defaults to
+     *                'SwatImagePreviewDisplay'.
      */
     protected function getJavaScriptClass()
     {
@@ -264,7 +263,7 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
     /**
      * Gets inline JavaScript required by this image preview.
      *
-     * @return string inline JavaScript needed by this widget.
+     * @return string inline JavaScript needed by this widget
      */
     protected function getInlineJavaScript()
     {
@@ -278,7 +277,7 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
         }
 
         $javascript .= sprintf(
-            "var %s = new %s(\n" . "%s, %s, %s, %s, %s, %s);\n",
+            "var %s = new %s(\n%s, %s, %s, %s, %s, %s);\n",
             $this->id,
             $this->getJavaScriptClass(),
             SwatString::quoteJavaScriptString($this->id),
@@ -313,14 +312,14 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 
     /**
      * Gets translatable string resources for the JavaScript object for
-     * this widget
+     * this widget.
      *
-     * @return string translatable JavaScript string resources for this widget.
+     * @return string translatable JavaScript string resources for this widget
      */
     protected function getInlineJavaScriptTranslations()
     {
-        $close_text =
-            $this->close_text === null ? Swat::_('Close') : $this->close_text;
+        $close_text
+            = $this->close_text === null ? Swat::_('Close') : $this->close_text;
 
         return sprintf(
             "SwatImagePreviewDisplay.close_text = '%s';\n",
@@ -332,16 +331,16 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
     // {{{ protected function getCSSClassNames()
 
     /**
-     * Gets the array of CSS classes that are applied to this image display
+     * Gets the array of CSS classes that are applied to this image display.
      *
      * @return array the array of CSS classes that are applied to this image
-     *                display.
+     *               display
      */
     protected function getCSSClassNames()
     {
         $classes = ['swat-image-preview-display'];
-        $classes = array_merge($classes, parent::getCSSClassNames());
-        return $classes;
+
+        return array_merge($classes, parent::getCSSClassNames());
     }
 
     // }}}

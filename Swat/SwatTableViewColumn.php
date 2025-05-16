@@ -1,7 +1,7 @@
 <?php
 
 /**
- * A visible column in a SwatTableView
+ * A visible column in a SwatTableView.
  *
  * For styling purposes, if this table-view column has an identifier set, a CSS
  * class of this column's identifier is appended to the list of classes on this
@@ -10,7 +10,6 @@
  * applied to this column, a CSS class of 'price-column' will be added to this
  * column's displayed TD tag.
  *
- * @package   Swat
  * @copyright 2004-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
@@ -19,21 +18,21 @@ class SwatTableViewColumn extends SwatCellRendererContainer
     // {{{ public properties
 
     /**
-     * Unique identifier of this column
+     * Unique identifier of this column.
      *
      * @var string
      */
-    public $id = null;
+    public $id;
 
     /**
-     * Title of this column
+     * Title of this column.
      *
      * @var string
      */
     public $title = '';
 
     /**
-     * Optional content type for the title
+     * Optional content type for the title.
      *
      * Default text/plain, use text/xml for XHTML fragments. Note that if an
      * $abbreviated_title is set that this is ignored and minimizesEntities() is
@@ -44,14 +43,14 @@ class SwatTableViewColumn extends SwatCellRendererContainer
     public $title_content_type = 'text/plain';
 
     /**
-     * Optional abbreviated title of this column
+     * Optional abbreviated title of this column.
      *
      * If set, an HTML abbr tag is used to display the $title property along
      * with this abbreviation of the title.
      *
      * @var string
      */
-    public $abbreviated_title = null;
+    public $abbreviated_title;
 
     /**
      * Optional content type for the abbreviated title.
@@ -63,24 +62,24 @@ class SwatTableViewColumn extends SwatCellRendererContainer
     public $abbreviated_title_content_type = 'text/plain';
 
     /**
-     * The {@link SwatTableView} associated with this column
+     * The {@link SwatTableView} associated with this column.
      *
      * The table view is the parent of this object.
      *
      * @var SwatTableView
      */
-    public $view = null;
+    public $view;
 
     /**
-     * Whether or not this column is displayed
+     * Whether or not this column is displayed.
      *
-     * @var boolean
+     * @var bool
      */
     public $visible = true;
 
     /**
      * Whether or not to include CSS classes from the first cell renderer
-     * of this column in this column's CSS classes
+     * of this column in this column's CSS classes.
      *
      * @see SwatTableViewColumn::getCSSClassNames()
      */
@@ -90,7 +89,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
     // {{{ protected properties
 
     /**
-     * An optional {@link SwatInputCell} object for this column
+     * An optional {@link SwatInputCell} object for this column.
      *
      * If this column's view has a {@link SwatTableViewInputRow} then this
      * column can contain one input cell for the input row.
@@ -100,13 +99,13 @@ class SwatTableViewColumn extends SwatCellRendererContainer
      * @see SwatTableViewColumn::setInputCell()
      * @see SwatTableViewColumn::getInputCell()
      */
-    protected $input_cell = null;
+    protected $input_cell;
 
     /**
      * Whether or not this column was automatically assigned a unique
-     * identifier
+     * identifier.
      *
-     * @var boolean
+     * @var bool
      */
     protected $has_auto_id = false;
 
@@ -114,10 +113,10 @@ class SwatTableViewColumn extends SwatCellRendererContainer
     // {{{ public function __construct()
 
     /**
-     * Creates a new table-view column
+     * Creates a new table-view column.
      *
      * @param string $id an optional unique identifier for this column in the
-     *                    table view.
+     *                   table view
      */
     public function __construct($id = null)
     {
@@ -129,7 +128,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
     // {{{ public function init()
 
     /**
-     * Initializes this column
+     * Initializes this column.
      *
      * Gets a unique identifier for this column if one is not provided
      *
@@ -175,7 +174,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
     // {{{ public function hasHeader()
 
     /**
-     * Whether this column has a header to display
+     * Whether this column has a header to display.
      */
     public function hasHeader()
     {
@@ -186,7 +185,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
     // {{{ public function displayHeaderCell()
 
     /**
-     * Displays the table-view header cell for this column
+     * Displays the table-view header cell for this column.
      */
     public function displayHeaderCell()
     {
@@ -211,7 +210,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
     // {{{ public function displayHeader()
 
     /**
-     * Displays the contents of the header cell for this column
+     * Displays the contents of the header cell for this column.
      */
     public function displayHeader()
     {
@@ -246,13 +245,13 @@ class SwatTableViewColumn extends SwatCellRendererContainer
     // {{{ public function display()
 
     /**
-     * Displays this column using a data object
+     * Displays this column using a data object.
      *
      * The properties of the cell renderers are set from the data object
      * through the datafield property mappings.
      *
      * @param mixed $row a data object used to display the cell renderers in
-     *                    this column.
+     *                   this column
      */
     public function display($row)
     {
@@ -268,12 +267,12 @@ class SwatTableViewColumn extends SwatCellRendererContainer
     // {{{ public function getMessages()
 
     /**
-     * Gathers all messages from this column for the given data object
+     * Gathers all messages from this column for the given data object.
      *
      * @param mixed $data the data object to use to check this column for
-     *                     messages.
+     *                    messages
      *
-     * @return array an array of {@link SwatMessage} objects.
+     * @return array an array of {@link SwatMessage} objects
      */
     public function getMessages($data)
     {
@@ -294,13 +293,13 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 
     /**
      * Gets whether or not this column has any messages for the given data
-     * object
+     * object.
      *
      * @param mixed $data the data object to use to check this column for
-     *                     messages.
+     *                    messages
      *
-     * @return boolean true if this table-view column has one or more messages
-     *                  for the given data object and false if it does not.
+     * @return bool true if this table-view column has one or more messages
+     *              for the given data object and false if it does not
      */
     public function hasMessage($data)
     {
@@ -323,12 +322,12 @@ class SwatTableViewColumn extends SwatCellRendererContainer
     // {{{ public function getInlineJavaScript()
 
     /**
-     * Gets the inline JavaScript required by this column
+     * Gets the inline JavaScript required by this column.
      *
      * All inline JavaScript is displayed after the table-view has been
      * displayed.
      *
-     * @return string the inline JavaScript required by this column.
+     * @return string the inline JavaScript required by this column
      */
     public function getInlineJavaScript()
     {
@@ -339,9 +338,9 @@ class SwatTableViewColumn extends SwatCellRendererContainer
     // {{{ public function setInputCell()
 
     /**
-     * Sets the input cell of this column
+     * Sets the input cell of this column.
      *
-     * @param SwatInputCell $cell the input cell to set for this column.
+     * @param SwatInputCell $cell the input cell to set for this column
      *
      * @see SwatTableViewColumn::init()
      * @see SwatTableViewInputRow
@@ -356,7 +355,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
     // {{{ public function getTrAttributes()
 
     /**
-     * Gets TR-tag attributes
+     * Gets TR-tag attributes.
      *
      * Subclasses may redefine this to set attributes on the tr tag that wraps
      * rows using this column.
@@ -364,10 +363,10 @@ class SwatTableViewColumn extends SwatCellRendererContainer
      * The returned array is of the form 'attribute' => 'value'.
      *
      * @param mixed $row a data object used to display the cell renderers in
-     *                    this column.
+     *                   this column
      *
      * @return array an array of attributes to apply to the tr tag of the
-     *                row that wraps this column display.
+     *               row that wraps this column display
      */
     public function getTrAttributes($row)
     {
@@ -378,13 +377,13 @@ class SwatTableViewColumn extends SwatCellRendererContainer
     // {{{ public function getInputCell()
 
     /**
-     * Gets the input cell of this column
+     * Gets the input cell of this column.
      *
      * This method is a useful way to get this column's input cell before
      * init() is called on the UI tree. You can then modify the cell's
      * prototype widget before init() is called.
      *
-     * @return SwatInputCell the input cell of this column.
+     * @return SwatInputCell the input cell of this column
      *
      * @see SwatTableViewColumn::setInputCell()
      * @see SwatInputCell::getPrototypeWidget()
@@ -399,9 +398,9 @@ class SwatTableViewColumn extends SwatCellRendererContainer
     // {{{ public function addChild()
 
     /**
-     * Add a child object to this object
+     * Add a child object to this object.
      *
-     * @param SwatCellRenderer $child the reference to the child object to add.
+     * @param SwatCellRenderer $child the reference to the child object to add
      *
      * @throws SwatException, SwatInvalidClassException
      *
@@ -416,14 +415,14 @@ class SwatTableViewColumn extends SwatCellRendererContainer
                 $this->setInputCell($child);
             } else {
                 throw new SwatException(
-                    'Only one input cell may be added to ' .
-                        'a table-view column.',
+                    'Only one input cell may be added to '
+                        . 'a table-view column.',
                 );
             }
         } else {
             throw new SwatInvalidClassException(
-                'Only SwatCellRenderer and SwatInputCell objects may be ' .
-                    'nested within SwatTableViewColumn objects.',
+                'Only SwatCellRenderer and SwatInputCell objects may be '
+                    . 'nested within SwatTableViewColumn objects.',
                 0,
                 $child,
             );
@@ -434,15 +433,15 @@ class SwatTableViewColumn extends SwatCellRendererContainer
     // {{{ public function getDescendants()
 
     /**
-     * Gets descendant UI-objects
+     * Gets descendant UI-objects.
      *
      * @param string $class_name optional class name. If set, only UI-objects
-     *                            that are instances of <i>$class_name</i> are
-     *                            returned.
+     *                           that are instances of <i>$class_name</i> are
+     *                           returned.
      *
      * @return array the descendant UI-objects of this table-view column. If
-     *                descendant objects have identifiers, the identifier is
-     *                used as the array key.
+     *               descendant objects have identifiers, the identifier is
+     *               used as the array key.
      *
      * @see SwatUIParent::getDescendants()
      */
@@ -450,9 +449,9 @@ class SwatTableViewColumn extends SwatCellRendererContainer
     {
         if (
             !(
-                $class_name === null ||
-                class_exists($class_name) ||
-                interface_exists($class_name)
+                $class_name === null
+                || class_exists($class_name)
+                || interface_exists($class_name)
             )
         ) {
             return [];
@@ -479,8 +478,8 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 
         if ($this->input_cell !== null) {
             if (
-                $class_name === null ||
-                $this->input_cell instanceof $class_name
+                $class_name === null
+                || $this->input_cell instanceof $class_name
             ) {
                 if ($this->input_cell->id === null) {
                     $out[] = $this->input_cell;
@@ -504,12 +503,12 @@ class SwatTableViewColumn extends SwatCellRendererContainer
     // {{{ public function getFirstDescendant()
 
     /**
-     * Gets the first descendant UI-object of a specific class
+     * Gets the first descendant UI-object of a specific class.
      *
-     * @param string $class_name class name to look for.
+     * @param string $class_name class name to look for
      *
      * @return SwatUIObject the first descendant UI-object or null if no
-     *                       matching descendant is found.
+     *                      matching descendant is found
      *
      * @see SwatUIParent::getFirstDescendant()
      */
@@ -536,10 +535,10 @@ class SwatTableViewColumn extends SwatCellRendererContainer
     // {{{ public function getHtmlHeadEntrySet()
 
     /**
-     * Gets the SwatHtmlHeadEntry objects needed by this column
+     * Gets the SwatHtmlHeadEntry objects needed by this column.
      *
      * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
-     *                               this column.
+     *                              this column
      *
      * @see SwatUIObject::getHtmlHeadEntrySet()
      */
@@ -558,10 +557,10 @@ class SwatTableViewColumn extends SwatCellRendererContainer
     // {{{ public function getAvailableHtmlHeadEntrySet()
 
     /**
-     * Gets the SwatHtmlHeadEntry objects that may be needed by this column
+     * Gets the SwatHtmlHeadEntry objects that may be needed by this column.
      *
      * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects that may be
-     *                               needed by this column.
+     *                              needed by this column
      *
      * @see SwatUIObject::getAvailableHtmlHeadEntrySet()
      */
@@ -582,11 +581,11 @@ class SwatTableViewColumn extends SwatCellRendererContainer
     // {{{ public function getTdAttributes()
 
     /**
-     * Gets the TD tag attributes for this column
+     * Gets the TD tag attributes for this column.
      *
      * The returned array is of the form 'attribute' => value.
      *
-     * @return array an array of attributes to apply to this column's TD tag.
+     * @return array an array of attributes to apply to this column's TD tag
      */
     public function getTdAttributes()
     {
@@ -599,11 +598,11 @@ class SwatTableViewColumn extends SwatCellRendererContainer
     // {{{ public function getThAttributes()
 
     /**
-     * Gets the TH tag attributes for this column
+     * Gets the TH tag attributes for this column.
      *
      * The returned array is of the form 'attribute' => value.
      *
-     * @return array an array of attributes to apply to this column's TH tag.
+     * @return array an array of attributes to apply to this column's TH tag
      */
     public function getThAttributes()
     {
@@ -616,10 +615,10 @@ class SwatTableViewColumn extends SwatCellRendererContainer
     // {{{ public function getXhtmlColspan()
 
     /**
-     * Gets how many XHTML table columns this column object spans on display
+     * Gets how many XHTML table columns this column object spans on display.
      *
-     * @return integer the number of XHTML table columns this column object
-     *                  spans on display.
+     * @return int the number of XHTML table columns this column object
+     *             spans on display
      */
     public function getXhtmlColspan()
     {
@@ -630,14 +629,14 @@ class SwatTableViewColumn extends SwatCellRendererContainer
     // {{{ public function hasVisibleRenderer()
 
     /**
-     * Whether or not this column has one or more visible cell renderers
+     * Whether or not this column has one or more visible cell renderers.
      *
      * @param mixed $row a data object containing the data for a single row
-     *                    in the table store for this group. This object may
-     *                    affect the visibility of renderers in this column.
+     *                   in the table store for this group. This object may
+     *                   affect the visibility of renderers in this column.
      *
-     * @return boolean true if this column has one or more visible cell
-     *                  renderers and false if it does not.
+     * @return bool true if this column has one or more visible cell
+     *              renderers and false if it does not
      */
     public function hasVisibleRenderer($row)
     {
@@ -659,13 +658,13 @@ class SwatTableViewColumn extends SwatCellRendererContainer
     // {{{ public function copy()
 
     /**
-     * Performs a deep copy of the UI tree starting with this UI object
+     * Performs a deep copy of the UI tree starting with this UI object.
      *
      * @param string $id_suffix optional. A suffix to append to copied UI
-     *                           objects in the UI tree.
+     *                          objects in the UI tree.
      *
      * @return SwatUIObject a deep copy of the UI tree starting with this UI
-     *                       object.
+     *                      object
      *
      * @see SwatUIObject::copy()
      */
@@ -691,10 +690,10 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 
     /**
      * Renders each cell renderer in this column inside a wrapping XHTML
-     * element
+     * element.
      *
      * @param mixed $data the data object being used to render the cell
-     *                     renderers of this field.
+     *                    renderers of this field
      */
     protected function displayRenderers($data)
     {
@@ -714,7 +713,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
     // {{{ protected function displayRenderersInternal()
 
     /**
-     * Renders each cell renderer in this column
+     * Renders each cell renderer in this column.
      *
      * If there is once cell renderer in this column, it is rendered by itself.
      * If there is more than one cell renderer in this column, cell renderers
@@ -723,7 +722,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
      * div elements are displayed inline by default.
      *
      * @param mixed $data the data object being used to render the cell
-     *                     renderers of this field.
+     *                    renderers of this field
      */
     protected function displayRenderersInternal($data)
     {
@@ -775,10 +774,10 @@ class SwatTableViewColumn extends SwatCellRendererContainer
     // {{{ protected function setupRenderers()
 
     /**
-     * Sets properties of renderers using data from current row
+     * Sets properties of renderers using data from current row.
      *
      * @param mixed $data the data object being used to render the cell
-     *                     renderers of this field.
+     *                    renderers of this field
      */
     protected function setupRenderers($data)
     {
@@ -801,7 +800,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
     // {{{ protected function getCSSClassNames()
 
     /**
-     * Gets the array of CSS classes that are applied to this table-view column
+     * Gets the array of CSS classes that are applied to this table-view column.
      *
      * CSS classes are added to this column in the following order:
      *
@@ -820,7 +819,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
      * 7. user-specified CSS classes on the first cell renderer in this column.
      *
      * @return array the array of CSS classes that are applied to this
-     *                table-view column.
+     *               table-view column
      *
      * @see SwatCellRenderer::getInheritanceCSSClassNames()
      * @see SwatCellRenderer::getBaseCSSClassNames()
@@ -844,8 +843,8 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 
         $first_renderer = $this->renderers->getFirst();
         if (
-            $this->show_renderer_classes &&
-            $first_renderer instanceof SwatCellRenderer
+            $this->show_renderer_classes
+            && $first_renderer instanceof SwatCellRenderer
         ) {
             // renderer inheritance classes
             $classes = array_merge(
@@ -878,13 +877,13 @@ class SwatTableViewColumn extends SwatCellRendererContainer
     // {{{ protected function getBaseCSSClassNames()
 
     /**
-     * Gets the base CSS class names of this table-view column
+     * Gets the base CSS class names of this table-view column.
      *
      * This is the recommended place for column subclasses to add extra hard-
      * coded CSS classes.
      *
      * @return array the array of base CSS class names for this table-view
-     *                column.
+     *               column
      */
     protected function getBaseCSSClassNames()
     {

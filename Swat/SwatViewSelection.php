@@ -1,7 +1,7 @@
 <?php
 
 /**
- * A selection on a view
+ * A selection on a view.
  *
  * Selections are iteratable and countable. A usual pattern for working with
  * selections is to use it in a <code>foreach</code> statement as follows:
@@ -22,9 +22,9 @@
  * means the view does not need to be displayed this can remove the need for
  * unnecessary queries.
  *
- * @package   Swat
  * @copyright 2007-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ *
  * @see       SwatView::getSelection()
  */
 class SwatViewSelection extends SwatObject implements Countable, Iterator
@@ -32,18 +32,18 @@ class SwatViewSelection extends SwatObject implements Countable, Iterator
     // {{{ private properties
 
     /**
-     * The selected items of this selection
+     * The selected items of this selection.
      *
      * @var array
      */
     private $selected_items = [];
 
     /**
-     * Current array index of the selected items of this selection
+     * Current array index of the selected items of this selection.
      *
      * Used for implementing the Iterator interface.
      *
-     * @var integer
+     * @var int
      */
     private $current_index = 0;
 
@@ -51,11 +51,11 @@ class SwatViewSelection extends SwatObject implements Countable, Iterator
     // {{{ public function __construct()
 
     /**
-     * Creates a new selection object
+     * Creates a new selection object.
      *
      * @param array $selected_items the selected items of this selection. This
-     *                               is usually an array of item identifiers,
-     *                               not an array of item objects.
+     *                              is usually an array of item identifiers,
+     *                              not an array of item objects.
      */
     public function __construct(array $selected_items)
     {
@@ -66,9 +66,9 @@ class SwatViewSelection extends SwatObject implements Countable, Iterator
     // {{{ public function current()
 
     /**
-     * Returns the current selected item
+     * Returns the current selected item.
      *
-     * @return mixed the current selected item.
+     * @return mixed the current selected item
      */
     public function current()
     {
@@ -79,9 +79,9 @@ class SwatViewSelection extends SwatObject implements Countable, Iterator
     // {{{ public function key()
 
     /**
-     * Returns the key of the current selected item
+     * Returns the key of the current selected item.
      *
-     * @return integer the key of the current selected item
+     * @return int the key of the current selected item
      */
     public function key()
     {
@@ -92,7 +92,7 @@ class SwatViewSelection extends SwatObject implements Countable, Iterator
     // {{{ public function next()
 
     /**
-     * Moves forward to the next selected item
+     * Moves forward to the next selected item.
      */
     public function next(): void
     {
@@ -103,7 +103,7 @@ class SwatViewSelection extends SwatObject implements Countable, Iterator
     // {{{ public function prev()
 
     /**
-     * Moves forward to the previous selected item
+     * Moves forward to the previous selected item.
      */
     public function prev(): void
     {
@@ -114,7 +114,7 @@ class SwatViewSelection extends SwatObject implements Countable, Iterator
     // {{{ public function rewind()
 
     /**
-     * Rewinds this iterator to the first selected item
+     * Rewinds this iterator to the first selected item.
      */
     public function rewind(): void
     {
@@ -126,10 +126,10 @@ class SwatViewSelection extends SwatObject implements Countable, Iterator
 
     /**
      * Checks is there is a current selected item after calls to rewind() and
-     * next()
+     * next().
      *
-     * @return boolean true if there is a current selected item and false if
-     *                  there is not.
+     * @return bool true if there is a current selected item and false if
+     *              there is not
      */
     public function valid(): bool
     {
@@ -140,11 +140,11 @@ class SwatViewSelection extends SwatObject implements Countable, Iterator
     // {{{ public funciton count()
 
     /**
-     * Gets the number of items in this selection
+     * Gets the number of items in this selection.
      *
      * This satisfies the Countable interface.
      *
-     * @return integer the number of items in this selection.
+     * @return int the number of items in this selection
      */
     public function count(): int
     {
@@ -155,12 +155,12 @@ class SwatViewSelection extends SwatObject implements Countable, Iterator
     // {{{ public function contains()
 
     /**
-     * Checks whether or not this selection contains an item
+     * Checks whether or not this selection contains an item.
      *
-     * @param mixed $item the item to check.
+     * @param mixed $item the item to check
      *
-     * @return boolean true if this selection contains the specified item and
-     *                  false if it does not.
+     * @return bool true if this selection contains the specified item and
+     *              false if it does not
      */
     public function contains($item)
     {

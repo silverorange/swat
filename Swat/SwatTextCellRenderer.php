@@ -1,9 +1,8 @@
 <?php
 
 /**
- * A text cell renderer
+ * A text cell renderer.
  *
- * @package   Swat
  * @copyright 2004-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
@@ -12,7 +11,7 @@ class SwatTextCellRenderer extends SwatCellRenderer
     // {{{ public properties
 
     /**
-     * The textual content to place within this cell
+     * The textual content to place within this cell.
      *
      * Optionally uses vsprintf() syntax, for example:
      * <code>
@@ -26,7 +25,7 @@ class SwatTextCellRenderer extends SwatCellRenderer
     public $text = '';
 
     /**
-     * Optional content type
+     * Optional content type.
      *
      * Default text/plain, use text/xml for XHTML fragments.
      *
@@ -35,7 +34,7 @@ class SwatTextCellRenderer extends SwatCellRenderer
     public $content_type = 'text/plain';
 
     /**
-     * A value or array of values to substitute into the text of this cell
+     * A value or array of values to substitute into the text of this cell.
      *
      * The value property may be specified either as an array of values or as
      * a single value. If an array is passed, a call to vsprintf() is done
@@ -46,13 +45,13 @@ class SwatTextCellRenderer extends SwatCellRenderer
      *
      * @see SwatTextCellRenderer::$text
      */
-    public $value = null;
+    public $value;
 
     // }}}
     // {{{ public function render()
 
     /**
-     * Renders the contents of this cell
+     * Renders the contents of this cell.
      *
      * @see SwatCellRenderer::render()
      */

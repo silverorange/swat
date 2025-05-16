@@ -1,9 +1,8 @@
 <?php
 
 /**
- * A flydown (aka combo-box) selection widget
+ * A flydown (aka combo-box) selection widget.
  *
- * @package   Swat
  * @copyright 2004-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
@@ -12,26 +11,26 @@ class SwatFlydown extends SwatOptionControl implements SwatState
     // {{{ public properties
 
     /**
-     * Flydown value
+     * Flydown value.
      *
      * The index value of the selected option, or null if no option is
      * selected.
      *
      * @var string
      */
-    public $value = null;
+    public $value;
 
     /**
-     * Show a blank option
+     * Show a blank option.
      *
      * Whether or not to show a blank value at the top of the flydown.
      *
-     * @var boolean
+     * @var bool
      */
     public $show_blank = true;
 
     /**
-     * Blank title
+     * Blank title.
      *
      * The user visible title to display in the blank field.
      *
@@ -40,12 +39,10 @@ class SwatFlydown extends SwatOptionControl implements SwatState
     public $blank_title = '';
 
     /**
-     * Collapse single
+     * Collapse single.
      *
      * Whether to collapse a list/flydown with only one option down to a hidden field (default),
      * or display it as a list/flydown with just one option.
-     *
-     * @var bool
      */
     public bool $collapse_single = true;
 
@@ -53,7 +50,7 @@ class SwatFlydown extends SwatOptionControl implements SwatState
     // {{{ public function display()
 
     /**
-     * Displays this flydown
+     * Displays this flydown.
      *
      * Displays this flydown as a XHTML select.
      */
@@ -144,9 +141,9 @@ class SwatFlydown extends SwatOptionControl implements SwatState
                     : (string) $flydown_option->value;
 
                 if (
-                    $flydown_value === $value &&
-                    !$selected &&
-                    !($flydown_option instanceof SwatFlydownDivider)
+                    $flydown_value === $value
+                    && !$selected
+                    && !($flydown_option instanceof SwatFlydownDivider)
                 ) {
                     $option_tag->selected = 'selected';
                     $selected = true;
@@ -172,7 +169,7 @@ class SwatFlydown extends SwatOptionControl implements SwatState
     // {{{ public function process()
 
     /**
-     * Figures out what option was selected
+     * Figures out what option was selected.
      *
      * Processes this widget and figures out what select element from this
      * flydown was selected. Any validation errors cause an error message to
@@ -192,8 +189,8 @@ class SwatFlydown extends SwatOptionControl implements SwatState
             // string value in the same flydown except when using serialized
             // values.
             if (
-                ($this->serialize_values && $this->value === null) ||
-                (!$this->serialize_values && $this->value == '')
+                ($this->serialize_values && $this->value === null)
+                || (!$this->serialize_values && $this->value == '')
             ) {
                 $this->addMessage($this->getValidationMessage('required'));
             }
@@ -204,14 +201,14 @@ class SwatFlydown extends SwatOptionControl implements SwatState
     // {{{ public function addDivider()
 
     /**
-     * Adds a divider to this flydown
+     * Adds a divider to this flydown.
      *
      * A divider is an unselectable flydown option.
      *
-     * @param string $title the title of the divider. Defaults to two em
-     *                       dashes.
+     * @param string $title        the title of the divider. Defaults to two em
+     *                             dashes.
      * @param string $content_type optional. The content type of the divider. If
-     *                              not specified, defaults to 'text/plain'.
+     *                             not specified, defaults to 'text/plain'.
      */
     public function addDivider($title = '——', $content_type = 'text/plain')
     {
@@ -222,7 +219,7 @@ class SwatFlydown extends SwatOptionControl implements SwatState
     // {{{ public function reset()
 
     /**
-     * Resets this flydown
+     * Resets this flydown.
      *
      * Resets this flydown to its default state. This method is useful to
      * call from a display() method when form persistence is not desired.
@@ -237,9 +234,9 @@ class SwatFlydown extends SwatOptionControl implements SwatState
     // {{{ public function getState()
 
     /**
-     * Gets the current state of this flydown
+     * Gets the current state of this flydown.
      *
-     * @return boolean the current state of this flydown.
+     * @return bool the current state of this flydown
      *
      * @see SwatState::getState()
      */
@@ -252,9 +249,9 @@ class SwatFlydown extends SwatOptionControl implements SwatState
     // {{{ public function setState()
 
     /**
-     * Sets the current state of this flydown
+     * Sets the current state of this flydown.
      *
-     * @param boolean $state the new state of this flydown.
+     * @param bool $state the new state of this flydown
      *
      * @see SwatState::setState()
      */
@@ -268,11 +265,11 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 
     /**
      * Gets the id attribute of the XHTML element displayed by this widget
-     * that should receive focus
+     * that should receive focus.
      *
      * @return string the id attribute of the XHTML element displayed by this
-     *                 widget that should receive focus or null if there is
-     *                 no such element.
+     *                widget that should receive focus or null if there is
+     *                no such element
      *
      * @see SwatWidget::getFocusableHtmlId()
      */
@@ -298,9 +295,9 @@ class SwatFlydown extends SwatOptionControl implements SwatState
     // {{{ protected function processValue()
 
     /**
-     * Processes the value of this flydown from user-submitted form data
+     * Processes the value of this flydown from user-submitted form data.
      *
-     * @return boolean true if the value was processed from form data
+     * @return bool true if the value was processed from form data
      */
     protected function processValue()
     {
@@ -328,7 +325,7 @@ class SwatFlydown extends SwatOptionControl implements SwatState
     // {{{ protected function displaySingle()
 
     /**
-     * Displays this flydown if there is only a single option
+     * Displays this flydown if there is only a single option.
      */
     protected function displaySingle(SwatOption $flydown_option)
     {
@@ -360,7 +357,7 @@ class SwatFlydown extends SwatOptionControl implements SwatState
     /**
      * Gets the the blank option for this flydown.
      *
-     * @return SwatFlydownBlankOption the blank value option.
+     * @return SwatFlydownBlankOption the blank value option
      */
     protected function getBlankOption()
     {
@@ -371,15 +368,15 @@ class SwatFlydown extends SwatOptionControl implements SwatState
     // {{{ protected function getCSSClassNames()
 
     /**
-     * Gets the array of CSS classes that are applied to this flydown
+     * Gets the array of CSS classes that are applied to this flydown.
      *
-     * @return array the array of CSS classes that are applied to this flydown.
+     * @return array the array of CSS classes that are applied to this flydown
      */
     protected function getCSSClassNames()
     {
         $classes = ['swat-flydown'];
-        $classes = array_merge($classes, parent::getCSSClassNames());
-        return $classes;
+
+        return array_merge($classes, parent::getCSSClassNames());
     }
 
     // }}}

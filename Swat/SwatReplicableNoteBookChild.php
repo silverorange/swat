@@ -1,24 +1,22 @@
 <?php
 
 /**
- * A replicable container that replicates {@link SwatNoteBookChild} objects
+ * A replicable container that replicates {@link SwatNoteBookChild} objects.
  *
- * @package   Swat
  * @copyright 2007-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatReplicableNoteBookChild extends SwatReplicableContainer implements
-    SwatNoteBookChild
+class SwatReplicableNoteBookChild extends SwatReplicableContainer implements SwatNoteBookChild
 {
     // {{{ public function getPages()
 
     /**
-     * Gets the notebook pages of this replicable notebook child
+     * Gets the notebook pages of this replicable notebook child.
      *
      * Implements the {@link SwatNoteBookChild::getPages()} interface.
      *
      * @return array an array containing all the replicated pages of this
-     *                child.
+     *               child
      */
     public function getPages()
     {
@@ -37,23 +35,23 @@ class SwatReplicableNoteBookChild extends SwatReplicableContainer implements
     // {{{ public function addChild()
 
     /**
-     * Adds a {@link SwatNoteBookChild} to this replicable notebook child
+     * Adds a {@link SwatNoteBookChild} to this replicable notebook child.
      *
      * This method fulfills the {@link SwatUIParent} interface.
      *
-     * @param SwatNoteBookChild $child the notebook child to add.
+     * @param SwatNoteBookChild $child the notebook child to add
      *
      * @throws SwatInvalidClassException if the given object is not an instance
-     *                                    of SwatNoteBookChild.
+     *                                   of SwatNoteBookChild
      *
      * @see SwatUIParent
      */
     public function addChild(SwatObject $child)
     {
-        if (!($child instanceof SwatNoteBookChild)) {
+        if (!$child instanceof SwatNoteBookChild) {
             throw new SwatInvalidClassException(
-                'Only SwatNoteBookChild objects may be nested within a ' .
-                    'SwatReplicableNoteBookChild object.',
+                'Only SwatNoteBookChild objects may be nested within a '
+                    . 'SwatReplicableNoteBookChild object.',
                 0,
                 $child,
             );

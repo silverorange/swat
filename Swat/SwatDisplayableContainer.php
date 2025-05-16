@@ -1,9 +1,8 @@
 <?php
 
 /**
- * Base class for containers that display an XHTML element
+ * Base class for containers that display an XHTML element.
  *
- * @package   Swat
  * @copyright 2006-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
@@ -12,7 +11,7 @@ class SwatDisplayableContainer extends SwatContainer
     // {{{ public function display()
 
     /**
-     * Displays this container
+     * Displays this container.
      */
     public function display()
     {
@@ -36,16 +35,16 @@ class SwatDisplayableContainer extends SwatContainer
 
     /**
      * Gets the array of CSS classes that are applied to this displayable
-     * container
+     * container.
      *
      * @return array the array of CSS classes that are applied to this
-     *                displayable container.
+     *               displayable container
      */
     protected function getCSSClassNames()
     {
         $classes = ['swat-displayable-container'];
-        $classes = array_merge($classes, parent::getCSSClassNames());
-        return $classes;
+
+        return array_merge($classes, parent::getCSSClassNames());
     }
 
     // }}}

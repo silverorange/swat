@@ -1,12 +1,11 @@
 <?php
 
 /**
- * A data structure that can be used with the SwatTableView
+ * A data structure that can be used with the SwatTableView.
  *
  * A new table store is empty by default. Use the
  * {@link SwatTableStore::add()} method to add rows to a table store.
  *
- * @package   Swat
  * @copyright 2004-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
@@ -15,16 +14,16 @@ class SwatTableStore extends SwatObject implements SwatTableModel
     // {{{ private properties
 
     /**
-     * The indvidual rows for this data structure
+     * The indvidual rows for this data structure.
      *
      * @var array
      */
     private $rows = [];
 
     /**
-     * The current index of the iterator interface
+     * The current index of the iterator interface.
      *
-     * @var integer
+     * @var int
      */
     private $current_index = 0;
 
@@ -32,11 +31,11 @@ class SwatTableStore extends SwatObject implements SwatTableModel
     // {{{ public function count()
 
     /**
-     * Gets the number of rows
+     * Gets the number of rows.
      *
      * This satisfies the Countable interface.
      *
-     * @return integer the number of rows in this data structure.
+     * @return int the number of rows in this data structure
      */
     public function count(): int
     {
@@ -47,9 +46,9 @@ class SwatTableStore extends SwatObject implements SwatTableModel
     // {{{ public function current()
 
     /**
-     * Returns the current element
+     * Returns the current element.
      *
-     * @return mixed the current element.
+     * @return mixed the current element
      */
     public function current()
     {
@@ -60,9 +59,9 @@ class SwatTableStore extends SwatObject implements SwatTableModel
     // {{{ public function key()
 
     /**
-     * Returns the key of the current element
+     * Returns the key of the current element.
      *
-     * @return integer the key of the current element
+     * @return int the key of the current element
      */
     public function key()
     {
@@ -73,7 +72,7 @@ class SwatTableStore extends SwatObject implements SwatTableModel
     // {{{ public function next()
 
     /**
-     * Moves forward to the next element
+     * Moves forward to the next element.
      */
     public function next(): void
     {
@@ -84,7 +83,7 @@ class SwatTableStore extends SwatObject implements SwatTableModel
     // {{{ public function prev()
 
     /**
-     * Moves forward to the previous element
+     * Moves forward to the previous element.
      */
     public function prev()
     {
@@ -95,7 +94,7 @@ class SwatTableStore extends SwatObject implements SwatTableModel
     // {{{ public function rewind()
 
     /**
-     * Rewinds this iterator to the first element
+     * Rewinds this iterator to the first element.
      */
     public function rewind(): void
     {
@@ -106,10 +105,10 @@ class SwatTableStore extends SwatObject implements SwatTableModel
     // {{{ public function valid()
 
     /**
-     * Checks is there is a current element after calls to rewind() and next()
+     * Checks is there is a current element after calls to rewind() and next().
      *
-     * @return boolean true if there is a current element and false if there
-     *                  is not.
+     * @return bool true if there is a current element and false if there
+     *              is not
      */
     public function valid(): bool
     {
@@ -120,10 +119,9 @@ class SwatTableStore extends SwatObject implements SwatTableModel
     // {{{ public function add()
 
     /**
-     * Adds a row to this data structure
+     * Adds a row to this data structure.
      *
-     * @param $data the data of the row to add.
-     *
+     * @param $data the data of the row to add
      */
     public function add($data)
     {
@@ -134,10 +132,9 @@ class SwatTableStore extends SwatObject implements SwatTableModel
     // {{{ public function addToStart()
 
     /**
-     * Adds a row to the beginning of this data structure
+     * Adds a row to the beginning of this data structure.
      *
-     * @param $data the data of the row to add.
-     *
+     * @param $data the data of the row to add
      */
     public function addToStart($data)
     {
@@ -149,7 +146,7 @@ class SwatTableStore extends SwatObject implements SwatTableModel
     // {{{ public function getRowCount()
 
     /**
-     * Gets the number of rows in this data structure
+     * Gets the number of rows in this data structure.
      *
      * @deprecated Use Countable::count()
      */
@@ -162,7 +159,7 @@ class SwatTableStore extends SwatObject implements SwatTableModel
     // {{{ public function &getRows()
 
     /**
-     * Gets the rows of this data structure as an array
+     * Gets the rows of this data structure as an array.
      *
      * @return array the rows of this data structure
      *
@@ -177,10 +174,10 @@ class SwatTableStore extends SwatObject implements SwatTableModel
     // {{{ public function addRow()
 
     /**
-     * Adds a row to this data structure
+     * Adds a row to this data structure.
      *
-     * @param $data the data of the row to add.
-     * @param $id an optional uniqueid of the row to add.
+     * @param $data the data of the row to add
+     * @param $id   an optional uniqueid of the row to add
      *
      * @deprecated Use SwatTableStore::add()
      */

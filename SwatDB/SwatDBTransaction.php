@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * Example use:
  * <code>
  * $transaction = new SwatDBTransaction($database);
@@ -12,9 +11,8 @@
  *     throw $e;
  * }
  * $transaction->commit();
- * </code>
+ * </code>.
  *
- * @package   SwatDB
  * @copyright 2006-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
@@ -23,7 +21,7 @@ class SwatDBTransaction extends SwatObject
     // {{{ private properties
 
     /**
-     * The database driver object to perform the transaction with
+     * The database driver object to perform the transaction with.
      *
      * @var MDB2_Driver_Common
      */
@@ -33,10 +31,10 @@ class SwatDBTransaction extends SwatObject
     // {{{ public function __construct()
 
     /**
-     * Begins a new database transaction
+     * Begins a new database transaction.
      *
      * @param MDB2_Driver_Common the database connection to perform the
-     *                            transaction with.
+     *                            transaction with
      */
     public function __construct(MDB2_Driver_Common $db)
     {
@@ -48,7 +46,7 @@ class SwatDBTransaction extends SwatObject
     // {{{ public function commit()
 
     /**
-     * Commits this database transaction
+     * Commits this database transaction.
      */
     public function commit()
     {
@@ -59,7 +57,7 @@ class SwatDBTransaction extends SwatObject
     // {{{ public function rollback()
 
     /**
-     * Rolls-back this database transaction
+     * Rolls-back this database transaction.
      */
     public function rollback()
     {

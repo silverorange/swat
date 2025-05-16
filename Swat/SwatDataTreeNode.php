@@ -1,9 +1,8 @@
 <?php
 
 /**
- * A tree node containing a value and a title
+ * A tree node containing a value and a title.
  *
- * @package   Swat
  * @copyright 2005-2021 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
@@ -12,7 +11,7 @@ class SwatDataTreeNode extends SwatTreeNode
     // {{{ public properties
 
     /**
-     * The value of this node
+     * The value of this node.
      *
      * The value is used for processing. It is either a string or an integer.
      *
@@ -21,7 +20,7 @@ class SwatDataTreeNode extends SwatTreeNode
     public $value;
 
     /**
-     * The title of this node
+     * The title of this node.
      *
      * The title is used for display.
      *
@@ -30,7 +29,7 @@ class SwatDataTreeNode extends SwatTreeNode
     public $title;
 
     /**
-     * Optional content type
+     * Optional content type.
      *
      * Default text/plain, use text/xml for XHTML fragments.
      *
@@ -39,11 +38,11 @@ class SwatDataTreeNode extends SwatTreeNode
     public $content_type = 'text/plain';
 
     /**
-     * The sensitivity of this node
+     * The sensitivity of this node.
      *
      * Used to mark this node as unselectable
      *
-     * @var boolean
+     * @var bool
      */
     public $sensitive = true;
 
@@ -51,13 +50,13 @@ class SwatDataTreeNode extends SwatTreeNode
     // {{{ public function __construct()
 
     /**
-     * Creates a new data node
+     * Creates a new data node.
      *
-     * @param mixed $value the value of the node. It is either a string or an
-     *                      integer.
-     * @param string $title the title of the node.
+     * @param mixed  $value        the value of the node. It is either a string or an
+     *                             integer.
+     * @param string $title        the title of the node
      * @param string $content_type optional content-type
-     * @param boolean $sesitive optional, the sensitivity of this node.
+     * @param mixed  $sensitive
      */
     public function __construct(
         $value,

@@ -1,9 +1,8 @@
 <?php
 
 /**
- * An image renderer
+ * An image renderer.
  *
- * @package   Swat
  * @copyright 2004-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
@@ -12,7 +11,7 @@ class SwatImageCellRenderer extends SwatCellRenderer
     // {{{ public properties
 
     /**
-     * The relative uri of the image file for this image renderer
+     * The relative uri of the image file for this image renderer.
      *
      * This is the src attribute in the XHTML img tag. It optionally uses
      * vsprintf() syntax, for example:
@@ -29,7 +28,7 @@ class SwatImageCellRenderer extends SwatCellRenderer
 
     /**
      * A value or array of values to substitute into the
-     * {@link SwatImageCellRenderer::$image} property of this cell
+     * {@link SwatImageCellRenderer::$image} property of this cell.
      *
      * The value property may be specified either as an array of values or as
      * a single value. If an array is passed, a call to vsprintf() is done
@@ -40,57 +39,57 @@ class SwatImageCellRenderer extends SwatCellRenderer
      *
      * @see SwatImageCellRenderer::$image
      */
-    public $value = null;
+    public $value;
 
     /**
-     * The height of the image for this image renderer
+     * The height of the image for this image renderer.
      *
      * The height attribute in the XHTML img tag.
      *
-     * @var integer
+     * @var int
      */
-    public $height = null;
+    public $height;
 
     /**
-     * The width of the image for this image renderer
+     * The width of the image for this image renderer.
      *
      * The width attribute in the XHTML img tag.
      *
-     * @var integer
+     * @var int
      */
-    public $width = null;
+    public $width;
 
     /**
-     * The total height that the image occupies
+     * The total height that the image occupies.
      *
      * Extra margin will be adding to the style of the img tag if the height is
      * less than occupy_height.
      *
-     * @var integer
+     * @var int
      */
-    public $occupy_height = null;
+    public $occupy_height;
 
     /**
-     * The total width that the image occupies
+     * The total width that the image occupies.
      *
      * Extra margin will be adding to the style of the img tag if the width is
      * less than occupy_width.
      *
-     * @var integer
+     * @var int
      */
-    public $occupy_width = null;
+    public $occupy_width;
 
     /**
-     * The title of the image for this image renderer
+     * The title of the image for this image renderer.
      *
      * The title attribute in the XHTML img tag.
      *
      * @var string
      */
-    public $title = null;
+    public $title;
 
     /**
-     * The alternate text for this image renderer
+     * The alternate text for this image renderer.
      *
      * This text is used by screen-readers and is required.
      *
@@ -98,13 +97,13 @@ class SwatImageCellRenderer extends SwatCellRenderer
      *
      * @var string
      */
-    public $alt = null;
+    public $alt;
 
     // }}}
     // {{{ public function render()
 
     /**
-     * Renders the contents of this cell
+     * Renders the contents of this cell.
      *
      * @see SwatCellRenderer::render()
      */
@@ -134,15 +133,15 @@ class SwatImageCellRenderer extends SwatCellRenderer
         $margin_y = 0;
 
         if (
-            $this->occupy_width !== null &&
-            $this->occupy_width > $this->width
+            $this->occupy_width !== null
+            && $this->occupy_width > $this->width
         ) {
             $margin_x = intval($this->occupy_width - $this->width);
         }
 
         if (
-            $this->occupy_height !== null &&
-            $this->occupy_height > $this->height
+            $this->occupy_height !== null
+            && $this->occupy_height > $this->height
         ) {
             $margin_y = intval($this->occupy_height - $this->height);
         }
@@ -172,15 +171,15 @@ class SwatImageCellRenderer extends SwatCellRenderer
     // {{{ protected function getCSSClassNames()
 
     /**
-     * Gets the array of CSS classes that are applied to this cell renderer
+     * Gets the array of CSS classes that are applied to this cell renderer.
      *
-     * @return array the array of CSS classes that are applied to this cell renderer.
+     * @return array the array of CSS classes that are applied to this cell renderer
      */
     protected function getCSSClassNames()
     {
         $classes = ['swat-image-cell-renderer'];
-        $classes = array_merge($classes, $this->classes);
-        return $classes;
+
+        return array_merge($classes, $this->classes);
     }
 
     // }}}
