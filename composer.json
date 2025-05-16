@@ -73,7 +73,9 @@
   },
   "scripts": {
     "phpcs": "./vendor/bin/php-cs-fixer check -v",
-    "phpcs:write": "./vendor/bin/php-cs-fixer fix -v"
+    "phpcs:write": "./vendor/bin/php-cs-fixer fix -v",
+    "phpstan": "./vendor/bin/phpstan analyse",
+    "phpstan:baseline": "./vendor/bin/phpstan analyse --generate-baseline"
   },
   "config": {
     "sort-packages": true
