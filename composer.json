@@ -43,27 +43,31 @@
 		}
 	],
 	"require": {
-		"php": ">=8.1.0",
+		"php": ">=8.2",
 		"ext-dom": "*",
 		"ext-iconv": "*",
 		"ext-intl": "*",
 		"ext-mbstring": "*",
 		"ext-pcre": "*",
 		"pear/pear_exception": "^1.0.0",
-		"silverorange/mdb2": "^3.1.1",
 		"silverorange/concentrate": "^2.0.0",
+		"silverorange/mdb2": "^3.1.1",
 		"silverorange/yui": "^1.0.11"
 	},
 	"require-dev": {
-		"silverorange/coding-standard": "^1.0.0",
+		"friendsofphp/php-cs-fixer": "*",
 		"phpstan/phpstan": "^2.1"
 	},
 	"autoload": {
 		"classmap": [ "Swat/", "SwatDB/", "SwatI18N/" ]
 	},
 	"scripts": {
-		"lint": "./vendor/bin/phpcs",
+        "phpcs": "./vendor/bin/php-cs-fixer check -v",
+        "phpcs:write": "./vendor/bin/php-cs-fixer fix -v",
 		"post-install-cmd": "./vendor/bin/phpcs --config-set installed_paths vendor/silverorange/coding-standard/src",
 		"post-update-cmd": "./vendor/bin/phpcs --config-set installed_paths vendor/silverorange/coding-standard/src"
-	}
+	},
+    "config": {
+        "sort-packages": true
+    }
 }
