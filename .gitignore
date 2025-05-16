@@ -11,6 +11,3 @@ node_modules/
 .php-cs-fixer.cache
 *.swp
 
-# dependency lock files
-composer.lock
-pnpm-lock.yaml
