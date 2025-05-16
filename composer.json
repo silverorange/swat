@@ -61,7 +61,7 @@
     "silverorange/yui": "^1.0.11"
   },
   "require-dev": {
-    "friendsofphp/php-cs-fixer": "*",
+    "friendsofphp/php-cs-fixer": "^3.75",
     "phpstan/phpstan": "^2.1"
   },
   "autoload": {
@@ -73,9 +73,7 @@
   },
   "scripts": {
     "phpcs": "./vendor/bin/php-cs-fixer check -v",
-    "phpcs:write": "./vendor/bin/php-cs-fixer fix -v",
-    "post-install-cmd": "./vendor/bin/phpcs --config-set installed_paths vendor/silverorange/coding-standard/src",
-    "post-update-cmd": "./vendor/bin/phpcs --config-set installed_paths vendor/silverorange/coding-standard/src"
+    "phpcs:write": "./vendor/bin/php-cs-fixer fix -v"
   },
   "config": {
     "sort-packages": true
