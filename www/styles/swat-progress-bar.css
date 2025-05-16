@@ -1,21 +1,21 @@
 /* SwatProgressBar */
 div.swat-progress-bar {
-	color: #666;
+  color: #666;
 }
 
 div.swat-progress-bar-bar {
-	border: 1px solid #dcceb2;
-	padding: 1px;
-	background-color: #f8f6f0;
-	background-image: url(../images/swat-progressbar-horizontal-background.png);
-	background-repeat: repeat-x;
-	background-position: right bottom;
+  border: 1px solid #dcceb2;
+  padding: 1px;
+  background-color: #f8f6f0;
+  background-image: url(../images/swat-progressbar-horizontal-background.png);
+  background-repeat: repeat-x;
+  background-position: right bottom;
 }
 
 div.swat-progress-bar-top-to-bottom,
 div.swat-progress-bar-bottom-to-top {
-	background-image: url(../images/swat-progressbar-vertical-background.png);
-	background-repeat: repeat-y;
+  background-image: url(../images/swat-progressbar-vertical-background.png);
+  background-repeat: repeat-y;
 }
 
 /* Empty part of progress-bar */
@@ -24,43 +24,43 @@ div.swat-progress-bar-empty {
 
 /* Full part of progress-bar */
 div.swat-progress-bar-full {
-	background: #3465a4;
-	background-repeat: repeat-x;
-	background-image: url(../images/swat-progressbar-horizontal-full-background.png);
+  background: #3465a4;
+  background-repeat: repeat-x;
+  background-image: url(../images/swat-progressbar-horizontal-full-background.png);
 }
 
 div.swat-progress-bar-top-to-bottom div.swat-progress-bar-full,
 div.swat-progress-bar-bottom-to-top div.swat-progress-bar-full {
-	background-repeat: repeat-y;
-	background-image: url(../images/swat-progressbar-vertical-full-background.png);
+  background-repeat: repeat-y;
+  background-image: url(../images/swat-progressbar-vertical-full-background.png);
 }
 
 div.swat-progress-bar-left-to-right,
 div.swat-progress-bar-left-to-right div,
 div.swat-progress-bar-right-to-left,
 div.swat-progress-bar-right-to-left div {
-	height: 1em;
+  height: 1em;
 }
 
 div.swat-progress-bar-bottom-to-top,
 div.swat-progress-bar-bottom-to-top div,
 div.swat-progress-bar-top-to-bottom,
 div.swat-progress-bar-top-to-bottom div {
-	width: 1em;
+  width: 1em;
 }
 
 .swat-progress-bar-bottom-to-top,
 div.swat-progress-bar-bottom-to-top div.swat-progress-bar-full,
 div.swat-progress-bar-bottom-to-top div.swat-progress-bar-empty {
-	position: relative;
+  position: relative;
 }
 
 div.swat-progress-bar-left-to-right div.swat-progress-bar-full,
 div.swat-progress-bar-right-to-left div.swat-progress-bar-empty {
-	float: left;
+  float: left;
 }
 
 div.swat-progress-bar-left-to-right div.swat-progress-bar-empty,
 div.swat-progress-bar-right-to-left div.swat-progress-bar-full {
-	float: right;
+  float: right;
 }

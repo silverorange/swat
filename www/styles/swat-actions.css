@@ -1,41 +1,41 @@
 /* SwatActions */
 .swat-actions .swat-actions-controls * {
-	vertical-align: middle;
+  vertical-align: middle;
 }
 
 .swat-actions .swat-actions-message {
-	display: inline-flex;
-	align-items: center;
-	justify-content: space-between;
-	border: 1px solid #f0dca1;
-	background-color: #fffbc9;
-	color: #7b4b09;
-	margin: 0 0 0 7px;
-	padding: 5px;
-	border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #f0dca1;
+  background-color: #fffbc9;
+  color: #7b4b09;
+  margin: 0 0 0 7px;
+  padding: 5px;
+  border-radius: 4px;
 }
 
 .swat-actions .swat-actions-message-dismiss-link,
 .swat-actions .swat-actions-message-dismiss-link:link,
 .swat-actions .swat-actions-message-dismiss-link:visited {
-	display: block;
-	margin-left: 4px;
-	flex: 0 0 auto;
-	font-size: 85%;
-	height: 14px;
-	width: 14px;
-	background: url(../images/dismiss.png) 0 0 no-repeat;
-	text-indent: 100%;
-	overflow: hidden;
-	white-space: nowrap;
-	text-decoration: none;
-	outline: none;
+  display: block;
+  margin-left: 4px;
+  flex: 0 0 auto;
+  font-size: 85%;
+  height: 14px;
+  width: 14px;
+  background: url(../images/dismiss.png) 0 0 no-repeat;
+  text-indent: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-decoration: none;
+  outline: none;
 }
 
 .swat-actions .swat-actions-message-dismiss-link:hover {
-	background-position: 0 -14px;
+  background-position: 0 -14px;
 }
 
 .swat-actions label {
-	display: inline;
+  display: inline;
 }

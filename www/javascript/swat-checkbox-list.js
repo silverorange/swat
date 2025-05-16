@@ -28,10 +28,10 @@ class SwatCheckboxList {
     }
 
     for (var i = 0; i < this.check_list.length; i++) {
-      this.check_list[i].addEventListener('click', e => {
+      this.check_list[i].addEventListener('click', (e) => {
         this.handleClick(e);
       });
-      this.check_list[i].addEventListener('dblclick', e => {
+      this.check_list[i].addEventListener('dblclick', (e) => {
         this.handleClick(e);
       });
     }

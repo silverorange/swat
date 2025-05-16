@@ -94,7 +94,7 @@ class SwatDisclosure {
       this.anchor.classList.add('swat-disclosure-anchor-closed');
     }
 
-    this.anchor.addEventListener('click', e => {
+    this.anchor.addEventListener('click', (e) => {
       e.preventDefault();
       this.toggle();
     });

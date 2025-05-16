@@ -1,38 +1,39 @@
 .swat-tile {
-	width: 100px;
-	height: 100px;
-	padding: 10px;
-	margin: 5px 10px;
-	float: left;
-	display: inline; /* IE 6 hack */
-	text-align: center;
-	position: relative;
+  width: 100px;
+  height: 100px;
+  padding: 10px;
+  margin: 5px 10px;
+  float: left;
+  display: inline; /* IE 6 hack */
+  text-align: center;
+  position: relative;
 }
 
 .swat-tile-view .swat-check-all {
-	clear: left;
-	margin: 10px;
+  clear: left;
+  margin: 10px;
 }
 
 .swat-tile-view .highlight {
-	background: #f7f5f3 url(../images/swat-table-view-cell-highlight-background.png) bottom repeat-x;
+  background: #f7f5f3
+    url(../images/swat-table-view-cell-highlight-background.png) bottom repeat-x;
 }
 
 .swat-tile-view .insensitive {
-	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
-	filter: alpha(opacity=60);
-	opacity: 0.60;
+  -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=60)';
+  filter: alpha(opacity=60);
+  opacity: 0.6;
 }
 
 .swat-tile-view-group {
-	clear: left;
-	padding-top: 2em;
+  clear: left;
+  padding-top: 2em;
 }
 
 .swat-tile-view-first-group {
-	padding-top: 0em;
+  padding-top: 0em;
 }
 
 .swat-tile-view-clear {
-	clear: both;
+  clear: both;
 }

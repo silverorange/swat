@@ -1,45 +1,44 @@
 /* SwatToolbar  */
 
 ul.swat-toolbar {
-	background: #f6f2ea url(../images/swat-toolbar-background.png) top left repeat-x;
-	border-bottom: 1px solid #efe8da;
-	margin: 0 -16px;
-	list-style-type: none;
-	padding: 0;
-	position: relative;
-	top: -16px;
-	display: block;
+  background: #f6f2ea url(../images/swat-toolbar-background.png) top left
+    repeat-x;
+  border-bottom: 1px solid #efe8da;
+  margin: 0 -16px;
+  list-style-type: none;
+  padding: 0;
+  position: relative;
+  top: -16px;
+  display: block;
 }
 
 ul.swat-toolbar-end {
-	border-bottom: none;
-	border-top: 1px solid #efe8da;
-	top: 16px;
+  border-bottom: none;
+  border-top: 1px solid #efe8da;
+  top: 16px;
 }
 
 .swat-toolbar li {
-	display: inline;
-	line-height: 1;
+  display: inline;
+  line-height: 1;
 }
-
 
 /* SwatToolLink when inside a SwatToolbar */
 
 .swat-toolbar .swat-tool-link,
 .swat-toolbar .swat-tool-link-insensitive {
-	padding: 5px 6px;
-	margin: 0;
-	border-top: none;
-	border-bottom: none;
-	border-left: none;
-	text-decoration: none;
-	background-color: transparent;
+  padding: 5px 6px;
+  margin: 0;
+  border-top: none;
+  border-bottom: none;
+  border-left: none;
+  text-decoration: none;
+  background-color: transparent;
 }
-
 
 /* SwatToolbar when inside a SwatNotebook */
 
 .yui-navset div.yui-content div ul.swat-toolbar {
-	margin: 0 -12px;
-	top: -12px;
+  margin: 0 -12px;
+  top: -12px;
 }

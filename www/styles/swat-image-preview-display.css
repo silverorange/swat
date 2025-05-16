@@ -1,86 +1,86 @@
 .swat-image-preview-display-link {
-	/* note: relative positioning breaks background position in IE6 */
-	font-size: 85%;
-	padding-right: 16px;
-	background-image: url(../images/swat-image-preview-display-zoom.png);
-	background-position: top right;
-	background-repeat: no-repeat;
+  /* note: relative positioning breaks background position in IE6 */
+  font-size: 85%;
+  padding-right: 16px;
+  background-image: url(../images/swat-image-preview-display-zoom.png);
+  background-position: top right;
+  background-repeat: no-repeat;
 }
 
 .swat-image-preview-display-link img,
 a.swat-image-preview-display-link-plain img {
-	vertical-align: top;
-	padding: 2px;
-	background: #fff;
-	border: 1px solid #dcceb2;
+  vertical-align: top;
+  padding: 2px;
+  background: #fff;
+  border: 1px solid #dcceb2;
 }
 
 a.swat-image-preview-display-link:hover img,
 a.swat-image-preview-display-link-plain:hover img {
-	border-color: #3f5ace;
+  border-color: #3f5ace;
 }
 
 .swat-image-preview-overlay {
-	position: fixed;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100vh;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
 }
 
 .swat-image-preview-mask {
-	position: fixed;
-	cursor: default;
-	display: block;
-	background: #000;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	opacity: 0.75;
+  position: fixed;
+  cursor: default;
+  display: block;
+  background: #000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.75;
 }
 .swat-image-preview-mask:focus,
 .swat-image-preview-mask:active {
-	outline: none;
+  outline: none;
 }
 
 .swat-image-preview-header {
-	display: block;
-	padding: 0 8px 8px;
-	font-weight: bold;
+  display: block;
+  padding: 0 8px 8px;
+  font-weight: bold;
 }
 
 .swat-image-preview-title {
-	display: block;
+  display: block;
 }
 
 .swat-image-preview-close {
-	float: right;
-	display: block;
-	outline: none;
+  float: right;
+  display: block;
+  outline: none;
 }
 
 .swat-image-preview-container {
-	flex: 0 1 auto;
-	text-decoration: none;
-	text-align: left;
-	border: 1px solid #dcceb2;
-	background: #fff;
-	padding: 8px;
-	border-radius: 8px;
-	max-width: calc(100% - 32px);
+  flex: 0 1 auto;
+  text-decoration: none;
+  text-align: left;
+  border: 1px solid #dcceb2;
+  background: #fff;
+  padding: 8px;
+  border-radius: 8px;
+  max-width: calc(100% - 32px);
 }
 
 .swat-image-preview-container:focus,
 .swat-image-preview-container:active {
-	outline: none;
+  outline: none;
 }
 
 .swat-image-preview-container img {
-	display: block;
-	width: 100%;
-	height: 100%;
+  display: block;
+  width: 100%;
+  height: 100%;
 }

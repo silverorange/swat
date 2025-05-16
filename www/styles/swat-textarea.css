@@ -1,25 +1,27 @@
 div.swat-textarea-container {
-	line-height: 1;
+  line-height: 1;
 }
 
 div.swat-textarea-container textarea {
-	margin: 0;
-	padding: 0;
-	resize: none;
+  margin: 0;
+  padding: 0;
+  resize: none;
 }
 
 div.swat-textarea-container textarea.swat-textarea-resizeable {
-	resize: vertical;
+  resize: vertical;
 }
 
-.swat-textarea-editor-container .swat-textarea-container textarea.swat-textarea-editor-source-mode {
-	width: 99.5%;
-	max-width: 99.5%;
-	height: 100%;
-	overflow-x: hidden;
-	overflow-y: scroll;
-	border: 0;
-	resize: none;
-	outline: none;
-	padding: 1px;
+.swat-textarea-editor-container
+  .swat-textarea-container
+  textarea.swat-textarea-editor-source-mode {
+  width: 99.5%;
+  max-width: 99.5%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  border: 0;
+  resize: none;
+  outline: none;
+  padding: 1px;
 }

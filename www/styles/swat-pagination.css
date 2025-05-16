@@ -1,45 +1,45 @@
 /* SwatPagination */
 
 .swat-pagination {
-	padding: 1em;
-	text-align: center;
+  padding: 1em;
+  text-align: center;
 }
 
 .swat-pagination a,
 .swat-pagination span {
-	padding: 0.2em 0.5em;
-	font-size: 85%;
-	margin-right: 0.1em;
-	border: 1px solid #fff;
+  padding: 0.2em 0.5em;
+  font-size: 85%;
+  margin-right: 0.1em;
+  border: 1px solid #fff;
 }
 
 .swat-pagination span.swat-pagination-current {
-	border: 3px solid #ddd;
-	font-weight: bold;
+  border: 3px solid #ddd;
+  font-weight: bold;
 }
 
 .swat-pagination a {
-	border: 1px solid #ddd;
-	text-decoration: none;
+  border: 1px solid #ddd;
+  text-decoration: none;
 }
 
 .swat-pagination a:hover {
-	background-color: #ddd;
-	border-color: #bbb;
+  background-color: #ddd;
+  border-color: #bbb;
 }
 
 .swat-pagination a.swat-pagination-nextprev {
-	font-weight: bold;
+  font-weight: bold;
 }
 
 .swat-pagination span.swat-pagination-nextprev {
-	color: #666;
+  color: #666;
 }
 
 .swat-pagination div.swat-pagination-position {
-	font-size: 85%;
-	font-weight: bold;
-	text-align: center;
-	margin: 0.2em;
-	padding-bottom: 3px;
+  font-size: 85%;
+  font-weight: bold;
+  text-align: center;
+  margin: 0.2em;
+  padding-bottom: 3px;
 }

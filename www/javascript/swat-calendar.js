@@ -263,7 +263,7 @@ class SwatCalendar {
     this.toggle_button.href = '#';
     this.toggle_button.title = SwatCalendar.open_toggle_text;
     this.toggle_button.classList.add('swat-calendar-toggle-button');
-    this.toggle_button.addEventListener('click', e => {
+    this.toggle_button.addEventListener('click', (e) => {
       e.preventDefault();
       this.toggle();
     });
