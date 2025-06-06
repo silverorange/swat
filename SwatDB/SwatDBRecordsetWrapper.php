@@ -18,7 +18,13 @@
  * @copyright 2005-2024 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-abstract class SwatDBRecordsetWrapper extends SwatObject implements Serializable, ArrayAccess, SwatTableModel, SwatDBRecordable, SwatDBMarshallable, SwatDBFlushable
+abstract class SwatDBRecordsetWrapper extends SwatObject implements
+    Serializable,
+    ArrayAccess,
+    SwatTableModel,
+    SwatDBRecordable,
+    SwatDBMarshallable,
+    SwatDBFlushable
 {
     // {{{ protected properties
 

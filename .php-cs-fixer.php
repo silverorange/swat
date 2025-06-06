@@ -25,6 +25,9 @@ return (new Config())
         // Subset of statements that should be proceeded with blank line
         'blank_line_before_statement' => ['statements' => ['case', 'continue', 'declare', 'default', 'return', 'throw', 'try', 'yield', 'yield_from']],
 
+        // Allow class list for multiple extends/implements to span multiple lines
+        'class_definition' => ['multi_line_extends_each_single_line' => true],
+
         // Enforce space around concatenation operator
         'concat_space' => ['spacing' => 'one'],
 
