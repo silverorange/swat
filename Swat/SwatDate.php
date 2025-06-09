@@ -1747,10 +1747,10 @@ class SwatDate extends DateTime implements Stringable
         $month = $this->getMonth() + $months;
 
         if ($month < 1) {
-            --$year;
+            $year--;
             $month += 12;
         } elseif ($month > 12) {
-            ++$year;
+            $year++;
             $month -= 12;
         }
 
