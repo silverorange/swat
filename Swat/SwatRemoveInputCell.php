@@ -1,7 +1,7 @@
 <?php
 
 /**
- * An input cell containing a "remove row" link
+ * An input cell containing a "remove row" link.
  *
  * One or more of these input cell are required if you want the user to be
  * able to remove rows from the table-view's input-row. For example if the
@@ -13,7 +13,6 @@
  * Trying to set the widget for this cell will result in an exception being
  * thrown.
  *
- * @package   Swat
  * @copyright 2006-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
@@ -22,7 +21,7 @@ class SwatRemoveInputCell extends SwatInputCell
     // {{{ public function init()
 
     /**
-     * Sets the remove widget for this input cell
+     * Sets the remove widget for this input cell.
      *
      * In SwatRemoveInputCell objects the remove widget is automatically set to
      * a SwatContentBlock with predefined content for the remove link.
@@ -34,8 +33,8 @@ class SwatRemoveInputCell extends SwatInputCell
         $row = $this->getInputRow();
         if ($row === null) {
             throw new SwatException(
-                'Remove input-cells can only be used ' .
-                    'inside table-views with an input-row.',
+                'Remove input-cells can only be used '
+                    . 'inside table-views with an input-row.',
             );
         }
 
@@ -68,10 +67,10 @@ class SwatRemoveInputCell extends SwatInputCell
     // {{{ public function display()
 
     /**
-     * Displays this remove input cell given a numeric row identifier
+     * Displays this remove input cell given a numeric row identifier.
      *
-     * @param integer $replicator_id the numeric identifier of the input row
-     *                                that is being displayed.
+     * @param int $replicator_id the numeric identifier of the input row
+     *                           that is being displayed
      *
      * @see SwatInputCell::display()
      */
@@ -87,12 +86,10 @@ class SwatRemoveInputCell extends SwatInputCell
     // {{{ public function setWidget()
 
     /**
-     * Sets the widget of this input cell
+     * Sets the widget of this input cell.
      *
      * SwatRemoveInputCell objects cannot have their widget set manually so
      * this method is over-ridden to always throw an exception.
-     *
-     * @param SwatWidget $widget the new widget of this input cell.
      *
      * @throws SwatException
      */

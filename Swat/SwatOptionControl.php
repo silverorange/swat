@@ -1,9 +1,8 @@
 <?php
 
 /**
- * A base class for controls using a set of options
+ * A base class for controls using a set of options.
  *
- * @package   Swat
  * @copyright 2004-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
@@ -12,7 +11,7 @@ abstract class SwatOptionControl extends SwatInputControl
     // {{{ public properties
 
     /**
-     * Options
+     * Options.
      *
      * An array of {@link SwatOptions}
      *
@@ -21,7 +20,7 @@ abstract class SwatOptionControl extends SwatInputControl
     public $options = [];
 
     /**
-     * Metadata for the options of this control
+     * Metadata for the options of this control.
      *
      * An array with the object hash of the option as the key and a sub-array
      * of name-value pairs as the metadata. For example:
@@ -53,7 +52,7 @@ abstract class SwatOptionControl extends SwatInputControl
     protected $option_metadata = [];
 
     /**
-     * Whether or not to serialize option values
+     * Whether or not to serialize option values.
      *
      * If option values are serialized, the PHP type is remembered between
      * page loads. This is useful if, for example, your option values are a mix
@@ -64,7 +63,7 @@ abstract class SwatOptionControl extends SwatInputControl
      * to strings. This is most useful for SwatForms using the GET method but
      * could be applicable in other circumstances.
      *
-     * @var boolean
+     * @var bool
      */
     public $serialize_values = true;
 
@@ -72,7 +71,7 @@ abstract class SwatOptionControl extends SwatInputControl
     // {{{ public function addOption()
 
     /**
-     * Adds an option to this option control
+     * Adds an option to this option control.
      *
      * This method has a number of signatures. You can add an existing option
      * object, or create a new option object from a value and title:
@@ -92,21 +91,21 @@ abstract class SwatOptionControl extends SwatInputControl
      * ?>
      * </code>
      *
-     * @param mixed|SwatOption $value either a value for the option, or a
-     *                                 {@link SwatOption} object. If a
-     *                                 SwatOption is used, the
-     *                                 <i>$content_type</i> parameter of
-     *                                 this method call is ignored and the
-     *                                 <i>$title</i> parameter may be used to
-     *                                 specify option metadata.
-     * @param array|string $title optional. Either a string containing the
-     *                             title of the added option, or an array
-     *                             containing metadata for the SwatOption
-     *                             specified in the <i>$value</i> parameter.
-     * @param string $content_type optional. The content type of the title. If
-     *                              not specified, defaults to 'text/plain'.
-     *                              Ignored if the <i>$value</i> parameter is
-     *                              a SwatOption object.
+     * @param mixed|SwatOption $value        either a value for the option, or a
+     *                                       {@link SwatOption} object. If a
+     *                                       SwatOption is used, the
+     *                                       <i>$content_type</i> parameter of
+     *                                       this method call is ignored and the
+     *                                       <i>$title</i> parameter may be used to
+     *                                       specify option metadata.
+     * @param array|string     $title        optional. Either a string containing the
+     *                                       title of the added option, or an array
+     *                                       containing metadata for the SwatOption
+     *                                       specified in the <i>$value</i> parameter.
+     * @param string           $content_type optional. The content type of the title. If
+     *                                       not specified, defaults to 'text/plain'.
+     *                                       Ignored if the <i>$value</i> parameter is
+     *                                       a SwatOption object.
      *
      * @see SwatOptionControl::$options
      * @see SwatOptionControl::addOptionMetadata()
@@ -140,20 +139,20 @@ abstract class SwatOptionControl extends SwatInputControl
     // {{{ public function addOptionMetadata()
 
     /**
-     * Sets the metadata for an option
+     * Sets the metadata for an option.
      *
      * Any metadata may be added to options. It is up to the control to make
      * use of particular metadata fields. Common metadata fields are:
      *
      * - classes - an array of CSS classes
      *
-     * @param SwatOption $option the option for which to set the metadata.
+     * @param SwatOption   $option   the option for which to set the metadata
      * @param array|string $metadata either an array of metadata to add to the
-     *                                option, or a string specifying the name
-     *                                of the metadata field to add.
-     * @param mixed $value optional. If the <i>$metadata</i> parameter is a
-     *                      string, this is the metadata value to set for the
-     *                      option. Otherwise, this parameter is ignored.
+     *                               option, or a string specifying the name
+     *                               of the metadata field to add
+     * @param mixed        $value    optional. If the <i>$metadata</i> parameter is a
+     *                               string, this is the metadata value to set for the
+     *                               option. Otherwise, this parameter is ignored.
      *
      * @see SwatOptionControl::addOption()
      * @see SwatOptionControl::getOptionMetadata()
@@ -179,17 +178,17 @@ abstract class SwatOptionControl extends SwatInputControl
     // {{{ public function getOptionMetadata()
 
     /**
-     * Gets the metadata for an option
+     * Gets the metadata for an option.
      *
      * Any metadata may be added to options. It is up to the control to make
      * use of particular metadata fields. Common metadata fields are:
      *
      * - classes - an array of CSS classes
      *
-     * @param SwatOption $option the option for which to get the metadata.
-     * @param string $metadata optional. An optional metadata property to get.
-     *                          If not specified, all available metadata for
-     *                          the option is returned.
+     * @param SwatOption $option   the option for which to get the metadata
+     * @param string     $metadata optional. An optional metadata property to get.
+     *                             If not specified, all available metadata for
+     *                             the option is returned.
      *
      * @returns array|mixed an array of the metadata for this option, or a
      *                      specific metadata value if the <i>$metadata</i>
@@ -211,8 +210,7 @@ abstract class SwatOptionControl extends SwatInputControl
             }
         } else {
             if (
-                isset($this->option_metadata[$key]) &&
-                isset($this->option_metadata[$key][$metadata])
+                isset($this->option_metadata[$key], $this->option_metadata[$key][$metadata])
             ) {
                 $metadata = $this->option_metadata[$key][$metadata];
             } else {
@@ -227,11 +225,11 @@ abstract class SwatOptionControl extends SwatInputControl
     // {{{ public function removeOption()
 
     /**
-     * Removes an option from this option control
+     * Removes an option from this option control.
      *
-     * @param SwatOption $option the option to remove.
+     * @param SwatOption $option the option to remove
      *
-     * @return SwatOption the removed option or null if no option was removed.
+     * @return SwatOption the removed option or null if no option was removed
      */
     public function removeOption(SwatOption $option)
     {
@@ -257,12 +255,12 @@ abstract class SwatOptionControl extends SwatInputControl
     // {{{ public function removeOptionsByValue()
 
     /**
-     * Removes options from this option control by their value
+     * Removes options from this option control by their value.
      *
-     * @param mixed $value the value of the option or options to remove.
+     * @param mixed $value the value of the option or options to remove
      *
      * @return array an array of removed SwatOption objects or an empty array
-     *                if no options are removed.
+     *               if no options are removed
      */
     public function removeOptionsByValue($value)
     {
@@ -288,13 +286,13 @@ abstract class SwatOptionControl extends SwatInputControl
     // {{{ public function addOptionsByArray()
 
     /**
-     * Adds options to this option control using an associative array
+     * Adds options to this option control using an associative array.
      *
-     * @param array $options an associative array of options. Keys are option
-     *                        values. Values are option titles.
+     * @param array  $options      an associative array of options. Keys are option
+     *                             values. Values are option titles.
      * @param string $content_type optional. The content type of the option
-     *                              titles. If not specified, defaults to
-     *                              'text/plain'.
+     *                             titles. If not specified, defaults to
+     *                             'text/plain'.
      */
     public function addOptionsByArray(
         array $options,
@@ -309,13 +307,13 @@ abstract class SwatOptionControl extends SwatInputControl
     // {{{ public function getOptionsByValue()
 
     /**
-     * Gets options from this option control by their value
+     * Gets options from this option control by their value.
      *
-     * @param mixed $value the value of the option or options to get.
+     * @param mixed $value the value of the option or options to get
      *
      * @return array an array of SwatOption objects or an empty array if no
-     *                options with the given value exist within this option
-     *                control.
+     *               options with the given value exist within this option
+     *               control
      */
     public function getOptionsByValue($value)
     {
@@ -334,11 +332,11 @@ abstract class SwatOptionControl extends SwatInputControl
     // {{{ protected function getOptions()
 
     /**
-     * Gets a reference to the array of options
+     * Gets a reference to the array of options.
      *
      * Subclasses may want to override this method.
      *
-     * @return array a reference to the array of options.
+     * @return array a reference to the array of options
      */
     protected function &getOptions()
     {
@@ -349,13 +347,13 @@ abstract class SwatOptionControl extends SwatInputControl
     // {{{ protected function getOption()
 
     /**
-     * Gets an option within this option control
+     * Gets an option within this option control.
      *
-     * @param integer $index the ordinal position of the option within this
-     *                        option control.
+     * @param int $index the ordinal position of the option within this
+     *                   option control
      *
      * @return SwatOption a reference to the option, or null if no such option
-     *                     exists within this option control.
+     *                    exists within this option control
      */
     protected function getOption($index)
     {
@@ -372,12 +370,12 @@ abstract class SwatOptionControl extends SwatInputControl
     // {{{ protected function getOptionMetadataKey()
 
     /**
-     * Gets the key used to load and store metadata for an option
+     * Gets the key used to load and store metadata for an option.
      *
-     * @param SwatOption $option the option for which to get the key.
+     * @param SwatOption $option the option for which to get the key
      *
      * @return string the key used to load and store metadata for the specified
-     *                option.
+     *                option
      */
     protected function getOptionMetadataKey(SwatOption $option)
     {

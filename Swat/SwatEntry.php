@@ -1,9 +1,8 @@
 <?php
 
 /**
- * A single line text entry widget
+ * A single line text entry widget.
  *
- * @package   Swat
  * @copyright 2004-2023 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
@@ -12,69 +11,69 @@ class SwatEntry extends SwatInputControl implements SwatState
     // {{{ public properties
 
     /**
-     * Entry value
+     * Entry value.
      *
      * Text content of the widget, or null.
      *
      * @var string
      */
-    public $value = null;
+    public $value;
 
     /**
-     * Input size
+     * Input size.
      *
      * Size in characters of the HTML text form input, or null.
      *
-     * @var integer
+     * @var int
      */
     public $size = 50;
 
     /**
-     * Maximum length
+     * Maximum length.
      *
      * Maximum number of allowable characters in HTML text form input, or null.
      *
-     * @var integer
+     * @var int
      */
-    public $maxlength = null;
+    public $maxlength;
 
     /**
-     * Access key
+     * Access key.
      *
      * Access key for this form input, for keyboard nagivation.
      *
      * @var string
      */
-    public $access_key = null;
+    public $access_key;
 
     /**
-     * Minimum length
+     * Minimum length.
      *
      * Minimum number of allowable characters in HTML text form input, or null.
      *
-     * @var integer
+     * @var int
      */
-    public $minlength = null;
+    public $minlength;
 
     /**
-     * Tab index
+     * Tab index.
      *
      * The ordinal tab index position of the XHTML input tag, or null.
      * Values 1 or greater will affect the tab index of this widget. A value
      * of 0 or null will use the position of the input tag in the XHTML
      * character stream to determine tab order.
      *
-     * @var integer
+     * @var int
      */
-    public $tab_index = null;
+    public $tab_index;
 
     /**
-     * Whether or not to use browser-based autocompletion on this entry
+     * Whether or not to use browser-based autocompletion on this entry.
      *
      * Note: Be careful writing JavaScript when using this property as it
      * changes the id of the XHTML element.
      *
-     * @var boolean
+     * @var bool
      */
     public $autocomplete = true;
 
@@ -83,21 +82,21 @@ class SwatEntry extends SwatInputControl implements SwatState
      *
      * If read-only, the input will not allow editing its contents
      *
-     * @var boolean
+     * @var bool
      */
     public $read_only = false;
 
     /**
-     * Some text hinting to the user what should be entered in this entry
+     * Some text hinting to the user what should be entered in this entry.
      *
      * @var string
      */
     public $placeholder;
 
     /**
-     * Whether or not to select the content of this entry on receiving focus
+     * Whether or not to select the content of this entry on receiving focus.
      *
-     * @var boolean
+     * @var bool
      */
     public $select_on_focus = false;
 
@@ -110,7 +109,7 @@ class SwatEntry extends SwatInputControl implements SwatState
      *
      * @var string
      */
-    protected $nonce = null;
+    protected $nonce;
 
     /**
      * Whether or not to trim the value on process.
@@ -118,7 +117,7 @@ class SwatEntry extends SwatInputControl implements SwatState
      * If auto_trim is true, then we trim all values before doing other
      * processing. When trimming, zero length strings are converted to null.
      *
-     * @var boolean
+     * @var bool
      */
     public $auto_trim = true;
 
@@ -126,7 +125,7 @@ class SwatEntry extends SwatInputControl implements SwatState
     // {{{ public function display()
 
     /**
-     * Displays this entry widget
+     * Displays this entry widget.
      *
      * Outputs an appropriate XHTML tag.
      */
@@ -154,7 +153,7 @@ class SwatEntry extends SwatInputControl implements SwatState
     // {{{ public function process()
 
     /**
-     * Processes this entry widget
+     * Processes this entry widget.
      *
      * If any validation type errors occur, an error message is attached to
      * this entry widget.
@@ -166,6 +165,7 @@ class SwatEntry extends SwatInputControl implements SwatState
         // if nothing was submitted by the user, shortcut return
         if (!$this->hasRawValue()) {
             $this->value = null;
+
             return;
         }
 
@@ -182,7 +182,8 @@ class SwatEntry extends SwatInputControl implements SwatState
 
         if (!$this->required && $this->value === null) {
             return;
-        } elseif ($this->value === null) {
+        }
+        if ($this->value === null) {
             $this->addMessage($this->getValidationMessage('required'));
         } elseif ($this->maxlength !== null && $len > $this->maxlength) {
             $message = $this->getValidationMessage('too-long');
@@ -207,9 +208,9 @@ class SwatEntry extends SwatInputControl implements SwatState
     // {{{ public function getState()
 
     /**
-     * Gets the current state of this entry widget
+     * Gets the current state of this entry widget.
      *
-     * @return string the current state of this entry widget.
+     * @return string the current state of this entry widget
      *
      * @see SwatState::getState()
      */
@@ -222,9 +223,9 @@ class SwatEntry extends SwatInputControl implements SwatState
     // {{{ public function setState()
 
     /**
-     * Sets the current state of this entry widget
+     * Sets the current state of this entry widget.
      *
-     * @param string $state the new state of this entry widget.
+     * @param string $state the new state of this entry widget
      *
      * @see SwatState::setState()
      */
@@ -238,11 +239,11 @@ class SwatEntry extends SwatInputControl implements SwatState
 
     /**
      * Gets the id attribute of the XHTML element displayed by this widget
-     * that should receive focus
+     * that should receive focus.
      *
      * @return string the id attribute of the XHTML element displayed by this
-     *                 widget that should receive focus or null if there is
-     *                 no such element.
+     *                widget that should receive focus or null if there is
+     *                no such element
      *
      * @see SwatWidget::getFocusableHtmlId()
      */
@@ -250,22 +251,22 @@ class SwatEntry extends SwatInputControl implements SwatState
     {
         if ($this->visible) {
             return $this->autocomplete ? $this->id : $this->getNonce();
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     // }}}
     // {{{ protected function getValidationMessage()
 
     /**
-     * Gets a validation message for this entry
+     * Gets a validation message for this entry.
      *
      * Can be used by sub-classes to change the validation messages.
      *
-     * @param string $id the string identifier of the validation message.
+     * @param string $id the string identifier of the validation message
      *
-     * @return SwatMessage the validation message.
+     * @return SwatMessage the validation message
      */
     protected function getValidationMessage($id)
     {
@@ -278,23 +279,23 @@ class SwatEntry extends SwatInputControl implements SwatState
                     );
 
                 break;
+
             default:
                 return parent::getValidationMessage($id);
         }
 
-        $message = new SwatMessage($text, 'error');
-        return $message;
+        return new SwatMessage($text, 'error');
     }
 
     // }}}
     // {{{ protected function getInputTag()
 
     /**
-     * Get the input tag to display
+     * Get the input tag to display.
      *
      * Can be used by sub-classes to change the setup of the input tag.
      *
-     * @return SwatHtmlTag Input tag to display.
+     * @return SwatHtmlTag input tag to display
      */
     protected function getInputTag()
     {
@@ -307,13 +308,13 @@ class SwatEntry extends SwatInputControl implements SwatState
         // event handlers to select on focus
         if ($this->select_on_focus) {
             $tag->onmousedown = 'if(!this._focused){this._focus_click=true;}';
-            $tag->onmouseup =
-                'if(this._focus_click){' .
-                'this.select();this._focus_click=false;}';
+            $tag->onmouseup
+                = 'if(this._focus_click){'
+                . 'this.select();this._focus_click=false;}';
 
-            $tag->onfocus =
-                'this._focused=true;' .
-                'if(!this._focus_click){this.select();}';
+            $tag->onfocus
+                = 'this._focused=true;'
+                . 'if(!this._focus_click){this.select();}';
 
             $tag->onblur = 'this._focused=false;this._focus_click=false;';
         }
@@ -349,13 +350,13 @@ class SwatEntry extends SwatInputControl implements SwatState
     // {{{ protected function getDisplayValue()
 
     /**
-     * Formats a value to display
+     * Formats a value to display.
      *
      * Can be used by subclasses to change what is displayed.
      *
-     * @param string $value the value to format for display.
+     * @param string $value the value to format for display
      *
-     * @return string the formatted value.
+     * @return string the formatted value
      */
     protected function getDisplayValue($value)
     {
@@ -366,16 +367,16 @@ class SwatEntry extends SwatInputControl implements SwatState
     // {{{ protected function getCSSClassNames()
 
     /**
-     * Gets the array of CSS classes that are applied to this entry widget
+     * Gets the array of CSS classes that are applied to this entry widget.
      *
      * @return array the array of CSS classes that are applied to this entry
-     *                widget.
+     *               widget
      */
     protected function getCSSClassNames()
     {
         $classes = ['swat-entry'];
-        $classes = array_merge($classes, parent::getCSSClassNames());
-        return $classes;
+
+        return array_merge($classes, parent::getCSSClassNames());
     }
 
     // }}}
@@ -394,10 +395,10 @@ class SwatEntry extends SwatInputControl implements SwatState
     // {{{ protected function getRawValue()
 
     /**
-     * Gets the raw value entered by the user before processing
+     * Gets the raw value entered by the user before processing.
      *
      * @return string the raw value entred by the user before processing or
-     *                 null if no value was entered by the user.
+     *                null if no value was entered by the user
      *
      * @see SwatEntry::hasRawValue()
      */
@@ -428,13 +429,13 @@ class SwatEntry extends SwatInputControl implements SwatState
     // {{{ protected function hasRawValue()
 
     /**
-     * Gets whether or not a value was submitted by the user for this entry
+     * Gets whether or not a value was submitted by the user for this entry.
      *
      * Note: Users can submit a value of nothing and this method will return
      * true. This method only returns false if no data was submitted at all.
      *
-     * @return boolean true if a value was submitted by the user for this entry
-     *                  and false if no value was submitted by the user.
+     * @return bool true if a value was submitted by the user for this entry
+     *              and false if no value was submitted by the user
      *
      * @see SwatEntry::getRawValue()
      */

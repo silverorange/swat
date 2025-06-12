@@ -2,7 +2,7 @@
 
 /**
  * Object for building Swat HTML head entry dependencies for Yahoo UI Library
- * components
+ * components.
  *
  * Most of Swat's UI objects using JavaScript make use of the Yahoo User
  * Interface Library (YUI) to abstract cross-browser event-handling, DOM
@@ -31,7 +31,6 @@
  * $html_head_entries = $yui->getHtmlHeadEntrySet();
  * </code>
  *
- * @package   Swat
  * @copyright 2006-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
@@ -40,12 +39,13 @@ class SwatYUI extends SwatObject
     // {{{ private static properties
 
     /**
-     * Static component definitions
+     * Static component definitions.
      *
      * This array is used for each instance of SwatYUI and contains component
      * definitions and dependency information.
      *
      * @var array
+     *
      * @see SwatYUI::buildComponents()
      */
     private static $components = [];
@@ -54,7 +54,7 @@ class SwatYUI extends SwatObject
     // {{{ private properties
 
     /**
-     * The {@link SwatHtmlHeadEntrySet} required for this SwaYUI object
+     * The {@link SwatHtmlHeadEntrySet} required for this SwaYUI object.
      *
      * @var SwatHtmlHeadEntrySet
      */
@@ -64,13 +64,13 @@ class SwatYUI extends SwatObject
     // {{{ public function __construct()
 
     /**
-     * Creates a new SwatYUI HTML head entry set building object
+     * Creates a new SwatYUI HTML head entry set building object.
      *
-     * @param array $component_ids an array of YUI component ids to build a
-     *                              HTML head entry set for.
-     * @param string $mode the YUI component mode to use. Should be one of the
-     *                      'min', 'normal' or 'debug'. The default mode is
-     *                      'normal'.
+     * @param array  $component_ids an array of YUI component ids to build a
+     *                              HTML head entry set for
+     * @param string $mode          the YUI component mode to use. Should be one of the
+     *                              'min', 'normal' or 'debug'. The default mode is
+     *                              'normal'.
      */
     public function __construct(array $component_ids, $mode = 'normal')
     {
@@ -91,7 +91,7 @@ class SwatYUI extends SwatObject
 
     /**
      * Gets the HTML head entry set required for the YUI components of this
-     * object
+     * object.
      *
      * @return SwatHtmlHeadEntrySet
      */
@@ -105,14 +105,14 @@ class SwatYUI extends SwatObject
 
     /**
      * Builds the HTML head entry set required for the YUI components of this
-     * object
+     * object.
      *
-     * @param array $component_ids an array of YUI component ids to build
-     *                              HTML head entries for.
-     * @param string $mode the YUI component mode to use.
+     * @param array  $component_ids an array of YUI component ids to build
+     *                              HTML head entries for
+     * @param string $mode          the YUI component mode to use
      *
      * @return SwatHtmlHeadEntrySet the full constructed set of HTML head
-     *                               entries.
+     *                              entries
      */
     private function buildHtmlHeadEntrySet(array $component_ids, $mode)
     {
@@ -134,9 +134,9 @@ class SwatYUI extends SwatObject
 
     private function getAttributionHtmlHeadEntry()
     {
-        $comment =
-            'Yahoo! UI Library (YUI) is Copyright (c) 2007-2009, ' .
-            "Yahoo! Inc.\n\t     http://developer.yahoo.com/yui/license.html";
+        $comment
+            = 'Yahoo! UI Library (YUI) is Copyright (c) 2007-2009, '
+            . "Yahoo! Inc.\n\t     http://developer.yahoo.com/yui/license.html";
 
         return new SwatCommentHtmlHeadEntry($comment);
     }
@@ -145,7 +145,7 @@ class SwatYUI extends SwatObject
     // {{{ private static function buildComponents()
 
     /**
-     * Builds the YUI component definitions and dependency information
+     * Builds the YUI component definitions and dependency information.
      *
      * Since this is a large data structure, the actual building is only done
      * once and the result is stored in a static class variable.

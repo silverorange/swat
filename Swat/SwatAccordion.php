@@ -7,9 +7,9 @@
  * stacked and open and close like disclosures. It sounds like a ye-olde
  * squeezebox.
  *
- * @package   Swat
  * @copyright 2011-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ *
  * @see       SwatNoteBookPage
  */
 class SwatAccordion extends SwatNoteBook
@@ -17,18 +17,18 @@ class SwatAccordion extends SwatNoteBook
     // {{{ public properties
 
     /**
-     * Whether or not to animate the opening/closing of the accordion
+     * Whether or not to animate the opening/closing of the accordion.
      *
-     * @var boolean
+     * @var bool
      */
     public $animate = true;
 
     /**
-     * Whether or not one page of the accordion is always open
+     * Whether or not one page of the accordion is always open.
      *
      * If false, the accordion can collapse to an all-closed state.
      *
-     * @var boolean
+     * @var bool
      */
     public $always_open = false;
 
@@ -36,9 +36,9 @@ class SwatAccordion extends SwatNoteBook
     // {{{ public function __construct()
 
     /**
-     * Creates a new accordion view
+     * Creates a new accordion view.
      *
-     * @param string $id a non-visable unique id for this widget.
+     * @param string $id a non-visable unique id for this widget
      */
     public function __construct($id = null)
     {
@@ -57,7 +57,7 @@ class SwatAccordion extends SwatNoteBook
     // {{{ public function display()
 
     /**
-     * Displays this notebook
+     * Displays this notebook.
      */
     public function display()
     {
@@ -131,9 +131,9 @@ class SwatAccordion extends SwatNoteBook
     // {{{ protected function getInlineJavaScript()
 
     /**
-     * Gets the inline JavaScript used by this accordion view
+     * Gets the inline JavaScript used by this accordion view.
      *
-     * @return string the inline JavaScript used by this accordion view.
+     * @return string the inline JavaScript used by this accordion view
      */
     protected function getInlineJavaScript()
     {

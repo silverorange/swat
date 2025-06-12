@@ -32,7 +32,6 @@
  * should exactly match the possible values coming from the database), or they
  * can be backed enums (in which case the enum case _values_ should exactly match).
  *
- * @package   SwatDB
  * @copyright 2025 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  *
@@ -57,16 +56,14 @@ class SwatDBEnumMapper
     public static function setMap(array $map): static
     {
         self::$map = $map;
+
         return new static();
     }
 
     /**
      * Set up the database drive to automagically handle the enum mapping.
      *
-     * @param MDB2_Driver_Common &$db
      * @param TEnumMap $map
-     *
-     * @return void
      */
     public static function initialize(MDB2_Driver_Common &$db, array $map): void
     {
@@ -91,7 +88,7 @@ class SwatDBEnumMapper
         // tells MDB2 to treat DB enum columns as their own type
         $nativetype_map_callback = array_fill_keys(
             array_keys($map),
-            fn(MDB2_Driver_Common $db, array $field) => [
+            fn (MDB2_Driver_Common $db, array $field) => [
                 [$field['type']],
                 null,
                 null,
@@ -119,9 +116,9 @@ class SwatDBEnumMapper
         MDB2_Driver_Common $db,
         string $method,
         array $parameters,
-    ): \UnitEnum|array|string {
+    ): array|string|UnitEnum {
         return match ($method) {
-            'quote' => self::quote($db, $parameters['value']),
+            'quote'         => self::quote($db, $parameters['value']),
             'convertResult' => self::convertResult(
                 $parameters['type'],
                 $parameters['value'],
@@ -132,10 +129,10 @@ class SwatDBEnumMapper
                 $parameters['field'],
             ),
             'mapPrepareDatatype' => $db->datatype->mapPrepareDatatype('text'),
-            'compareDefinition' => self::compareDefinition($db, $parameters),
-            'getValidTypes' => '',
-            default => throw new SwatDBException(
-                "EnumMapper::handle() does not support method: $method",
+            'compareDefinition'  => self::compareDefinition($db, $parameters),
+            'getValidTypes'      => '',
+            default              => throw new SwatDBException(
+                "EnumMapper::handle() does not support method: {$method}",
             ),
         };
     }
@@ -150,9 +147,10 @@ class SwatDBEnumMapper
      */
     protected static function quote(
         MDB2_Driver_Common $db,
-        \UnitEnum $value,
+        UnitEnum $value,
     ): string {
-        $string = $value instanceof \BackedEnum ? $value->value : $value->name;
+        $string = $value instanceof BackedEnum ? $value->value : $value->name;
+
         return $db->datatype->quote($string, 'text');
     }
 
@@ -171,10 +169,10 @@ class SwatDBEnumMapper
     protected static function convertResult(
         string $classname,
         mixed $value,
-    ): \UnitEnum {
+    ): UnitEnum {
         try {
-            $reflection = new \ReflectionEnum($classname);
-        } catch (\ReflectionException $e) {
+            $reflection = new ReflectionEnum($classname);
+        } catch (ReflectionException $e) {
             throw new SwatDBException(
                 sprintf('"%s" does not appear to be a PHP enum', $classname),
             );
@@ -184,7 +182,7 @@ class SwatDBEnumMapper
         if ($reflection->isBacked()) {
             try {
                 return $classname::from($value);
-            } catch (\ValueError $e) {
+            } catch (ValueError $e) {
                 throw new SwatDBException(
                     sprintf(
                         'Can not create a backed enum instance of "%s" from the value "%s"',
@@ -198,7 +196,7 @@ class SwatDBEnumMapper
         // handle unit enums
         try {
             return $reflection->getCase($value)->getValue();
-        } catch (\ReflectionException $e) {
+        } catch (ReflectionException $e) {
             throw new SwatDBException(
                 sprintf(
                     'Can not create a unit enum instance of "%s" from the value "%s"',
@@ -231,7 +229,5 @@ class SwatDBEnumMapper
     /**
      * Static class should not be instantiated.
      */
-    final private function __construct()
-    {
-    }
+    final private function __construct() {}
 }

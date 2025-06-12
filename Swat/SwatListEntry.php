@@ -1,9 +1,8 @@
 <?php
 
 /**
- * An input control for entering a delimited list of data
+ * An input control for entering a delimited list of data.
  *
- * @package   Swat
  * @copyright 2006-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
@@ -12,14 +11,14 @@ class SwatListEntry extends SwatEntry
     // {{{ public properties
 
     /**
-     * The values of this list entry
+     * The values of this list entry.
      *
      * @var array
      */
     public $values = [];
 
     /**
-     * The delimiter for entries in this list entry
+     * The delimiter for entries in this list entry.
      *
      * This may be a single character or a string of characters. The delimiter
      * is used to separate list entries. Entries in the
@@ -32,7 +31,7 @@ class SwatListEntry extends SwatEntry
     public $delimiter = ',';
 
     /**
-     * Whether or not to trim whitespace from values between delimiters
+     * Whether or not to trim whitespace from values between delimiters.
      *
      * If this is true, whitespace before or after the delimiter is removed
      * from entries in the array of values. If this is false, whitespace is
@@ -44,22 +43,22 @@ class SwatListEntry extends SwatEntry
      * example if {@link SwatListEntry::$trim_whitespace} is false, the second
      * entry in the array will be ' apple'.
      *
-     * @var boolean
+     * @var bool
      */
     public $trim_whitespace = true;
 
     /**
-     * The maximum number of allowed entries in this list entry
+     * The maximum number of allowed entries in this list entry.
      *
      * If this value is set to null or 0 then there is no maximum number of
      * allowed entries.
      *
-     * @var integer
+     * @var int
      */
-    public $max_entries = null;
+    public $max_entries;
 
     /**
-     * The minimum number of required entries in this list entry
+     * The minimum number of required entries in this list entry.
      *
      * If {@link SwatInputControl::$required} is set to true for this list
      * entry this property specifies the minimum number of entries the user
@@ -68,7 +67,8 @@ class SwatListEntry extends SwatEntry
      * Note: If {@link SwatInputControl::$required} is set to false, this
      * property has no effect.
      *
-     * @var integer
+     * @var int
+     *
      * @see SwatInputControl::$required
      */
     public $min_entries = 1;
@@ -77,9 +77,9 @@ class SwatListEntry extends SwatEntry
     // {{{ public function __construct()
 
     /**
-     * Creates a new list entry widget
+     * Creates a new list entry widget.
      *
-     * @param string $id a non-visible unique id for this widget.
+     * @param string $id a non-visible unique id for this widget
      *
      * @see SwatWidget::__construct()
      */
@@ -93,7 +93,7 @@ class SwatListEntry extends SwatEntry
     // {{{ public function display()
 
     /**
-     * Displays this list entry
+     * Displays this list entry.
      */
     public function display()
     {
@@ -115,7 +115,7 @@ class SwatListEntry extends SwatEntry
     // {{{ public function process()
 
     /**
-     * Processes this list entry widget
+     * Processes this list entry widget.
      *
      * The user entered values are split into an array of values and stored in
      * the {@link SwatListEntry::$values} array.
@@ -137,9 +137,10 @@ class SwatListEntry extends SwatEntry
 
         if (!$this->required && count($this->values) === 0) {
             return;
-        } elseif (
-            $this->max_entries > 0 &&
-            count($this->values) > $this->max_entries
+        }
+        if (
+            $this->max_entries > 0
+            && count($this->values) > $this->max_entries
         ) {
             $message = sprintf(
                 Swat::_('The %%s field cannot have more than %s entries.'),
@@ -148,8 +149,8 @@ class SwatListEntry extends SwatEntry
 
             $this->addMessage(new SwatMessage($message, 'error'));
         } elseif (
-            $this->required &&
-            count($this->values) < $this->min_entries
+            $this->required
+            && count($this->values) < $this->min_entries
         ) {
             $message = sprintf(
                 Swat::ngettext(
@@ -173,13 +174,13 @@ class SwatListEntry extends SwatEntry
         foreach ($this->values as $value) {
             $len = mb_strlen($value);
             if ($this->maxlength !== null && $len > $this->maxlength) {
-                $max_length_msg =
-                    sprintf(
+                $max_length_msg
+                    = sprintf(
                         Swat::ngettext(
-                            'Entries in the %%s field must be less than %s ' .
-                                'character long.',
-                            'Entries in the %%s field must be less than %s ' .
-                                'characters long.',
+                            'Entries in the %%s field must be less than %s '
+                                . 'character long.',
+                            'Entries in the %%s field must be less than %s '
+                                . 'characters long.',
                             $this->maxlength,
                         ),
                         $locale->formatNumber($this->maxlength),
@@ -187,13 +188,13 @@ class SwatListEntry extends SwatEntry
 
                 $max_length_error_values[] = $value;
             } elseif ($this->minlength !== null && $len < $this->minlength) {
-                $min_length_msg =
-                    sprintf(
+                $min_length_msg
+                    = sprintf(
                         Swat::ngettext(
-                            'Entries in the %%s field must be at least %s ' .
-                                'character long.',
-                            'Entries in the %%s field must be at least %s ' .
-                                'characters long.',
+                            'Entries in the %%s field must be at least %s '
+                                . 'character long.',
+                            'Entries in the %%s field must be at least %s '
+                                . 'characters long.',
                             $this->minlength,
                         ),
                         $locale->formatNumber($this->minlength),
@@ -236,9 +237,9 @@ class SwatListEntry extends SwatEntry
     // {{{ public function getState()
 
     /**
-     * Gets the current state of this entry widget
+     * Gets the current state of this entry widget.
      *
-     * @return string the current state of this entry widget.
+     * @return string the current state of this entry widget
      *
      * @see SwatState::getState()
      */
@@ -251,9 +252,9 @@ class SwatListEntry extends SwatEntry
     // {{{ public function setState()
 
     /**
-     * Sets the current state of this list entry widget
+     * Sets the current state of this list entry widget.
      *
-     * @param string $state the new state of this list entry widget.
+     * @param mixed $values
      *
      * @see SwatState::setState()
      */
@@ -270,36 +271,36 @@ class SwatListEntry extends SwatEntry
     // {{{ public function getDisplayValue()
 
     /**
-     * Gets the value displayed in the XHTML input
+     * Gets the value displayed in the XHTML input.
      *
      * For list entry, this is a delimiter separated string containing the
      * elements of {@link SwatListEntry::$values}.
      *
-     * @param array $value the value to format for display.
+     * @param array $value the value to format for display
      *
-     * @return string the values displayed in the XHTML input.
+     * @return string the values displayed in the XHTML input
      */
     protected function getDisplayValue($value)
     {
         if ($this->trim_whitespace && $this->delimiter != ' ') {
             return implode($this->delimiter . ' ', $this->values);
-        } else {
-            return implode($this->delimiter, $this->values);
         }
+
+        return implode($this->delimiter, $this->values);
     }
 
     // }}}
     // {{{ public function getNote()
 
     /**
-     * Gets a note describing the rules on this list entry
+     * Gets a note describing the rules on this list entry.
      *
      * This note informs the user what numbers of entries are valid for this
      * list entry. This note does not mention anything about what type of
      * delimiter is used. Developers are responsible for ensuring that users
      * are notified what type of delimiters are used.
      *
-     * @return SwatMessage an informative note of how to use this list entry.
+     * @return SwatMessage an informative note of how to use this list entry
      *
      * @see SwatControl::getNote()
      */
@@ -309,9 +310,9 @@ class SwatListEntry extends SwatEntry
         $locale = SwatI18NLocale::get();
 
         if (
-            $this->max_entries !== null &&
-            $this->max_entries > 0 &&
-            $this->min_entries === null
+            $this->max_entries !== null
+            && $this->max_entries > 0
+            && $this->min_entries === null
         ) {
             $message = new SwatMessage(
                 sprintf(
@@ -324,9 +325,9 @@ class SwatListEntry extends SwatEntry
                 ),
             );
         } elseif (
-            ($this->max_entries === null || $this->max_entries === 0) &&
-            $this->min_entries > 1 &&
-            $this->required == true
+            ($this->max_entries === null || $this->max_entries === 0)
+            && $this->min_entries > 1
+            && $this->required == true
         ) {
             $message = new SwatMessage(
                 sprintf(
@@ -339,10 +340,10 @@ class SwatListEntry extends SwatEntry
                 ),
             );
         } elseif (
-            $this->max_entries !== null &&
-            $this->max_entries > 0 &&
-            $this->min_entries !== null &&
-            $this->required == true
+            $this->max_entries !== null
+            && $this->max_entries > 0
+            && $this->min_entries !== null
+            && $this->required == true
         ) {
             $message = new SwatMessage(
                 sprintf(
@@ -361,15 +362,15 @@ class SwatListEntry extends SwatEntry
 
     /**
      * Splits a value string with entries separated by delimiters into
-     * an array
+     * an array.
      *
      * If {@link SwatListEntry::$trim_whitespace} is set to true, whitespace
      * is not included in the split values.
      *
-     * @param string $value the string to split.
+     * @param string $value the string to split
      *
      * @return array the string of delimiter separated values split into an
-     *                array of values.
+     *               array of values
      */
     protected function splitValues($value)
     {
@@ -388,16 +389,16 @@ class SwatListEntry extends SwatEntry
     // {{{ protected function getCSSClassNames()
 
     /**
-     * Gets the array of CSS classes that are applied to this entry
+     * Gets the array of CSS classes that are applied to this entry.
      *
      * @return array the array of CSS classes that are applied to this
-     *                entry.
+     *               entry
      */
     protected function getCSSClassNames()
     {
         $classes = ['swat-list-entry'];
-        $classes = array_merge($classes, parent::getCSSClassNames());
-        return $classes;
+
+        return array_merge($classes, parent::getCSSClassNames());
     }
 
     // }}}

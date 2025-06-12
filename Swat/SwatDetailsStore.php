@@ -1,14 +1,14 @@
 <?php
 
 /**
- * A data structure that can be used with the SwatDetailsView
+ * A data structure that can be used with the SwatDetailsView.
  *
  * A new details store is empty by default unless is it initialized with
  * another object.
  *
- * @package   Swat
  * @copyright 2006-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ *
  * @todo      Document parsePath().
  */
 class SwatDetailsStore extends SwatObject
@@ -16,7 +16,7 @@ class SwatDetailsStore extends SwatObject
     // {{{ private properties
 
     /**
-     * The base object for this details store
+     * The base object for this details store.
      *
      * Properties of this details store are taken from this base object unless
      * they are manually specified.
@@ -26,7 +26,7 @@ class SwatDetailsStore extends SwatObject
     private $base_object;
 
     /**
-     * Manually set data of this details store
+     * Manually set data of this details store.
      *
      * @var array
      */
@@ -36,13 +36,13 @@ class SwatDetailsStore extends SwatObject
     // {{{ public function __construct()
 
     /**
-     * Creates a new details store
+     * Creates a new details store.
      *
      * @param stdClass $base_object optional. The object to initialize this
-     *                               details store with. Properties in this
-     *                               details store will be taken from the base
-     *                               object unless they are manually set on
-     *                               this details store.
+     *                              details store with. Properties in this
+     *                              details store will be taken from the base
+     *                              object unless they are manually set on
+     *                              this details store.
      */
     public function __construct($base_object = null)
     {
@@ -55,7 +55,7 @@ class SwatDetailsStore extends SwatObject
     // {{{ public function __get()
 
     /**
-     * Gets a property of this details store
+     * Gets a property of this details store.
      *
      * Properties are retrieved in the following manner:
      * 1. If the property name contains a dot (.) the results of
@@ -67,12 +67,12 @@ class SwatDetailsStore extends SwatObject
      * 4. The property could not be found in this details store and an
      *    exception is thrown.
      *
-     * @param string $name the name of the property to get.
+     * @param string $name the name of the property to get
      *
-     * @return mixed the value of the property.
+     * @return mixed the value of the property
      *
      * @throws SwatInvalidPropertyException if the property does not exist in
-     *                                       this details store.
+     *                                      this details store
      */
     public function __get($name)
     {
@@ -86,11 +86,11 @@ class SwatDetailsStore extends SwatObject
 
         if ($this->base_object !== null) {
             if (property_exists($this->base_object, $name)) {
-                return $this->base_object->$name;
+                return $this->base_object->{$name};
             }
 
             if (method_exists($this->base_object, '__get')) {
-                return $this->base_object->$name;
+                return $this->base_object->{$name};
             }
         }
 
@@ -106,14 +106,14 @@ class SwatDetailsStore extends SwatObject
     // {{{ public function __set()
 
     /**
-     * Manually sets a property of this details store
+     * Manually sets a property of this details store.
      *
      * If a base object is used, it is not modified by this method. Manually
      * set properties override properties of the base object when calling
      * {@link SwatDetailsStore::__get()} or {@link SwatDetailsStore::__isset()}.
      *
-     * @param string $name the name of the property to set.
-     * @param mixed $value the value of the property.
+     * @param string $name  the name of the property to set
+     * @param mixed  $value the value of the property
      */
     public function __set($name, $value)
     {
@@ -124,22 +124,22 @@ class SwatDetailsStore extends SwatObject
     // {{{ public function __isset()
 
     /**
-     * Gets whether or not a property is set for this details store
+     * Gets whether or not a property is set for this details store.
      *
      * First, the manually set properties are checked. Then the properties of
      * the base object are checked if there is a base object.
      *
-     * @param string $name the name of the property to check.
+     * @param string $name the name of the property to check
      *
-     * @return boolean true if the property is set for this details store and
-     *                  false if it is not.
+     * @return bool true if the property is set for this details store and
+     *              false if it is not
      */
     public function __isset($name)
     {
         $is_set = isset($this->data[$name]);
 
         if (!$is_set && $this->base_object !== null) {
-            $is_set = isset($this->base_object->$name);
+            $is_set = isset($this->base_object->{$name});
         }
 
         return $is_set;
@@ -153,15 +153,16 @@ class SwatDetailsStore extends SwatObject
         $pos = mb_strpos($path, '.');
         $name = mb_substr($path, 0, $pos);
         $rest = mb_substr($path, $pos + 1);
-        $sub_object = $object->$name;
+        $sub_object = $object->{$name};
 
         if ($sub_object === null) {
             return null;
-        } elseif (mb_strpos($rest, '.') === false) {
-            return $sub_object->$rest;
-        } else {
-            return $this->parsePath($sub_object, $rest);
         }
+        if (mb_strpos($rest, '.') === false) {
+            return $sub_object->{$rest};
+        }
+
+        return $this->parsePath($sub_object, $rest);
     }
 
     // }}}

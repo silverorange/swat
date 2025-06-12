@@ -1,9 +1,8 @@
 <?php
 
 /**
- * Thrown when a file is not found
+ * Thrown when a file is not found.
  *
- * @package   Swat
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
@@ -22,11 +21,11 @@ class SwatFileNotFoundException extends SwatException
     // {{{ public function __construct()
 
     /**
-     * Creates a new file not found exception
+     * Creates a new file not found exception.
      *
-     * @param string $message the message of the exception.
-     * @param integer $code the code of the exception.
-     * @param string $filename the filename of the file that is not found.
+     * @param string $message  the message of the exception
+     * @param int    $code     the code of the exception
+     * @param string $filename the filename of the file that is not found
      */
     public function __construct($message = null, $code = 0, $filename = '')
     {
@@ -38,9 +37,9 @@ class SwatFileNotFoundException extends SwatException
     // {{{ public function getFilename()
 
     /**
-     * Gets the filename of that caused this exception to be thrown
+     * Gets the filename of that caused this exception to be thrown.
      *
-     * @return string the filename that caused this exception to be thrown.
+     * @return string the filename that caused this exception to be thrown
      */
     public function getFilename()
     {

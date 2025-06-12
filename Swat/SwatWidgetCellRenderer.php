@@ -1,19 +1,15 @@
 <?php
 
 /**
- *
- * @package   Swat
  * @copyright 2006-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatWidgetCellRenderer extends SwatCellRenderer implements
-    SwatUIParent,
-    SwatTitleable
+class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent, SwatTitleable
 {
     // {{{ public properties
 
     /**
-     * Identifier of this widget cell renderer
+     * Identifier of this widget cell renderer.
      *
      * Identifier must be unique. This property is required and cannot be a
      * data-mapped value.
@@ -26,17 +22,17 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
      * Unique value used to uniquely identify the replicated widget.
      * If null, no replicating is done and the prototype widget is used.
      */
-    public $replicator_id = null;
+    public $replicator_id;
 
     // }}}
     // {{{ private properties
 
     /**
-     * A reference to the prototype widget for this cell renderer
+     * A reference to the prototype widget for this cell renderer.
      *
      * @var SwatWidget
      */
-    private $prototype_widget = null;
+    private $prototype_widget;
 
     private $mappings = [];
     private $clones = [];
@@ -45,9 +41,9 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
 
     /**
      * Whether or not renderings of this cell renderer are using a dynamic
-     * {@link SwatWidgetCellRenderer::$replicator_id} to create cloned widgets
+     * {@link SwatWidgetCellRenderer::$replicator_id} to create cloned widgets.
      *
-     * @var boolean
+     * @var bool
      *
      * @see SwatWidgetCellRenderer::render()
      */
@@ -56,9 +52,9 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
     /**
      * Whether or not renderings of this cell renderer are using a null
      * {@link SwatWidgetCellRenderer::$replicator_id} and rendering the
-     * prototype widget instead of cloned widgets
+     * prototype widget instead of cloned widgets.
      *
-     * @var boolean
+     * @var bool
      *
      * @see SwatWidgetCellRenderer::render()
      */
@@ -68,7 +64,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
     // {{{ public function __construct()
 
     /**
-     * Creates a new radio button cell renderer
+     * Creates a new radio button cell renderer.
      */
     public function __construct()
     {
@@ -84,7 +80,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
     // {{{ public function addChild()
 
     /**
-     * Fulfills SwatUIParent::addChild()
+     * Fulfills SwatUIParent::addChild().
      *
      * @throws SwatException
      */
@@ -122,7 +118,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
         }
 
         $this->mappings[$mangled_name] = [
-            'object' => $object,
+            'object'   => $object,
             'property' => $name,
         ];
 
@@ -133,7 +129,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
     // {{{ public function init()
 
     /**
-     * Initializes this cell renderer
+     * Initializes this cell renderer.
      *
      * This calls {@link SwatWidget::init()} on this renderer's widget.
      */
@@ -162,9 +158,6 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
     // }}}
     // {{{ public function process()
 
-    /**
-     *
-     */
     public function process()
     {
         $form = $this->getForm();
@@ -178,8 +171,8 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
 
         if ($replicators === null) {
             if (
-                $this->prototype_widget !== null &&
-                !$this->prototype_widget->isProcessed()
+                $this->prototype_widget !== null
+                && !$this->prototype_widget->isProcessed()
             ) {
                 $this->prototype_widget->process();
             }
@@ -197,8 +190,6 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
     // {{{ public function render()
 
     /**
-     *
-     *
      * @throws SwatException
      */
     public function render()
@@ -212,10 +203,10 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
         if ($this->replicator_id === null) {
             if ($this->using_clone_replication) {
                 throw new SwatException(
-                    'Cannot mix null replicator_id values ' .
-                        'with non-null replicator_id values. Make sure this ' .
-                        'widget cell renderer\'s replicator_id is set before ' .
-                        'rendering this renderer.',
+                    'Cannot mix null replicator_id values '
+                        . 'with non-null replicator_id values. Make sure this '
+                        . 'widget cell renderer\'s replicator_id is set before '
+                        . 'rendering this renderer.',
                 );
             }
 
@@ -228,10 +219,10 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
         } else {
             if ($this->using_null_replication) {
                 throw new SwatException(
-                    'Cannot mix non-null replicator_id ' .
-                        'values with null replicator_id values. All prior ' .
-                        'renderings of this widget cell renderer have had a null ' .
-                        'value for the replicator_id.',
+                    'Cannot mix non-null replicator_id '
+                        . 'values with null replicator_id values. All prior '
+                        . 'renderings of this widget cell renderer have had a null '
+                        . 'value for the replicator_id.',
                 );
             }
 
@@ -249,8 +240,8 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
             $form = $this->getForm();
             if ($form === null) {
                 throw new SwatException(
-                    'Cell renderer container must be ' .
-                        'inside a SwatForm for SwatWidgetCellRenderer to work.',
+                    'Cell renderer container must be '
+                        . 'inside a SwatForm for SwatWidgetCellRenderer to work.',
                 );
             }
 
@@ -269,10 +260,6 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
     // }}}
     // {{{ public function setPrototypeWidget()
 
-    /**
-     *
-     * @param SwatWidget $widget
-     */
     public function setPrototypeWidget(SwatWidget $widget)
     {
         $this->prototype_widget = $widget;
@@ -283,9 +270,9 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
     // {{{ public function getPrototypeWidget()
 
     /**
-     * Gets the prototype widget of this widget cell renderer
+     * Gets the prototype widget of this widget cell renderer.
      *
-     * @return SwatWidget the prototype widget of this widget cell renderer.
+     * @return SwatWidget the prototype widget of this widget cell renderer
      */
     public function getPrototypeWidget()
     {
@@ -296,14 +283,14 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
     // {{{ public function getWidget()
 
     /**
-     * Retrieves a reference to a replicated widget
+     * Retrieves a reference to a replicated widget.
      *
      * @param string $replicator_id the replicator id of the replicated widget
-     * @param string $widget_id the unique id of the original widget, or null
-     *                           to get the root
+     * @param string $widget_id     the unique id of the original widget, or null
+     *                              to get the root
      *
      * @return SwatWidget a reference to the replicated widget, or null if the
-     *                     widget is not found.
+     *                    widget is not found
      */
     public function getWidget($replicator_id, $widget_id = null)
     {
@@ -326,18 +313,18 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
     // {{{ public function getWidgets()
 
     /**
-     * Gets an array of replicated widgets indexed by the replicator_id
+     * Gets an array of replicated widgets indexed by the replicator_id.
      *
      * If this cell renderer's form is submitted, only cloned widgets that were
      * displayed and processed are returned.
      *
      * @param string $widget_id the unique id of the original widget, or null
-     *                           to get the root
+     *                          to get the root
      *
      * @return array an array of widgets indexed by replicator_id
      *
      * @throws SwatWidgetNotFoundException if a widget id is specified and no
-     *                                     such widget exists in the subtree.
+     *                                     such widget exists in the subtree
      */
     public function getWidgets($widget_id = null)
     {
@@ -352,14 +339,14 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
                 foreach ($this->clones as $replicator_id => $clone) {
                     if (in_array($replicator_id, $replicators)) {
                         if (
-                            $widget_id !== null &&
-                            !isset($this->widgets[$replicator_id][$widget_id])
+                            $widget_id !== null
+                            && !isset($this->widgets[$replicator_id][$widget_id])
                         ) {
                             throw new SwatWidgetNotFoundException(
                                 sprintf(
-                                    'No widget with the id "%s" exists in the ' .
-                                        'cloned widget sub-tree of this ' .
-                                        'SwatWidgetCellRenderer.',
+                                    'No widget with the id "%s" exists in the '
+                                        . 'cloned widget sub-tree of this '
+                                        . 'SwatWidgetCellRenderer.',
                                     $widget_id,
                                 ),
                                 0,
@@ -385,7 +372,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
     // {{{ public function getClonedWidgets()
 
     /**
-     * Gets an array of cloned widgets indexed by the replicator_id
+     * Gets an array of cloned widgets indexed by the replicator_id.
      *
      * If this cell renderer's form is submitted, only cloned widgets that were
      * displayed and processed are returned.
@@ -407,8 +394,8 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
             $clones = [];
             foreach ($this->clones as $replicator_id => $clone) {
                 if (
-                    is_array($replicators) &&
-                    in_array($replicator_id, $replicators)
+                    is_array($replicators)
+                    && in_array($replicator_id, $replicators)
                 ) {
                     $clones[$replicator_id] = $clone;
                 }
@@ -424,21 +411,21 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
     // {{{ public function getDataSpecificCSSClassNames()
 
     /**
-     * Gets the data specific CSS class names for this widget cell renderer
+     * Gets the data specific CSS class names for this widget cell renderer.
      *
      * If the widget within this cell renderer has messages, a CSS class of
      * 'swat-error' is added to the base CSS classes of this cell renderer.
      *
      * @return array the array of data specific CSS class names for this widget
-     *                cell-renderer.
+     *               cell-renderer
      */
     public function getDataSpecificCSSClassNames()
     {
         $classes = [];
 
         if (
-            $this->replicator_id !== null &&
-            $this->hasMessage($this->replicator_id)
+            $this->replicator_id !== null
+            && $this->hasMessage($this->replicator_id)
         ) {
             $classes[] = 'swat-error';
         }
@@ -451,14 +438,14 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
 
     /**
      * Gathers all messages from the widget of this cell renderer for the given
-     * replicator id
+     * replicator id.
      *
      * @param mixed $replicator_id an optional replicator id of the row to
-     *                              gather messages from. If no replicator id
-     *                              is specified, the current replicator_id is
-     *                              used.
+     *                             gather messages from. If no replicator id
+     *                             is specified, the current replicator_id is
+     *                             used.
      *
-     * @return array an array of {@link SwatMessage} objects.
+     * @return array an array of {@link SwatMessage} objects
      */
     public function getMessages($replicator_id = null)
     {
@@ -479,16 +466,16 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
     // {{{ public function hasMessage()
 
     /**
-     * Gets whether or not this widget cell renderer has messages
+     * Gets whether or not this widget cell renderer has messages.
      *
      * @param mixed $replicator_id an optional replicator id of the row to
-     *                              check for messages. If no replicator id is
-     *                              specified, the current replicator_id is
-     *                              used.
+     *                             check for messages. If no replicator id is
+     *                             specified, the current replicator_id is
+     *                             used.
      *
-     * @return boolean true if this widget cell renderer has one or more
-     *                  messages for the given replicator id and false if it
-     *                  does not.
+     * @return bool true if this widget cell renderer has one or more
+     *              messages for the given replicator id and false if it
+     *              does not
      */
     public function hasMessage($replicator_id = null)
     {
@@ -509,12 +496,12 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
     // {{{ public function getTitle()
 
     /**
-     * Gets the title of this widget cell renderer
+     * Gets the title of this widget cell renderer.
      *
      * The title is taken from this cell renderer's parent.
      * Satisfies the {SwatTitleable::getTitle()} interface.
      *
-     * @return string the title of this widget cell renderer.
+     * @return string the title of this widget cell renderer
      */
     public function getTitle()
     {
@@ -531,11 +518,11 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
     // {{{ public function getTitleContentType()
 
     /**
-     * Gets the title content-type of this widget cell renderer
+     * Gets the title content-type of this widget cell renderer.
      *
      * Implements the {@link SwatTitleable::getTitleContentType()} interface.
      *
-     * @return string the title content-type of this widget cell renderer.
+     * @return string the title content-type of this widget cell renderer
      */
     public function getTitleContentType()
     {
@@ -552,10 +539,10 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
     // {{{ public function getHtmlHeadEntrySet()
 
     /**
-     * Gets the SwatHtmlHeadEntry objects needed by this widget cell renderer
+     * Gets the SwatHtmlHeadEntry objects needed by this widget cell renderer.
      *
      * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
-     *                               this widget cell renderer.
+     *                              this widget cell renderer
      *
      * @see SwatUIObject::getHtmlHeadEntrySet()
      */
@@ -582,10 +569,10 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
 
     /**
      * Gets the SwatHtmlHeadEntry objects that may be needed by this widget
-     * cell renderer
+     * cell renderer.
      *
      * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects that may be
-     *                               needed by this widget cell renderer.
+     *                              needed by this widget cell renderer
      *
      * @see SwatUIObject::getAvailableHtmlHeadEntrySet()
      */
@@ -611,18 +598,18 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
     // {{{ public function getDescendants()
 
     /**
-     * Gets descendant UI-objects
+     * Gets descendant UI-objects.
      *
      * The descendant UI-objects of a widget cell renderer are cloned widgets,
      * not the prototype widget.
      *
      * @param string $class_name optional class name. If set, only UI-objects
-     *                            that are instances of <i>$class_name</i> are
-     *                            returned.
+     *                           that are instances of <i>$class_name</i> are
+     *                           returned.
      *
      * @return array the descendant UI-objects of this widget cell renderer. If
-     *                descendant objects have identifiers, the identifier is
-     *                used as the array key.
+     *               descendant objects have identifiers, the identifier is
+     *               used as the array key.
      *
      * @see SwatUIParent::getDescendants()
      */
@@ -630,9 +617,9 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
     {
         if (
             !(
-                $class_name === null ||
-                class_exists($class_name) ||
-                interface_exists($class_name)
+                $class_name === null
+                || class_exists($class_name)
+                || interface_exists($class_name)
             )
         ) {
             return [];
@@ -664,15 +651,15 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
     // {{{ public function getFirstDescendant()
 
     /**
-     * Gets the first descendant UI-object of a specific class
+     * Gets the first descendant UI-object of a specific class.
      *
      * The descendant UI-objects of a widget cell renderer are cloned widgets,
      * not the prototype widget.
      *
-     * @param string $class_name class name to look for.
+     * @param string $class_name class name to look for
      *
      * @return SwatUIObject the first descendant widget or null if no matching
-     *                       descendant is found.
+     *                      descendant is found
      *
      * @see SwatUIParent::getFirstDescendant()
      */
@@ -705,13 +692,13 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
     // {{{ public function getDescendantStates()
 
     /**
-     * Gets descendant states
+     * Gets descendant states.
      *
      * Retrieves an array of states of all stateful UI-objects in the widget
      * subtree below this widget cell renderer.
      *
      * @return array an array of UI-object states with UI-object identifiers as
-     *                array keys.
+     *               array keys
      */
     public function getDescendantStates()
     {
@@ -728,13 +715,13 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
     // {{{ public function setDescendantStates()
 
     /**
-     * Sets descendant states
+     * Sets descendant states.
      *
      * Sets states on all stateful UI-objects in the widget subtree below this
      * widget cell renderer.
      *
      * @param array $states an array of UI-object states with UI-object
-     *                       identifiers as array keys.
+     *                      identifiers as array keys
      */
     public function setDescendantStates(array $states)
     {
@@ -749,9 +736,12 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
     // {{{ public function __set()
 
     /**
-     * Maps a data field to a property of a widget in the widget tree
+     * Maps a data field to a property of a widget in the widget tree.
      *
      * TODO: document me better
+     *
+     * @param mixed $name
+     * @param mixed $value
      */
     public function __set($name, $value)
     {
@@ -782,14 +772,13 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
     // {{{ private function getForm()
 
     /**
-     * Gets the form
+     * Gets the form.
      *
-     * @return SwatForm the form this cell renderer's view is contained in.
+     * @return SwatForm the form this cell renderer's view is contained in
      */
     private function getForm()
     {
-        $form = $this->getFirstAncestor('SwatForm');
-        return $form;
+        return $this->getFirstAncestor('SwatForm');
     }
 
     // }}}
@@ -812,7 +801,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
         foreach ($this->property_values as $name => $value) {
             $object = $this->mappings[$name]['object'];
             $property = $this->mappings[$name]['property'];
-            $object->$property = $value;
+            $object->{$property} = $value;
         }
     }
 
@@ -843,8 +832,8 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
             $cloned_object = null;
             foreach ($prototype_descendants as $index => $prototype_object) {
                 if ($object === $prototype_object) {
-                    $cloned_object =
-                        $this->widgets[$this->replicator_id][$object->id];
+                    $cloned_object
+                        = $this->widgets[$this->replicator_id][$object->id];
 
                     break;
                 }
@@ -852,13 +841,13 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
 
             if ($cloned_object === null) {
                 throw new SwatException(
-                    'Cloned widget tree does not match ' .
-                        'prototype widget tree.',
+                    'Cloned widget tree does not match '
+                        . 'prototype widget tree.',
                 );
             }
 
-            if ($cloned_object->$property instanceof SwatCellRendererMapping) {
-                $cloned_object->$property = $value;
+            if ($cloned_object->{$property} instanceof SwatCellRendererMapping) {
+                $cloned_object->{$property} = $value;
             }
         }
     }

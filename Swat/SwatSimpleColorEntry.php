@@ -6,7 +6,6 @@
  * This color selector displays a simple palette to the user with a set of
  * predefined color choices. It requires JavaScript to work correctly.
  *
- * @package   Swat
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
@@ -15,23 +14,23 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay
     // {{{ public properties
 
     /**
-     * Show "none" option
+     * Show "none" option.
      *
      * Whether or not to show an option for selected no color
      *
-     * @var boolean
+     * @var bool
      */
     public $none_option = true;
 
     /**
-     * "None" option title
+     * "None" option title.
      *
      * @var string
      */
-    public $none_option_title = null;
+    public $none_option_title;
 
     /**
-     * Array of colors to display in this color selector
+     * Array of colors to display in this color selector.
      *
      * The array is flat and contains three or six digit hex color
      * codes.
@@ -79,9 +78,9 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay
     // {{{ public function __construct()
 
     /**
-     * Creates a new simple color selection widget
+     * Creates a new simple color selection widget.
      *
-     * @param string $id a non-visible unique id for this widget.
+     * @param string $id a non-visible unique id for this widget
      *
      * @see SwatWidget::__construct()
      */
@@ -110,7 +109,7 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay
     // {{{ public function process()
 
     /**
-     * Processes this color entry
+     * Processes this color entry.
      *
      * Ensures this color is a valid hex color.
      */
@@ -134,8 +133,8 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay
         if ($this->required && $this->value === null) {
             $this->addMessage($this->getValidationMessage('required'));
         } elseif (
-            $this->value !== null &&
-            !$this->validateColor($this->value)
+            $this->value !== null
+            && !$this->validateColor($this->value)
         ) {
             $message = sprintf(
                 Swat::_('“%s” is not a valid color.'),
@@ -151,27 +150,27 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay
 
     /**
      * Gets the array of CSS classes that are applied to this simple color
-     * entry widget
+     * entry widget.
      *
      * @return array the array of CSS classes that are applied to this simple
-     *                color entry widget.
+     *               color entry widget
      */
     protected function getCSSClassNames()
     {
         $classes = ['swat-simple-color-entry'];
-        $classes = array_merge($classes, parent::getCSSClassNames());
-        return $classes;
+
+        return array_merge($classes, parent::getCSSClassNames());
     }
 
     // }}}
     // {{{ protected function getInlineJavaScript()
 
     /**
-     * Gets simple color selector inline JavaScript
+     * Gets simple color selector inline JavaScript.
      *
      * The JavaScript is the majority of the simple color selector code
      *
-     * @return string simple color selector inline JavaScript.
+     * @return string simple color selector inline JavaScript
      */
     protected function getInlineJavaScript()
     {
@@ -180,8 +179,8 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay
         $colors = "'" . implode("', '", $this->colors) . "'";
 
         if ($this->none_option) {
-            $none_option =
-                $this->none_option_title === null
+            $none_option
+                = $this->none_option_title === null
                     ? 'null'
                     : SwatString::quoteJavaScriptString(
                         $this->none_option_title,
@@ -192,9 +191,9 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay
 
         $js_class_name = $this->getJavaScriptClassName();
 
-        $javascript .=
-            "\nvar {$this->id}_obj = new {$js_class_name}(" .
-            "'{$this->id}', [{$colors}], {$none_option});\n";
+        $javascript
+            .= "\nvar {$this->id}_obj = new {$js_class_name}("
+            . "'{$this->id}', [{$colors}], {$none_option});\n";
 
         return $javascript;
     }
@@ -203,15 +202,15 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay
     // {{{ protected function validateColor()
 
     /**
-     * Validates a color
+     * Validates a color.
      *
      * A valid color is a 3 or 6 character hex string with values between
      * 0 and 255.
      *
-     * @param string $value the color to validate.
+     * @param string $value the color to validate
      *
-     * @return boolean true if <i>$value</i> is a valid color and
-     *                  false if it is not.
+     * @return bool true if <i>$value</i> is a valid color and
+     *              false if it is not
      */
     protected function validateColor($value)
     {
@@ -236,9 +235,9 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay
     // {{{ protected function getJavaScriptClassName()
 
     /**
-     * Get the name of the JavaScript class for this widget
+     * Get the name of the JavaScript class for this widget.
      *
-     * @return string JavaScript class name.
+     * @return string JavaScript class name
      */
     protected function getJavaScriptClassName()
     {

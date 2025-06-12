@@ -1,7 +1,7 @@
 <?php
 
 /**
- * An exception in Swat
+ * An exception in Swat.
  *
  * Exceptions in Swat have handy methods for outputting nicely formed error
  * messages. Call SwatException::setupHandler() to register SwatException as
@@ -32,7 +32,6 @@
  * only filter one parameter. Use multiple <i>@sensitive</i> documentation tags
  * to filter multiple parameters in a single method.
  *
- * @package   Swat
  * @copyright 2004-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
@@ -40,13 +39,13 @@ class SwatException extends Exception
 {
     // {{{ protected properties
 
-    protected $backtrace = null;
-    protected $class = null;
+    protected $backtrace;
+    protected $class;
 
     /**
      * @var SwatExceptionDisplayer
      */
-    protected static $displayer = null;
+    protected static $displayer;
 
     /**
      * @var array
@@ -57,9 +56,9 @@ class SwatException extends Exception
     // {{{ private properties
 
     /**
-     * Whether or not this excception was manually handled
+     * Whether or not this excception was manually handled.
      *
-     * @var boolean
+     * @var bool
      */
     private $handled = false;
 
@@ -67,14 +66,14 @@ class SwatException extends Exception
     // {{{ public static function setLogger()
 
     /**
-     * Sets the object that logs SwatException objects when they are processed
+     * Sets the object that logs SwatException objects when they are processed.
      *
      * For example:
      * <code>
      * SwatException::setLogger(new CustomLogger());
      * </code>
      *
-     * @param SwatExceptionLogger $logger the object to use to log exceptions.
+     * @param SwatExceptionLogger $logger the object to use to log exceptions
      */
     public static function setLogger(SwatExceptionLogger $logger)
     {
@@ -86,7 +85,7 @@ class SwatException extends Exception
 
     /**
      * Adds an object to the array of objects that log SwatException objects
-     * when they are processed
+     * when they are processed.
      *
      * For example:
      * <code>
@@ -94,7 +93,7 @@ class SwatException extends Exception
      * </code>
      *
      * @param SwatExceptionLogger $logger the object to add to the array of
-     *                                           exception loggers
+     *                                    exception loggers
      */
     public static function addLogger(SwatExceptionLogger $logger)
     {
@@ -106,7 +105,7 @@ class SwatException extends Exception
 
     /**
      * Sets the object that displays SwatException objects when they are
-     * processed
+     * processed.
      *
      * For example:
      * <code>
@@ -114,7 +113,7 @@ class SwatException extends Exception
      * </code>
      *
      * @param SwatExceptionDisplayer $displayer the object to use to display
-     *                                           exceptions.
+     *                                          exceptions
      */
     public static function setDisplayer(SwatExceptionDisplayer $displayer)
     {
@@ -125,10 +124,10 @@ class SwatException extends Exception
     // {{{ public static function setupHandler()
 
     /**
-     * Set the PHP exception handler to use SwatException
+     * Set the PHP exception handler to use SwatException.
      *
      * @param string $class the exception class containing a static handle()
-     *                       method.
+     *                      method
      */
     public static function setupHandler($class = 'SwatException')
     {
@@ -160,18 +159,18 @@ class SwatException extends Exception
     // {{{ public function process()
 
     /**
-     * Processes this exception
+     * Processes this exception.
      *
      * Processing involves displaying errors, logging errors and sending
      * error message emails
      *
-     * @param boolean $exit optional. Whether or not to exit after processing
-     *                       this exception. If unspecified, defaults to true.
-     * @param boolean $handled optional. Whether or not this exception was
-     *                          manually handled. If unspecified defaults to
-     *                          true. Usually this parameter should be true
-     *                          if you catch an exception and manually call
-     *                          process on the exception.
+     * @param bool $exit    optional. Whether or not to exit after processing
+     *                      this exception. If unspecified, defaults to true.
+     * @param bool $handled optional. Whether or not this exception was
+     *                      manually handled. If unspecified defaults to
+     *                      true. Usually this parameter should be true
+     *                      if you catch an exception and manually call
+     *                      process on the exception.
      */
     public function process($exit = true, $handled = true)
     {
@@ -194,7 +193,7 @@ class SwatException extends Exception
     // {{{ public function processAndContinue()
 
     /**
-     * Processes this exception and continues execution
+     * Processes this exception and continues execution.
      *
      * Processing involves displaying errors, logging errors and sending
      * error message emails
@@ -208,7 +207,7 @@ class SwatException extends Exception
     // {{{ public function processAndExit()
 
     /**
-     * Processes this exception and stops execution
+     * Processes this exception and stops execution.
      *
      * Processing involves displaying errors, logging errors and sending
      * error message emails
@@ -222,7 +221,7 @@ class SwatException extends Exception
     // {{{ public function log()
 
     /**
-     * Logs this exception
+     * Logs this exception.
      *
      * The exception is logged to the webserver error log.
      */
@@ -241,7 +240,7 @@ class SwatException extends Exception
     // {{{ public function display()
 
     /**
-     * Displays this exception
+     * Displays this exception.
      *
      * This exception is displayed as either text or XHMTL depending on the
      * current execution context. If there is a request URI, this exception is
@@ -267,7 +266,7 @@ class SwatException extends Exception
     // {{{ public function getSummary()
 
     /**
-     * Gets a one-line short text summary of this exception
+     * Gets a one-line short text summary of this exception.
      *
      * This summary is useful for log entries and error email titles.
      *
@@ -295,19 +294,19 @@ class SwatException extends Exception
     // {{{ public function toString()
 
     /**
-     * Gets this exception as a nicely formatted text block
+     * Gets this exception as a nicely formatted text block.
      *
      * This is useful for text-based logs and emails.
      *
-     * @return string this exception formatted as text.
+     * @return string this exception formatted as text
      */
     public function toString()
     {
         ob_start();
 
         printf(
-            "%s Exception: %s\n\nMessage: %s\n\nCode:\n\t%s\n\n" .
-                "Created in file '%s' on line %s.\n\n",
+            "%s Exception: %s\n\nMessage: %s\n\nCode:\n\t%s\n\n"
+                . "Created in file '%s' on line %s.\n\n",
             $this->wasHandled() ? 'Caught' : 'Uncaught',
             $this->class,
             $this->getMessage(),
@@ -358,11 +357,11 @@ class SwatException extends Exception
     // {{{ public function toXHTML()
 
     /**
-     * Gets this exception as a nicely formatted XHTML fragment
+     * Gets this exception as a nicely formatted XHTML fragment.
      *
      * This is nice for debugging errors on a staging server.
      *
-     * @return string this exception formatted as XHTML.
+     * @return string this exception formatted as XHTML
      */
     public function toXHTML()
     {
@@ -373,12 +372,12 @@ class SwatException extends Exception
         echo '<div class="swat-exception">';
 
         printf(
-            '<h3>%s Exception: %s</h3>' .
-                '<div class="swat-exception-body">' .
-                'Message:<div class="swat-exception-message">%s</div>' .
-                'Code:<div class="swat-exception-message">%s</div>' .
-                'Created in file <strong>%s</strong> ' .
-                'on line <strong>%s</strong>.<br /><br />',
+            '<h3>%s Exception: %s</h3>'
+                . '<div class="swat-exception-body">'
+                . 'Message:<div class="swat-exception-message">%s</div>'
+                . 'Code:<div class="swat-exception-message">%s</div>'
+                . 'Created in file <strong>%s</strong> '
+                . 'on line <strong>%s</strong>.<br /><br />',
             $this->wasHandled() ? 'Caught' : 'Uncaught',
             $this->class,
             $this->getMessageAsHtml(),
@@ -408,9 +407,9 @@ class SwatException extends Exception
             }
 
             printf(
-                '<dt>%s.</dt><dd>In file <strong>%s</strong> ' .
-                    'line&nbsp;<strong>%s</strong>.<br />Method: ' .
-                    '<strong>%s%s%s(</strong>%s<strong>)</strong></dd>',
+                '<dt>%s.</dt><dd>In file <strong>%s</strong> '
+                    . 'line&nbsp;<strong>%s</strong>.<br />Method: '
+                    . '<strong>%s%s%s(</strong>%s<strong>)</strong></dd>',
                 --$count,
                 array_key_exists('file', $entry) ? $entry['file'] : 'unknown',
                 array_key_exists('line', $entry) ? $entry['line'] : 'unknown',
@@ -430,11 +429,11 @@ class SwatException extends Exception
     // {{{ public function getClass()
 
     /**
-     * Gets the name of the class this exception represents
+     * Gets the name of the class this exception represents.
      *
      * This is usually, but not always, equivalent to get_class($this).
      *
-     * @return string the name of the class this exception represents.
+     * @return string the name of the class this exception represents
      */
     public function getClass()
     {
@@ -445,10 +444,10 @@ class SwatException extends Exception
     // {{{ public function wasHandled()
 
     /**
-     * Gets whether or not this exception was manually handled
+     * Gets whether or not this exception was manually handled.
      *
-     * @return boolean true if this exception was manually handled and false
-     *                  if it was not.
+     * @return bool true if this exception was manually handled and false
+     *              if it was not
      */
     public function wasHandled()
     {
@@ -459,12 +458,12 @@ class SwatException extends Exception
     // {{{ public static function handle()
 
     /**
-     * Handles an exception
+     * Handles an exception.
      *
      * Wraps a generic exception in a SwatException object and process the
      * SwatException object.
      *
-     * @param Throwable $e the exception to handle.
+     * @param Throwable $e the exception to handle
      */
     public static function handle($e)
     {
@@ -480,9 +479,9 @@ class SwatException extends Exception
     // {{{ protected function getMessageAsHtml()
 
     /**
-     * Formats the exception's message as Html
+     * Formats the exception's message as Html.
      *
-     * @return string the cleaned exception message.
+     * @return string the cleaned exception message
      */
     protected function getMessageAsHtml()
     {
@@ -493,17 +492,17 @@ class SwatException extends Exception
     // {{{ protected function getArguments()
 
     /**
-     * Formats a method call's arguments
+     * Formats a method call's arguments.
      *
      * This method is also responsible for filtering sensitive parameters
      * out of the final stack trace and for cleaning up invalid encoding in
      * exception messages.
      *
-     * @param array $args an array of arguments.
+     * @param array  $args     an array of arguments
      * @param string $function optional. The current method or function.
-     * @param string $class optional. The current class name.
+     * @param string $class    optional. The current class name.
      *
-     * @return string the arguments formatted into a comma delimited string.
+     * @return string the arguments formatted into a comma delimited string
      */
     protected function getArguments($args, $function = null, $class = null)
     {
@@ -553,16 +552,16 @@ class SwatException extends Exception
 
     /**
      * Removes sensitive information from a parameter value and formats
-     * the parameter as a string
+     * the parameter as a string.
      *
      * This is used, for example, to filter credit/debit card numbers from
      * stack traces. By default, a string of the form
      * "[<i>$name</i> FILTERED]" is returned.
      *
-     * @param string $name the name of the parameter.
-     * @param mixed $value the sensitive value of the parameter.
+     * @param string $name  the name of the parameter
+     * @param mixed  $value the sensitive value of the parameter
      *
-     * @return string the filtered formatted version of the parameter.
+     * @return string the filtered formatted version of the parameter
      *
      * @see SwatException::$sensitive_param_names
      */
@@ -575,11 +574,11 @@ class SwatException extends Exception
     // {{{ protected function formatValue()
 
     /**
-     * Formats a parameter value for display in a stack trace
+     * Formats a parameter value for display in a stack trace.
      *
-     * @param mixed $value the value of the parameter.
+     * @param mixed $value the value of the parameter
      *
-     * @return string the formatted version of the parameter.
+     * @return string the formatted version of the parameter
      */
     protected function formatValue($value)
     {
@@ -639,7 +638,7 @@ class SwatException extends Exception
     // {{{ protected function displayStyleSheet()
 
     /**
-     * Displays style sheet required for XHMTL exception formatting
+     * Displays style sheet required for XHMTL exception formatting.
      *
      * This is purposly not in a separate file so that even if this exception
      * causes problems including other files the exception styles will be
@@ -650,17 +649,17 @@ class SwatException extends Exception
         static $displayed = false;
         if (!$displayed) {
             echo "<style>\n";
-            echo '.swat-exception { border: 1px solid #d43; margin: 1em; ' .
-                'font-family: sans-serif; background: #fff !important; ' .
-                'z-index: 9999 !important; color: #000; text-align: left; ' .
-                "min-width: 400px; }\n";
+            echo '.swat-exception { border: 1px solid #d43; margin: 1em; '
+                . 'font-family: sans-serif; background: #fff !important; '
+                . 'z-index: 9999 !important; color: #000; text-align: left; '
+                . "min-width: 400px; }\n";
 
-            echo '.swat-exception h3 { background: #e65; margin: 0; padding: ' .
-                "5px; border-bottom: 1px solid #d43; color: #fff; }\n";
+            echo '.swat-exception h3 { background: #e65; margin: 0; padding: '
+                . "5px; border-bottom: 1px solid #d43; color: #fff; }\n";
 
             echo ".swat-exception-body { padding: 0.8em; }\n";
-            echo '.swat-exception-message { margin-left: 2em; ' .
-                "padding: 1em; }\n";
+            echo '.swat-exception-message { margin-left: 2em; '
+                . "padding: 1em; }\n";
 
             echo ".swat-exception dt { float: left; margin-left: 1em; }\n";
             echo ".swat-exception dd { margin-bottom: 1em; }\n";
@@ -674,7 +673,7 @@ class SwatException extends Exception
 
     /**
      * Detects whether or not a parameter is sensitive from the method-level
-     * documentation of the parameter's method
+     * documentation of the parameter's method.
      *
      * Parameters with the following docblock tag are considered sensitive:
      * <code>
@@ -686,11 +685,11 @@ class SwatException extends Exception
      * </code>
      *
      * @param ReflectionFunctionAbstract $method the method the parameter to
-     *                                            which the parameter belongs.
-     * @param string $name the name of the parameter.
+     *                                           which the parameter belongs
+     * @param string                     $name   the name of the parameter
      *
-     * @return boolean true if the parameter is sensitive and false if the
-     *                  method is not sensitive.
+     * @return bool true if the parameter is sensitive and false if the
+     *              method is not sensitive
      */
     protected function isSensitiveParameter(
         ReflectionFunctionAbstract $method,
@@ -698,8 +697,8 @@ class SwatException extends Exception
     ) {
         $sensitive = false;
 
-        $exp =
-            '/^.*@sensitive\s+\$([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*).*$/';
+        $exp
+            = '/^.*@sensitive\s+\$([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*).*$/';
 
         $documentation = $method->getDocComment();
         $documentation = str_replace("\r", "\n", $documentation);
@@ -707,8 +706,8 @@ class SwatException extends Exception
         foreach ($documentation_exp as $documentation_line) {
             $matches = [];
             if (
-                preg_match($exp, $documentation_line, $matches) === 1 &&
-                $matches[1] == $name
+                preg_match($exp, $documentation_line, $matches) === 1
+                && $matches[1] == $name
             ) {
                 $sensitive = true;
                 break;

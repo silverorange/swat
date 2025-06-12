@@ -1,9 +1,8 @@
 <?php
 
 /**
- * Stores and outputs an HTML head entry for an XML comment
+ * Stores and outputs an HTML head entry for an XML comment.
  *
- * @package   Swat
  * @copyright 2006-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
@@ -17,9 +16,9 @@ class SwatCommentHtmlHeadEntry extends SwatHtmlHeadEntry
     // {{{ public function __construct()
 
     /**
-     * Creates a new HTML head entry
+     * Creates a new HTML head entry.
      *
-     * @param string  $comment the comment of this entry.
+     * @param string $comment the comment of this entry
      */
     public function __construct($comment)
     {

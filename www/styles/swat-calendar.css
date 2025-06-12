@@ -18,161 +18,162 @@
  */
 
 .swat-calendar {
-	display: inline;
+  display: inline;
 }
 
 .swat-calendar-div {
-	font-size: small;
-	background: #fff;
+  font-size: small;
+  background: #fff;
 }
 
 table.swat-calendar-frame {
-	border-top: 1px solid #ccc;
-	border-left: 1px solid #ccc;
-	margin: 0;
+  border-top: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  margin: 0;
 }
 
 .swat-calendar-control-frame {
-	text-align: center;
-	padding: 3px;
-	border-bottom: 1px solid #ccc;
-	border-right: 1px solid #ccc;
-	background: #f6f2ea url(../images/swat-calendar-header-background.png) top left repeat-x;
-	vertical-align: center;
+  text-align: center;
+  padding: 3px;
+  border-bottom: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  background: #f6f2ea url(../images/swat-calendar-header-background.png) top
+    left repeat-x;
+  vertical-align: center;
 }
 
 .swat-calendar-control {
-	font-size: x-small;
+  font-size: x-small;
 }
 
 td.swat-calendar-control-arrow {
-	text-align: center;
-	width: 50%;
+  text-align: center;
+  width: 50%;
 }
 
 td.swat-calendar-control-arrow img {
-	vertical-align: middle;
+  vertical-align: middle;
 }
 
 td.swat-calendar-control-flydowns {
-	width: 0;
-	white-space: nowrap;
+  width: 0;
+  white-space: nowrap;
 }
 
 th.swat-calendar-header {
-	width: 2.2em;
-	text-align: center;
-	font-weight: normal;
-	font-size: x-small;
-	border-bottom: 1px solid #ccc;
-	padding: 2px;
+  width: 2.2em;
+  text-align: center;
+  font-weight: normal;
+  font-size: x-small;
+  border-bottom: 1px solid #ccc;
+  padding: 2px;
 }
 
 th.swat-calendar-last-header {
-	width: 2.2em;
-	text-align: center;
-	font-weight: normal;
-	font-size: x-small;
-	border-bottom: 1px solid #ccc;
-	border-right: 1px solid #ccc;
-	padding: 2px;
+  width: 2.2em;
+  text-align: center;
+  font-weight: normal;
+  font-size: x-small;
+  border-bottom: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  padding: 2px;
 }
 
 .swat-calendar-cell {
-	text-align: center;
-	cursor: pointer;
-	cursor: hand;
-	border-bottom: 1px solid #ccc;
-	border-right: 1px solid #ccc;
-	padding: 2px;
+  text-align: center;
+  cursor: pointer;
+  cursor: hand;
+  border-bottom: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  padding: 2px;
 }
 
 .swat-calendar-cell:hover {
-	background: #eee;
+  background: #eee;
 }
 
 .swat-calendar-current-cell {
-	background: Highlight;
-	color: HighlightText;
-	text-align: center;
-	cursor: pointer;
-	cursor: hand;
-	border-bottom: 1px solid #ccc;
-	border-right: 1px solid #ccc;
-	padding: 2px;
+  background: Highlight;
+  color: HighlightText;
+  text-align: center;
+  cursor: pointer;
+  cursor: hand;
+  border-bottom: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  padding: 2px;
 }
 
 .swat-calendar-invalid-cell {
-	text-align: center;
-	color: #ccc;
-	border-bottom: 1px solid #ccc;
-	border-right: 1px solid #ccc;
-	padding: 2px;
+  text-align: center;
+  color: #ccc;
+  border-bottom: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  padding: 2px;
 }
 
 .swat-calendar-empty-cell {
-	padding: 2px;
-	border-bottom: 1px solid #ccc;
-	border-right: 1px solid #ccc;
-	background: #eee;
-	text-align: center;
-	color: #888;
+  padding: 2px;
+  border-bottom: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  background: #eee;
+  text-align: center;
+  color: #888;
 }
 
 td.swat-calendar-close-controls {
-	text-align: center;
-	padding: 1px 0 3px 0;
-	border-bottom: 1px solid #ccc;
-	border-right: 1px solid #ccc;
+  text-align: center;
+  padding: 1px 0 3px 0;
+  border-bottom: 1px solid #ccc;
+  border-right: 1px solid #ccc;
 }
 
 .swat-calendar-close-controls a {
-	padding: 1px 0.2em 1px 0.2em;
+  padding: 1px 0.2em 1px 0.2em;
 }
 
 .swat-calendar-date-field {
-	border: 1px solid;
-	background: #fff;
-	padding: 1px;
-	text-align: center;
+  border: 1px solid;
+  background: #fff;
+  padding: 1px;
+  text-align: center;
 }
 
 .swat-calendar-toggle-button {
-	padding: 0 24px 5px 0;
-	background-image: url(../images/tango/22/office-calendar.png);
-	background-position: 1px -1px;
-	background-repeat: no-repeat;
-	position: relative;
-	zoom: 1;
+  padding: 0 24px 5px 0;
+  background-image: url(../images/tango/22/office-calendar.png);
+  background-position: 1px -1px;
+  background-repeat: no-repeat;
+  position: relative;
+  zoom: 1;
 }
 
 .ie7 .swat-calendar-toggle-button,
 .ie8 .swat-calendar-toggle-button {
-	background-image: url(../images/tango/22/office-calendar-256.png);
+  background-image: url(../images/tango/22/office-calendar-256.png);
 }
 
 .swat-insensitive .swat-calendar-toggle-button {
-	opacity: 0.6;
+  opacity: 0.6;
 }
 
 .ie7 .swat-insensitive .swat-calendar-toggle-button,
 .ie8 .swat-insensitive .swat-calendar-toggle-button {
-	background-image: url(../images/tango/22/office-calendar-256-insensitive.png);
+  background-image: url(../images/tango/22/office-calendar-256-insensitive.png);
 }
 
 .swat-calendar-arrows {
-	cursor: pointer;
-	cursor: hand;
+  cursor: pointer;
+  cursor: hand;
 }
 
 .swat-calendar-arrows-off {
-	cursor: none;
+  cursor: none;
 }
 
 .swat-date-entry-span {
-	vertical-align: middle;
+  vertical-align: middle;
 }
 
 table.swat-calendar-frame table {
-	margin: 0;
+  margin: 0;
 }

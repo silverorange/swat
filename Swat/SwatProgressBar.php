@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Progress bar
+ * Progress bar.
  *
  * Progress bars should only be used to indicate progress. Use a separate
  * widget to display values.
@@ -16,7 +16,6 @@
  * accurate to four decimal places. This translates to one-hundredth of a
  * percent.
  *
- * @package   Swat
  * @copyright 2007-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
@@ -25,41 +24,41 @@ class SwatProgressBar extends SwatControl
     // {{{ class constants
 
     /**
-     * Progress bar displays horizontally and completes from left to right
+     * Progress bar displays horizontally and completes from left to right.
      */
-    const ORIENTATION_LEFT_TO_RIGHT = 1;
+    public const ORIENTATION_LEFT_TO_RIGHT = 1;
 
     /**
-     * Progress bar displays horizontally and completes from right to left
+     * Progress bar displays horizontally and completes from right to left.
      */
-    const ORIENTATION_RIGHT_TO_LEFT = 2;
+    public const ORIENTATION_RIGHT_TO_LEFT = 2;
 
     /**
-     * Progress bar displays vertically and completes from bottom to top
+     * Progress bar displays vertically and completes from bottom to top.
      */
-    const ORIENTATION_BOTTOM_TO_TOP = 3;
+    public const ORIENTATION_BOTTOM_TO_TOP = 3;
 
     /**
-     * Progress bar displays vertically and completes from top to bottom
+     * Progress bar displays vertically and completes from top to bottom.
      */
-    const ORIENTATION_TOP_TO_BOTTOM = 4;
+    public const ORIENTATION_TOP_TO_BOTTOM = 4;
 
     // }}}
     // {{{ public properties
 
     /**
-     * Orientation of this progress bar
+     * Orientation of this progress bar.
      *
      * This should be one of the SwatProgressBar::ORIENTATION_* constants. If
      * an invalid value is used,
      * {@link SwatProgressBar::ORIENTATION_LEFT_TO_RIGHT} is used.
      *
-     * @var integer
+     * @var int
      */
     public $orientation = self::ORIENTATION_LEFT_TO_RIGHT;
 
     /**
-     * The current value of this progress bar
+     * The current value of this progress bar.
      *
      * This should be a value between 0 and 1. If the number is greater than 1
      * the progress bar will display as 100%. If the number is less than 0, the
@@ -70,7 +69,7 @@ class SwatProgressBar extends SwatControl
     public $value = 0;
 
     /**
-     * Text to show beneath the progress bar
+     * Text to show beneath the progress bar.
      *
      * Optionally uses vsprintf() syntax, for example:
      * <code>
@@ -85,21 +84,21 @@ class SwatProgressBar extends SwatControl
 
     /**
      * Value or array of values to substitute into the
-     * {@link SwatProgressBar::$text} property
+     * {@link SwatProgressBar::$text} property.
      *
      * The value property may be specified either as an array of values or as
      * a single value. If an array is passed, a call to vsprintf() is done
      * on the {@link SwatProgressBar::$text} property. If the value is a string
      * a single sprintf() call is made.
      *
-     * @var string|array
+     * @var array|string
      *
      * @see SwatProgressBar::$text
      */
-    public $text_value = null;
+    public $text_value;
 
     /**
-     * Optional content type for text of this progress bar
+     * Optional content type for text of this progress bar.
      *
      * Defaults to 'text/plain', use 'text/xml' for XHTML fragments.
      *
@@ -108,7 +107,7 @@ class SwatProgressBar extends SwatControl
     public $content_type = 'text/plain';
 
     /**
-     * Length of this progress bar in cascading style-sheet units
+     * Length of this progress bar in cascading style-sheet units.
      *
      * This determines the width of horizontal progress bars and the height of
      * vertical progress bars. Any valid cascading style-sheet dimension
@@ -122,9 +121,9 @@ class SwatProgressBar extends SwatControl
     // {{{ public function __construct()
 
     /**
-     * Creates a new progress bar
+     * Creates a new progress bar.
      *
-     * @param string $id a non-visible unique id for this widget.
+     * @param string $id a non-visible unique id for this widget
      *
      * @see SwatWidget::__construct()
      */
@@ -145,10 +144,10 @@ class SwatProgressBar extends SwatControl
     // {{{ public function display()
 
     /**
-     * Displays this progress bar
+     * Displays this progress bar.
      *
      * @throws SwatException if this progress bar's <i>$length</i> property is
-     *                       not a valid cascading style-sheet dimension.
+     *                       not a valid cascading style-sheet dimension
      */
     public function display()
     {
@@ -176,10 +175,10 @@ class SwatProgressBar extends SwatControl
     // {{{ protected function displayBar()
 
     /**
-     * Displays the bar part of this progress bar
+     * Displays the bar part of this progress bar.
      *
      * @throws SwatException if this progress bar's <i>$length</i> property is
-     *                       not a valid cascading style-sheet dimension.
+     *                       not a valid cascading style-sheet dimension
      */
     protected function displayBar()
     {
@@ -188,8 +187,8 @@ class SwatProgressBar extends SwatControl
         if (preg_match($dimension_pattern, $this->length) === 0) {
             throw new SwatException(
                 sprintf(
-                    '$length must be specified in ' .
-                        'cascading style-sheet units. Value was: %s',
+                    '$length must be specified in '
+                        . 'cascading style-sheet units. Value was: %s',
                     $this->length,
                 ),
             );
@@ -266,7 +265,7 @@ class SwatProgressBar extends SwatControl
     // {{{ protected function displayText()
 
     /**
-     * Displays the text part of this progress bar
+     * Displays the text part of this progress bar.
      */
     protected function displayText()
     {
@@ -295,9 +294,9 @@ class SwatProgressBar extends SwatControl
     // {{{ protected function getInlineJavaScript()
 
     /**
-     * Gets inline JavaScript for this progress bar
+     * Gets inline JavaScript for this progress bar.
      *
-     * @return string inline JavaScript for this progress bar.
+     * @return string inline JavaScript for this progress bar
      */
     protected function getInlineJavaScript()
     {
@@ -314,16 +313,16 @@ class SwatProgressBar extends SwatControl
     // {{{ protected function getCSSClassNames()
 
     /**
-     * Gets the array of CSS classes that are applied to this progress bar
+     * Gets the array of CSS classes that are applied to this progress bar.
      *
      * @return array the array of CSS classes that are applied to this progress
-     *                bar.
+     *               bar
      */
     protected function getCSSClassNames()
     {
         $classes = ['swat-progress-bar'];
-        $classes = array_merge($classes, parent::getCSSClassNames());
-        return $classes;
+
+        return array_merge($classes, parent::getCSSClassNames());
     }
 
     // }}}

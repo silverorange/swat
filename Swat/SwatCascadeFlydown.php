@@ -1,14 +1,13 @@
 <?php
 
 /**
- * A cascading flydown (aka combo-box) selection widget
+ * A cascading flydown (aka combo-box) selection widget.
  *
  * The term cascading refers to the fact that this flydown's contents are
  * updated dynamically based on the selected value of another flydown.
  *
  * The value of the other SwatFlydown cascades to this SwatCascadeFlydown.
  *
- * @package   Swat
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
@@ -17,7 +16,7 @@ class SwatCascadeFlydown extends SwatFlydown
     // {{{ public properties
 
     /**
-     * Flydown options
+     * Flydown options.
      *
      * An array of parents and {@link SwatOption}s for the flydown. Each parent
      * value is associated to an array of possible child values, in the form:
@@ -34,21 +33,21 @@ class SwatCascadeFlydown extends SwatFlydown
     public $options = [];
 
     /**
-     * Cascade from
+     * Cascade from.
      *
      * A reference to the {@link SwatWidget} that this item cascades from.
      *
      * @var SwatWidget
      */
-    public $cascade_from = null;
+    public $cascade_from;
 
     // }}}
     // {{{ public function __construct()
 
     /**
-     * Creates a new calendar
+     * Creates a new calendar.
      *
-     * @param string $id a non-visible unique id for this widget.
+     * @param string $id a non-visible unique id for this widget
      *
      * @see SwatWidget::__construct()
      */
@@ -68,7 +67,7 @@ class SwatCascadeFlydown extends SwatFlydown
     // {{{ public function display()
 
     /**
-     * Displays this cascading flydown
+     * Displays this cascading flydown.
      *
      * {@link SwatFlydown::$show_blank} is set to false here.
      */
@@ -86,21 +85,21 @@ class SwatCascadeFlydown extends SwatFlydown
     // {{{ public function addOption()
 
     /**
-     * Adds an option to this option control
+     * Adds an option to this option control.
      *
-     * @param mixed $parent the value of the parent value from which this
-     *                       option cascades.
-     * @param mixed|SwatOption $value either a value for the option, or a
-     *                                 {@link SwatOption} object. If a
-     *                                 SwatOption is used, the <i>$title</i>
-     *                                 and <i>$content_type</i> parameters of
-     *                                 this method call are ignored.
-     * @param string $title the title of the added option. Ignored if the
-     *                       <i>$value</i> parameter is a SwatOption object.
-     * @param string $content_type optional. The content type of the title. If
-     *                              not specified, defaults to 'text/plain'.
-     *                              Ignored if the <i>$value</i> parameter is
-     *                              a SwatOption object.
+     * @param mixed            $parent       the value of the parent value from which this
+     *                                       option cascades
+     * @param mixed|SwatOption $value        either a value for the option, or a
+     *                                       {@link SwatOption} object. If a
+     *                                       SwatOption is used, the <i>$title</i>
+     *                                       and <i>$content_type</i> parameters of
+     *                                       this method call are ignored.
+     * @param string           $title        the title of the added option. Ignored if the
+     *                                       <i>$value</i> parameter is a SwatOption object.
+     * @param string           $content_type optional. The content type of the title. If
+     *                                       not specified, defaults to 'text/plain'.
+     *                                       Ignored if the <i>$value</i> parameter is
+     *                                       a SwatOption object.
      */
     public function addOption(
         $parent,
@@ -121,14 +120,14 @@ class SwatCascadeFlydown extends SwatFlydown
     // {{{ public function addOptionsByArray()
 
     /**
-     * Adds options to this option control using an associative array
+     * Adds options to this option control using an associative array.
      *
-     * @param array $options an array of options. Keys are option parent values.
-     *                        Values are a 2-element associative array of
-     *                        title => value pairs.
+     * @param array  $options      an array of options. Keys are option parent values.
+     *                             Values are a 2-element associative array of
+     *                             title => value pairs.
      * @param string $content_type optional. The content type of the option
-     *                              titles. If not specified, defaults to
-     *                              'text/plain'.
+     *                             titles. If not specified, defaults to
+     *                             'text/plain'.
      */
     public function addOptionsByArray(
         array $options,
@@ -145,14 +144,14 @@ class SwatCascadeFlydown extends SwatFlydown
     // {{{ protected function getOptions()
 
     /**
-     * Gets the options of this flydown as a flat array
+     * Gets the options of this flydown as a flat array.
      *
      * For the cascading flydown, the array returned
      *
      * The array is of the form:
      *    value => title
      *
-     * @return array the options of this flydown as a flat array.
+     * @return array the options of this flydown as a flat array
      *
      * @see SwatFlydown::getOptions()
      */
@@ -223,8 +222,8 @@ class SwatCascadeFlydown extends SwatFlydown
 
     protected function hasSingleParent()
     {
-        return count($this->getParentOptions()) === 1 &&
-            $this->cascade_from->show_blank == false;
+        return count($this->getParentOptions()) === 1
+            && $this->cascade_from->show_blank == false;
     }
 
     // }}}
@@ -232,8 +231,8 @@ class SwatCascadeFlydown extends SwatFlydown
 
     protected function getBlankOption()
     {
-        $blank_title =
-            $this->blank_title === null
+        $blank_title
+            = $this->blank_title === null
                 ? Swat::_('choose one ...')
                 : $this->blank_title;
 
@@ -244,9 +243,9 @@ class SwatCascadeFlydown extends SwatFlydown
     // {{{ protected function getInlineJavaScript()
 
     /**
-     * Gets the inline JavaScript that makes this control work
+     * Gets the inline JavaScript that makes this control work.
      *
-     * @return string the inline JavaScript that makes this control work.
+     * @return string the inline JavaScript that makes this control work
      */
     protected function getInlineJavaScript()
     {
@@ -282,8 +281,8 @@ class SwatCascadeFlydown extends SwatFlydown
                     $value = '';
                 }
 
-                $blank_title =
-                    $this->blank_title === null
+                $blank_title
+                    = $this->blank_title === null
                         ? Swat::_('choose one ...')
                         : $this->blank_title;
 
@@ -300,8 +299,8 @@ class SwatCascadeFlydown extends SwatFlydown
                 if ($this->serialize_values) {
                     // if they are serialized, we want to compare the actual
                     // values
-                    $selected =
-                        $flydown_value === $option->value ? 'true' : 'false';
+                    $selected
+                        = $flydown_value === $option->value ? 'true' : 'false';
 
                     $value = SwatString::signedSerialize($option->value, $salt);
                 } else {

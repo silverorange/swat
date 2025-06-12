@@ -1,7 +1,7 @@
 <?php
 
 /**
- * A single object to represent a database query range
+ * A single object to represent a database query range.
  *
  * Objects of this class can be passed too and from methods as a single
  * argument representing the values of a limit/offset clause in a query. It is
@@ -12,7 +12,6 @@
  * $db->setLimit($range->getLimit(), $range->getOffset());
  * </code>
  *
- * @package   SwatDB
  * @copyright 2007-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
@@ -21,18 +20,18 @@ class SwatDBRange extends SwatObject
     // {{{ private properties
 
     /**
-     * The limit of this range
+     * The limit of this range.
      *
-     * @var integer
+     * @var int
      *
      * @see SwatDBRange::getLimit()
      */
     private $limit;
 
     /**
-     * The offset of this range
+     * The offset of this range.
      *
-     * @var integer
+     * @var int
      *
      * @see SwatDBRange::getOffset()
      */
@@ -42,11 +41,11 @@ class SwatDBRange extends SwatObject
     // {{{ public function __construct()
 
     /**
-     * Creates a new database range
+     * Creates a new database range.
      *
-     * @param integer $limit the limit of this range.
-     * @param integer $offset optional. The offset of this range. If not
-     *                         specified, defaults to 0.
+     * @param int $limit  the limit of this range
+     * @param int $offset optional. The offset of this range. If not
+     *                    specified, defaults to 0.
      */
     public function __construct($limit, $offset = 0)
     {
@@ -58,9 +57,9 @@ class SwatDBRange extends SwatObject
     // {{{ public function getLimit()
 
     /**
-     * Gets the limit of this range
+     * Gets the limit of this range.
      *
-     * @return integer the limit of this range.
+     * @return int the limit of this range
      */
     public function getLimit()
     {
@@ -71,9 +70,9 @@ class SwatDBRange extends SwatObject
     // {{{ public function getOffset()
 
     /**
-     * Gets the offset of this range
+     * Gets the offset of this range.
      *
-     * @return integer the offset of this range.
+     * @return int the offset of this range
      */
     public function getOffset()
     {
@@ -84,9 +83,9 @@ class SwatDBRange extends SwatObject
     // {{{ public function addOffset()
 
     /**
-     * Increases the offset of this range
+     * Increases the offset of this range.
      *
-     * @param integer $offset the amount by which to increase the offset.
+     * @param int $offset the amount by which to increase the offset
      */
     public function addOffset($offset)
     {
@@ -97,7 +96,7 @@ class SwatDBRange extends SwatObject
     // {{{ public function combine()
 
     /**
-     * Combines this range with another range forming a new range
+     * Combines this range with another range forming a new range.
      *
      * Ranges are combined so the combined range includes both ranges. For
      * example, if a range of (10, 100) is combined with a
@@ -109,9 +108,9 @@ class SwatDBRange extends SwatObject
      * ..|=====================| combined range
      * </pre>
      *
-     * @param SwatDBRange $range the range to combine with this range.
+     * @param SwatDBRange $range the range to combine with this range
      *
-     * @return SwatDBRange the combined range.
+     * @return SwatDBRange the combined range
      */
     public function combine(SwatDBRange $range)
     {

@@ -9,7 +9,6 @@
  *
  * TODO: Implement this functionality with AJAX.
  *
- * @package   Swat
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
@@ -18,35 +17,35 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
     // {{{ constants
 
     /**
-     * Indicates no ordering is done
+     * Indicates no ordering is done.
      */
-    const ORDER_BY_DIR_NONE = 0;
+    public const ORDER_BY_DIR_NONE = 0;
 
     /**
-     * Indicates descending ordering is done
+     * Indicates descending ordering is done.
      */
-    const ORDER_BY_DIR_DESCENDING = 1;
+    public const ORDER_BY_DIR_DESCENDING = 1;
 
     /**
-     * Indicates ascending ordering is done
+     * Indicates ascending ordering is done.
      */
-    const ORDER_BY_DIR_ASCENDING = 2;
+    public const ORDER_BY_DIR_ASCENDING = 2;
 
     /**
-     * Indicates ascending ordering is done
+     * Indicates ascending ordering is done.
      */
-    const NULLS_FIRST = 1;
+    public const NULLS_FIRST = 1;
 
     /**
-     * Indicates ascending ordering is done
+     * Indicates ascending ordering is done.
      */
-    const NULLS_LAST = 2;
+    public const NULLS_LAST = 2;
 
     // }}}
     // {{{ public properties
 
     /**
-     * The base of the link used when building column header links
+     * The base of the link used when building column header links.
      *
      * Additional GET variables are appended to this link in the getLink()
      * method.
@@ -70,12 +69,12 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
      * $column->nulls_ordering = SwatTableViewOrderableColumn::NULLS_LAST;
      * </code>
      *
-     * @var integer
+     * @var int
      */
     public $nulls_ordering;
 
     /**
-     * HTTP GET variables to remove from the column header link
+     * HTTP GET variables to remove from the column header link.
      *
      * An array of GET variable names to unset before building new links.
      *
@@ -87,7 +86,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
     // {{{ protected properties
 
     /**
-     * The direction of ordering
+     * The direction of ordering.
      *
      * The current direction of ordering for this column. Valid values are:
      *
@@ -95,12 +94,12 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
      * - {@link SwatTableViewOrderableColumn::ORDER_BY_DIR_DESCENDING}, and
      * - {@link SwatTableViewOrderableColumn::ORDER_BY_DIR_ASCENDING}.
      *
-     * @var integer
+     * @var int
      */
     protected $direction = self::ORDER_BY_DIR_NONE;
 
     /**
-     * The default direction of ordering
+     * The default direction of ordering.
      *
      * The default direction of ordering before the GET variables are processed.
      * When the GET variables are processed, they change
@@ -111,7 +110,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
      * - {@link SwatTableViewOrderableColumn::ORDER_BY_DIR_DESCENDING}, and
      * - {@link SwatTableViewOrderableColumn::ORDER_BY_DIR_ASCENDING}.
      *
-     * @var integer
+     * @var int
      */
     protected $default_direction = self::ORDER_BY_DIR_NONE;
 
@@ -119,20 +118,20 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
     // {{{ private properties
 
     /**
-     * The mode of ordering
+     * The mode of ordering.
      *
      * The mode of switching between ordering states.
      * Valid values are ORDER_MODE_TRISTATE, and ORDER_MODE_BISTATE constants.
      *
-     * @var integer
+     * @var int
      */
-    //private $mode = SwatTableViewOrderableColumn::ORDER_MODE_TRISTATE;
+    // private $mode = SwatTableViewOrderableColumn::ORDER_MODE_TRISTATE;
 
     // }}}
     // {{{ public function init()
 
     /**
-     * Initializes this column
+     * Initializes this column.
      *
      * The current direction of ordering is grabbed from GET variables.
      */
@@ -146,7 +145,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
     // {{{ public function setDirection()
 
     /**
-     * Sets the direction of ordering
+     * Sets the direction of ordering.
      *
      * This method sets the direction of ordering of the column, either asc,
      * desc, or none. Valid directions are:
@@ -175,7 +174,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
     // {{{ public function displayHeader()
 
     /**
-     * Displays the column header for this table view column
+     * Displays the column header for this table view column.
      *
      * This method displays an appropriate header based on the current
      * direction of ordering of this table view column. If the column has been
@@ -219,20 +218,20 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
     // {{{ public function getDirectionAsString()
 
     /**
-     * Gets the direction of ordering as a string
+     * Gets the direction of ordering as a string.
      *
      * Retrieves the current ordering direction of this column or an arbitrary
      * direction constant as a string. The string is returned the lowercase
      * abbreviated form 'asc' or 'desc'.
      *
-     * @param integer $direction_id an optional direction constant to convert
-     *                               to a string rather than using this
-     *                               column's current direction.
-     * @param boolean $include_nulls_ordering optional. If specified, an extra
-     *                                         string indicating the nulls
-     *                                         ordering behaviour is appended.
+     * @param int  $direction_id           an optional direction constant to convert
+     *                                     to a string rather than using this
+     *                                     column's current direction
+     * @param bool $include_nulls_ordering optional. If specified, an extra
+     *                                     string indicating the nulls
+     *                                     ordering behaviour is appended.
      *
-     * @return string the direction of ordering.
+     * @return string the direction of ordering
      */
     public function getDirectionAsString(
         $direction_id = null,
@@ -319,10 +318,10 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
     // {{{ protected function getBaseCSSClassNames()
 
     /**
-     * Gets the base CSS class names of this orderable table-view column
+     * Gets the base CSS class names of this orderable table-view column.
      *
      * @return array the array of base CSS class names for this orderable
-     *                table-view column.
+     *               table-view column
      */
     protected function getBaseCSSClassNames()
     {
@@ -339,7 +338,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
     // {{{ protected function getLinkPrefix()
 
     /**
-     * Gets the prefix for GET var links
+     * Gets the prefix for GET var links.
      *
      * @return string The prefix for GET var links
      */
@@ -353,12 +352,12 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
     // {{{ protected function getNextDirection()
 
     /**
-     * Gets the next direction or ordering in the rotation
+     * Gets the next direction or ordering in the rotation.
      *
      * As a user clicks on the comun headers the direction of ordering changes
      * from NONE => ASCSENDING => DESCENDING => NONE in a loop.
      *
-     * @return integer the next direction of ordering for this column.
+     * @return int the next direction of ordering for this column
      */
     protected function getNextDirection()
     {
@@ -385,14 +384,14 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
     // {{{ private function setDirectionByString()
 
     /**
-     * Sets direction of ordering by a string
+     * Sets direction of ordering by a string.
      *
      * Sets the current ordering direction of this column.
      *
      * @param string $direction ordering direction as a string. The direction
-     *                           is case insensitive and may be the short form
-     *                           'asc' or 'desc' or the long form 'ascending'
-     *                           or 'descending'.
+     *                          is case insensitive and may be the short form
+     *                          'asc' or 'desc' or the long form 'ascending'
+     *                          or 'descending'.
      */
     private function setDirectionByString($direction)
     {
@@ -418,12 +417,12 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
     // {{{ private function getLink()
 
     /**
-     * Gets the link for this column's header
+     * Gets the link for this column's header.
      *
      * This method builds the link by appending special GET variables and
      * unsetting other ones.
      *
-     * @return string the link for this column's header.
+     * @return string the link for this column's header
      */
     private function getLink()
     {
@@ -439,8 +438,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
         $key_orderby = $this->getLinkPrefix() . 'orderby';
         $key_orderbydir = $this->getLinkPrefix() . 'orderbydir';
 
-        unset($vars[$key_orderby]);
-        unset($vars[$key_orderbydir]);
+        unset($vars[$key_orderby], $vars[$key_orderbydir]);
 
         $next_dir = $this->getNextDirection();
 
@@ -473,7 +471,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
     // {{{ private function initFromGetVariables()
 
     /**
-     * Process GET variables and set class variables
+     * Process GET variables and set class variables.
      */
     private function initFromGetVariables()
     {

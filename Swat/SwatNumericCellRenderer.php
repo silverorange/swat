@@ -1,9 +1,8 @@
 <?php
 
 /**
- * A numeric cell renderer
+ * A numeric cell renderer.
  *
- * @package   Swat
  * @copyright 2006-2021 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
@@ -12,22 +11,22 @@ class SwatNumericCellRenderer extends SwatCellRenderer
     // {{{ public properties
 
     /**
-     * Value can be either a float or an integer
+     * Value can be either a float or an integer.
      *
      * @var float
      */
     public $value;
 
     /**
-     * Number of digits to display after the decimal point
+     * Number of digits to display after the decimal point.
      *
      * If null, the native number of digits displayed by PHP is used. The native
      * number of digits could be a relatively large number of digits for uneven
      * fractions.
      *
-     * @var integer
+     * @var int
      */
-    public $precision = null;
+    public $precision;
 
     /**
      * What to display when value is null.
@@ -37,15 +36,15 @@ class SwatNumericCellRenderer extends SwatCellRenderer
      *
      * @var string
      */
-    public $null_display_value = null;
+    public $null_display_value;
 
     /**
-     * Show Thousands Seperator
+     * Show Thousands Seperator.
      *
      * Whether or not to show a thousands separator (shown depending on
      * locale).
      *
-     * @var boolean
+     * @var bool
      */
     public $show_thousands_separator = true;
 
@@ -53,7 +52,7 @@ class SwatNumericCellRenderer extends SwatCellRenderer
     // {{{ public function render()
 
     /**
-     * Renders the contents of this cell
+     * Renders the contents of this cell.
      *
      * @see SwatCellRenderer::render()
      */

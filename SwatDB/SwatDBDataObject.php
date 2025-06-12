@@ -1,16 +1,12 @@
 <?php
 
 /**
- * All public properties correspond to database fields
+ * All public properties correspond to database fields.
  *
  * @copyright 2005-2025 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatDBDataObject extends SwatObject implements
-    Serializable,
-    SwatDBRecordable,
-    SwatDBMarshallable,
-    SwatDBFlushable
+class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecordable, SwatDBMarshallable, SwatDBFlushable
 {
     // {{{ private properties
 
@@ -50,7 +46,7 @@ class SwatDBDataObject extends SwatObject implements
     private $date_properties = [];
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $loaded_from_database = false;
 
@@ -65,18 +61,19 @@ class SwatDBDataObject extends SwatObject implements
     /**
      * @var MDB2
      */
-    protected $db = null;
+    protected $db;
 
-    protected $table = null;
-    protected $id_field = null;
+    protected $table;
+    protected $id_field;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $read_only = false;
 
     /**
      * @var SwatDBCacheNsFlushable
+     *
      * @see SwatDBDataObject::setFlushableCache()
      */
     protected $flushable_cache;
@@ -85,7 +82,7 @@ class SwatDBDataObject extends SwatObject implements
     // {{{ private properties
 
     /**
-     * Cache of public property names indexed by class name
+     * Cache of public property names indexed by class name.
      *
      * @var array
      */
@@ -96,10 +93,10 @@ class SwatDBDataObject extends SwatObject implements
 
     /**
      * @param mixed $data
-     * @param boolean $read_only Whether this data object is read only. Setting
-     *                read-only to true will improve the performance of
-     *                creating large amounts of dataobjects that will never be
-     *                saved.
+     * @param bool  $read_only Whether this data object is read only. Setting
+     *                         read-only to true will improve the performance of
+     *                         creating large amounts of dataobjects that will never be
+     *                         saved.
      */
     public function __construct($data = null, $read_only = false)
     {
@@ -129,10 +126,10 @@ class SwatDBDataObject extends SwatObject implements
     // {{{ public function getModifiedProperties()
 
     /**
-     * Gets a list of all the modified properties of this object
+     * Gets a list of all the modified properties of this object.
      *
      * @return array an array of modified properties and their values in the
-     *                form of: name => value
+     *               form of: name => value
      */
     public function getModifiedProperties()
     {
@@ -144,8 +141,8 @@ class SwatDBDataObject extends SwatObject implements
         foreach ($this->getProperties() as $name => $value) {
             $hashed_value = $this->getHashValue($value);
             if (
-                array_key_exists($name, $this->property_hashes) &&
-                $hashed_value !== $this->property_hashes[$name]
+                array_key_exists($name, $this->property_hashes)
+                && $hashed_value !== $this->property_hashes[$name]
             ) {
                 $modified_properties[$name] = $value;
             }
@@ -167,10 +164,11 @@ class SwatDBDataObject extends SwatObject implements
         if (array_key_exists($key, $property_list)) {
             if (array_key_exists('get', $property_list[$key])) {
                 $get = $property_list[$key]['get'];
-                return $this->$get();
-            } else {
-                return $this->$key;
+
+                return $this->{$get}();
             }
+
+            return $this->{$key};
         }
 
         $value = $this->getUsingLoaderMethod($key);
@@ -181,15 +179,16 @@ class SwatDBDataObject extends SwatObject implements
 
         if ($value === false) {
             $loader_method = $this->getLoaderMethod($key);
+
             throw new SwatDBException(
                 sprintf(
-                    "A property named '%s' does not " .
-                        'exist on the %s data-object. If the property corresponds ' .
-                        'directly to a database field it should be added as a public ' .
-                        'property of this data object. If the property should access ' .
-                        'a sub-data-object, either specify a class when registering ' .
-                        "the internal property named '%s' or define a custom loader " .
-                        "method named '%s()'.",
+                    "A property named '%s' does not "
+                        . 'exist on the %s data-object. If the property corresponds '
+                        . 'directly to a database field it should be added as a public '
+                        . 'property of this data object. If the property should access '
+                        . 'a sub-data-object, either specify a class when registering '
+                        . "the internal property named '%s' or define a custom loader "
+                        . "method named '%s()'.",
                     $key,
                     get_class($this),
                     $key,
@@ -208,6 +207,7 @@ class SwatDBDataObject extends SwatObject implements
     {
         if (in_array($key, $this->deprecated_properties)) {
             $this->setDeprecatedProperty($key, $value);
+
             return;
         }
 
@@ -215,12 +215,13 @@ class SwatDBDataObject extends SwatObject implements
         if (array_key_exists($key, $property_list)) {
             if (array_key_exists('set', $property_list[$key])) {
                 $set = $property_list[$key]['set'];
-                $this->$set($value);
-                return;
-            } else {
-                $this->$key = $value;
+                $this->{$set}($value);
+
                 return;
             }
+            $this->{$key} = $value;
+
+            return;
         }
 
         if (method_exists($this, $this->getLoaderMethod($key))) {
@@ -230,8 +231,8 @@ class SwatDBDataObject extends SwatObject implements
                 $this->setSubDataObject($key, $value);
             }
         } elseif (
-            $this->hasInternalValue($key) &&
-            $this->internal_property_accessible[$key]
+            $this->hasInternalValue($key)
+            && $this->internal_property_accessible[$key]
         ) {
             if ($value instanceof SwatDBDataObject) {
                 $this->setSubDataObject($key, $value);
@@ -245,12 +246,12 @@ class SwatDBDataObject extends SwatObject implements
             }
         } else {
             throw new SwatDBException(
-                "A property named '{$key}' does not exist on this " .
-                    'dataobject.  If the property corresponds directly to ' .
-                    'a database field it should be added as a public property ' .
-                    'of this data object.  If the property should access a ' .
-                    'sub-dataobject, specify a class when registering the ' .
-                    "internal field named '{$key}'.",
+                "A property named '{$key}' does not exist on this "
+                    . 'dataobject.  If the property corresponds directly to '
+                    . 'a database field it should be added as a public property '
+                    . 'of this data object.  If the property should access a '
+                    . 'sub-dataobject, specify a class when registering the '
+                    . "internal field named '{$key}'.",
             );
         }
     }
@@ -263,11 +264,11 @@ class SwatDBDataObject extends SwatObject implements
         $is_set = false;
 
         if (!in_array($key, $this->deprecated_properties)) {
-            $is_set =
-                method_exists($this, $this->getLoaderMethod($key)) ||
-                ($this->hasInternalValue($key) &&
-                    $this->internal_property_accessible[$key]) ||
-                array_key_exists($key, $this->getProtectedPropertyList());
+            $is_set
+                = method_exists($this, $this->getLoaderMethod($key))
+                || ($this->hasInternalValue($key)
+                    && $this->internal_property_accessible[$key])
+                || array_key_exists($key, $this->getProtectedPropertyList());
         }
 
         return $is_set;
@@ -277,9 +278,9 @@ class SwatDBDataObject extends SwatObject implements
     // {{{ public function __toString()
 
     /**
-     * Gets a string representation of this data-object
+     * Gets a string representation of this data-object.
      *
-     * @return string this data-object represented as a string.
+     * @return string this data-object represented as a string
      *
      * @see SwatObject::__toString()
      */
@@ -358,9 +359,9 @@ class SwatDBDataObject extends SwatObject implements
     {
         if (array_key_exists($name, $this->internal_properties)) {
             return $this->internal_properties[$name];
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     // }}}
@@ -375,12 +376,12 @@ class SwatDBDataObject extends SwatObject implements
     // {{{ public function hasPublicProperty()
 
     /**
-     * Whether or not a public property exists for the given property name
+     * Whether or not a public property exists for the given property name.
      *
-     * @param string $name the property name to check.
+     * @param string $name the property name to check
      *
-     * @return boolean true if a public property exists and false if it does
-     *                 not.
+     * @return bool true if a public property exists and false if it does
+     *              not
      *
      * @see SwatDBDataObject::getPublicProperties()
      */
@@ -396,12 +397,12 @@ class SwatDBDataObject extends SwatObject implements
 
     /**
      * Whether or not a registered date property exists for the given property
-     * name
+     * name.
      *
-     * @param string $name the property name to check.
+     * @param string $name the property name to check
      *
-     * @return boolean true if a registered date property exists and false if
-     *                 it does not.
+     * @return bool true if a registered date property exists and false if
+     *              it does not
      *
      * @see SwatDBDataObject::registerDateProperty()
      */
@@ -414,7 +415,7 @@ class SwatDBDataObject extends SwatObject implements
     // {{{ public function duplicate()
 
     /**
-     * Duplicates this object
+     * Duplicates this object.
      *
      * A duplicate is less of an exact copy than a true clone. Like a clone, a
      * duplicate has all the same public property values.  Unlike a clone, a
@@ -422,7 +423,7 @@ class SwatDBDataObject extends SwatObject implements
      * database as a new row. This method recursively duplicates
      * sub-dataobjects which were registered with <i>$autosave</i> set to true.
      *
-     * @return static a duplicate of this object.
+     * @return static a duplicate of this object
      */
     public function duplicate(): static
     {
@@ -438,20 +439,20 @@ class SwatDBDataObject extends SwatObject implements
 
         foreach ($properties as $name => $value) {
             if ($name !== $id_field->name) {
-                $new_object->$name = $this->$name;
+                $new_object->{$name} = $this->{$name};
             }
         }
 
         // sub-dataobjects
         foreach ($this->sub_data_objects as $name => $object) {
-            $saver_method =
-                'save' . str_replace(' ', '', ucwords(strtr($name, '_', ' ')));
+            $saver_method
+                = 'save' . str_replace(' ', '', ucwords(strtr($name, '_', ' ')));
 
             $object->setDatabase($this->db);
             if (method_exists($this, $saver_method)) {
-                $new_object->$name = $object->duplicate();
+                $new_object->{$name} = $object->duplicate();
             } elseif (!array_key_exists($name, $this->internal_properties)) {
-                $new_object->$name = $object;
+                $new_object->{$name} = $object;
             }
         }
 
@@ -473,12 +474,12 @@ class SwatDBDataObject extends SwatObject implements
             if ($this->hasSubDataObject($name)) {
                 $object = $this->getSubDataObject($name);
                 if ($autosave) {
-                    $new_object->$name = $object->duplicate();
+                    $new_object->{$name} = $object->duplicate();
                 } else {
-                    $new_object->$name = $object;
+                    $new_object->{$name} = $object;
                 }
             } else {
-                $new_object->$name = $value;
+                $new_object->{$name} = $value;
             }
         }
 
@@ -491,14 +492,14 @@ class SwatDBDataObject extends SwatObject implements
     // {{{ public function getAttributes()
 
     /**
-     * Returns an array of the public and protected properties of this object
+     * Returns an array of the public and protected properties of this object.
      *
      * This array is useful for places where get_object_vars() is useful but we
      * also want to return the protected properties alongside the public onces.
      * For example when using getter and setter methods instead of public
      * properties on a dataobject.
      *
-     * @return array an array of public and protected properties.
+     * @return array an array of public and protected properties
      *
      * @see SwatDBDataObject::getPublicProperties()
      * @see SwatDBDataObject::getSerializableProtectedProperties()
@@ -524,9 +525,7 @@ class SwatDBDataObject extends SwatObject implements
     // }}}
     // {{{ protected function init()
 
-    protected function init()
-    {
-    }
+    protected function init() {}
 
     // }}}
     // {{{ protected function registerDateProperty()
@@ -564,12 +563,12 @@ class SwatDBDataObject extends SwatObject implements
 
     /**
      * Takes a data row and sets the properties of this object according to
-     * the values of the row
+     * the values of the row.
      *
      * Subclasses can override this method to provide additional
      * functionality.
      *
-     * @param mixed $row the row to use as either an array or object.
+     * @param mixed $row the row to use as either an array or object
      */
     protected function initFromRow($row)
     {
@@ -618,7 +617,7 @@ class SwatDBDataObject extends SwatObject implements
     // {{{ protected function generatePropertyHashes()
 
     /**
-     * Generates the set of md5 hashes for this data object
+     * Generates the set of md5 hashes for this data object.
      *
      * The md5 hashes represent all the public properties of this object and
      * are used to tell if a property has been modified.
@@ -642,10 +641,10 @@ class SwatDBDataObject extends SwatObject implements
     // {{{ protected function generatePropertyHash()
 
     /**
-     * Generates the MD5 hash for a property of this object
+     * Generates the MD5 hash for a property of this object.
      *
      * @param string $property the name of the property for which to generate
-     *                          the hash.
+     *                         the hash
      */
     protected function generatePropertyHash($property)
     {
@@ -665,13 +664,13 @@ class SwatDBDataObject extends SwatObject implements
     // {{{ protected function getHashValue()
 
     /**
-     * Gets the hash of a value
+     * Gets the hash of a value.
      *
      * Used to detect modified properties.
      *
-     * @param mixed $value the value to hash.
+     * @param mixed $value the value to hash
      *
-     * @return string the hashed value.
+     * @return string the hashed value
      */
     protected function getHashValue($value)
     {
@@ -694,7 +693,8 @@ class SwatDBDataObject extends SwatObject implements
 
         $id_field = new SwatDBField($this->id_field, 'integer');
         $temp = $id_field->name;
-        return $this->$temp;
+
+        return $this->{$temp};
     }
 
     // }}}
@@ -730,12 +730,12 @@ class SwatDBDataObject extends SwatObject implements
     // {{{ protected function hasSubDataObject()
 
     /**
-     * Whether or not a sub data object is loaded for the given key
+     * Whether or not a sub data object is loaded for the given key.
      *
-     * @param string $key the key to check.
+     * @param string $key the key to check
      *
-     * @return boolean true if a sub data object is loaded and false if it is
-     *                 not.
+     * @return bool true if a sub data object is loaded and false if it is
+     *              not
      */
     protected function hasSubDataObject($key)
     {
@@ -745,9 +745,7 @@ class SwatDBDataObject extends SwatObject implements
     // }}}
     // {{{ protected function setDeprecatedProperty()
 
-    protected function setDeprecatedProperty($key, $value)
-    {
-    }
+    protected function setDeprecatedProperty($key, $value) {}
 
     // }}}
     // {{{ protected function getDeprecatedProperty()
@@ -761,7 +759,7 @@ class SwatDBDataObject extends SwatObject implements
     // {{{ protected function getProtectedPropertyList()
 
     /**
-     * Gets a list of all protected properties of this data-object
+     * Gets a list of all protected properties of this data-object.
      *
      * The keys of this array should map to protected properties on this
      * object. The value of each entry is a second array in the format
@@ -770,7 +768,7 @@ class SwatDBDataObject extends SwatObject implements
      * will be called by the magic getter and setter when the protected
      * property is accessed.
      *
-     * @return array an array of protected property keys and method values.
+     * @return array an array of protected property keys and method values
      */
     protected function getProtectedPropertyList()
     {
@@ -781,13 +779,13 @@ class SwatDBDataObject extends SwatObject implements
     // {{{ private function getPublicProperties()
 
     /**
-     * Gets the public properties of this data-object
+     * Gets the public properties of this data-object.
      *
      * Public properties should correspond directly to database fields.
      *
      * @return array a reference to an associative array of public properties
-     *                of this data-object. The array is of the form
-     *                'property name' => 'property value'.
+     *               of this data-object. The array is of the form
+     *               'property name' => 'property value'.
      */
     private function getPublicProperties()
     {
@@ -811,7 +809,7 @@ class SwatDBDataObject extends SwatObject implements
         $names = self::$public_properties_cache[$class];
         $properties = [];
         foreach ($names as $name) {
-            $properties[$name] = $this->$name;
+            $properties[$name] = $this->{$name};
         }
 
         return $properties;
@@ -826,8 +824,8 @@ class SwatDBDataObject extends SwatObject implements
      * Protected properties should correspond directly to database fields.
      *
      * @return array a reference to an associative array of protected properties
-     *                of this data-object. The array is of the form
-     *                'property name' => 'property value'.
+     *               of this data-object. The array is of the form
+     *               'property name' => 'property value'.
      */
     private function getSerializableProtectedProperties()
     {
@@ -836,7 +834,7 @@ class SwatDBDataObject extends SwatObject implements
             // We want to maintain what is internally stored in this object so
             // we don't want to use the getter. What the getter returns
             // publicly may be different than what we have internally.
-            $properties[$property] = $this->$property;
+            $properties[$property] = $this->{$property};
         }
 
         return $properties;
@@ -852,8 +850,8 @@ class SwatDBDataObject extends SwatObject implements
      * Protected properties should correspond directly to database fields.
      *
      * @return array a reference to an associative array of protected properties
-     *                of this data-object. The array is of the form
-     *                'property name' => 'property value'.
+     *               of this data-object. The array is of the form
+     *               'property name' => 'property value'.
      */
     private function getProtectedProperties()
     {
@@ -870,15 +868,15 @@ class SwatDBDataObject extends SwatObject implements
     // {{{ private function getProperties()
 
     /**
-     * Gets all the modifyable properties of this data-object
+     * Gets all the modifyable properties of this data-object.
      *
      * This includes the public and protected properties that correspond to
      * database fields and the internal values that also correspond to database
      * fields.
      *
      * @return array a reference to an associative array of properties of this
-     *                data-object. The array is of the form
-     *                'property name' => 'property value'.
+     *               data-object. The array is of the form
+     *               'property name' => 'property value'.
      */
     private function &getProperties()
     {
@@ -904,9 +902,9 @@ class SwatDBDataObject extends SwatObject implements
         static $cache = [];
 
         if (!array_key_exists($key, $cache)) {
-            $cache[$key] =
-                'load' .
-                str_replace(' ', '', ucwords(str_replace('_', ' ', $key)));
+            $cache[$key]
+                = 'load'
+                . str_replace(' ', '', ucwords(str_replace('_', ' ', $key)));
         }
 
         return $cache[$key];
@@ -947,8 +945,8 @@ class SwatDBDataObject extends SwatObject implements
         $value = false;
 
         if (
-            array_key_exists($key, $this->internal_property_accessible) &&
-            $this->internal_property_accessible[$key]
+            array_key_exists($key, $this->internal_property_accessible)
+            && $this->internal_property_accessible[$key]
         ) {
             if ($this->hasSubDataObject($key)) {
                 // return loaded sub-dataobject
@@ -957,8 +955,8 @@ class SwatDBDataObject extends SwatObject implements
                 $value = $this->getInternalValue($key);
 
                 if (
-                    $value !== null &&
-                    isset($this->internal_property_classes[$key])
+                    $value !== null
+                    && isset($this->internal_property_classes[$key])
                 ) {
                     // autoload sub-dataobject
                     $class = $this->internal_property_classes[$key];
@@ -966,8 +964,8 @@ class SwatDBDataObject extends SwatObject implements
                     if (!class_exists($class)) {
                         throw new SwatClassNotFoundException(
                             sprintf(
-                                "Class '%s' registered for internal property '%s' " .
-                                    'does not exist.',
+                                "Class '%s' registered for internal property '%s' "
+                                    . 'does not exist.',
                                 $class,
                                 $key,
                             ),
@@ -997,13 +995,13 @@ class SwatDBDataObject extends SwatObject implements
     // {{{ public function setDatabase()
 
     /**
-     * Sets the database driver for this data-object
+     * Sets the database driver for this data-object.
      *
      * The database is automatically set for all recordable sub-objects of this
      * data-object.
      *
      * @param MDB2_Driver_Common $db  the database driver to use for this
-     *                                data-object.
+     *                                data-object
      * @param array              $set optional array of objects passed through
      *                                recursive call containing all objects that
      *                                have been set already. Prevents infinite
@@ -1032,7 +1030,7 @@ class SwatDBDataObject extends SwatObject implements
     // {{{ public function save()
 
     /**
-     * Saves this object to the database
+     * Saves this object to the database.
      *
      * Only modified properties are updated.
      */
@@ -1047,6 +1045,7 @@ class SwatDBDataObject extends SwatObject implements
         $this->checkDB();
 
         $transaction = new SwatDBTransaction($this->db);
+
         try {
             $rollback_property_hashes = $this->property_hashes;
 
@@ -1063,6 +1062,7 @@ class SwatDBDataObject extends SwatObject implements
             $transaction->commit();
         } catch (Throwable $e) {
             $this->rollback($transaction, $rollback_property_hashes);
+
             throw $e;
         }
 
@@ -1073,12 +1073,12 @@ class SwatDBDataObject extends SwatObject implements
     // {{{ public function load()
 
     /**
-     * Loads this object's properties from the database given an id
+     * Loads this object's properties from the database given an id.
      *
      * @param mixed $id the id of the database row to set this object's
-     *               properties with.
+     *                  properties with
      *
-     * @return boolean whether data was sucessfully loaded.
+     * @return bool whether data was sucessfully loaded
      */
     public function load($id)
     {
@@ -1091,6 +1091,7 @@ class SwatDBDataObject extends SwatObject implements
 
         $this->initFromRow($row);
         $this->generatePropertyHashes();
+
         return true;
     }
 
@@ -1098,26 +1099,28 @@ class SwatDBDataObject extends SwatObject implements
     // {{{ public function delete()
 
     /**
-     * Deletes this object from the database
+     * Deletes this object from the database.
      */
     public function delete()
     {
         if ($this->read_only) {
             throw new SwatDBException(
-                'This dataobject was loaded read-only ' .
-                    'and cannot be deleted.',
+                'This dataobject was loaded read-only '
+                    . 'and cannot be deleted.',
             );
         }
 
         $this->checkDB();
 
         $transaction = new SwatDBTransaction($this->db);
+
         try {
             $rollback_property_hashes = $this->property_hashes;
             $this->deleteInternal();
             $transaction->commit();
         } catch (Throwable $e) {
             $this->rollback($transaction, $rollback_property_hashes);
+
             throw $e;
         }
     }
@@ -1126,10 +1129,10 @@ class SwatDBDataObject extends SwatObject implements
     // {{{ public function isModified()
 
     /**
-     * Returns true if this object has been modified since it was loaded
+     * Returns true if this object has been modified since it was loaded.
      *
-     * @return boolean true if this object was modified and false if this
-     *                  object was not modified.
+     * @return bool true if this object was modified and false if this
+     *              object was not modified
      */
     public function isModified()
     {
@@ -1140,8 +1143,8 @@ class SwatDBDataObject extends SwatObject implements
         foreach ($this->getProperties() as $name => $value) {
             $hashed_value = $this->getHashValue($value);
             if (
-                isset($this->property_hashes[$name]) &&
-                $hashed_value !== $this->property_hashes[$name]
+                isset($this->property_hashes[$name])
+                && $hashed_value !== $this->property_hashes[$name]
             ) {
                 return true;
             }
@@ -1151,8 +1154,8 @@ class SwatDBDataObject extends SwatObject implements
             if ($autosave && isset($this->sub_data_objects[$name])) {
                 $object = $this->sub_data_objects[$name];
                 if (
-                    $object instanceof SwatDBRecordable &&
-                    $object->isModified()
+                    $object instanceof SwatDBRecordable
+                    && $object->isModified()
                 ) {
                     return true;
                 }
@@ -1160,14 +1163,14 @@ class SwatDBDataObject extends SwatObject implements
         }
 
         foreach ($this->sub_data_objects as $name => $object) {
-            $saver_method =
-                'save' . str_replace(' ', '', ucwords(strtr($name, '_', ' ')));
+            $saver_method
+                = 'save' . str_replace(' ', '', ucwords(strtr($name, '_', ' ')));
 
             if (method_exists($this, $saver_method)) {
                 $object = $this->sub_data_objects[$name];
                 if (
-                    $object instanceof SwatDBRecordable &&
-                    $object->isModified()
+                    $object instanceof SwatDBRecordable
+                    && $object->isModified()
                 ) {
                     return true;
                 }
@@ -1185,8 +1188,8 @@ class SwatDBDataObject extends SwatObject implements
         if ($this->db === null) {
             throw new SwatDBNoDatabaseException(
                 sprintf(
-                    'No database available to this dataobject (%s). ' .
-                        'Call the setDatabase method.',
+                    'No database available to this dataobject (%s). '
+                        . 'Call the setDatabase method.',
                     get_class($this),
                 ),
             );
@@ -1197,12 +1200,12 @@ class SwatDBDataObject extends SwatObject implements
     // {{{ protected function loadInternal()
 
     /**
-     * Loads this object's properties from the database given an id
+     * Loads this object's properties from the database given an id.
      *
      * @param mixed $id the id of the database row to set this object's
-     *               properties with.
+     *                  properties with
      *
-     * @return object data row or null.
+     * @return object data row or null
      */
     protected function loadInternal($id)
     {
@@ -1218,10 +1221,10 @@ class SwatDBDataObject extends SwatObject implements
             );
 
             $rs = SwatDB::query($this->db, $sql, null);
-            $row = $rs->fetchRow(MDB2_FETCHMODE_ASSOC);
 
-            return $row;
+            return $rs->fetchRow(MDB2_FETCHMODE_ASSOC);
         }
+
         return null;
     }
 
@@ -1229,7 +1232,7 @@ class SwatDBDataObject extends SwatObject implements
     // {{{ protected function saveInternal()
 
     /**
-     * Saves this object to the database
+     * Saves this object to the database.
      *
      * Only modified properties are updated.
      */
@@ -1253,6 +1256,7 @@ class SwatDBDataObject extends SwatObject implements
         if ($this->id_field === null) {
             if (!$this->loaded_from_database) {
                 $this->saveNewBinding();
+
                 return;
             }
 
@@ -1280,7 +1284,7 @@ class SwatDBDataObject extends SwatObject implements
         }
 
         $id_ref = $id_field->name;
-        $id = $this->$id_ref;
+        $id = $this->{$id_ref};
 
         $fields = [];
         $values = [];
@@ -1301,7 +1305,7 @@ class SwatDBDataObject extends SwatObject implements
         }
 
         if ($id === null) {
-            $this->$id_ref = SwatDB::insertRow(
+            $this->{$id_ref} = SwatDB::insertRow(
                 $this->db,
                 $this->table,
                 $fields,
@@ -1347,8 +1351,8 @@ class SwatDBDataObject extends SwatObject implements
     protected function saveSubDataObjects()
     {
         foreach ($this->sub_data_objects as $name => $object) {
-            $saver_method =
-                'save' . str_replace(' ', '', ucwords(strtr($name, '_', ' ')));
+            $saver_method
+                = 'save' . str_replace(' ', '', ucwords(strtr($name, '_', ' ')));
 
             if (method_exists($this, $saver_method)) {
                 call_user_func([$this, $saver_method]);
@@ -1376,7 +1380,7 @@ class SwatDBDataObject extends SwatObject implements
     // {{{ protected function deleteInternal()
 
     /**
-     * Deletes this object from the database
+     * Deletes this object from the database.
      */
     protected function deleteInternal()
     {
@@ -1391,7 +1395,7 @@ class SwatDBDataObject extends SwatObject implements
         }
 
         $id_ref = $id_field->name;
-        $id = $this->$id_ref;
+        $id = $this->{$id_ref};
 
         if ($id !== null) {
             $ns_array = $this->getCacheNamespaces();
@@ -1411,7 +1415,7 @@ class SwatDBDataObject extends SwatObject implements
     // {{{ protected function saveNewBinding()
 
     /**
-     * Saves a new binding object without an id to the database
+     * Saves a new binding object without an id to the database.
      *
      * Only modified properties are saved. It is always inserted,
      * never updated.
@@ -1445,17 +1449,23 @@ class SwatDBDataObject extends SwatObject implements
         switch (gettype($value)) {
             case 'boolean':
                 return 'boolean';
+
             case 'integer':
                 return 'integer';
+
             case 'float':
                 return 'float';
+
             case 'object':
                 if ($value instanceof SwatDate) {
                     return 'date';
-                } elseif ($value instanceof UnitEnum) {
+                }
+                if ($value instanceof UnitEnum) {
                     return 'enum';
                 }
+
                 return 'text';
+
             case 'string':
             default:
                 return 'text';
@@ -1479,13 +1489,13 @@ class SwatDBDataObject extends SwatObject implements
     // {{{ public function setFlushableCache()
 
     /**
-     * Sets the flushable cache to use for this dataobject
+     * Sets the flushable cache to use for this dataobject.
      *
      * Using a flushable cache allows clearing the cache when the dataobject
      * is modified or deleted.
      *
-     * @param SwatDBCacheNsFlushable $cache The flushable cache to use for
-     *                                      this dataobject.
+     * @param SwatDBCacheNsFlushable $cache the flushable cache to use for
+     *                                      this dataobject
      */
     public function setFlushableCache(SwatDBCacheNsFlushable $cache)
     {
@@ -1498,7 +1508,7 @@ class SwatDBDataObject extends SwatObject implements
     /**
      * Gets the name-spaces that should be flushed for this dataobject.
      *
-     * @return array An array of name-spaces that should be flushed.
+     * @return array an array of name-spaces that should be flushed
      */
     public function getCacheNamespaces()
     {
@@ -1512,7 +1522,7 @@ class SwatDBDataObject extends SwatObject implements
      * Gets all available name-spaces that should be flushed for this dataobject
      * ignoring any logic attempting to be smart about namespace.
      *
-     * @return array An array of name-spaces that should be flushed.
+     * @return array an array of name-spaces that should be flushed
      */
     public function getAvailableCacheNamespaces()
     {
@@ -1600,14 +1610,14 @@ class SwatDBDataObject extends SwatObject implements
         }
 
         foreach ($this->getSerializablePrivateProperties() as $property) {
-            $data[$property] = $this->$property;
+            $data[$property] = $this->{$property};
         }
 
         $reflector = new ReflectionObject($this);
         foreach ($reflector->getProperties() as $property) {
             if ($property->isPublic() && !$property->isStatic()) {
                 $name = $property->getName();
-                $data[$name] = $this->$name;
+                $data[$name] = $this->{$name};
             }
         }
 
@@ -1615,7 +1625,7 @@ class SwatDBDataObject extends SwatObject implements
             // We want to maintain what is internally stored in this object so
             // we don't want to use the getter. What the getter returns
             // publicly may be different than what we have internally.
-            $data[$property] = $this->$property;
+            $data[$property] = $this->{$property};
         }
 
         // restore unset sub-dataobjects on this object
@@ -1646,9 +1656,9 @@ class SwatDBDataObject extends SwatObject implements
             if ($property === 'internal_properties') {
                 // merge with null properties from init() so that newly
                 // defined properties work on old serialized data.
-                $this->$property = array_merge($this->$property, $value);
+                $this->{$property} = array_merge($this->{$property}, $value);
             } elseif (!isset($ignored_properties[$property])) {
-                $this->$property = $value;
+                $this->{$property} = $value;
             }
         }
     }
@@ -1683,8 +1693,8 @@ class SwatDBDataObject extends SwatObject implements
                 } else {
                     throw new SwatDBMarshallException(
                         sprintf(
-                            'Unable to marshall requested property "%s" ' .
-                                'for object of class %s.',
+                            'Unable to marshall requested property "%s" '
+                                . 'for object of class %s.',
                             $key,
                             get_class($this),
                         ),
@@ -1699,7 +1709,7 @@ class SwatDBDataObject extends SwatObject implements
             'sub_data_objects',
         ]);
         foreach ($private_properties as $property) {
-            $data[$property] = $this->$property;
+            $data[$property] = $this->{$property};
         }
 
         // public properties
@@ -1707,7 +1717,7 @@ class SwatDBDataObject extends SwatObject implements
         foreach ($reflector->getProperties() as $property) {
             if ($property->isPublic() && !$property->isStatic()) {
                 $name = $property->getName();
-                $data[$name] = $this->$name;
+                $data[$name] = $this->{$name};
             }
         }
 
@@ -1715,7 +1725,7 @@ class SwatDBDataObject extends SwatObject implements
             // We want to maintain what is internally stored in this object so
             // we don't want to use the getter. What the getter returns
             // publicly may be different than what we have internally.
-            $data[$property] = $this->$property;
+            $data[$property] = $this->{$property};
         }
 
         return $data;
@@ -1732,9 +1742,9 @@ class SwatDBDataObject extends SwatObject implements
             if ($property->isPublic() && !$property->isStatic()) {
                 $name = $property->getName();
                 if (isset($data[$name])) {
-                    $this->$name = $data[$name];
+                    $this->{$name} = $data[$name];
                 } else {
-                    $this->$name = null;
+                    $this->{$name} = null;
                 }
             }
         }
@@ -1744,7 +1754,7 @@ class SwatDBDataObject extends SwatObject implements
                 // We want to maintain what is internally stored in this object
                 // so we don't want to use the getter. What the setter sets may
                 // be different than what we have internally.
-                $this->$property = $data[$property];
+                $this->{$property} = $data[$property];
             }
         }
 
@@ -1756,9 +1766,9 @@ class SwatDBDataObject extends SwatObject implements
 
         foreach ($private_properties as $property) {
             if (isset($data[$property])) {
-                $this->$property = $data[$property];
+                $this->{$property} = $data[$property];
             } else {
-                $this->$property = null;
+                $this->{$property} = null;
             }
         }
 

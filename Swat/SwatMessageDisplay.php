@@ -1,9 +1,8 @@
 <?php
 
 /**
- * A control to display {@link SwatMessage} objects
+ * A control to display {@link SwatMessage} objects.
  *
- * @package   Swat
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
@@ -14,12 +13,12 @@ class SwatMessageDisplay extends SwatControl
     /**
      * Dismiss link for message is on.
      */
-    const DISMISS_ON = 1;
+    public const DISMISS_ON = 1;
 
     /**
      * Dismiss link for message is off.
      */
-    const DISMISS_OFF = 2;
+    public const DISMISS_OFF = 2;
 
     /**
      * Dismiss link for message is automatically displayed for certain message
@@ -27,25 +26,25 @@ class SwatMessageDisplay extends SwatControl
      *
      * @see SwatMessageDisplay::getDismissableMessageTypes()
      */
-    const DISMISS_AUTO = 3;
+    public const DISMISS_AUTO = 3;
 
     // }}}
     // {{{ public properties
 
     /**
-     * Text to display for closing the message
+     * Text to display for closing the message.
      *
      * By default, "Dismiss message."
      *
      * @var string
      */
-    public $close_text = null;
+    public $close_text;
 
     // }}}
     // {{{ protected properties
 
     /**
-     * The messages to display
+     * The messages to display.
      *
      * This is an array of {@link SwatMessage} objects.
      *
@@ -54,7 +53,7 @@ class SwatMessageDisplay extends SwatControl
     protected $display_messages = [];
 
     /**
-     * Messages in this display that are dismissable
+     * Messages in this display that are dismissable.
      *
      * This is an array with values corresponding to a keys in the
      * {@link SwatMessageDisplay::$display_messages} array.
@@ -67,9 +66,9 @@ class SwatMessageDisplay extends SwatControl
     // {{{ public function __construct()
 
     /**
-     * Creates a new message display
+     * Creates a new message display.
      *
-     * @param string $id a non-visible unique id for this widget.
+     * @param string $id a non-visible unique id for this widget
      *
      * @see SwatWidget::__construct()
      */
@@ -94,21 +93,21 @@ class SwatMessageDisplay extends SwatControl
     // {{{ public function add()
 
     /**
-     * Adds a message
+     * Adds a message.
      *
      * Adds a new message. The message will be shown by the display() method
      *
-     * @param string|SwatMessage $message the message to add. If the message is
-     *                                     a string, a new {@link SwatMessage}
-     *                                     object of the default message type
-     *                                     is created.
-     * @param integer $dismissable optional. Whether or not to show a dismiss
-     *                              link for the added message on this message
-     *                              display. This should be one of the
-     *                              SwatMessageDisplay::DISMISS_* constants.
-     *                              By default, the <i>$dismiss_link</i> is
-     *                              set to
-     *                              {@link SwatMessageDisplay::DISMISS_AUTO}.
+     * @param string|SwatMessage $message     the message to add. If the message is
+     *                                        a string, a new {@link SwatMessage}
+     *                                        object of the default message type
+     *                                        is created.
+     * @param int                $dismissable optional. Whether or not to show a dismiss
+     *                                        link for the added message on this message
+     *                                        display. This should be one of the
+     *                                        SwatMessageDisplay::DISMISS_* constants.
+     *                                        By default, the <i>$dismiss_link</i> is
+     *                                        set to
+     *                                        {@link SwatMessageDisplay::DISMISS_AUTO}.
      *
      * @throws SwatInvalidClassException
      */
@@ -116,10 +115,10 @@ class SwatMessageDisplay extends SwatControl
     {
         if (is_string($message)) {
             $message = new SwatMessage($message);
-        } elseif (!($message instanceof SwatMessage)) {
+        } elseif (!$message instanceof SwatMessage) {
             throw new SwatInvalidClassException(
-                'Cannot add message. $message must be either a string or a ' .
-                    'SwatMessage.',
+                'Cannot add message. $message must be either a string or a '
+                    . 'SwatMessage.',
                 0,
                 $message,
             );
@@ -145,7 +144,7 @@ class SwatMessageDisplay extends SwatControl
     // {{{ public function display()
 
     /**
-     * Displays messages in this message display
+     * Displays messages in this message display.
      *
      * The CSS class of each message is determined by the message being
      * displayed.
@@ -196,14 +195,14 @@ class SwatMessageDisplay extends SwatControl
     // {{{ public function isVisible()
 
     /**
-     * Gets whether or not this message display is visible
+     * Gets whether or not this message display is visible.
      *
      * The message display control respectes normal visibility rules. In
      * addition, a message display is considered not visible if it contains no
      * messages.
      *
-     * @return boolean true if this message display is visible and false if it
-     *                  is not.
+     * @return bool true if this message display is visible and false if it
+     *              is not
      *
      * @see SwatUIObject::isVisible()
      */
@@ -216,9 +215,9 @@ class SwatMessageDisplay extends SwatControl
     // {{{ public function getMessageCount()
 
     /**
-     * Gets the number of messages in this message display
+     * Gets the number of messages in this message display.
      *
-     * @return integer the number of messages in this message display.
+     * @return int the number of messages in this message display
      */
     public function getMessageCount()
     {
@@ -229,15 +228,15 @@ class SwatMessageDisplay extends SwatControl
     // {{{ protected function displayMessage()
 
     /**
-     * Display a single message of this message display
+     * Display a single message of this message display.
      *
-     * @param integer $message_id a unique identifier for the message within
-     *                             this message display.
-     * @param SwatMessage $message the message to display.
-     * @param boolean $first optional. Whether or not the message is the first
-     *                       message in this message display.
-     * @param boolean $last optional. Whether or not the message is the last
-     *                       message in this message display.
+     * @param int         $message_id a unique identifier for the message within
+     *                                this message display
+     * @param SwatMessage $message    the message to display
+     * @param bool        $first      optional. Whether or not the message is the first
+     *                                message in this message display.
+     * @param bool        $last       optional. Whether or not the message is the last
+     *                                message in this message display.
      */
     protected function displayMessage(
         $message_id,
@@ -292,9 +291,9 @@ class SwatMessageDisplay extends SwatControl
     // {{{ protected function getDismissableMessageTypes()
 
     /**
-     * Gets an array of message types that are dismissable by default
+     * Gets an array of message types that are dismissable by default.
      *
-     * @return array message types that are dismissable by default.
+     * @return array message types that are dismissable by default
      */
     protected function getDismissableMessageTypes()
     {
@@ -305,23 +304,23 @@ class SwatMessageDisplay extends SwatControl
     // {{{ protected function getCSSClassNames()
 
     /**
-     * Gets the array of CSS classes that are applied to this message display
+     * Gets the array of CSS classes that are applied to this message display.
      *
      * @return array the array of CSS classes that are applied to this message
-     *                display.
+     *               display
      */
     protected function getCSSClassNames()
     {
         $classes = ['swat-message-display'];
-        $classes = array_merge($classes, parent::getCSSClassNames());
-        return $classes;
+
+        return array_merge($classes, parent::getCSSClassNames());
     }
 
     // }}}
     // {{{ protected function getInlineJavaScript()
 
     /**
-     * Gets the inline JavaScript for hiding messages
+     * Gets the inline JavaScript for hiding messages.
      */
     protected function getInlineJavaScript()
     {
@@ -334,8 +333,8 @@ class SwatMessageDisplay extends SwatControl
             $javascript = '';
         }
 
-        $dismissable_messages =
-            '[' . implode(', ', $this->dismissable_messages) . ']';
+        $dismissable_messages
+            = '[' . implode(', ', $this->dismissable_messages) . ']';
 
         $javascript .= sprintf(
             "var %s_obj = new %s('%s', %s);",
@@ -353,13 +352,13 @@ class SwatMessageDisplay extends SwatControl
 
     /**
      * Gets the name of the JavaScript class to instantiate for this message
-     * display
+     * display.
      *
      * Sub-classes of this class may want to return a sub-class of the default
      * JavaScript form class.
      *
      * @return string the name of the JavaScript class to instantiate for this
-     *                 form . Defaults to 'SwatMessageDisplay'.
+     *                form . Defaults to 'SwatMessageDisplay'.
      */
     protected function getJavaScriptClass()
     {
@@ -371,14 +370,14 @@ class SwatMessageDisplay extends SwatControl
 
     /**
      * Gets translatable string resources for the JavaScript object for
-     * this widget
+     * this widget.
      *
-     * @return string translatable JavaScript string resources for this widget.
+     * @return string translatable JavaScript string resources for this widget
      */
     protected function getInlineJavaScriptTranslations()
     {
-        $close_text =
-            $this->close_text === null
+        $close_text
+            = $this->close_text === null
                 ? Swat::_('Dismiss message.')
                 : $this->close_text;
 

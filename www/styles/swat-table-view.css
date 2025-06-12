@@ -1,105 +1,122 @@
 /* SwatTableView */
 
 table.swat-table-view {
-	width: 99%; /* this is not 100% because that makes IE choke on clears/floats */
+  width: 99%; /* this is not 100% because that makes IE choke on clears/floats */
 }
 
-.swat-table-view th, .swat-table-view td {
-	padding: 0.2em;
-	text-align: left;
+.swat-table-view th,
+.swat-table-view td {
+  padding: 0.2em;
+  text-align: left;
 }
 
 .swat-table-view thead th {
-	border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #eee;
 }
 
 .swat-table-view tbody tr {
-	background: #fff url(../images/swat-table-view-cell-background.png) bottom repeat-x;
+  background: #fff url(../images/swat-table-view-cell-background.png) bottom
+    repeat-x;
 }
 
-.swat-table-view tbody tr.highlight, .swat-table-view tbody tr.highlight-odd {
-	background: #f7f5f3 url(../images/swat-table-view-cell-highlight-background.png) bottom repeat-x;
+.swat-table-view tbody tr.highlight,
+.swat-table-view tbody tr.highlight-odd {
+  background: #f7f5f3
+    url(../images/swat-table-view-cell-highlight-background.png) bottom repeat-x;
 }
 
 .swat-table-view th {
-	color: #666;
-	font-size: 85%;
-	font-weight: bold;
+  color: #666;
+  font-size: 85%;
+  font-weight: bold;
 }
 
-.swat-table-view thead th a:link,  .swat-table-view thead th a:visited { color: #333; }
-.swat-table-view thead th a:hover, .swat-table-view thead th a:active  { color: #000; }
+.swat-table-view thead th a:link,
+.swat-table-view thead th a:visited {
+  color: #333;
+}
+.swat-table-view thead th a:hover,
+.swat-table-view thead th a:active {
+  color: #000;
+}
 
-.swat-table-view td.swat-image-link-cell-renderer { width: 22px; }
-.swat-table-view td.swat-checkbox-cell-renderer { width: 24px; }
-.swat-table-view td.swat-radio-button-cell-renderer { width: 24px; }
+.swat-table-view td.swat-image-link-cell-renderer {
+  width: 22px;
+}
+.swat-table-view td.swat-checkbox-cell-renderer {
+  width: 24px;
+}
+.swat-table-view td.swat-radio-button-cell-renderer {
+  width: 24px;
+}
 
 .swat-table-view .swat-table-view-group {
-	font-weight: bold;
-	padding-top: 1em;
-	background: #fff;
-	border-bottom: 1px solid #eee;
+  font-weight: bold;
+  padding-top: 1em;
+  background: #fff;
+  border-bottom: 1px solid #eee;
 }
 
 table.swat-table-view td.swat-boolean-cell-renderer,
 table.swat-table-view th.swat-boolean-cell-renderer {
-	text-align: center;
+  text-align: center;
 }
 
 table.swat-table-view td.swat-numeric-cell-renderer,
 table.swat-table-view th.swat-numeric-cell-renderer,
 table.swat-table-view td.swat-money-cell-renderer,
 table.swat-table-view th.swat-money-cell-renderer {
-	text-align: right;
+  text-align: right;
 }
 
 table.swat-table-view td.swat-rating-cell-renderer,
 table.swat-table-view th.swat-rating-cell-renderer {
-	text-align: left;
+  text-align: left;
 }
 
 /* Error styling */
 
 .swat-table-view tbody tr.swat-error {
-	background-color: #ffe3e0;
-	background-image: url(../images/swat-table-view-cell-error-background.png);
+  background-color: #ffe3e0;
+  background-image: url(../images/swat-table-view-cell-error-background.png);
 }
 
 .swat-table-view td.swat-error {
-	background: #dc6e66;
+  background: #dc6e66;
 }
 
 tr.swat-table-view-input-row-messages {
-	background-color: #ffe3e0;
-	color: #e31b0c;
+  background-color: #ffe3e0;
+  color: #e31b0c;
 }
 
 tfoot.swat-table-view-invalid-tfoot-ordering {
-	display: table-row-group;
+  display: table-row-group;
 }
-
 
 /* SwatTableViewSpanningColumn */
 
 .swat-table-view .swat-table-view-spanning-column th {
-	text-align: right;
+  text-align: right;
 }
 
 /* Cell renderers in columns */
 div.swat-table-view-column-renderer {
-	display: inline;
+  display: inline;
 }
 
 .swat-table-view-orderable-column-title-last {
-	background-image: url(../images/swat-table-view-orderable-column.png);
-	background-repeat: no-repeat;
-	padding-right: 12px;
+  background-image: url(../images/swat-table-view-orderable-column.png);
+  background-repeat: no-repeat;
+  padding-right: 12px;
 }
 
-.swat-table-view-orderable-column-ascending .swat-table-view-orderable-column-title-last {
-	background-position: 100% 25%;
+.swat-table-view-orderable-column-ascending
+  .swat-table-view-orderable-column-title-last {
+  background-position: 100% 25%;
 }
 
-.swat-table-view-orderable-column-descending .swat-table-view-orderable-column-title-last {
-	background-position: 100% 75%;
+.swat-table-view-orderable-column-descending
+  .swat-table-view-orderable-column-title-last {
+  background-position: 100% 75%;
 }

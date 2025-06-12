@@ -1,7 +1,7 @@
 <?php
 
 /**
- * An element ordering widget
+ * An element ordering widget.
  *
  * This widget uses JavaScript to present an orderable list of elements. The
  * ordering of elements is what this widget returns.
@@ -9,7 +9,6 @@
  * If two options are added to this control with equivalent values the returned
  * order of the two options is arbitrary.
  *
- * @package   Swat
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
@@ -18,24 +17,24 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
     // {{{ public properties
 
     /**
-     * Value ordered array
+     * Value ordered array.
      *
      * The current ordering of options in the widget. If null, options are
      * displayed in the order of the options array.
      *
      * @var array
      */
-    public $values = null;
+    public $values;
 
     /**
-     * Width of the order box (in stylesheet units)
+     * Width of the order box (in stylesheet units).
      *
      * @var string
      */
     public $width = '600px';
 
     /**
-     * Height of the order box (in stylesheet units)
+     * Height of the order box (in stylesheet units).
      *
      * @var string
      */
@@ -45,9 +44,9 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
     // {{{ public function __construct()
 
     /**
-     * Creates a new change-order widget
+     * Creates a new change-order widget.
      *
-     * @param string $id a non-visible unique id for this widget.
+     * @param string $id a non-visible unique id for this widget
      *
      * @see SwatWidget::__construct()
      */
@@ -70,7 +69,7 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
     // {{{ public function display()
 
     /**
-     * Displays this change-order control
+     * Displays this change-order control.
      */
     public function display()
     {
@@ -162,10 +161,10 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 
     /**
      * Gets a note letting the user know drag-and-drop is available for
-     * ordering items
+     * ordering items.
      *
      * @return SwatMessage a note letting the user know drag-and-drop is
-     *                      available for ordering items.
+     *                     available for ordering items
      *
      * @see SwatControl::getNote()
      */
@@ -185,9 +184,9 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
     {
         if ($this->values === null) {
             return array_keys($this->options);
-        } else {
-            return $this->values;
         }
+
+        return $this->values;
     }
 
     // }}}
@@ -203,13 +202,13 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 
     /**
      * Gets the options of this change-order control ordered by the
-     * values of this change-order
+     * values of this change-order.
      *
      * If this control has two or more equivalent values, the order of options
      * having those values is arbitrary.
      *
      * @return array the options of this change-order control ordered by the
-     *                values of this change-order.
+     *               values of this change-order
      */
     public function &getOrderedOptions()
     {
@@ -243,27 +242,26 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 
     /**
      * Gets the array of CSS classes that are applied to this change-order
-     * widget
+     * widget.
      *
      * @return array the array of CSS classes that are applied to this
-     *                change-order widget.
+     *               change-order widget
      */
     protected function getCSSClassNames()
     {
         $classes = ['swat-change-order'];
 
-        $classes = array_merge($classes, parent::getCSSClassNames());
-        return $classes;
+        return array_merge($classes, parent::getCSSClassNames());
     }
 
     // }}}
     // {{{ protected function getInlineJavaScript()
 
     /**
-     * Gets the inline JavaScript required by this change-order control
+     * Gets the inline JavaScript required by this change-order control.
      *
      * @return string the inline JavaScript required by this change-order
-     *                 control.
+     *                control
      */
     protected function getInlineJavaScript()
     {

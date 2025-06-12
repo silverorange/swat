@@ -1,9 +1,8 @@
 <?php
 
 /**
- * Thrown when an object is of the wrong class
+ * Thrown when an object is of the wrong class.
  *
- * @package   Swat
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
@@ -12,21 +11,21 @@ class SwatInvalidClassException extends SwatException
     // {{{ protected properties
 
     /**
-     * The object that is of the wrong class
+     * The object that is of the wrong class.
      *
      * @var mixed
      */
-    protected $object = null;
+    protected $object;
 
     // }}}
     // {{{ public function __construct()
 
     /**
-     * Creates a new invalid class exception
+     * Creates a new invalid class exception.
      *
-     * @param string $message the message of the exception.
-     * @param integer $code the code of the exception.
-     * @param mixed $object the object that is of the wrong class.
+     * @param string $message the message of the exception
+     * @param int    $code    the code of the exception
+     * @param mixed  $object  the object that is of the wrong class
      */
     public function __construct($message = null, $code = 0, $object = null)
     {
@@ -38,9 +37,9 @@ class SwatInvalidClassException extends SwatException
     // {{{ public function getObject()
 
     /**
-     * Gets the object that is of the wrong class
+     * Gets the object that is of the wrong class.
      *
-     * @return mixed the object that is of the wrong class.
+     * @return mixed the object that is of the wrong class
      */
     public function getObject()
     {

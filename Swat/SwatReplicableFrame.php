@@ -1,14 +1,14 @@
 <?php
 
 /**
- * A frame that replicates its children
+ * A frame that replicates its children.
  *
  * The frame can dynamically create widgets based on an array of
  * replicators identifiers.
  *
- * @package    Swat
  * @copyright  2005-2008 silverorange
  * @license    http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ *
  * @deprecated Use a SwatReplicableContainer with a SwatFrame as the only child
  *             widget. Automatic title-setting functionality need will to be
  *             implemented manually.
@@ -18,7 +18,7 @@ class SwatReplicableFrame extends SwatReplicableContainer
     // {{{ public function init()
 
     /**
-     * Initilizes this replicable frame
+     * Initilizes this replicable frame.
      */
     public function init()
     {

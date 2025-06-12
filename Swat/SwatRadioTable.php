@@ -2,9 +2,8 @@
 
 /**
  * Special radio-list that can display multi-line list items using a
- * tabular format
+ * tabular format.
  *
- * @package   Swat
  * @copyright 2006-2016 silverorange
  */
 class SwatRadioTable extends SwatRadioList
@@ -12,9 +11,9 @@ class SwatRadioTable extends SwatRadioList
     // {{{ public function __construct()
 
     /**
-     * Creates a new radio table
+     * Creates a new radio table.
      *
-     * @param string $id a non-visible unique id for this widget.
+     * @param string $id a non-visible unique id for this widget
      *
      * @see SwatWidget::__construct()
      */
@@ -65,11 +64,11 @@ class SwatRadioTable extends SwatRadioList
     // {{{ protected function displayRadioTableOption()
 
     /**
-     * Displays a single option in this radio table
+     * Displays a single option in this radio table.
      *
-     * @param SwatOption $option the option to display.
-     * @param integer $index the numeric index of the option in this list.
-     *                        Starts at 0.
+     * @param SwatOption $option the option to display
+     * @param int        $index  the numeric index of the option in this list.
+     *                           Starts at 0.
      */
     protected function displayRadioTableOption(SwatOption $option, $index)
     {
@@ -110,10 +109,10 @@ class SwatRadioTable extends SwatRadioList
     // {{{ protected function getTrTag()
 
     /**
-     * Gets the tr tag used to display a single option in this radio table
+     * Gets the tr tag used to display a single option in this radio table.
      *
-     * @param SwatOption $option the option to display.
-     * @param integer $index the numeric index of the option in this list.
+     * @param SwatOption $option the option to display
+     * @param int        $index  the numeric index of the option in this list
      */
     protected function getTrTag(SwatOption $option, $index)
     {
@@ -124,16 +123,16 @@ class SwatRadioTable extends SwatRadioList
     // {{{ protected function getCSSClassNames()
 
     /**
-     * Gets the array of CSS classes that are applied to this radio table
+     * Gets the array of CSS classes that are applied to this radio table.
      *
      * @return array the array of CSS classes that are applied to this radio
-     *                table.
+     *               table
      */
     protected function getCSSClassNames()
     {
         $classes = ['swat-radio-table'];
-        $classes = array_merge($classes, $this->classes);
-        return $classes;
+
+        return array_merge($classes, $this->classes);
     }
 
     // }}}
