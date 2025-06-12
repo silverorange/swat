@@ -24,7 +24,7 @@ pipeline {
             }
         }
 
-        stage('Check Formating') {
+        stage('Check Formatting') {
             steps {
                 sh 'n -d exec engine pnpm prettier'
             }
