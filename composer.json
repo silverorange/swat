@@ -57,7 +57,7 @@
     "ext-pcre": "*",
     "pear/pear_exception": "^1.0.0",
     "silverorange/concentrate": "^2.0.0",
-    "silverorange/mdb2": "^3.1.1",
+    "silverorange/mdb2": "^3.1.2",
     "silverorange/yui": "^1.0.11"
   },
   "require-dev": {
