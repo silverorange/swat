@@ -18,17 +18,12 @@
  */
 class SwatDBTransaction extends SwatObject
 {
-    // {{{ private properties
-
     /**
      * The database driver object to perform the transaction with.
      *
      * @var MDB2_Driver_Common
      */
     private $db;
-
-    // }}}
-    // {{{ public function __construct()
 
     /**
      * Begins a new database transaction.
@@ -42,9 +37,6 @@ class SwatDBTransaction extends SwatObject
         $this->db->beginNestedTransaction();
     }
 
-    // }}}
-    // {{{ public function commit()
-
     /**
      * Commits this database transaction.
      */
@@ -52,9 +44,6 @@ class SwatDBTransaction extends SwatObject
     {
         $this->db->completeNestedTransaction();
     }
-
-    // }}}
-    // {{{ public function rollback()
 
     /**
      * Rolls-back this database transaction.
@@ -67,6 +56,4 @@ class SwatDBTransaction extends SwatObject
         // there is an error unless you pass the immediately param
         $this->db->completeNestedTransaction();
     }
-
-    // }}}
 }

@@ -11,14 +11,10 @@
  */
 interface SwatViewSelector
 {
-    // {{{ public function getId()
-
     /**
      * Gets the identifier of this selector.
      *
      * @return string the identifier of this selector
      */
     public function getId();
-
-    // }}}
 }

@@ -8,16 +8,11 @@
  */
 class SwatRatingCellRenderer extends SwatNumericCellRenderer
 {
-    // {{{ constants
-
     public const ROUND_FLOOR = 1;
     public const ROUND_CEIL = 2;
     public const ROUND_UP = 3;
     public const ROUND_NONE = 4;
     public const ROUND_HALF = 5;
-
-    // }}}
-    // {{{ public properties
 
     /**
      * Maximum value a rating can be.
@@ -36,9 +31,6 @@ class SwatRatingCellRenderer extends SwatNumericCellRenderer
      * @var int
      */
     public $round_mode = self::ROUND_FLOOR;
-
-    // }}}
-    // {{{ public function render()
 
     /**
      * Renders the contents of this cell.
@@ -89,9 +81,6 @@ class SwatRatingCellRenderer extends SwatNumericCellRenderer
         }
     }
 
-    // }}}
-    // {{{ protected function getDisplayValue()
-
     public function getDisplayValue()
     {
         switch ($this->round_mode) {
@@ -118,6 +107,4 @@ class SwatRatingCellRenderer extends SwatNumericCellRenderer
 
         return $value;
     }
-
-    // }}}
 }

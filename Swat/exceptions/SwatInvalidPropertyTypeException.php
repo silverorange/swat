@@ -8,8 +8,6 @@
  */
 class SwatInvalidPropertyTypeException extends SwatException
 {
-    // {{{ protected properties
-
     /**
      * The name of the type that is invalid.
      *
@@ -23,9 +21,6 @@ class SwatInvalidPropertyTypeException extends SwatException
      * @var mixed
      */
     protected $object;
-
-    // }}}
-    // {{{ public function __construct()
 
     /**
      * Creates a new invalid class exception.
@@ -46,9 +41,6 @@ class SwatInvalidPropertyTypeException extends SwatException
         $this->type = $type;
     }
 
-    // }}}
-    // {{{ public function getObject()
-
     /**
      * Gets the object the property is invalid for.
      *
@@ -59,9 +51,6 @@ class SwatInvalidPropertyTypeException extends SwatException
         return $this->object;
     }
 
-    // }}}
-    // {{{ public function getType()
-
     /**
      * Gets the name of the type that is invalid.
      *
@@ -71,6 +60,4 @@ class SwatInvalidPropertyTypeException extends SwatException
     {
         return $this->type;
     }
-
-    // }}}
 }

@@ -11,8 +11,6 @@
  */
 class SwatI18NCurrencyFormat extends SwatI18NNumberFormat
 {
-    // {{{ public properties
-
     /**
      * Number of fractional digits.
      *
@@ -111,9 +109,6 @@ class SwatI18NCurrencyFormat extends SwatI18NNumberFormat
      */
     public $symbol;
 
-    // }}}
-    // {{{ public function __toString()
-
     /**
      * Gets a string representation of this format.
      *
@@ -153,6 +148,4 @@ class SwatI18NCurrencyFormat extends SwatI18NNumberFormat
 
         return $string;
     }
-
-    // }}}
 }

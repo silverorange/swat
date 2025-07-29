@@ -14,14 +14,10 @@
  */
 abstract class SwatErrorLogger
 {
-    // {{{ public abstract function log()
-
     /**
      * Logs a SwatError.
      *
      * This is called by SwatError::process().
      */
     abstract public function log(SwatError $e);
-
-    // }}}
 }

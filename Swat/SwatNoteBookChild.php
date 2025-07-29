@@ -11,8 +11,6 @@
  */
 interface SwatNoteBookChild
 {
-    // {{{ public function getPages()
-
     /**
      * Gets the notebook pages of this child.
      *
@@ -21,6 +19,4 @@ interface SwatNoteBookChild
      * @see SwatNoteBookPage
      */
     public function getPages();
-
-    // }}}
 }

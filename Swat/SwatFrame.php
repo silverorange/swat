@@ -8,8 +8,6 @@
  */
 class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
 {
-    // {{{ public properties
-
     /**
      * A visible title for this frame, or null.
      *
@@ -50,9 +48,6 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
      */
     public $header_level;
 
-    // }}}
-    // {{{ public function getTitle()
-
     /**
      * Gets the title of this frame.
      *
@@ -73,9 +68,6 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
         return $this->title . ': ' . $this->subtitle;
     }
 
-    // }}}
-    // {{{ public function getTitleContentType()
-
     /**
      * Gets the title content-type of this frame.
      *
@@ -87,9 +79,6 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
     {
         return $this->title_content_type;
     }
-
-    // }}}
-    // {{{ public function display()
 
     /**
      * Displays this frame.
@@ -111,9 +100,6 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
         $this->displayContent();
         $outer_div->close();
     }
-
-    // }}}
-    // {{{ protected function displayTitle()
 
     /**
      * Displays this frame's title.
@@ -144,9 +130,6 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
         }
     }
 
-    // }}}
-    // {{{ protected function displayContent()
-
     /**
      * Displays this frame's content.
      */
@@ -159,9 +142,6 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
         $inner_div->close();
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
-
     /**
      * Gets the array of CSS classes that are applied to this frame.
      *
@@ -173,9 +153,6 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
 
         return array_merge($classes, parent::getCSSClassNames());
     }
-
-    // }}}
-    // {{{ protected function getHeaderLevel()
 
     protected function getHeaderLevel()
     {
@@ -201,6 +178,4 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
 
         return $level;
     }
-
-    // }}}
 }

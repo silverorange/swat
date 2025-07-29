@@ -8,8 +8,6 @@
  */
 class SwatStyleSheetHtmlHeadEntry extends SwatHtmlHeadEntry
 {
-    // {{{ protected function displayInternal()
-
     protected function displayInternal($uri_prefix = '', $tag = null)
     {
         $uri = $this->uri;
@@ -29,15 +27,10 @@ class SwatStyleSheetHtmlHeadEntry extends SwatHtmlHeadEntry
         );
     }
 
-    // }}}
-    // {{{ protected function displayInlineInternal()
-
     protected function displayInlineInternal($path)
     {
         echo '<style type="text/css" media="all">';
         readfile($path . $this->getUri());
         echo '</style>';
     }
-
-    // }}}
 }

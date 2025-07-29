@@ -14,8 +14,6 @@
  */
 class SwatAccordion extends SwatNoteBook
 {
-    // {{{ public properties
-
     /**
      * Whether or not to animate the opening/closing of the accordion.
      *
@@ -31,9 +29,6 @@ class SwatAccordion extends SwatNoteBook
      * @var bool
      */
     public $always_open = false;
-
-    // }}}
-    // {{{ public function __construct()
 
     /**
      * Creates a new accordion view.
@@ -52,9 +47,6 @@ class SwatAccordion extends SwatNoteBook
         $this->addStyleSheet('packages/swat/styles/swat-accordion.css');
         $this->addJavaScript('packages/swat/javascript/swat-accordion.js');
     }
-
-    // }}}
-    // {{{ public function display()
 
     /**
      * Displays this notebook.
@@ -127,9 +119,6 @@ class SwatAccordion extends SwatNoteBook
         Swat::displayInlineJavaScript($this->getInlineJavaScript());
     }
 
-    // }}}
-    // {{{ protected function getInlineJavaScript()
-
     /**
      * Gets the inline JavaScript used by this accordion view.
      *
@@ -159,13 +148,8 @@ class SwatAccordion extends SwatNoteBook
         return $javascript;
     }
 
-    // }}}
-    // {{{ protected function getJavaScriptClassName()
-
     protected function getJavaScriptClassName()
     {
         return 'SwatAccordion';
     }
-
-    // }}}
 }

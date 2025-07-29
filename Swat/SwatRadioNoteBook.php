@@ -13,8 +13,6 @@
  */
 class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
 {
-    // {{{ public properties
-
     /**
      * Selected page.
      *
@@ -24,9 +22,6 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
      * @var string
      */
     public $selected_page;
-
-    // }}}
-    // {{{ protected properties
 
     /**
      * Note book child objects initally added to this widget.
@@ -41,9 +36,6 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
      * @var array
      */
     protected $pages = [];
-
-    // }}}
-    // {{{ public function __construct()
 
     /**
      * Creates a new notebook.
@@ -65,9 +57,6 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
             'packages/swat/javascript/swat-radio-note-book.js',
         );
     }
-
-    // }}}
-    // {{{ public function addChild()
 
     /**
      * Adds a {@link SwatNoteBookChild} to this notebook.
@@ -102,9 +91,6 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
         }
     }
 
-    // }}}
-    // {{{ public function addPage()
-
     /**
      * Adds a {@link SwatNoteBookPage} to this notebook.
      *
@@ -115,9 +101,6 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
         $this->pages[] = $page;
         $page->parent = $this;
     }
-
-    // }}}
-    // {{{ public function getPage()
 
     /**
      * Gets a page in this notebook.
@@ -143,9 +126,6 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
         return $found_page;
     }
 
-    // }}}
-    // {{{ public function init()
-
     /**
      * Initializes this notebook.
      */
@@ -164,9 +144,6 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
             $page->init();
         }
     }
-
-    // }}}
-    // {{{ public function process()
 
     /**
      * Processes this notebook.
@@ -193,9 +170,6 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
             }
         }
     }
-
-    // }}}
-    // {{{ public function display()
 
     /**
      * Displays this notebook.
@@ -241,9 +215,6 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
         }
     }
 
-    // }}}
-    // {{{ public function printWidgetTree()
-
     public function printWidgetTree()
     {
         echo get_class($this), ' ', $this->id;
@@ -259,9 +230,6 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
             echo '</ul>';
         }
     }
-
-    // }}}
-    // {{{ public function getMessages()
 
     /**
      * Gets all messaages.
@@ -284,9 +252,6 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
         return $messages;
     }
 
-    // }}}
-    // {{{ public function hasMessage()
-
     /**
      * Checks for the presence of messages.
      *
@@ -306,9 +271,6 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
 
         return $has_message;
     }
-
-    // }}}
-    // {{{ public function getHtmlHeadEntrySet()
 
     /**
      * Gets the {@link SwatHtmlHeadEntry} objects needed by this notebook.
@@ -330,9 +292,6 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
         return $set;
     }
 
-    // }}}
-    // {{{ public function getAvailableHtmlHeadEntrySet()
-
     /**
      * Gets the {@link SwatHtmlHeadEntry} objects that may be needed by this
      * notebook.
@@ -353,9 +312,6 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
 
         return $set;
     }
-
-    // }}}
-    // {{{ public function getDescendants()
 
     /**
      * Gets descendant UI-objects.
@@ -401,9 +357,6 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
         return $out;
     }
 
-    // }}}
-    // {{{ public function getFirstDescendant()
-
     /**
      * Gets the first descendant UI-object of a specific class.
      *
@@ -439,9 +392,6 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
         return $out;
     }
 
-    // }}}
-    // {{{ public function getDescendantStates()
-
     /**
      * Gets descendant states.
      *
@@ -462,9 +412,6 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
         return $states;
     }
 
-    // }}}
-    // {{{ public function setDescendantStates()
-
     /**
      * Sets descendant states.
      *
@@ -482,9 +429,6 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
             }
         }
     }
-
-    // }}}
-    // {{{ public function copy()
 
     /**
      * Performs a deep copy of the UI tree starting with this UI object.
@@ -509,9 +453,6 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
 
         return $copy;
     }
-
-    // }}}
-    // {{{ public function processValue()
 
     /**
      * Processes the value of this radio list from user-submitted form data.
@@ -543,9 +484,6 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
 
         return true;
     }
-
-    // }}}
-    // {{{ protected function displayPage()
 
     /**
      * Displays an individual page in this radio notebook.
@@ -604,9 +542,6 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
         echo '</tr>';
     }
 
-    // }}}
-    // {{{ protected function displaySinglePage()
-
     /**
      * Displays the only page of this notebook if this notebook contains only
      * one page.
@@ -636,9 +571,6 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
         $container->close();
     }
 
-    // }}}
-    // {{{ protected function getInlineJavaScript()
-
     /**
      * Gets the inline JavaScript used by this notebook.
      *
@@ -652,6 +584,4 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
             SwatString::quoteJavaScriptString($this->id),
         );
     }
-
-    // }}}
 }

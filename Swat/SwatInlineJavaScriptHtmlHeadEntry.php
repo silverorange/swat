@@ -6,15 +6,10 @@
  */
 class SwatInlineJavaScriptHtmlHeadEntry extends SwatHtmlHeadEntry
 {
-    // {{{ protected properties
-
     /**
      * @var string
      */
     protected $script;
-
-    // }}}
-    // {{{ public function __construct()
 
     /**
      * Creates a new HTML head entry.
@@ -27,21 +22,13 @@ class SwatInlineJavaScriptHtmlHeadEntry extends SwatHtmlHeadEntry
         $this->script = $script;
     }
 
-    // }}}
-    // {{{ protected function displayInternal()
-
     protected function displayInternal($uri_prefix = '', $tag = null)
     {
         Swat::displayInlineJavaScript($this->script);
     }
 
-    // }}}
-    // {{{ protected function displayInlineInternal()
-
     protected function displayInlineInternal($path)
     {
         $this->displayInternal();
     }
-
-    // }}}
 }

@@ -8,8 +8,6 @@
  */
 class SwatListEntry extends SwatEntry
 {
-    // {{{ public properties
-
     /**
      * The values of this list entry.
      *
@@ -73,9 +71,6 @@ class SwatListEntry extends SwatEntry
      */
     public $min_entries = 1;
 
-    // }}}
-    // {{{ public function __construct()
-
     /**
      * Creates a new list entry widget.
      *
@@ -88,9 +83,6 @@ class SwatListEntry extends SwatEntry
         parent::__construct($id);
         $this->minlength = 1;
     }
-
-    // }}}
-    // {{{ public function display()
 
     /**
      * Displays this list entry.
@@ -110,9 +102,6 @@ class SwatListEntry extends SwatEntry
 
         $this->maxlength = $old_maxlength;
     }
-
-    // }}}
-    // {{{ public function process()
 
     /**
      * Processes this list entry widget.
@@ -233,9 +222,6 @@ class SwatListEntry extends SwatEntry
         }
     }
 
-    // }}}
-    // {{{ public function getState()
-
     /**
      * Gets the current state of this entry widget.
      *
@@ -247,9 +233,6 @@ class SwatListEntry extends SwatEntry
     {
         return $this->values;
     }
-
-    // }}}
-    // {{{ public function setState()
 
     /**
      * Sets the current state of this list entry widget.
@@ -266,9 +249,6 @@ class SwatListEntry extends SwatEntry
             $this->values = $this->splitValues($values);
         }
     }
-
-    // }}}
-    // {{{ public function getDisplayValue()
 
     /**
      * Gets the value displayed in the XHTML input.
@@ -288,9 +268,6 @@ class SwatListEntry extends SwatEntry
 
         return implode($this->delimiter, $this->values);
     }
-
-    // }}}
-    // {{{ public function getNote()
 
     /**
      * Gets a note describing the rules on this list entry.
@@ -357,9 +334,6 @@ class SwatListEntry extends SwatEntry
         return $message;
     }
 
-    // }}}
-    // {{{ protected function splitValues()
-
     /**
      * Splits a value string with entries separated by delimiters into
      * an array.
@@ -385,9 +359,6 @@ class SwatListEntry extends SwatEntry
         return preg_split($expression, $value, -1, PREG_SPLIT_NO_EMPTY);
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
-
     /**
      * Gets the array of CSS classes that are applied to this entry.
      *
@@ -400,6 +371,4 @@ class SwatListEntry extends SwatEntry
 
         return array_merge($classes, parent::getCSSClassNames());
     }
-
-    // }}}
 }

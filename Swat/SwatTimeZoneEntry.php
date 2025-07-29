@@ -8,8 +8,6 @@
  */
 class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 {
-    // {{{ public properties
-
     /**
      * Time zone identifier.
      *
@@ -18,9 +16,6 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
      * @var string
      */
     public $value;
-
-    // }}}
-    // {{{ private properties
 
     /**
      * Time zone areas available for this time zone entry widget.
@@ -39,9 +34,6 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
      * @var array
      */
     private $regions = [];
-
-    // }}}
-    // {{{ public function __construct()
 
     /**
      * Creates a new time zone selector widget.
@@ -71,9 +63,6 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
         $time_zone_list = $this->parseAreaWhitelist($area_whitelist);
         $this->setAreas($time_zone_list);
     }
-
-    // }}}
-    // {{{ public function display()
 
     /**
      * Displays this time zone entry widget.
@@ -105,9 +94,6 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 
         $div_tag->close();
     }
-
-    // }}}
-    // {{{ public function process()
 
     /**
      * Processes this time zone entry widget.
@@ -150,9 +136,6 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
         }
     }
 
-    // }}}
-    // {{{ public function getState()
-
     /**
      * Gets the current state of this time zone entry widget.
      *
@@ -165,9 +148,6 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
         return $this->value;
     }
 
-    // }}}
-    // {{{ public function setState()
-
     /**
      * Sets the current state of this time zone entry widget.
      *
@@ -179,9 +159,6 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
     {
         $this->value = $state;
     }
-
-    // }}}
-    // {{{ protected function getCSSClassNames()
 
     /**
      * Gets the array of CSS classes that are applied to this time zone entry
@@ -196,9 +173,6 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 
         return array_merge($classes, parent::getCSSClassNames());
     }
-
-    // }}}
-    // {{{ protected function createCompositeWidgets()
 
     /**
      * Creates all internal widgets required for this time zone entry.
@@ -218,9 +192,6 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
         $regions_flydown->width = '15em';
         $this->addCompositeWidget($regions_flydown, 'regions_flydown');
     }
-
-    // }}}
-    // {{{ private function parseAreaWhitelist()
 
     /**
      * Parses a whitelist of valid areas.
@@ -258,9 +229,6 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
         return $areas;
     }
 
-    // }}}
-    // {{{ private function setAreas()
-
     /**
      * Sets areas.
      *
@@ -285,9 +253,6 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
             $this->setRegions($regions, $area);
         }
     }
-
-    // }}}
-    // {{{ private function setRegions()
 
     /**
      * Builds the internal array of {@link SwatOption} objects for the
@@ -319,9 +284,6 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
         }
     }
 
-    // }}}
-    // {{{ private function getArea()
-
     /**
      * Gets an area from a time zone identifier.
      *
@@ -345,9 +307,6 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
         return $area;
     }
 
-    // }}}
-    // {{{ private function getRegion()
-
     /**
      * Gets a region from a time zone identifier.
      *
@@ -370,9 +329,6 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
         return $region;
     }
 
-    // }}}
-    // {{{ private function getRegionTitle()
-
     /**
      * Gets a formatted region title from the region part of a time zone
      * identifier.
@@ -393,6 +349,4 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 
         return $title;
     }
-
-    // }}}
 }

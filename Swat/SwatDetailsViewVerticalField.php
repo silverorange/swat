@@ -9,8 +9,6 @@
  */
 class SwatDetailsViewVerticalField extends SwatDetailsViewField
 {
-    // {{{ public function display()
-
     /**
      * Displays this details view field using a data object.
      *
@@ -44,9 +42,6 @@ class SwatDetailsViewVerticalField extends SwatDetailsViewField
         $tr_tag->close();
     }
 
-    // }}}
-    // {{{ public function displayHeader()
-
     /**
      * Displays the header for this details view field.
      *
@@ -65,9 +60,6 @@ class SwatDetailsViewVerticalField extends SwatDetailsViewField
             $div_tag->display();
         }
     }
-
-    // }}}
-    // {{{ protected function displayRenderers()
 
     /**
      * Renders each cell renderer in this details-view field.
@@ -90,9 +82,6 @@ class SwatDetailsViewVerticalField extends SwatDetailsViewField
         $div_tag->close();
     }
 
-    // }}}
-    // {{{ protected function getBaseCSSClassNames()
-
     /**
      * Gets the base CSS class names of this details-view field.
      *
@@ -103,6 +92,4 @@ class SwatDetailsViewVerticalField extends SwatDetailsViewField
     {
         return ['swat-details-view-vertical-field'];
     }
-
-    // }}}
 }

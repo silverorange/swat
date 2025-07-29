@@ -10,8 +10,6 @@
  */
 class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
 {
-    // {{{ public properties
-
     /**
      * Fieldset title.
      *
@@ -39,9 +37,6 @@ class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
      */
     public $access_key;
 
-    // }}}
-    // {{{ public function __construct()
-
     /**
      * Creates a new fieldset.
      *
@@ -61,9 +56,6 @@ class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
         $this->addJavaScript('packages/swat/javascript/swat-fieldset.js');
     }
 
-    // }}}
-    // {{{ public function getTitle()
-
     /**
      * Gets the title of this fieldset.
      *
@@ -76,9 +68,6 @@ class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
         return $this->title;
     }
 
-    // }}}
-    // {{{ public function getTitleContentType()
-
     /**
      * Gets the title content-type of this fieldset.
      *
@@ -90,9 +79,6 @@ class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
     {
         return $this->title_content_type;
     }
-
-    // }}}
-    // {{{ public function display()
 
     public function display()
     {
@@ -125,9 +111,6 @@ class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
         $fieldset_tag->close();
     }
 
-    // }}}
-    // {{{ protected function getInlineJavaScript()
-
     /**
      * Gets fieldset specific inline JavaScript.
      *
@@ -142,9 +125,6 @@ class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
         );
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
-
     /**
      * Gets the array of CSS classes that are applied to this fieldset.
      *
@@ -156,6 +136,4 @@ class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
 
         return array_merge($classes, parent::getCSSClassNames());
     }
-
-    // }}}
 }

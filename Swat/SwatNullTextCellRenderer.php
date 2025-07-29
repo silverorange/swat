@@ -9,8 +9,6 @@
  */
 class SwatNullTextCellRenderer extends SwatTextCellRenderer
 {
-    // {{{ public properties
-
     /**
      * The text to display in this cell if the
      * {@link SwatTextCellRenderer::$text} proeprty is null when the render()
@@ -28,9 +26,6 @@ class SwatNullTextCellRenderer extends SwatTextCellRenderer
      */
     public $strict = false;
 
-    // }}}
-    // {{{ public function __construct()
-
     /**
      * Creates a null text cell renderer.
      */
@@ -42,9 +37,6 @@ class SwatNullTextCellRenderer extends SwatTextCellRenderer
             'packages/swat/styles/swat-null-text-cell-renderer.css',
         );
     }
-
-    // }}}
-    // {{{ public function render()
 
     /**
      * Renders this cell renderer.
@@ -70,6 +62,4 @@ class SwatNullTextCellRenderer extends SwatTextCellRenderer
             parent::render();
         }
     }
-
-    // }}}
 }

@@ -8,8 +8,6 @@
  */
 class SwatDataTreeNode extends SwatTreeNode
 {
-    // {{{ public properties
-
     /**
      * The value of this node.
      *
@@ -46,9 +44,6 @@ class SwatDataTreeNode extends SwatTreeNode
      */
     public $sensitive = true;
 
-    // }}}
-    // {{{ public function __construct()
-
     /**
      * Creates a new data node.
      *
@@ -69,6 +64,4 @@ class SwatDataTreeNode extends SwatTreeNode
         $this->content_type = $content_type;
         $this->sensitive = $sensitive;
     }
-
-    // }}}
 }

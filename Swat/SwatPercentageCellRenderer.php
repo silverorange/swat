@@ -8,8 +8,6 @@
  */
 class SwatPercentageCellRenderer extends SwatNumericCellRenderer
 {
-    // {{{ public function render()
-
     /**
      * Renders the contents of this cell.
      *
@@ -32,6 +30,4 @@ class SwatPercentageCellRenderer extends SwatNumericCellRenderer
             $this->value = $old_value;
         }
     }
-
-    // }}}
 }

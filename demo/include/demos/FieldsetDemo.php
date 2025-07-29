@@ -10,8 +10,6 @@ require_once 'Demo.php';
  */
 class FieldsetDemo extends Demo
 {
-    // {{{ public function buildDemoUI()
-
     public function buildDemoUI(SwatUI $ui)
     {
         $radiolist = $ui->getWidget('radio_list');
@@ -26,6 +24,4 @@ class FieldsetDemo extends Demo
             7 => 'Grapefruit',
             8 => 'Strawberry']);
     }
-
-    // }}}
 }

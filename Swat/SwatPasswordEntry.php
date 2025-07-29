@@ -8,8 +8,6 @@
  */
 class SwatPasswordEntry extends SwatEntry
 {
-    // {{{ public function __construct()
-
     /**
      * Creates a new password entry and defaults the size to 20.
      *
@@ -23,9 +21,6 @@ class SwatPasswordEntry extends SwatEntry
         $this->size = 20;
     }
 
-    // }}}
-    // {{{ protected function getInputTag()
-
     protected function getInputTag()
     {
         $tag = parent::getInputTag();
@@ -33,9 +28,6 @@ class SwatPasswordEntry extends SwatEntry
 
         return $tag;
     }
-
-    // }}}
-    // {{{ protected function getCSSClassNames()
 
     /**
      * Gets the array of CSS classes that are applied to this entry.
@@ -49,6 +41,4 @@ class SwatPasswordEntry extends SwatEntry
 
         return array_merge($classes, parent::getCSSClassNames());
     }
-
-    // }}}
 }

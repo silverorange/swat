@@ -15,8 +15,6 @@
  */
 class SwatReplicableFormField extends SwatReplicableContainer
 {
-    // {{{ public function init()
-
     /**
      * Initilizes this replicable form field.
      */
@@ -44,6 +42,4 @@ class SwatReplicableFormField extends SwatReplicableContainer
             $field->title = $title;
         }
     }
-
-    // }}}
 }

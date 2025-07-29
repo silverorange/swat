@@ -25,8 +25,6 @@
  */
 class SwatMessage extends SwatObject
 {
-    // {{{ constants
-
     /**
      * Notification message type.
      *
@@ -67,9 +65,6 @@ class SwatMessage extends SwatObject
      */
     public const SYSTEM_ERROR = 'system-error';
 
-    // }}}
-    // {{{ public properties
-
     /**
      * Type of message.
      *
@@ -106,9 +101,6 @@ class SwatMessage extends SwatObject
      */
     public $content_type = 'text/plain';
 
-    // }}}
-    // {{{ public function __construct()
-
     /**
      * Creates a new SwatMessage.
      *
@@ -125,9 +117,6 @@ class SwatMessage extends SwatObject
         $this->primary_content = $primary_content;
         $this->type = $type;
     }
-
-    // }}}
-    // {{{ public function getCSSClassString()
 
     /**
      * Gets the CSS class names of this message as a string.
@@ -155,9 +144,6 @@ class SwatMessage extends SwatObject
         return implode(' ', $classes);
     }
 
-    // }}}
-    // {{{ public function getCssClass()
-
     /**
      * An alias for SwatMessage::getCSSClassString().
      *
@@ -169,6 +155,4 @@ class SwatMessage extends SwatObject
     {
         return $this->getCSSClassString();
     }
-
-    // }}}
 }

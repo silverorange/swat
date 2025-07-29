@@ -10,8 +10,6 @@ require_once 'Demo.php';
  */
 class ChangeOrderDemo extends Demo
 {
-    // {{{ public function buildDemoUI()
-
     public function buildDemoUI(SwatUI $ui)
     {
         $order_widget = $ui->getWidget('change_order');
@@ -26,6 +24,4 @@ class ChangeOrderDemo extends Demo
             7 => 'Grapefruit',
             8 => 'Strawberry']);
     }
-
-    // }}}
 }

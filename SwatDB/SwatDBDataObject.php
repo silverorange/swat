@@ -8,8 +8,6 @@
  */
 class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecordable, SwatDBMarshallable, SwatDBFlushable
 {
-    // {{{ private properties
-
     /**
      * @var array
      */
@@ -55,9 +53,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
      */
     private $deprecated_properties = [];
 
-    // }}}
-    // {{{ protected properties
-
     /**
      * @var MDB2
      */
@@ -78,18 +73,12 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
      */
     protected $flushable_cache;
 
-    // }}}
-    // {{{ private properties
-
     /**
      * Cache of public property names indexed by class name.
      *
      * @var array
      */
     private static $public_properties_cache = [];
-
-    // }}}
-    // {{{ public function __construct()
 
     /**
      * @param mixed $data
@@ -111,9 +100,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
         $this->generatePropertyHashes();
     }
 
-    // }}}
-    // {{{ public function setTable()
-
     /**
      * @param string $table Database table
      */
@@ -121,9 +107,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
     {
         $this->table = $table;
     }
-
-    // }}}
-    // {{{ public function getModifiedProperties()
 
     /**
      * Gets a list of all the modified properties of this object.
@@ -150,9 +133,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
 
         return $modified_properties;
     }
-
-    // }}}
-    // {{{ public function __get()
 
     public function __get($key)
     {
@@ -199,9 +179,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
 
         return $value;
     }
-
-    // }}}
-    // {{{ public function __set()
 
     public function __set($key, $value)
     {
@@ -256,9 +233,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
         }
     }
 
-    // }}}
-    // {{{ public function __isset()
-
     public function __isset($key)
     {
         $is_set = false;
@@ -273,9 +247,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
 
         return $is_set;
     }
-
-    // }}}
-    // {{{ public function __toString()
 
     /**
      * Gets a string representation of this data-object.
@@ -352,9 +323,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
         return $string;
     }
 
-    // }}}
-    // {{{ public function getInternalValue()
-
     public function getInternalValue($name)
     {
         if (array_key_exists($name, $this->internal_properties)) {
@@ -364,16 +332,10 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
         return null;
     }
 
-    // }}}
-    // {{{ public function hasInternalValue()
-
     public function hasInternalValue($name)
     {
         return array_key_exists($name, $this->internal_properties);
     }
-
-    // }}}
-    // {{{ public function hasPublicProperty()
 
     /**
      * Whether or not a public property exists for the given property name.
@@ -392,9 +354,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
         return array_key_exists($name, $public_properties);
     }
 
-    // }}}
-    // {{{ public function hasDateProperty()
-
     /**
      * Whether or not a registered date property exists for the given property
      * name.
@@ -410,9 +369,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
     {
         return in_array($name, $this->date_properties);
     }
-
-    // }}}
-    // {{{ public function duplicate()
 
     /**
      * Duplicates this object.
@@ -488,9 +444,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
         return $new_object;
     }
 
-    // }}}
-    // {{{ public function getAttributes()
-
     /**
      * Returns an array of the public and protected properties of this object.
      *
@@ -512,9 +465,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
         );
     }
 
-    // }}}
-    // {{{ protected function setInternalValue()
-
     protected function setInternalValue($name, $value)
     {
         if (array_key_exists($name, $this->internal_properties)) {
@@ -522,21 +472,12 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
         }
     }
 
-    // }}}
-    // {{{ protected function init()
-
     protected function init() {}
-
-    // }}}
-    // {{{ protected function registerDateProperty()
 
     protected function registerDateProperty($name)
     {
         $this->date_properties[] = $name;
     }
-
-    // }}}
-    // {{{ protected function registerInternalProperty()
 
     protected function registerInternalProperty(
         $name,
@@ -550,16 +491,10 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
         $this->internal_property_classes[$name] = $class;
     }
 
-    // }}}
-    // {{{ protected function registerDeprecatedProperty()
-
     protected function registerDeprecatedProperty($name)
     {
         $this->deprecated_properties[] = $name;
     }
-
-    // }}}
-    // {{{ protected function initFromRow()
 
     /**
      * Takes a data row and sets the properties of this object according to
@@ -613,9 +548,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
         $this->loaded_from_database = true;
     }
 
-    // }}}
-    // {{{ protected function generatePropertyHashes()
-
     /**
      * Generates the set of md5 hashes for this data object.
      *
@@ -637,9 +569,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
         }
     }
 
-    // }}}
-    // {{{ protected function generatePropertyHash()
-
     /**
      * Generates the MD5 hash for a property of this object.
      *
@@ -660,9 +589,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
         }
     }
 
-    // }}}
-    // {{{ protected function getHashValue()
-
     /**
      * Gets the hash of a value.
      *
@@ -676,9 +602,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
     {
         return md5(serialize($value));
     }
-
-    // }}}
-    // {{{ protected function getId()
 
     protected function getId()
     {
@@ -697,16 +620,10 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
         return $this->{$temp};
     }
 
-    // }}}
-    // {{{ protected function getSubDataObject()
-
     protected function getSubDataObject($name)
     {
         return $this->sub_data_objects[$name];
     }
-
-    // }}}
-    // {{{ protected function setSubDataObject()
 
     protected function setSubDataObject($name, $value)
     {
@@ -718,16 +635,10 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
         }
     }
 
-    // }}}
-    // {{{ protected function unsetSubDataObject()
-
     protected function unsetSubDataObject($name)
     {
         unset($this->sub_data_objects[$name]);
     }
-
-    // }}}
-    // {{{ protected function hasSubDataObject()
 
     /**
      * Whether or not a sub data object is loaded for the given key.
@@ -742,21 +653,12 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
         return isset($this->sub_data_objects[(string) $key]);
     }
 
-    // }}}
-    // {{{ protected function setDeprecatedProperty()
-
     protected function setDeprecatedProperty($key, $value) {}
-
-    // }}}
-    // {{{ protected function getDeprecatedProperty()
 
     protected function getDeprecatedProperty($key)
     {
         return null;
     }
-
-    // }}}
-    // {{{ protected function getProtectedPropertyList()
 
     /**
      * Gets a list of all protected properties of this data-object.
@@ -774,9 +676,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
     {
         return [];
     }
-
-    // }}}
-    // {{{ private function getPublicProperties()
 
     /**
      * Gets the public properties of this data-object.
@@ -815,9 +714,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
         return $properties;
     }
 
-    // }}}
-    // {{{ private function getSerializableProtectedProperties()
-
     /**
      * Gets the serializable protected properties of this data-object.
      *
@@ -840,9 +736,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
         return $properties;
     }
 
-    // }}}
-    // {{{ private function getProtectedProperties()
-
     /**
      * Gets the protected properties of this data-object using the getter
      * accessor.
@@ -863,9 +756,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
 
         return $properties;
     }
-
-    // }}}
-    // {{{ private function getProperties()
 
     /**
      * Gets all the modifyable properties of this data-object.
@@ -889,9 +779,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
         return $property_array;
     }
 
-    // }}}
-    // {{{ private function getLoaderMethod()
-
     private function getLoaderMethod($key)
     {
         /*
@@ -909,9 +796,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
 
         return $cache[$key];
     }
-
-    // }}}
-    // {{{ private function getUsingLoaderMethod()
 
     private function getUsingLoaderMethod($key)
     {
@@ -936,9 +820,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
 
         return $value;
     }
-
-    // }}}
-    // {{{ private function getUsingInternalProperty()
 
     private function getUsingInternalProperty($key)
     {
@@ -989,10 +870,7 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
         return $value;
     }
 
-    // }}}
-
     // database loading and saving
-    // {{{ public function setDatabase()
 
     /**
      * Sets the database driver for this data-object.
@@ -1025,9 +903,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
             }
         }
     }
-
-    // }}}
-    // {{{ public function save()
 
     /**
      * Saves this object to the database.
@@ -1069,9 +944,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
         $this->generatePropertyHashes();
     }
 
-    // }}}
-    // {{{ public function load()
-
     /**
      * Loads this object's properties from the database given an id.
      *
@@ -1094,9 +966,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
 
         return true;
     }
-
-    // }}}
-    // {{{ public function delete()
 
     /**
      * Deletes this object from the database.
@@ -1124,9 +993,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
             throw $e;
         }
     }
-
-    // }}}
-    // {{{ public function isModified()
 
     /**
      * Returns true if this object has been modified since it was loaded.
@@ -1180,9 +1046,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
         return false;
     }
 
-    // }}}
-    // {{{ protected function checkDB()
-
     protected function checkDB()
     {
         if ($this->db === null) {
@@ -1195,9 +1058,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
             );
         }
     }
-
-    // }}}
-    // {{{ protected function loadInternal()
 
     /**
      * Loads this object's properties from the database given an id.
@@ -1227,9 +1087,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
 
         return null;
     }
-
-    // }}}
-    // {{{ protected function saveInternal()
 
     /**
      * Saves this object to the database.
@@ -1331,9 +1188,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
         $this->flushCacheNamespaces();
     }
 
-    // }}}
-    // {{{ protected function saveInternalProperties()
-
     protected function saveInternalProperties()
     {
         foreach ($this->internal_property_autosave as $name => $autosave) {
@@ -1344,9 +1198,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
             }
         }
     }
-
-    // }}}
-    // {{{ protected function saveSubDataObjects()
 
     protected function saveSubDataObjects()
     {
@@ -1375,9 +1226,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
             }
         }
     }
-
-    // }}}
-    // {{{ protected function deleteInternal()
 
     /**
      * Deletes this object from the database.
@@ -1411,9 +1259,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
         }
     }
 
-    // }}}
-    // {{{ protected function saveNewBinding()
-
     /**
      * Saves a new binding object without an id to the database.
      *
@@ -1440,9 +1285,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
         SwatDB::insertRow($this->db, $this->table, $fields, $values);
         $this->flushCacheNamespaces();
     }
-
-    // }}}
-    // {{{ protected function guessType()
 
     protected function guessType($name, $value)
     {
@@ -1472,9 +1314,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
         }
     }
 
-    // }}}
-    // {{{ protected function rollback()
-
     protected function rollback(
         SwatDBTransaction $transaction,
         array $rollback_property_hashes,
@@ -1483,10 +1322,7 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
         $transaction->rollback();
     }
 
-    // }}}
-
     // cache flushing
-    // {{{ public function setFlushableCache()
 
     /**
      * Sets the flushable cache to use for this dataobject.
@@ -1502,9 +1338,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
         $this->flushable_cache = $cache;
     }
 
-    // }}}
-    // {{{ public function getCacheNamespaces()
-
     /**
      * Gets the name-spaces that should be flushed for this dataobject.
      *
@@ -1514,9 +1347,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
     {
         return [];
     }
-
-    // }}}
-    // {{{ public function getAvailableCacheNamespaces()
 
     /**
      * Gets all available name-spaces that should be flushed for this dataobject
@@ -1528,9 +1358,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
     {
         return [];
     }
-
-    // }}}
-    // {{{ public function flushCacheNamespaces()
 
     /**
      * Flushes the cache name-spaces for this object.
@@ -1557,9 +1384,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
         }
     }
 
-    // }}}
-    // {{{ public function flushAvailableCacheNamespaces()
-
     /**
      * Flushes all possible cache name-spaces for this object.
      *
@@ -1573,27 +1397,18 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
         $this->flushCacheNamespaces($namespaces);
     }
 
-    // }}}
-
     // serialization
-    // {{{ public function serialize()
 
     public function serialize(): string
     {
         return serialize($this->__serialize());
     }
 
-    // }}}
-    // {{{ public function unserialize()
-
     public function unserialize(string $data): void
     {
         $data = unserialize($data);
         $this->__unserialize($data);
     }
-
-    // }}}
-    // {{{ public function __serialize()
 
     public function __serialize(): array
     {
@@ -1636,9 +1451,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
         return $data;
     }
 
-    // }}}
-    // {{{ public function __unserialize()
-
     public function __unserialize(array $data): void
     {
         $this->init();
@@ -1662,9 +1474,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
             }
         }
     }
-
-    // }}}
-    // {{{ public function marshall()
 
     public function marshall(array $tree = [])
     {
@@ -1731,9 +1540,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
         return $data;
     }
 
-    // }}}
-    // {{{ public function unmarshall()
-
     public function unmarshall(array $data = [])
     {
         // public properties
@@ -1790,16 +1596,10 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
         }
     }
 
-    // }}}
-    // {{{ protected function getSerializableSubDataObjects()
-
     protected function getSerializableSubDataObjects()
     {
         return [];
     }
-
-    // }}}
-    // {{{ protected function getSerializablePrivateProperties()
 
     protected function getSerializablePrivateProperties()
     {
@@ -1813,6 +1613,4 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
             'read_only',
         ];
     }
-
-    // }}}
 }

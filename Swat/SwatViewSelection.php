@@ -29,8 +29,6 @@
  */
 class SwatViewSelection extends SwatObject implements Countable, Iterator
 {
-    // {{{ private properties
-
     /**
      * The selected items of this selection.
      *
@@ -47,9 +45,6 @@ class SwatViewSelection extends SwatObject implements Countable, Iterator
      */
     private $current_index = 0;
 
-    // }}}
-    // {{{ public function __construct()
-
     /**
      * Creates a new selection object.
      *
@@ -62,9 +57,6 @@ class SwatViewSelection extends SwatObject implements Countable, Iterator
         $this->selected_items = array_values($selected_items);
     }
 
-    // }}}
-    // {{{ public function current()
-
     /**
      * Returns the current selected item.
      *
@@ -74,9 +66,6 @@ class SwatViewSelection extends SwatObject implements Countable, Iterator
     {
         return $this->selected_items[$this->current_index];
     }
-
-    // }}}
-    // {{{ public function key()
 
     /**
      * Returns the key of the current selected item.
@@ -88,9 +77,6 @@ class SwatViewSelection extends SwatObject implements Countable, Iterator
         return $this->current_index;
     }
 
-    // }}}
-    // {{{ public function next()
-
     /**
      * Moves forward to the next selected item.
      */
@@ -98,9 +84,6 @@ class SwatViewSelection extends SwatObject implements Countable, Iterator
     {
         $this->current_index++;
     }
-
-    // }}}
-    // {{{ public function prev()
 
     /**
      * Moves forward to the previous selected item.
@@ -110,9 +93,6 @@ class SwatViewSelection extends SwatObject implements Countable, Iterator
         $this->current_index--;
     }
 
-    // }}}
-    // {{{ public function rewind()
-
     /**
      * Rewinds this iterator to the first selected item.
      */
@@ -120,9 +100,6 @@ class SwatViewSelection extends SwatObject implements Countable, Iterator
     {
         $this->current_index = 0;
     }
-
-    // }}}
-    // {{{ public function valid()
 
     /**
      * Checks is there is a current selected item after calls to rewind() and
@@ -136,9 +113,6 @@ class SwatViewSelection extends SwatObject implements Countable, Iterator
         return isset($this->selected_items[$this->current_index]);
     }
 
-    // }}}
-    // {{{ public funciton count()
-
     /**
      * Gets the number of items in this selection.
      *
@@ -150,9 +124,6 @@ class SwatViewSelection extends SwatObject implements Countable, Iterator
     {
         return count($this->selected_items);
     }
-
-    // }}}
-    // {{{ public function contains()
 
     /**
      * Checks whether or not this selection contains an item.
@@ -166,6 +137,4 @@ class SwatViewSelection extends SwatObject implements Countable, Iterator
     {
         return in_array($item, $this->selected_items);
     }
-
-    // }}}
 }

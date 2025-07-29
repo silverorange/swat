@@ -8,8 +8,6 @@
  */
 abstract class SwatView extends SwatControl
 {
-    // {{{ public properties
-
     /**
      * A data structure that holds the data to display in this view.
      *
@@ -32,9 +30,6 @@ abstract class SwatView extends SwatControl
      */
     public $checked_items = [];
 
-    // }}}
-    // {{{ protected properties
-
     /**
      * The selections of this view.
      *
@@ -55,9 +50,6 @@ abstract class SwatView extends SwatControl
      */
     protected $selectors = [];
 
-    // }}}
-    // {{{ public function __construct()
-
     /**
      * Creates a new recordset view.
      *
@@ -74,9 +66,6 @@ abstract class SwatView extends SwatControl
         $this->addJavaScript('packages/swat/javascript/swat-view.js');
     }
 
-    // }}}
-    // {{{ public function init()
-
     /**
      * Initializes this view.
      */
@@ -92,9 +81,6 @@ abstract class SwatView extends SwatControl
             }
         }
     }
-
-    // }}}
-    // {{{ public function getSelection()
 
     /**
      * Gets a selection of this view.
@@ -162,9 +148,6 @@ abstract class SwatView extends SwatControl
 
         return $this->selections[$selector->getId()];
     }
-
-    // }}}
-    // {{{ public function setSelection()
 
     /**
      * Sets a selection of this view.
@@ -234,9 +217,6 @@ abstract class SwatView extends SwatControl
         $this->selections[$selector->getId()] = $selection;
     }
 
-    // }}}
-    // {{{ protected final function addSelector()
-
     /**
      * This method should be called internally by the
      * {@link SwatView::init() method on all descendant UI-objects that are
@@ -247,6 +227,4 @@ abstract class SwatView extends SwatControl
         $this->selections[$selector->getId()] = new SwatViewSelection([]);
         $this->selectors[$selector->getId()] = $selector;
     }
-
-    // }}}
 }

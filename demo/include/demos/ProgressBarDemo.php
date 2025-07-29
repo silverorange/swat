@@ -13,8 +13,6 @@ require_once 'Demo.php';
  */
 class ProgressBarDemo extends Demo
 {
-    // {{{ public function buildDemoUI()
-
     public function buildDemoUI(SwatUI $ui)
     {
         $message = new SwatMessage(
@@ -27,6 +25,4 @@ class ProgressBarDemo extends Demo
 
         $ui->getWidget('note')->add($message, SwatMessageDisplay::DISMISS_OFF);
     }
-
-    // }}}
 }

@@ -8,8 +8,6 @@
  */
 class SwatDetailsView extends SwatControl implements SwatUIParent
 {
-    // {{{ public properties
-
     /**
      * An object containing values to display.
      *
@@ -23,9 +21,6 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
      * @see SwatDetailsViewField
      */
     public $data;
-
-    // }}}
-    // {{{ private properties
 
     /**
      * An array of fields to be displayed by this details view.
@@ -47,9 +42,6 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
      */
     private $fields_by_id = [];
 
-    // }}}
-    // {{{ public function __construct()
-
     /**
      * Creates a new details view.
      *
@@ -63,9 +55,6 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 
         $this->addStyleSheet('packages/swat/styles/swat-details-view.css');
     }
-
-    // }}}
-    // {{{ public function init()
 
     /**
      * Initializes this details-view.
@@ -83,9 +72,6 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
         }
     }
 
-    // }}}
-    // {{{ public function process()
-
     /**
      * Processes this details-view.
      */
@@ -97,9 +83,6 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
             $field->process();
         }
     }
-
-    // }}}
-    // {{{ public function display()
 
     /**
      * Displays this details view.
@@ -125,9 +108,6 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
         Swat::displayInlineJavaScript($this->getInlineJavaScript());
     }
 
-    // }}}
-    // {{{ public function appendField()
-
     /**
      * Appends a field to this details view.
      *
@@ -142,9 +122,6 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
     {
         $this->insertField($field);
     }
-
-    // }}}
-    // {{{ public function insertFieldBefore()
 
     /**
      * Inserts a field before an existing field in this details-view.
@@ -165,9 +142,6 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
         $this->insertField($field, $reference_field, false);
     }
 
-    // }}}
-    // {{{ public function insertFieldAfter()
-
     /**
      * Inserts a field after an existing field in this details-view.
      *
@@ -187,9 +161,6 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
         $this->insertField($field, $reference_field, true);
     }
 
-    // }}}
-    // {{{ public function getFieldCount()
-
     /**
      * Gets the number of fields of this details-view.
      *
@@ -200,9 +171,6 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
         return count($this->fields);
     }
 
-    // }}}
-    // {{{ public function getFields()
-
     /**
      * Get the fields of this details-view.
      *
@@ -212,9 +180,6 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
     {
         return $this->fields;
     }
-
-    // }}}
-    // {{{ public function getField()
 
     /**
      * Gets a field in this details view by the field's id.
@@ -238,9 +203,6 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
         return $this->fields_by_id[$id];
     }
 
-    // }}}
-    // {{{ public function hasField()
-
     /**
      * Whether a field exists in this details view.
      *
@@ -252,9 +214,6 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
     {
         return array_key_exists($id, $this->fields_by_id);
     }
-
-    // }}}
-    // {{{ public function addChild()
 
     /**
      * Adds a child object to this object.
@@ -283,9 +242,6 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
         }
     }
 
-    // }}}
-    // {{{ public function getHtmlHeadEntrySet()
-
     /**
      * Gets the SwatHtmlHeadEntry objects needed by this details-view.
      *
@@ -304,9 +260,6 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 
         return $set;
     }
-
-    // }}}
-    // {{{ public function getAvailableHtmlHeadEntrySet()
 
     /**
      * Gets the SwatHtmlHeadEntry objects that may be needed by this
@@ -327,9 +280,6 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 
         return $set;
     }
-
-    // }}}
-    // {{{ public function getDescendants()
 
     /**
      * Gets descendant UI-objects.
@@ -375,9 +325,6 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
         return $out;
     }
 
-    // }}}
-    // {{{ public function getFirstDescendant()
-
     /**
      * Gets the first descendant UI-object of a specific class.
      *
@@ -413,9 +360,6 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
         return $out;
     }
 
-    // }}}
-    // {{{ public function getDescendantStates()
-
     /**
      * Gets descendant states.
      *
@@ -436,9 +380,6 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
         return $states;
     }
 
-    // }}}
-    // {{{ public function setDescendantStates()
-
     /**
      * Sets descendant states.
      *
@@ -456,9 +397,6 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
             }
         }
     }
-
-    // }}}
-    // {{{ public function copy()
 
     /**
      * Performs a deep copy of the UI tree starting with this UI object.
@@ -488,9 +426,6 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
         return $copy;
     }
 
-    // }}}
-    // {{{ protected function validateField()
-
     /**
      * Ensures a field added to this details-view is valid for this
      * details-view.
@@ -515,9 +450,6 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
             }
         }
     }
-
-    // }}}
-    // {{{ protected function insertField()
 
     /**
      * Helper method to insert fields into this details-view.
@@ -601,9 +533,6 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
         $field->parent = $this;
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
-
     /**
      * Gets the array of CSS classes that are applied to this details view.
      *
@@ -616,9 +545,6 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 
         return array_merge($classes, parent::getCSSClassNames());
     }
-
-    // }}}
-    // {{{ protected function getInlineJavaScript()
 
     /**
      * Gets the inline JavaScript needed by this details view as well as any
@@ -647,9 +573,6 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
         return $javascript;
     }
 
-    // }}}
-    // {{{ protected function displayContent()
-
     /**
      * Displays each field of this view.
      *
@@ -672,6 +595,4 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
             }
         }
     }
-
-    // }}}
 }

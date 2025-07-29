@@ -10,8 +10,6 @@ require_once 'Demo.php';
  */
 class TableViewInputRowDemo extends Demo
 {
-    // {{{ public function buildDemoUI();
-
     public function buildDemoUI(SwatUI $ui)
     {
         $message = new SwatMessage(
@@ -44,8 +42,6 @@ class TableViewInputRowDemo extends Demo
 
         $table_view->model = $table_store;
     }
-
-    // }}}
 }
 
 /**
@@ -56,11 +52,7 @@ class TableViewInputRowDemo extends Demo
  */
 class FruitObject
 {
-    // {{{ public properties
-
     public $title = '';
     public $makes_jam = false;
     public $makes_pie = false;
-
-    // }}}
 }

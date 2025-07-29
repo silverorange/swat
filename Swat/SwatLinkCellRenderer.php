@@ -8,8 +8,6 @@
  */
 class SwatLinkCellRenderer extends SwatCellRenderer
 {
-    // {{{ public properties
-
     /**
      * The href attribute in the XHTML anchor tag.
      *
@@ -72,9 +70,6 @@ class SwatLinkCellRenderer extends SwatCellRenderer
      */
     public $link_value;
 
-    // }}}
-    // {{{ public function render()
-
     /**
      * Renders the contents of this cell.
      *
@@ -95,9 +90,6 @@ class SwatLinkCellRenderer extends SwatCellRenderer
         }
     }
 
-    // }}}
-    // {{{ protected function isSensitive()
-
     /**
      * Whether or not this link is sensitive.
      *
@@ -112,9 +104,6 @@ class SwatLinkCellRenderer extends SwatCellRenderer
         return $this->sensitive && $this->link !== null;
     }
 
-    // }}}
-    // {{{ protected function renderSensitive()
-
     /**
      * Renders this link as sensitive.
      */
@@ -128,9 +117,6 @@ class SwatLinkCellRenderer extends SwatCellRenderer
         $anchor_tag->display();
     }
 
-    // }}}
-    // {{{ protected function renderInsensitive()
-
     /**
      * Renders this link as not sensitive.
      */
@@ -143,16 +129,10 @@ class SwatLinkCellRenderer extends SwatCellRenderer
         $span_tag->display();
     }
 
-    // }}}
-    // {{{ protected function getTitle()
-
     protected function getTitle()
     {
         return null;
     }
-
-    // }}}
-    // {{{ protected function getText()
 
     protected function getText()
     {
@@ -166,9 +146,6 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 
         return $text;
     }
-
-    // }}}
-    // {{{ protected function getLink()
 
     protected function getLink()
     {
@@ -190,9 +167,6 @@ class SwatLinkCellRenderer extends SwatCellRenderer
         return $link;
     }
 
-    // }}}
-    // {{{ public function getDataSpecificCSSClassNames()
-
     /**
      * Gets the data specific CSS class names for this cell renderer.
      *
@@ -208,6 +182,4 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 
         return $classes;
     }
-
-    // }}}
 }

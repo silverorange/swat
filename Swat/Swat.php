@@ -8,8 +8,6 @@
  */
 class Swat
 {
-    // {{{ constants
-
     /**
      * The gettext domain for Swat.
      *
@@ -17,18 +15,12 @@ class Swat
      */
     public const GETTEXT_DOMAIN = 'swat';
 
-    // }}}
-    // {{{ private properties
-
     /**
      * Whether or not this package is initialized.
      *
      * @var bool
      */
     private static $is_initialized = false;
-
-    // }}}
-    // {{{ public static function _()
 
     /**
      * Translates a phrase.
@@ -44,9 +36,6 @@ class Swat
         return self::gettext($message);
     }
 
-    // }}}
-    // {{{ public static function gettext()
-
     /**
      * Translates a phrase.
      *
@@ -61,9 +50,6 @@ class Swat
     {
         return dgettext(self::GETTEXT_DOMAIN, $message);
     }
-
-    // }}}
-    // {{{ public static function ngettext()
 
     /**
      * Translates a plural phrase.
@@ -95,17 +81,11 @@ class Swat
         );
     }
 
-    // }}}
-    // {{{ public static function setupGettext()
-
     public static function setupGettext()
     {
         bindtextdomain(self::GETTEXT_DOMAIN, __DIR__ . '/../locale');
         bind_textdomain_codeset(self::GETTEXT_DOMAIN, 'UTF-8');
     }
-
-    // }}}
-    // {{{ public static function displayMethods()
 
     /**
      * Displays the methods of an object.
@@ -125,9 +105,6 @@ class Swat
 
         echo '</ul>';
     }
-
-    // }}}
-    // {{{ public static function displayProperties()
 
     /**
      * Displays the properties of an object.
@@ -151,9 +128,6 @@ class Swat
         echo '</ul>';
     }
 
-    // }}}
-    // {{{ public static function printObject()
-
     /**
      * Displays an object's properties and values recursively.
      *
@@ -168,9 +142,6 @@ class Swat
     {
         echo '<pre>' . print_r($object, true) . '</pre>';
     }
-
-    // }}}
-    // {{{ public static function displayInlineJavaScript()
 
     /**
      * Displays inline JavaScript properly encapsulating the script in a CDATA
@@ -188,9 +159,6 @@ class Swat
         }
     }
 
-    // }}}
-    // {{{ public static function init()
-
     public static function init()
     {
         if (self::$is_initialized) {
@@ -202,20 +170,13 @@ class Swat
         self::$is_initialized = true;
     }
 
-    // }}}
-    // {{{ private function __construct()
-
     /**
      * Don't allow instantiation of the Swat object.
      *
      * This class contains only static methods and should not be instantiated.
      */
     private function __construct() {}
-
-    // }}}
 }
-
-// {{{ dummy dngettext()
 
 // Define a dummy dngettext() for when gettext is not available.
 if (!function_exists('dngettext')) {
@@ -246,9 +207,6 @@ if (!function_exists('dngettext')) {
     }
 }
 
-// }}}
-// {{{ dummy dgettext()
-
 // Define a dummy dgettext() for when gettext is not available.
 if (!function_exists('dgettext')) {
     /**
@@ -268,5 +226,3 @@ if (!function_exists('dgettext')) {
         return $messageid;
     }
 }
-
-// }}}

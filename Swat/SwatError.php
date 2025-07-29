@@ -16,8 +16,6 @@
  */
 class SwatError
 {
-    // {{{ protected properties
-
     /**
      * The message of this error.
      *
@@ -82,9 +80,6 @@ class SwatError
      */
     protected static $fatal_severity = E_USER_ERROR;
 
-    // }}}
-    // {{{ public static function setLogger()
-
     /**
      * Sets the object that logs SwatError objects when they are processed.
      *
@@ -99,9 +94,6 @@ class SwatError
     {
         self::$loggers = [$logger];
     }
-
-    // }}}
-    // {{{ public static function addLogger()
 
     /**
      * Adds an object to the array of objects that log SwatError objects
@@ -120,9 +112,6 @@ class SwatError
         self::$loggers[] = $logger;
     }
 
-    // }}}
-    // {{{ public static function setDisplayer()
-
     /**
      * Sets the object that displays SwatError objects when they are
      * processed.
@@ -140,9 +129,6 @@ class SwatError
         self::$displayer = $displayer;
     }
 
-    // }}}
-    // {{{ public static function setFatalSeverity()
-
     /**
      * Sets the severity of SwatError that should be fatal.
      *
@@ -153,9 +139,6 @@ class SwatError
     {
         self::$fatal_severity = $severity;
     }
-
-    // }}}
-    // {{{ public function __construct()
 
     /**
      * Creates a new error object.
@@ -185,9 +168,6 @@ class SwatError
         $this->backtrace = &$backtrace;
     }
 
-    // }}}
-    // {{{ public function process()
-
     /**
      * Processes this error.
      *
@@ -212,9 +192,6 @@ class SwatError
         }
     }
 
-    // }}}
-    // {{{ public function getMessage()
-
     /**
      * Gets the original message string of this error.
      *
@@ -224,9 +201,6 @@ class SwatError
     {
         return $this->message;
     }
-
-    // }}}
-    // {{{ public function getSeverity()
 
     /**
      * Gets the severity of this error.
@@ -238,9 +212,6 @@ class SwatError
         return $this->severity;
     }
 
-    // }}}
-    // {{{ public function getFile()
-
     /**
      * Gets the file location where the error occurred.
      *
@@ -251,9 +222,6 @@ class SwatError
         return $this->file;
     }
 
-    // }}}
-    // {{{ public function getLine()
-
     /**
      * Gets the line number where the error occurred.
      *
@@ -263,9 +231,6 @@ class SwatError
     {
         return $this->line;
     }
-
-    // }}}
-    // {{{ public function log()
 
     /**
      * Logs this error.
@@ -283,9 +248,6 @@ class SwatError
         }
     }
 
-    // }}}
-    // {{{ public function display()
-
     public function display()
     {
         if (self::$displayer === null) {
@@ -299,9 +261,6 @@ class SwatError
             $displayer->display($this);
         }
     }
-
-    // }}}
-    // {{{ public function getSummary()
 
     /**
      * Gets a one-line short text summary of this error.
@@ -323,9 +282,6 @@ class SwatError
 
         return ob_get_clean();
     }
-
-    // }}}
-    // {{{ public function toString()
 
     /**
      * Gets this error as a nicely formatted text block.
@@ -383,9 +339,6 @@ class SwatError
 
         return ob_get_clean();
     }
-
-    // }}}
-    // {{{ public function toXHTML()
 
     /**
      * Gets this error as a nicely formatted XHTML fragment.
@@ -453,9 +406,6 @@ class SwatError
         return ob_get_clean();
     }
 
-    // }}}
-    // {{{ public static function handle()
-
     /**
      * Handles an error.
      *
@@ -474,9 +424,6 @@ class SwatError
             $error->process();
         }
     }
-
-    // }}}
-    // {{{ protected function getArguments()
 
     /**
      * Formats a method call's arguments.
@@ -533,9 +480,6 @@ class SwatError
         return implode(', ', $formatted_values);
     }
 
-    // }}}
-    // {{{ protected function formatSensitiveParam()
-
     /**
      * Removes sensitive information from a parameter value and formats
      * the parameter as a string.
@@ -555,9 +499,6 @@ class SwatError
     {
         return '[$' . $name . ' FILTERED]';
     }
-
-    // }}}
-    // {{{ protected function formatValue()
 
     /**
      * Formats a parameter value for display in a stack trace.
@@ -616,9 +557,6 @@ class SwatError
         return $formatted_value;
     }
 
-    // }}}
-    // {{{ protected function displayStyleSheet()
-
     /**
      * Displays styles required to show XHTML error messages.
      *
@@ -650,9 +588,6 @@ class SwatError
         }
     }
 
-    // }}}
-    // {{{ protected function getSeverityString()
-
     /**
      * Gets a string representation of this error's severity.
      *
@@ -676,9 +611,6 @@ class SwatError
 
         return $out;
     }
-
-    // }}}
-    // {{{ protected function isSensitiveParameter()
 
     /**
      * Detects whether or not a parameter is sensitive from the method-level
@@ -726,9 +658,6 @@ class SwatError
         return $sensitive;
     }
 
-    // }}}
-    // {{{ public static function setupHandler()
-
     /**
      * Set the PHP error handler to use SwatError.
      */
@@ -740,6 +669,4 @@ class SwatError
          */
         set_error_handler(['SwatError', 'handle'], error_reporting());
     }
-
-    // }}}
 }

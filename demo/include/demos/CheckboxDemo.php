@@ -10,8 +10,6 @@ require_once 'Demo.php';
  */
 class CheckboxDemo extends Demo
 {
-    // {{{ public function buildDemoUI()
-
     public function buildDemoUI(SwatUI $ui)
     {
         // regular checkbox tree
@@ -66,6 +64,4 @@ class CheckboxDemo extends Demo
         $checkbox_entry_list = $ui->getWidget('checkbox_entry_list');
         $checkbox_entry_list->addOptionsByArray($checkbox_entry_list_options);
     }
-
-    // }}}
 }

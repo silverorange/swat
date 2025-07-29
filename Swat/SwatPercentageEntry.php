@@ -9,8 +9,6 @@
  */
 class SwatPercentageEntry extends SwatFloatEntry
 {
-    // {{{ protected function getDisplayValue()
-
     /**
      * Returns a value for this widget.
      *
@@ -32,9 +30,6 @@ class SwatPercentageEntry extends SwatFloatEntry
 
         return $value;
     }
-
-    // }}}
-    // {{{ protected function getNumericValue()
 
     /**
      * Gets the float value of this widget.
@@ -58,9 +53,6 @@ class SwatPercentageEntry extends SwatFloatEntry
         return $value;
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
-
     /**
      * Gets the array of CSS classes that are applied to this entry.
      *
@@ -73,6 +65,4 @@ class SwatPercentageEntry extends SwatFloatEntry
 
         return array_merge($classes, parent::getCSSClassNames());
     }
-
-    // }}}
 }

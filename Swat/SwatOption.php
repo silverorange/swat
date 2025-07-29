@@ -8,8 +8,6 @@
  */
 class SwatOption extends SwatObject
 {
-    // {{{ public properties
-
     /**
      * Option title.
      *
@@ -33,9 +31,6 @@ class SwatOption extends SwatObject
      */
     public $value;
 
-    // }}}
-    // {{{ public function __construct()
-
     /**
      * Creates an option.
      *
@@ -51,6 +46,4 @@ class SwatOption extends SwatObject
         $this->title = $title;
         $this->content_type = $content_type;
     }
-
-    // }}}
 }

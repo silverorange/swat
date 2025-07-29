@@ -10,8 +10,6 @@ require_once 'Demo.php';
  */
 class RadioListDemo extends Demo
 {
-    // {{{ public function buildDemoUI()
-
     public function buildDemoUI(SwatUI $ui)
     {
         $radiolist = $ui->getWidget('radiolist');
@@ -83,6 +81,4 @@ class RadioListDemo extends Demo
         $radiotable->addDivider();
         $radiotable->addOption(new SwatOption(9, 'I don\'t like fruit'));
     }
-
-    // }}}
 }

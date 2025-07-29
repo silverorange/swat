@@ -8,8 +8,6 @@
  */
 interface SwatDBRecordable
 {
-    // {{{ public function setDatabase()
-
     /**
      * Sets the database driver to use for this object.
      *
@@ -22,16 +20,10 @@ interface SwatDBRecordable
      */
     public function setDatabase(MDB2_Driver_Common $db, array $set = []);
 
-    // }}}
-    // {{{ public function save()
-
     /**
      * Saves this object to the database.
      */
     public function save();
-
-    // }}}
-    // {{{ public function load()
 
     /**
      * Loads this object from the database.
@@ -44,16 +36,10 @@ interface SwatDBRecordable
      */
     public function load($data);
 
-    // }}}
-    // {{{ public function delete()
-
     /**
      * Deletes this object from the database.
      */
     public function delete();
-
-    // }}}
-    // {{{ public function isModified()
 
     /**
      * Gets whether or not this object is modified.
@@ -61,6 +47,4 @@ interface SwatDBRecordable
      * @return bool true if this object is modified and false if it is not
      */
     public function isModified();
-
-    // }}}
 }

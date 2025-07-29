@@ -8,8 +8,6 @@
  */
 class SwatFlydown extends SwatOptionControl implements SwatState
 {
-    // {{{ public properties
-
     /**
      * Flydown value.
      *
@@ -45,9 +43,6 @@ class SwatFlydown extends SwatOptionControl implements SwatState
      * or display it as a list/flydown with just one option.
      */
     public bool $collapse_single = true;
-
-    // }}}
-    // {{{ public function display()
 
     /**
      * Displays this flydown.
@@ -165,9 +160,6 @@ class SwatFlydown extends SwatOptionControl implements SwatState
         $wrapper->close();
     }
 
-    // }}}
-    // {{{ public function process()
-
     /**
      * Figures out what option was selected.
      *
@@ -197,9 +189,6 @@ class SwatFlydown extends SwatOptionControl implements SwatState
         }
     }
 
-    // }}}
-    // {{{ public function addDivider()
-
     /**
      * Adds a divider to this flydown.
      *
@@ -215,9 +204,6 @@ class SwatFlydown extends SwatOptionControl implements SwatState
         $this->options[] = new SwatFlydownDivider(null, $title, $content_type);
     }
 
-    // }}}
-    // {{{ public function reset()
-
     /**
      * Resets this flydown.
      *
@@ -229,9 +215,6 @@ class SwatFlydown extends SwatOptionControl implements SwatState
         reset($this->options);
         $this->value = null;
     }
-
-    // }}}
-    // {{{ public function getState()
 
     /**
      * Gets the current state of this flydown.
@@ -245,9 +228,6 @@ class SwatFlydown extends SwatOptionControl implements SwatState
         return $this->value;
     }
 
-    // }}}
-    // {{{ public function setState()
-
     /**
      * Sets the current state of this flydown.
      *
@@ -259,9 +239,6 @@ class SwatFlydown extends SwatOptionControl implements SwatState
     {
         $this->value = $state;
     }
-
-    // }}}
-    // {{{ public function getFocusableHtmlId()
 
     /**
      * Gets the id attribute of the XHTML element displayed by this widget
@@ -291,9 +268,6 @@ class SwatFlydown extends SwatOptionControl implements SwatState
         return $focusable_id;
     }
 
-    // }}}
-    // {{{ protected function processValue()
-
     /**
      * Processes the value of this flydown from user-submitted form data.
      *
@@ -320,9 +294,6 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 
         return true;
     }
-
-    // }}}
-    // {{{ protected function displaySingle()
 
     /**
      * Displays this flydown if there is only a single option.
@@ -351,9 +322,6 @@ class SwatFlydown extends SwatOptionControl implements SwatState
         $span_tag->display();
     }
 
-    // }}}
-    // {{{ protected function getBlankOption()
-
     /**
      * Gets the the blank option for this flydown.
      *
@@ -363,9 +331,6 @@ class SwatFlydown extends SwatOptionControl implements SwatState
     {
         return new SwatFlydownBlankOption(null, $this->blank_title);
     }
-
-    // }}}
-    // {{{ protected function getCSSClassNames()
 
     /**
      * Gets the array of CSS classes that are applied to this flydown.
@@ -378,6 +343,4 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 
         return array_merge($classes, parent::getCSSClassNames());
     }
-
-    // }}}
 }

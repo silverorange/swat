@@ -10,8 +10,6 @@
  */
 abstract class SwatTreeNode extends SwatObject implements RecursiveIterator, Countable
 {
-    // {{{ protected properties
-
     /**
      * An array of children tree nodes.
      *
@@ -20,9 +18,6 @@ abstract class SwatTreeNode extends SwatObject implements RecursiveIterator, Cou
      * @var array
      */
     protected $children = [];
-
-    // }}}
-    // {{{ private properties
 
     /**
      * The parent tree node of this tree node.
@@ -41,9 +36,6 @@ abstract class SwatTreeNode extends SwatObject implements RecursiveIterator, Cou
      */
     private $index = 0;
 
-    // }}}
-    // {{{ public function addChild()
-
     /**
      * Adds a child node to this node.
      *
@@ -57,9 +49,6 @@ abstract class SwatTreeNode extends SwatObject implements RecursiveIterator, Cou
         $child->index = count($this->children);
         $this->children[] = $child;
     }
-
-    // }}}
-    // {{{ public function addTree()
 
     /**
      * Adds a full tree structure to this node.
@@ -75,9 +64,6 @@ abstract class SwatTreeNode extends SwatObject implements RecursiveIterator, Cou
             $this->addChild($child);
         }
     }
-
-    // }}}
-    // {{{ public function getPath()
 
     /**
      * Gets the path to this node.
@@ -104,9 +90,6 @@ abstract class SwatTreeNode extends SwatObject implements RecursiveIterator, Cou
         return $path;
     }
 
-    // }}}
-    // {{{ public function getParent()
-
     /**
      * Gets the parent node of this node.
      *
@@ -116,9 +99,6 @@ abstract class SwatTreeNode extends SwatObject implements RecursiveIterator, Cou
     {
         return $this->parent;
     }
-
-    // }}}
-    // {{{ public function getChildren()
 
     /**
      * Gets this node's children.
@@ -131,9 +111,6 @@ abstract class SwatTreeNode extends SwatObject implements RecursiveIterator, Cou
     {
         return $this->children;
     }
-
-    // }}}
-    // {{{ public function hasChildren()
 
     /**
      * Whether or not this tree node has children.
@@ -148,9 +125,6 @@ abstract class SwatTreeNode extends SwatObject implements RecursiveIterator, Cou
         return count($this->children) > 0;
     }
 
-    // }}}
-    // {{{ public function getIndex()
-
     /**
      * Gets this node's index.
      *
@@ -160,9 +134,6 @@ abstract class SwatTreeNode extends SwatObject implements RecursiveIterator, Cou
     {
         return $this->index;
     }
-
-    // }}}
-    // {{{ public function current()
 
     /**
      * Gets the current child node in this node.
@@ -178,9 +149,6 @@ abstract class SwatTreeNode extends SwatObject implements RecursiveIterator, Cou
         return current($this->children);
     }
 
-    // }}}
-    // {{{ public function key()
-
     /**
      * Gets the key of the current child node in this node.
      *
@@ -192,9 +160,6 @@ abstract class SwatTreeNode extends SwatObject implements RecursiveIterator, Cou
     {
         return key($this->children);
     }
-
-    // }}}
-    // {{{ public function next()
 
     /**
      * Gets the next child node in this node and moves the internal array
@@ -211,9 +176,6 @@ abstract class SwatTreeNode extends SwatObject implements RecursiveIterator, Cou
         return next($this->children);
     }
 
-    // }}}
-    // {{{ public function rewind()
-
     /**
      * Sets the internal pointer in the child nodes array back to the
      * beginning.
@@ -229,9 +191,6 @@ abstract class SwatTreeNode extends SwatObject implements RecursiveIterator, Cou
         return reset($this->children);
     }
 
-    // }}}
-    // {{{ public function valid()
-
     /**
      * Whether the current child node in this node is valid.
      *
@@ -244,9 +203,6 @@ abstract class SwatTreeNode extends SwatObject implements RecursiveIterator, Cou
     {
         return $this->current() !== false;
     }
-
-    // }}}
-    // {{{ public function count()
 
     /**
      * Gets the number of nodes in this tree or subtree.
@@ -264,6 +220,4 @@ abstract class SwatTreeNode extends SwatObject implements RecursiveIterator, Cou
 
         return $count;
     }
-
-    // }}}
 }

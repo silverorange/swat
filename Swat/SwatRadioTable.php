@@ -8,8 +8,6 @@
  */
 class SwatRadioTable extends SwatRadioList
 {
-    // {{{ public function __construct()
-
     /**
      * Creates a new radio table.
      *
@@ -23,9 +21,6 @@ class SwatRadioTable extends SwatRadioList
 
         $this->addStyleSheet('packages/swat/styles/swat-radio-table.css');
     }
-
-    // }}}
-    // {{{ public function display()
 
     public function display()
     {
@@ -59,9 +54,6 @@ class SwatRadioTable extends SwatRadioList
 
         $table_tag->close();
     }
-
-    // }}}
-    // {{{ protected function displayRadioTableOption()
 
     /**
      * Displays a single option in this radio table.
@@ -105,9 +97,6 @@ class SwatRadioTable extends SwatRadioList
         $tr_tag->close();
     }
 
-    // }}}
-    // {{{ protected function getTrTag()
-
     /**
      * Gets the tr tag used to display a single option in this radio table.
      *
@@ -118,9 +107,6 @@ class SwatRadioTable extends SwatRadioList
     {
         return new SwatHtmlTag('tr');
     }
-
-    // }}}
-    // {{{ protected function getCSSClassNames()
 
     /**
      * Gets the array of CSS classes that are applied to this radio table.
@@ -134,6 +120,4 @@ class SwatRadioTable extends SwatRadioList
 
         return array_merge($classes, $this->classes);
     }
-
-    // }}}
 }

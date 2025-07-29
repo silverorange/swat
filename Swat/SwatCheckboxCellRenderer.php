@@ -10,8 +10,6 @@
  */
 class SwatCheckboxCellRenderer extends SwatCellRenderer implements SwatViewSelector
 {
-    // {{{ public properties
-
     /**
      * Identifier of this checkbox cell renderer.
      *
@@ -63,9 +61,6 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer implements SwatViewSelec
      */
     public $tab_index;
 
-    // }}}
-    // {{{ private properties
-
     /**
      * Array of selected values populated during the processing of this cell
      * renderer.
@@ -76,9 +71,6 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer implements SwatViewSelec
      * @var array
      */
     private $selected_values = [];
-
-    // }}}
-    // {{{ public function __construct()
 
     /**
      * Creates a new checkbox cell renderer.
@@ -99,9 +91,6 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer implements SwatViewSelec
         $this->id = $this->getUniqueId();
     }
 
-    // }}}
-    // {{{ public function process()
-
     /**
      * Processes this checkbox cell renderer.
      */
@@ -121,9 +110,6 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer implements SwatViewSelec
             }
         }
     }
-
-    // }}}
-    // {{{ public function render()
 
     /**
      * Renders this checkbox cell renderer.
@@ -173,9 +159,6 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer implements SwatViewSelec
         }
     }
 
-    // }}}
-    // {{{ public function getId()
-
     /**
      * Gets the identifier of this checkbox cell renderer.
      *
@@ -187,9 +170,6 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer implements SwatViewSelec
     {
         return $this->id;
     }
-
-    // }}}
-    // {{{ public function getInlineJavaScript()
 
     /**
      * Gets the inline JavaScript required by this checkbox cell renderer.
@@ -214,9 +194,6 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer implements SwatViewSelec
         return $javascript;
     }
 
-    // }}}
-    // {{{ public function copy()
-
     /**
      * Performs a deep copy of the UI tree starting with this UI object.
      *
@@ -239,9 +216,6 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer implements SwatViewSelec
         return $copy;
     }
 
-    // }}}
-    // {{{ private function getForm()
-
     /**
      * Gets the form this checkbox cell renderer is contained in.
      *
@@ -263,6 +237,4 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer implements SwatViewSelec
 
         return $form;
     }
-
-    // }}}
 }

@@ -14,14 +14,10 @@
  */
 abstract class SwatExceptionLogger
 {
-    // {{{ public abstract function log()
-
     /**
      * Logs a SwatException.
      *
      * This is called by SwatException::process().
      */
     abstract public function log(SwatException $e);
-
-    // }}}
 }

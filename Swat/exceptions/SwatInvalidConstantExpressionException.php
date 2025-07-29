@@ -8,17 +8,12 @@
  */
 class SwatInvalidConstantExpressionException extends SwatException
 {
-    // {{{ protected properties
-
     /**
      * The constant expression that is invalid.
      *
      * @var string
      */
     protected $expression;
-
-    // }}}
-    // {{{ public function __construct()
 
     /**
      * Creates a new class not found exception.
@@ -33,9 +28,6 @@ class SwatInvalidConstantExpressionException extends SwatException
         $this->expression = $expression;
     }
 
-    // }}}
-    // {{{ public function getExpression()
-
     /**
      * Gets the constant expression that is invalid.
      *
@@ -45,6 +37,4 @@ class SwatInvalidConstantExpressionException extends SwatException
     {
         return $this->expression;
     }
-
-    // }}}
 }

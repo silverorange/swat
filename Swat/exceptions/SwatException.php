@@ -37,8 +37,6 @@
  */
 class SwatException extends Exception
 {
-    // {{{ protected properties
-
     protected $backtrace;
     protected $class;
 
@@ -52,18 +50,12 @@ class SwatException extends Exception
      */
     protected static $loggers = [];
 
-    // }}}
-    // {{{ private properties
-
     /**
      * Whether or not this excception was manually handled.
      *
      * @var bool
      */
     private $handled = false;
-
-    // }}}
-    // {{{ public static function setLogger()
 
     /**
      * Sets the object that logs SwatException objects when they are processed.
@@ -79,9 +71,6 @@ class SwatException extends Exception
     {
         self::$loggers = [$logger];
     }
-
-    // }}}
-    // {{{ public static function addLogger()
 
     /**
      * Adds an object to the array of objects that log SwatException objects
@@ -100,9 +89,6 @@ class SwatException extends Exception
         self::$loggers[] = $logger;
     }
 
-    // }}}
-    // {{{ public static function setDisplayer()
-
     /**
      * Sets the object that displays SwatException objects when they are
      * processed.
@@ -120,9 +106,6 @@ class SwatException extends Exception
         self::$displayer = $displayer;
     }
 
-    // }}}
-    // {{{ public static function setupHandler()
-
     /**
      * Set the PHP exception handler to use SwatException.
      *
@@ -133,9 +116,6 @@ class SwatException extends Exception
     {
         set_exception_handler([$class, 'handle']);
     }
-
-    // }}}
-    // {{{ public function __construct()
 
     public function __construct($message = null, $code = 0)
     {
@@ -154,9 +134,6 @@ class SwatException extends Exception
             $this->class = get_class($this);
         }
     }
-
-    // }}}
-    // {{{ public function process()
 
     /**
      * Processes this exception.
@@ -189,9 +166,6 @@ class SwatException extends Exception
         }
     }
 
-    // }}}
-    // {{{ public function processAndContinue()
-
     /**
      * Processes this exception and continues execution.
      *
@@ -203,9 +177,6 @@ class SwatException extends Exception
         $this->process(false, true);
     }
 
-    // }}}
-    // {{{ public function processAndExit()
-
     /**
      * Processes this exception and stops execution.
      *
@@ -216,9 +187,6 @@ class SwatException extends Exception
     {
         $this->process(true, true);
     }
-
-    // }}}
-    // {{{ public function log()
 
     /**
      * Logs this exception.
@@ -235,9 +203,6 @@ class SwatException extends Exception
             }
         }
     }
-
-    // }}}
-    // {{{ public function display()
 
     /**
      * Displays this exception.
@@ -261,9 +226,6 @@ class SwatException extends Exception
             $displayer->display($this);
         }
     }
-
-    // }}}
-    // {{{ public function getSummary()
 
     /**
      * Gets a one-line short text summary of this exception.
@@ -289,9 +251,6 @@ class SwatException extends Exception
 
         return ob_get_clean();
     }
-
-    // }}}
-    // {{{ public function toString()
 
     /**
      * Gets this exception as a nicely formatted text block.
@@ -352,9 +311,6 @@ class SwatException extends Exception
 
         return ob_get_clean();
     }
-
-    // }}}
-    // {{{ public function toXHTML()
 
     /**
      * Gets this exception as a nicely formatted XHTML fragment.
@@ -425,9 +381,6 @@ class SwatException extends Exception
         return ob_get_clean();
     }
 
-    // }}}
-    // {{{ public function getClass()
-
     /**
      * Gets the name of the class this exception represents.
      *
@@ -440,9 +393,6 @@ class SwatException extends Exception
         return $this->class;
     }
 
-    // }}}
-    // {{{ public function wasHandled()
-
     /**
      * Gets whether or not this exception was manually handled.
      *
@@ -453,9 +403,6 @@ class SwatException extends Exception
     {
         return $this->handled;
     }
-
-    // }}}
-    // {{{ public static function handle()
 
     /**
      * Handles an exception.
@@ -475,9 +422,6 @@ class SwatException extends Exception
         $e->process(true, false);
     }
 
-    // }}}
-    // {{{ protected function getMessageAsHtml()
-
     /**
      * Formats the exception's message as Html.
      *
@@ -487,9 +431,6 @@ class SwatException extends Exception
     {
         return nl2br(htmlspecialchars($this->getMessage()));
     }
-
-    // }}}
-    // {{{ protected function getArguments()
 
     /**
      * Formats a method call's arguments.
@@ -547,9 +488,6 @@ class SwatException extends Exception
         return implode(', ', $formatted_values);
     }
 
-    // }}}
-    // {{{ protected function formatSensitiveParam()
-
     /**
      * Removes sensitive information from a parameter value and formats
      * the parameter as a string.
@@ -569,9 +507,6 @@ class SwatException extends Exception
     {
         return '[$' . $name . ' FILTERED]';
     }
-
-    // }}}
-    // {{{ protected function formatValue()
 
     /**
      * Formats a parameter value for display in a stack trace.
@@ -634,9 +569,6 @@ class SwatException extends Exception
         return $formatted_value;
     }
 
-    // }}}
-    // {{{ protected function displayStyleSheet()
-
     /**
      * Displays style sheet required for XHMTL exception formatting.
      *
@@ -667,9 +599,6 @@ class SwatException extends Exception
             $displayed = true;
         }
     }
-
-    // }}}
-    // {{{ protected function isSensitiveParameter()
 
     /**
      * Detects whether or not a parameter is sensitive from the method-level
@@ -716,6 +645,4 @@ class SwatException extends Exception
 
         return $sensitive;
     }
-
-    // }}}
 }

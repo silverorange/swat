@@ -17,8 +17,6 @@
  */
 abstract class SwatAbstractOverlay extends SwatInputControl implements SwatState
 {
-    // {{{ public properties
-
     /**
      * Access key.
      *
@@ -34,9 +32,6 @@ abstract class SwatAbstractOverlay extends SwatInputControl implements SwatState
      * @var string
      */
     public $value;
-
-    // }}}
-    // {{{ public function __construct()
 
     /**
      * Creates a new overlay widget.
@@ -62,9 +57,6 @@ abstract class SwatAbstractOverlay extends SwatInputControl implements SwatState
             'packages/swat/javascript/swat-z-index-manager.js',
         );
     }
-
-    // }}}
-    // {{{ public function display()
 
     /**
      * Displays this overlay widget.
@@ -96,9 +88,6 @@ abstract class SwatAbstractOverlay extends SwatInputControl implements SwatState
         Swat::displayInlineJavaScript($this->getInlineJavaScript());
     }
 
-    // }}}
-    // {{{ public function getState()
-
     /**
      * Gets the current state of this simple color selector widget.
      *
@@ -110,9 +99,6 @@ abstract class SwatAbstractOverlay extends SwatInputControl implements SwatState
     {
         return $this->value;
     }
-
-    // }}}
-    // {{{ public function setState()
 
     /**
      * Sets the current state of this simple color selector widget.
@@ -126,9 +112,6 @@ abstract class SwatAbstractOverlay extends SwatInputControl implements SwatState
         $this->value = $state;
     }
 
-    // }}}
-    // {{{ abstract protected function getInlineJavaScript()
-
     /**
      * Gets inline JavaScript.
      *
@@ -141,6 +124,4 @@ abstract class SwatAbstractOverlay extends SwatInputControl implements SwatState
             SwatString::quoteJavaScriptString(Swat::_('Close')),
         );
     }
-
-    // }}}
 }

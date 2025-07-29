@@ -10,8 +10,6 @@ require_once 'Demo.php';
  */
 class DetailsViewDemo extends Demo
 {
-    // {{{ public function buildDemoUI()
-
     public function buildDemoUI(SwatUI $ui)
     {
         $details_view = $ui->getWidget('details_view');
@@ -38,8 +36,6 @@ class DetailsViewDemo extends Demo
 
         $details_view->data = $fruit;
     }
-
-    // }}}
 }
 
 /**
@@ -50,8 +46,6 @@ class DetailsViewDemo extends Demo
  */
 class FruitObject
 {
-    // {{{ public properties
-
     public $align = '';
     public $image = '';
     public $image_width = 0;
@@ -63,6 +57,4 @@ class FruitObject
     public $harvest_date;
     public $cost = 0;
     public $text = '';
-
-    // }}}
 }
