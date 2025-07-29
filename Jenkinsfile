@@ -20,11 +20,17 @@ pipeline {
 
         stage('Check PHP Coding Style') {
             steps {
-                sh 'composer run phpcs'
+                sh 'composer run phpcs:ci'
             }
         }
 
-        stage('Check Formatting') {
+        stage('Check PHP Static Analysis') {
+            steps {
+                sh 'composer run phpstan:ci'
+            }
+        }
+
+        stage('Check Formating') {
             steps {
                 sh 'n -d exec engine pnpm prettier'
             }
