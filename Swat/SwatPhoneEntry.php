@@ -8,8 +8,6 @@
  */
 class SwatPhoneEntry extends SwatEntry
 {
-    // {{{ protected function getInputTag()
-
     /**
      * Get the input tag to display.
      *
@@ -23,9 +21,6 @@ class SwatPhoneEntry extends SwatEntry
         return $tag;
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
-
     /**
      * Gets the array of CSS classes that are applied to this entry.
      *
@@ -38,6 +33,4 @@ class SwatPhoneEntry extends SwatEntry
 
         return array_merge($classes, parent::getCSSClassNames());
     }
-
-    // }}}
 }

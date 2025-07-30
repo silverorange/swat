@@ -14,8 +14,6 @@
  */
 class SwatTableViewOrderableColumn extends SwatTableViewColumn
 {
-    // {{{ constants
-
     /**
      * Indicates no ordering is done.
      */
@@ -40,9 +38,6 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
      * Indicates ascending ordering is done.
      */
     public const NULLS_LAST = 2;
-
-    // }}}
-    // {{{ public properties
 
     /**
      * The base of the link used when building column header links.
@@ -82,9 +77,6 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
      */
     public $unset_get_vars = [];
 
-    // }}}
-    // {{{ protected properties
-
     /**
      * The direction of ordering.
      *
@@ -114,9 +106,6 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
      */
     protected $default_direction = self::ORDER_BY_DIR_NONE;
 
-    // }}}
-    // {{{ private properties
-
     /**
      * The mode of ordering.
      *
@@ -126,9 +115,6 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
      * @var int
      */
     // private $mode = SwatTableViewOrderableColumn::ORDER_MODE_TRISTATE;
-
-    // }}}
-    // {{{ public function init()
 
     /**
      * Initializes this column.
@@ -140,9 +126,6 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
         parent::init();
         $this->initFromGetVariables();
     }
-
-    // }}}
-    // {{{ public function setDirection()
 
     /**
      * Sets the direction of ordering.
@@ -169,9 +152,6 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 
         $this->initFromGetVariables();
     }
-
-    // }}}
-    // {{{ public function displayHeader()
 
     /**
      * Displays the column header for this table view column.
@@ -213,9 +193,6 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 
         $anchor->close();
     }
-
-    // }}}
-    // {{{ public function getDirectionAsString()
 
     /**
      * Gets the direction of ordering as a string.
@@ -286,9 +263,6 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
         return $direction;
     }
 
-    // }}}
-    // {{{ protected function displayTitle()
-
     protected function displayTitle($title, $content_type)
     {
         // Display last word of the title in its own span so it can be styled
@@ -314,9 +288,6 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
         $span_tag->display();
     }
 
-    // }}}
-    // {{{ protected function getBaseCSSClassNames()
-
     /**
      * Gets the base CSS class names of this orderable table-view column.
      *
@@ -334,9 +305,6 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
         return $classes;
     }
 
-    // }}}
-    // {{{ protected function getLinkPrefix()
-
     /**
      * Gets the prefix for GET var links.
      *
@@ -347,9 +315,6 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
         // TODO: is id a required field of table views?
         return $this->view->id . '_';
     }
-
-    // }}}
-    // {{{ protected function getNextDirection()
 
     /**
      * Gets the next direction or ordering in the rotation.
@@ -380,9 +345,6 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
         }
     }
 
-    // }}}
-    // {{{ private function setDirectionByString()
-
     /**
      * Sets direction of ordering by a string.
      *
@@ -412,9 +374,6 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
                 $this->direction = self::ORDER_BY_DIR_NONE;
         }
     }
-
-    // }}}
-    // {{{ private function getLink()
 
     /**
      * Gets the link for this column's header.
@@ -467,9 +426,6 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
         return $link;
     }
 
-    // }}}
-    // {{{ private function initFromGetVariables()
-
     /**
      * Process GET variables and set class variables.
      */
@@ -486,6 +442,4 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
             }
         }
     }
-
-    // }}}
 }

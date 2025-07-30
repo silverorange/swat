@@ -9,8 +9,6 @@
  */
 class SwatTreeFlydown extends SwatFlydown
 {
-    // {{{ public properties
-
     /**
      * An array containing the branch of the selected node formed by node
      * values.
@@ -20,9 +18,6 @@ class SwatTreeFlydown extends SwatFlydown
      * @var array
      */
     public $path = [];
-
-    // }}}
-    // {{{ protected properties
 
     /**
      * A tree collection of {@link SwatTreeFlydownNode} objects for this
@@ -37,9 +32,6 @@ class SwatTreeFlydown extends SwatFlydown
      */
     protected $tree;
 
-    // }}}
-    // {{{ public function __construct()
-
     /**
      * Creates a new tree flydown control.
      *
@@ -52,9 +44,6 @@ class SwatTreeFlydown extends SwatFlydown
         parent::__construct($id);
         $this->setTree(new SwatTreeFlydownNode(null, 'root'));
     }
-
-    // }}}
-    // {{{ public function display()
 
     /**
      * Displays this tree flydown.
@@ -81,9 +70,6 @@ class SwatTreeFlydown extends SwatFlydown
         $this->value = $actual_value;
     }
 
-    // }}}
-    // {{{ protected function &getOptions()
-
     /**
      * Gets this flydown's tree as a flat array used in the
      * {@link SwatFlydown::display()} method.
@@ -101,9 +87,6 @@ class SwatTreeFlydown extends SwatFlydown
 
         return $options;
     }
-
-    // }}}
-    // {{{ private function flattenTree()
 
     /**
      * Flattens this flydown's tree into an array of flydown options.
@@ -140,47 +123,27 @@ class SwatTreeFlydown extends SwatFlydown
         }
     }
 
-    // }}}
-    // {{{ public function setTree()
-
     /**
      * Sets the tree to use for display.
      *
      * @param SwatDataTreeNode|SwatTreeFlydownNode $tree the tree to use for
      *                                                   display
      */
-    public function setTree($tree)
+    public function setTree(SwatDataTreeNode|SwatTreeFlydownNode $tree): void
     {
-        if ($tree instanceof SwatDataTreeNode) {
-            $tree = SwatTreeFlydownNode::convertFromDataTree($tree);
-        } elseif (!$tree instanceof SwatTreeFlydownNode) {
-            throw new SwatInvalidClassException(
-                'Tree must be an intance of '
-                    . 'either SwatDataTreeNode or SwatTreeFlydownNode.',
-                0,
-                $tree,
-            );
-        }
-
-        $this->tree = $tree;
+        $this->tree = $this->normalizeTree($tree);
     }
-
-    // }}}
-    // {{{ public function getTree()
 
     /**
      * Gets the tree collection of {@link SwatTreeFlydownNode} objects for this
      * tree flydown.
      *
-     * @return SwatFlydowTreeNode Tree of nodes
+     * @return SwatTreeFlydownNode Tree of nodes
      */
     public function getTree()
     {
         return $this->tree;
     }
-
-    // }}}
-    // {{{ public function process()
 
     /**
      * Processes this tree flydown.
@@ -201,5 +164,21 @@ class SwatTreeFlydown extends SwatFlydown
         }
     }
 
-    // }}}
+    /**
+     * Normalizes a data tree node or a tree flydown node to always be a tree
+     * flydown node.
+     *
+     * @param SwatDataTreeNode|SwatTreeFlydownNode $tree the tree to normalize
+     *
+     * @return SwatTreeFlydownNode the normalized tree
+     */
+    protected function normalizeTree(
+        SwatDataTreeNode|SwatTreeFlydownNode $tree
+    ): SwatTreeFlydownNode {
+        if ($tree instanceof SwatDataTreeNode) {
+            return SwatTreeFlydownNode::convertFromDataTree($tree);
+        }
+
+        return $tree;
+    }
 }

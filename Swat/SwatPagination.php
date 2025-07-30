@@ -10,8 +10,6 @@
  */
 class SwatPagination extends SwatControl
 {
-    // {{{ class constants
-
     /**
      * Display part constant for the displaying 'next' link.
      */
@@ -33,9 +31,6 @@ class SwatPagination extends SwatControl
      * current page.
      */
     public const PAGES = 8;
-
-    // }}}
-    // {{{ public properties
 
     /**
      * The URI linked by this pagination widget.
@@ -109,9 +104,6 @@ class SwatPagination extends SwatControl
      */
     public $display_parts;
 
-    // }}}
-    // {{{ protected properties
-
     /**
      * The next page to display.
      *
@@ -142,9 +134,6 @@ class SwatPagination extends SwatControl
      */
     protected $total_pages = 0;
 
-    // }}}
-    // {{{ public function __construct()
-
     /**
      * Creates a new pagination widget.
      *
@@ -167,9 +156,6 @@ class SwatPagination extends SwatControl
 
         $this->addStyleSheet('packages/swat/styles/swat-pagination.css');
     }
-
-    // }}}
-    // {{{ public function getResultsMessage()
 
     /**
      * Gets a human readable summary of the current state of this pagination
@@ -219,9 +205,6 @@ class SwatPagination extends SwatControl
         return $message;
     }
 
-    // }}}
-    // {{{ public function display()
-
     /**
      * Displays this pagination widget.
      */
@@ -261,9 +244,6 @@ class SwatPagination extends SwatControl
         }
     }
 
-    // }}}
-    // {{{ public function setCurrentPage()
-
     /**
      * Set the current page that is displayed.
      *
@@ -278,9 +258,6 @@ class SwatPagination extends SwatControl
         $this->current_record = ($this->current_page - 1) * $this->page_size;
     }
 
-    // }}}
-    // {{{ public function getCurrentPage()
-
     /**
      * Get the current page that is displayed.
      *
@@ -290,9 +267,6 @@ class SwatPagination extends SwatControl
     {
         return $this->current_page;
     }
-
-    // }}}
-    // {{{ protected function displayPrev()
 
     /**
      * Displays the previous page link.
@@ -316,9 +290,6 @@ class SwatPagination extends SwatControl
         }
     }
 
-    // }}}
-    // {{{ protected function displayPosition()
-
     /**
      * Displays the current page position.
      *
@@ -339,9 +310,6 @@ class SwatPagination extends SwatControl
 
         $div->display();
     }
-
-    // }}}
-    // {{{ protected function displayNext()
 
     /**
      * Displays the next page link.
@@ -365,9 +333,6 @@ class SwatPagination extends SwatControl
             $span->display();
         }
     }
-
-    // }}}
-    // {{{ protected function displayPages()
 
     /**
      * Displays a smart list of pages.
@@ -427,9 +392,6 @@ class SwatPagination extends SwatControl
         }
     }
 
-    // }}}
-    // {{{ protected function getLink()
-
     /**
      * Gets the base link for all page links.
      *
@@ -439,9 +401,6 @@ class SwatPagination extends SwatControl
     {
         return $this->link === null ? '%s' : $this->link;
     }
-
-    // }}}
-    // {{{ protected function getCSSClassNames()
 
     /**
      * Gets the array of CSS classes that are applied to this pagination
@@ -456,9 +415,6 @@ class SwatPagination extends SwatControl
 
         return array_merge($classes, parent::getCSSClassNames());
     }
-
-    // }}}
-    // {{{ protected function calculatePages()
 
     /**
      * Calculates page totals.
@@ -484,6 +440,4 @@ class SwatPagination extends SwatControl
             $this->prev_page = 0;
         }
     }
-
-    // }}}
 }

@@ -8,8 +8,6 @@
  */
 class SwatCheckAll extends SwatCheckbox
 {
-    // {{{ public properties
-
     /**
      * Optional checkbox label title.
      *
@@ -56,9 +54,6 @@ class SwatCheckAll extends SwatCheckbox
      */
     public $unit;
 
-    // }}}
-    // {{{ public function __construct()
-
     /**
      * Creates a new check-all widget.
      *
@@ -77,9 +72,6 @@ class SwatCheckAll extends SwatCheckbox
         $this->addJavaScript('packages/swat/javascript/swat-check-all.js');
     }
 
-    // }}}
-    // {{{ public function isExtendedSelected()
-
     /**
      * Whether or not the extended-checkbox was checked.
      *
@@ -89,9 +81,6 @@ class SwatCheckAll extends SwatCheckbox
     {
         return $this->getCompositeWidget('extended_checkbox')->value;
     }
-
-    // }}}
-    // {{{ public function display()
 
     /**
      * Displays this check-all widget.
@@ -137,9 +126,6 @@ class SwatCheckAll extends SwatCheckbox
         Swat::displayInlineJavaScript($this->getInlineJavaScript());
     }
 
-    // }}}
-    // {{{ protected function getExtendedTitle()
-
     protected function getExtendedTitle()
     {
         $locale = SwatI18NLocale::get();
@@ -175,9 +161,6 @@ class SwatCheckAll extends SwatCheckbox
         );
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
-
     /**
      * Gets the array of CSS classes that are applied to this check-all widget.
      *
@@ -190,9 +173,6 @@ class SwatCheckAll extends SwatCheckbox
 
         return array_merge($classes, parent::getCSSClassNames());
     }
-
-    // }}}
-    // {{{ protected function getInlineJavaScript()
 
     /**
      * Gets the inline JavaScript for this check-all widget.
@@ -208,14 +188,9 @@ class SwatCheckAll extends SwatCheckbox
         );
     }
 
-    // }}}
-    // {{{ protected function createCompositeWidgets()
-
     protected function createCompositeWidgets()
     {
         $extended_checkbox = new SwatCheckbox();
         $this->addCompositeWidget($extended_checkbox, 'extended_checkbox');
     }
-
-    // }}}
 }

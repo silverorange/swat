@@ -8,17 +8,12 @@
  */
 class SwatUndefinedStockTypeException extends SwatException
 {
-    // {{{ protected properties
-
     /**
      * The name of the stock type that is undefined.
      *
      * @var string
      */
     protected $stock_type;
-
-    // }}}
-    // {{{ public function __construct()
 
     /**
      * Creates a new undefined stock type exception.
@@ -33,9 +28,6 @@ class SwatUndefinedStockTypeException extends SwatException
         $this->stock_type = $stock_type;
     }
 
-    // }}}
-    // {{{ public function getStockType()
-
     /**
      * Gets the name of the stock type that is undefined.
      *
@@ -45,6 +37,4 @@ class SwatUndefinedStockTypeException extends SwatException
     {
         return $this->stock_type;
     }
-
-    // }}}
 }

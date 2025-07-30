@@ -8,8 +8,6 @@
  */
 class SwatMessageDisplay extends SwatControl
 {
-    // {{{ class constants
-
     /**
      * Dismiss link for message is on.
      */
@@ -28,9 +26,6 @@ class SwatMessageDisplay extends SwatControl
      */
     public const DISMISS_AUTO = 3;
 
-    // }}}
-    // {{{ public properties
-
     /**
      * Text to display for closing the message.
      *
@@ -39,9 +34,6 @@ class SwatMessageDisplay extends SwatControl
      * @var string
      */
     public $close_text;
-
-    // }}}
-    // {{{ protected properties
 
     /**
      * The messages to display.
@@ -61,9 +53,6 @@ class SwatMessageDisplay extends SwatControl
      * @var array
      */
     protected $dismissable_messages = [];
-
-    // }}}
-    // {{{ public function __construct()
 
     /**
      * Creates a new message display.
@@ -88,9 +77,6 @@ class SwatMessageDisplay extends SwatControl
         $this->addStyleSheet('packages/swat/styles/swat-message.css');
         $this->addStyleSheet('packages/swat/styles/swat-message-display.css');
     }
-
-    // }}}
-    // {{{ public function add()
 
     /**
      * Adds a message.
@@ -140,9 +126,6 @@ class SwatMessageDisplay extends SwatControl
         }
     }
 
-    // }}}
-    // {{{ public function display()
-
     /**
      * Displays messages in this message display.
      *
@@ -191,9 +174,6 @@ class SwatMessageDisplay extends SwatControl
         }
     }
 
-    // }}}
-    // {{{ public function isVisible()
-
     /**
      * Gets whether or not this message display is visible.
      *
@@ -211,9 +191,6 @@ class SwatMessageDisplay extends SwatControl
         return $this->getMessageCount() > 0 && parent::isVisible();
     }
 
-    // }}}
-    // {{{ public function getMessageCount()
-
     /**
      * Gets the number of messages in this message display.
      *
@@ -223,9 +200,6 @@ class SwatMessageDisplay extends SwatControl
     {
         return count($this->display_messages);
     }
-
-    // }}}
-    // {{{ protected function displayMessage()
 
     /**
      * Display a single message of this message display.
@@ -287,9 +261,6 @@ class SwatMessageDisplay extends SwatControl
         $message_div->close();
     }
 
-    // }}}
-    // {{{ protected function getDismissableMessageTypes()
-
     /**
      * Gets an array of message types that are dismissable by default.
      *
@@ -299,9 +270,6 @@ class SwatMessageDisplay extends SwatControl
     {
         return ['notice', 'warning', 'cart'];
     }
-
-    // }}}
-    // {{{ protected function getCSSClassNames()
 
     /**
      * Gets the array of CSS classes that are applied to this message display.
@@ -315,9 +283,6 @@ class SwatMessageDisplay extends SwatControl
 
         return array_merge($classes, parent::getCSSClassNames());
     }
-
-    // }}}
-    // {{{ protected function getInlineJavaScript()
 
     /**
      * Gets the inline JavaScript for hiding messages.
@@ -347,9 +312,6 @@ class SwatMessageDisplay extends SwatControl
         return $javascript;
     }
 
-    // }}}
-    // {{{ protected function getJavaScriptClass()
-
     /**
      * Gets the name of the JavaScript class to instantiate for this message
      * display.
@@ -364,9 +326,6 @@ class SwatMessageDisplay extends SwatControl
     {
         return 'SwatMessageDisplay';
     }
-
-    // }}}
-    // {{{ protected function getInlineJavaScriptTranslations()
 
     /**
      * Gets translatable string resources for the JavaScript object for
@@ -383,6 +342,4 @@ class SwatMessageDisplay extends SwatControl
 
         return "SwatMessageDisplayMessage.close_text = '{$close_text}';\n";
     }
-
-    // }}}
 }

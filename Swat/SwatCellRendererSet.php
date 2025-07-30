@@ -8,21 +8,15 @@
  */
 class SwatCellRendererSet extends SwatObject implements Iterator, Countable
 {
-    // {{{ private properties
-
     /**
      * Cell renderers of this set indexed numerically.
-     *
-     * @var array
      */
-    private $renderers = [];
+    private array $renderers = [];
 
     /**
      * Cell renderers of this set indexed by id.
-     *
-     * @var array
      */
-    private $renderers_by_id = [];
+    private array $renderers_by_id = [];
 
     /**
      * Cell renderer data-mappings of the renderers of this set.
@@ -30,27 +24,18 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
      * This array is indexed by cell renderer object hashes for quick retrieval.
      * Array values are numerically indexed arrays of
      * {@link SwatCellRendererMapping} objects.
-     *
-     * @var array
      */
-    private $mappings = [];
+    private array $mappings = [];
 
     /**
      * The current index of the iterator interface.
-     *
-     * @var int
      */
-    private $current_index = 0;
+    private int $current_index = 0;
 
     /**
      * Whether or not data-mappings have been applied to this cell-renderer set.
-     *
-     * @var bool
      */
-    private $mappings_applied = false;
-
-    // }}}
-    // {{{ public function addRenderer()
+    private bool $mappings_applied = false;
 
     /**
      * Adds a cell renderer to this set.
@@ -72,9 +57,6 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
         }
     }
 
-    // }}}
-    // {{{ public function addRendererWithMappings()
-
     /**
      * Adds a cell renderer to this set with a predefined set of
      * datafield-property mappings.
@@ -92,9 +74,6 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
         $this->addRenderer($renderer);
         $this->addMappingsToRenderer($renderer, $mappings);
     }
-
-    // }}}
-    // {{{ public function addMappingsToRenderer()
 
     /**
      * Adds a set of datafield-property mappings to a cell renderer already in
@@ -127,9 +106,6 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
         }
     }
 
-    // }}}
-    // {{{ public function addMappingToRenderer()
-
     /**
      * Adds a single property-datafield mapping to a cell renderer already in
      * this set.
@@ -157,9 +133,6 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
         $renderer_key = spl_object_hash($renderer);
         $this->mappings[$renderer_key][] = $mapping;
     }
-
-    // }}}
-    // {{{ public function applyMappingsToRenderer()
 
     /**
      * Applies the property-datafield mappings to a cell renderer already in
@@ -219,9 +192,6 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
         $this->mappings_applied = true;
     }
 
-    // }}}
-    // {{{ public function getRendererByPosition()
-
     /**
      * Gets a cell renderer in this set by its ordinal position.
      *
@@ -245,9 +215,6 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
             $position,
         );
     }
-
-    // }}}
-    // {{{ public function getRenderer()
 
     /**
      * Gets a renderer in this set by its id.
@@ -274,9 +241,6 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
         );
     }
 
-    // }}}
-    // {{{ public function getMappingsByRenderer()
-
     /**
      * Gets the mappings of a cell renderer already in this set.
      *
@@ -293,9 +257,6 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
         return $this->mappings[$renderer_key];
     }
 
-    // }}}
-    // {{{ public function mappingsApplied()
-
     /**
      * Whether or not mappings have been applied to this cell-renderer set.
      *
@@ -310,56 +271,41 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
         return $this->mappings_applied;
     }
 
-    // }}}
-    // {{{ public function current()
-
     /**
      * Returns the current renderer.
      *
      * @return SwatCellRenderer the current renderer
      */
-    public function current()
+    public function current(): SwatCellRenderer
     {
         return $this->renderers[$this->current_index];
     }
-
-    // }}}
-    // {{{ public function key()
 
     /**
      * Returns the key of the current renderer.
      *
      * @return int the key of the current renderer
      */
-    public function key()
+    public function key(): int
     {
         return $this->current_index;
     }
 
-    // }}}
-    // {{{ public function next()
-
     /**
      * Moves forward to the next renderer.
      */
-    public function next()
+    public function next(): void
     {
         $this->current_index++;
     }
 
-    // }}}
-    // {{{ public function rewind()
-
     /**
      * Rewinds this iterator to the first renderer.
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->current_index = 0;
     }
-
-    // }}}
-    // {{{ public function valid()
 
     /**
      * Checks is there is a current renderer after calls to rewind() and next().
@@ -367,13 +313,10 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
      * @return bool true if there is a current renderer and false if there
      *              is not
      */
-    public function valid()
+    public function valid(): bool
     {
         return array_key_exists($this->current_index, $this->renderers);
     }
-
-    // }}}
-    // {{{ public function getFirst()
 
     /**
      * Gets the first renderer in this set.
@@ -392,9 +335,6 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
         return $first;
     }
 
-    // }}}
-    // {{{ public function getCount()
-
     /**
      * Gets the number of renderers in this set.
      *
@@ -408,9 +348,6 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
         return count($this);
     }
 
-    // }}}
-    // {{{ public function count()
-
     /**
      * Gets the number of cell renderers in this set.
      *
@@ -418,10 +355,8 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
      *
      * @return int the number of cell renderers in this set
      */
-    public function count()
+    public function count(): int
     {
         return count($this->renderers);
     }
-
-    // }}}
 }

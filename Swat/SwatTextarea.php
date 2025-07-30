@@ -8,8 +8,6 @@
  */
 class SwatTextarea extends SwatInputControl implements SwatState
 {
-    // {{{ public properties
-
     /**
      * Text content of the widget.
      *
@@ -98,9 +96,6 @@ class SwatTextarea extends SwatInputControl implements SwatState
      */
     public $placeholder;
 
-    // }}}
-    // {{{ public function __construct()
-
     /**
      * Creates a new textarea widget.
      *
@@ -115,9 +110,6 @@ class SwatTextarea extends SwatInputControl implements SwatState
         parent::__construct($id);
         $this->addStyleSheet('packages/swat/styles/swat-textarea.css');
     }
-
-    // }}}
-    // {{{ public function display()
 
     /**
      * Displays this textarea.
@@ -141,9 +133,6 @@ class SwatTextarea extends SwatInputControl implements SwatState
 
         $div_tag->close();
     }
-
-    // }}}
-    // {{{ public function process()
 
     /**
      * Processes this textarea.
@@ -182,9 +171,6 @@ class SwatTextarea extends SwatInputControl implements SwatState
         }
     }
 
-    // }}}
-    // {{{ public function getState()
-
     /**
      * Gets the current state of this textarea.
      *
@@ -197,9 +183,6 @@ class SwatTextarea extends SwatInputControl implements SwatState
         return $this->value;
     }
 
-    // }}}
-    // {{{ public function setState()
-
     /**
      * Sets the current state of this textarea.
      *
@@ -211,9 +194,6 @@ class SwatTextarea extends SwatInputControl implements SwatState
     {
         $this->value = $state;
     }
-
-    // }}}
-    // {{{ public function getFocusableHtmlId()
 
     /**
      * Gets the id attribute of the XHTML element displayed by this widget
@@ -229,9 +209,6 @@ class SwatTextarea extends SwatInputControl implements SwatState
     {
         return $this->visible ? $this->id : null;
     }
-
-    // }}}
-    // {{{ protected function getTextareaTag()
 
     /**
      * Gets the textarea tag used to display this textarea control.
@@ -275,9 +252,6 @@ class SwatTextarea extends SwatInputControl implements SwatState
         return $textarea_tag;
     }
 
-    // }}}
-    // {{{ protected function getValueLength()
-
     /**
      * Gets the computed length of the value of this textarea.
      *
@@ -297,9 +271,6 @@ class SwatTextarea extends SwatInputControl implements SwatState
         return $length;
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
-
     /**
      * Gets the array of CSS classes that are applied to this textarea.
      *
@@ -315,6 +286,4 @@ class SwatTextarea extends SwatInputControl implements SwatState
 
         return array_merge($classes, parent::getCSSClassNames());
     }
-
-    // }}}
 }

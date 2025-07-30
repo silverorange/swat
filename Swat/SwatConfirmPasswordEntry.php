@@ -11,17 +11,12 @@
  */
 class SwatConfirmPasswordEntry extends SwatPasswordEntry
 {
-    // {{{ public properties
-
     /**
      * A reference to the matching password widget.
      *
      * @var SwatPasswordEntry
      */
     public $password_widget;
-
-    // }}}
-    // {{{ public function process()
 
     /**
      * Checks to make sure passwords match.
@@ -54,9 +49,6 @@ class SwatConfirmPasswordEntry extends SwatPasswordEntry
         }
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
-
     /**
      * Gets the array of CSS classes that are applied to this entry.
      *
@@ -69,6 +61,4 @@ class SwatConfirmPasswordEntry extends SwatPasswordEntry
 
         return array_merge($classes, parent::getCSSClassNames());
     }
-
-    // }}}
 }

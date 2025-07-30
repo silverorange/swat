@@ -13,8 +13,6 @@ require_once 'Demo.php';
  */
 class ButtonDemo extends Demo
 {
-    // {{{ public function buildDemoUI()
-
     public function buildDemoUI(SwatUI $ui)
     {
         $submit = $ui->getWidget('submit_throbber_button');
@@ -27,6 +25,4 @@ class ButtonDemo extends Demo
             sleep(2);
         }
     }
-
-    // }}}
 }

@@ -8,17 +8,12 @@
  */
 class SwatSelectList extends SwatCheckboxList
 {
-    // {{{ public properties
-
     /**
      * Optional number of rows in the select list.
      *
      * @var int
      */
     public $size;
-
-    // }}}
-    // {{{ public function display()
 
     /**
      * Displays this select list.
@@ -59,9 +54,6 @@ class SwatSelectList extends SwatCheckboxList
         $select_tag->close();
     }
 
-    // }}}
-    // {{{ public function getNote()
-
     /**
      * Gets a note letting the user know the select list can select multiple
      * options.
@@ -79,6 +71,4 @@ class SwatSelectList extends SwatCheckboxList
 
         return new SwatMessage($message);
     }
-
-    // }}}
 }

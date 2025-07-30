@@ -13,8 +13,6 @@ require_once 'DemoMenuBar.php';
  */
 class DemoDocumentationMenuBar extends DemoMenuBar
 {
-    // {{{ public function display()
-
     public function display()
     {
         if (count($this->entries) > 0) {
@@ -45,6 +43,4 @@ class DemoDocumentationMenuBar extends DemoMenuBar
             $p_tag->close();
         }
     }
-
-    // }}}
 }

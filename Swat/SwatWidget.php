@@ -32,8 +32,6 @@
  */
 abstract class SwatWidget extends SwatUIObject
 {
-    // {{{ public properties
-
     /**
      * A non-visible unique id for this widget, or null.
      *
@@ -67,9 +65,6 @@ abstract class SwatWidget extends SwatUIObject
      */
     public $stylesheet;
 
-    // }}}
-    // {{{ private properties
-
     /**
      * Composite widgets of this widget.
      *
@@ -88,9 +83,6 @@ abstract class SwatWidget extends SwatUIObject
      * @var bool
      */
     private $composite_widgets_created = false;
-
-    // }}}
-    // {{{ protected properties
 
     /**
      * Messages affixed to this widget.
@@ -138,9 +130,6 @@ abstract class SwatWidget extends SwatUIObject
      */
     protected $displayed = false;
 
-    // }}}
-    // {{{ public function __construct()
-
     /**
      * Creates a new widget.
      *
@@ -153,9 +142,6 @@ abstract class SwatWidget extends SwatUIObject
         $this->id = $id;
         $this->addStylesheet('packages/swat/styles/swat.css');
     }
-
-    // }}}
-    // {{{ public function init()
 
     /**
      * Initializes this widget.
@@ -192,9 +178,6 @@ abstract class SwatWidget extends SwatUIObject
         $this->initialized = true;
     }
 
-    // }}}
-    // {{{ public function process()
-
     /**
      * Processes this widget.
      *
@@ -219,9 +202,6 @@ abstract class SwatWidget extends SwatUIObject
         $this->processed = true;
     }
 
-    // }}}
-    // {{{ public function display()
-
     /**
      * Displays this widget.
      *
@@ -240,9 +220,6 @@ abstract class SwatWidget extends SwatUIObject
         $this->displayed = true;
     }
 
-    // }}}
-    // {{{ public function displayHtmlHeadEntries()
-
     /**
      * Displays the HTML head entries for this widget.
      *
@@ -254,9 +231,6 @@ abstract class SwatWidget extends SwatUIObject
         $set = $this->getHtmlHeadEntrySet();
         $set->display();
     }
-
-    // }}}
-    // {{{ public function getHtmlHeadEntrySet()
 
     /**
      * Gets the SwatHtmlHeadEntry objects needed by this widget.
@@ -282,9 +256,6 @@ abstract class SwatWidget extends SwatUIObject
         return $set;
     }
 
-    // }}}
-    // {{{ public function getAvailableHtmlHeadEntrySet()
-
     /**
      * Gets the SwatHtmlHeadEntry objects that may be needed by this widget.
      *
@@ -302,9 +273,6 @@ abstract class SwatWidget extends SwatUIObject
         return $set;
     }
 
-    // }}}
-    // {{{ public function addMessage()
-
     /**
      * Adds a message to this widget.
      *
@@ -317,9 +285,6 @@ abstract class SwatWidget extends SwatUIObject
     {
         $this->messages[] = $message;
     }
-
-    // }}}
-    // {{{ public function getMessages()
 
     /**
      * Gets all messages.
@@ -340,9 +305,6 @@ abstract class SwatWidget extends SwatUIObject
 
         return $messages;
     }
-
-    // }}}
-    // {{{ public function hasMessage()
 
     /**
      * Checks for the presence of messages.
@@ -366,9 +328,6 @@ abstract class SwatWidget extends SwatUIObject
         return $has_message;
     }
 
-    // }}}
-    // {{{ public function isSensitive()
-
     /**
      * Determines the sensitivity of this widget.
      *
@@ -388,9 +347,6 @@ abstract class SwatWidget extends SwatUIObject
         return $this->sensitive;
     }
 
-    // }}}
-    // {{{ public function isInitialized()
-
     /**
      * Whether or not this widget is initialized.
      *
@@ -400,9 +356,6 @@ abstract class SwatWidget extends SwatUIObject
     {
         return $this->initialized;
     }
-
-    // }}}
-    // {{{ public function isProcessed()
 
     /**
      * Whether or not this widget is processed.
@@ -414,9 +367,6 @@ abstract class SwatWidget extends SwatUIObject
         return $this->processed;
     }
 
-    // }}}
-    // {{{ public function isDisplayed()
-
     /**
      * Whether or not this widget is displayed.
      *
@@ -426,9 +376,6 @@ abstract class SwatWidget extends SwatUIObject
     {
         return $this->displayed;
     }
-
-    // }}}
-    // {{{ public function getFocusableHtmlId()
 
     /**
      * Gets the id attribute of the XHTML element displayed by this widget
@@ -451,9 +398,6 @@ abstract class SwatWidget extends SwatUIObject
     {
         return null;
     }
-
-    // }}}
-    // {{{ public function replaceWithContainer()
 
     /**
      * Replace this widget with a new container.
@@ -487,9 +431,6 @@ abstract class SwatWidget extends SwatUIObject
         return $container;
     }
 
-    // }}}
-    // {{{ public function copy()
-
     /**
      * Performs a deep copy of the UI tree starting with this UI object.
      *
@@ -521,16 +462,10 @@ abstract class SwatWidget extends SwatUIObject
         return $copy;
     }
 
-    // }}}
-    // {{{ abstract public function printWidgetTree()
-
     /**
      * @todo document me
      */
     abstract public function printWidgetTree();
-
-    // }}}
-    // {{{ protected function validateId()
 
     /**
      * Ensures the id for this widget is valid.
@@ -558,9 +493,6 @@ abstract class SwatWidget extends SwatUIObject
         }
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
-
     /**
      * Gets the array of CSS  classes that are applied  to this widget.
      *
@@ -577,9 +509,6 @@ abstract class SwatWidget extends SwatUIObject
         return array_merge($classes, parent::getCSSClassNames());
     }
 
-    // }}}
-    // {{{ protected function createCompositeWidgets()
-
     /**
      * Creates and adds composite widgets of this widget.
      *
@@ -587,9 +516,6 @@ abstract class SwatWidget extends SwatUIObject
      * {@link SwatWidget::addCompositeWidget()}.
      */
     protected function createCompositeWidgets() {}
-
-    // }}}
-    // {{{ protected final function addCompositeWidget()
 
     /**
      * Adds a composite a widget to this widget.
@@ -631,9 +557,6 @@ abstract class SwatWidget extends SwatUIObject
         $widget->parent = $this;
     }
 
-    // }}}
-    // {{{ protected final function getCompositeWidget()
-
     /**
      * Gets a composite widget of this widget by the composite widget's key.
      *
@@ -667,9 +590,6 @@ abstract class SwatWidget extends SwatUIObject
 
         return $this->composite_widgets[$key];
     }
-
-    // }}}
-    // {{{ protected final function getCompositeWidgets()
 
     /**
      * Gets all composite widgets added to this widget.
@@ -711,9 +631,6 @@ abstract class SwatWidget extends SwatUIObject
         return $out;
     }
 
-    // }}}
-    // {{{ protected final function confirmCompositeWidgets()
-
     /**
      * Confirms composite widgets have been created.
      *
@@ -733,6 +650,4 @@ abstract class SwatWidget extends SwatUIObject
             $this->composite_widgets_created = true;
         }
     }
-
-    // }}}
 }

@@ -8,8 +8,6 @@
  */
 class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 {
-    // {{{ constants
-
     /**
      * A regular checkbox tree. Nothing speical is tracked.
      */
@@ -30,18 +28,12 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
      */
     public const DEPENDENT_CHILD = 'child';
 
-    // }}}
-    // {{{ public properties
-
     /**
      * Used to determine the type of dependency tracking.
      *
      * @var string
      */
     public $dependency_type = self::DEPENDENT_NONE;
-
-    // }}}
-    // {{{ protected properties
 
     /**
      * Checkbox tree structure.
@@ -71,9 +63,6 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
      */
     protected $input_tag;
 
-    // }}}
-    // {{{ public function __construct()
-
     /**
      * Creates a new checkbox list.
      *
@@ -87,9 +76,6 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
         $this->addJavaScript('packages/swat/javascript/swat-checkbox-tree.js');
         $this->setTree(new SwatDataTreeNode(null, 'root'));
     }
-
-    // }}}
-    // {{{ public function process()
 
     /**
      * Processes this checkbox list widget.
@@ -110,9 +96,6 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
             }
         }
     }
-
-    // }}}
-    // {{{ public function display()
 
     public function display()
     {
@@ -153,9 +136,6 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
         Swat::displayInlineJavaScript($this->getInlineJavaScript());
     }
 
-    // }}}
-    // {{{ public function setTree()
-
     /**
      * Sets the tree to use for display.
      *
@@ -165,9 +145,6 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
     {
         $this->tree = $tree;
     }
-
-    // }}}
-    // {{{ public function getTree()
 
     /**
      * Gets the tree collection of {@link SwatTreeNode} objects for this
@@ -179,9 +156,6 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
     {
         return $this->tree;
     }
-
-    // }}}
-    // {{{ protected function validate()
 
     protected function validate(SwatDataTreeNode $node, $is_parent_selected)
     {
@@ -204,9 +178,6 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
         );
     }
 
-    // }}}
-    // {{{ protected function getJavaScriptClassName()
-
     /**
      * Get the name of the JavaScript class for this widget.
      *
@@ -226,9 +197,6 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
         }
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
-
     /**
      * Gets the array of CSS classes that are applied to this checkbox tree.
      *
@@ -241,9 +209,6 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 
         return array_merge($classes, parent::getCSSClassNames());
     }
-
-    // }}}
-    // {{{ private function displayNode()
 
     /**
      * Displays a node in a tree as a checkbox input.
@@ -323,6 +288,4 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 
         return $nodes;
     }
-
-    // }}}
 }

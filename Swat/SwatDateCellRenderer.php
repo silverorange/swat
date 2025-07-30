@@ -8,8 +8,6 @@
  */
 class SwatDateCellRenderer extends SwatCellRenderer
 {
-    // {{{ public properties
-
     /**
      * Date to render.
      *
@@ -50,9 +48,6 @@ class SwatDateCellRenderer extends SwatCellRenderer
      * @var DateTimeZone|string
      */
     public $display_time_zone;
-
-    // }}}
-    // {{{ public function render()
 
     /**
      * Renders the contents of this cell.
@@ -96,6 +91,4 @@ class SwatDateCellRenderer extends SwatCellRenderer
             );
         }
     }
-
-    // }}}
 }

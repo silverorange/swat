@@ -8,8 +8,6 @@
  */
 class SwatImageCellRenderer extends SwatCellRenderer
 {
-    // {{{ public properties
-
     /**
      * The relative uri of the image file for this image renderer.
      *
@@ -99,9 +97,6 @@ class SwatImageCellRenderer extends SwatCellRenderer
      */
     public $alt;
 
-    // }}}
-    // {{{ public function render()
-
     /**
      * Renders the contents of this cell.
      *
@@ -167,9 +162,6 @@ class SwatImageCellRenderer extends SwatCellRenderer
         $image_tag->display();
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
-
     /**
      * Gets the array of CSS classes that are applied to this cell renderer.
      *
@@ -181,6 +173,4 @@ class SwatImageCellRenderer extends SwatCellRenderer
 
         return array_merge($classes, $this->classes);
     }
-
-    // }}}
 }

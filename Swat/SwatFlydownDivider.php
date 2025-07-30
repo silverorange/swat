@@ -11,8 +11,6 @@
  */
 class SwatFlydownDivider extends SwatOption
 {
-    // {{{ public function __construct()
-
     /**
      * Creates a flydown option.
      *
@@ -33,6 +31,4 @@ class SwatFlydownDivider extends SwatOption
 
         parent::__construct($value, $title, $content_type);
     }
-
-    // }}}
 }

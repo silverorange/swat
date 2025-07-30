@@ -10,8 +10,6 @@ require_once 'Demo.php';
  */
 class SelectListDemo extends Demo
 {
-    // {{{ public function buildDemoUI()
-
     public function buildDemoUI(SwatUI $ui)
     {
         $select_list_options = [
@@ -25,6 +23,4 @@ class SelectListDemo extends Demo
         $select_list = $ui->getWidget('select_list');
         $select_list->addOptionsByArray($select_list_options);
     }
-
-    // }}}
 }

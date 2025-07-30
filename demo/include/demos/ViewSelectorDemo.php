@@ -10,8 +10,6 @@ require_once 'Demo.php';
  */
 class ViewSelectorDemo extends Demo
 {
-    // {{{ public function buildDemoUI();
-
     public function buildDemoUI(SwatUI $ui)
     {
         $data = [
@@ -46,8 +44,6 @@ class ViewSelectorDemo extends Demo
         $table_view = $ui->getWidget('checkbox_table_view');
         $table_view->model = $table_store;
     }
-
-    // }}}
 }
 
 /**
@@ -58,8 +54,6 @@ class ViewSelectorDemo extends Demo
  */
 class FruitObject
 {
-    // {{{ public properties
-
     public $image = '';
     public $image_width = 0;
     public $image_height = 0;
@@ -69,6 +63,4 @@ class FruitObject
     public $makes_pie = false;
     public $harvest_date;
     public $cost = 0;
-
-    // }}}
 }

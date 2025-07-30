@@ -8,8 +8,6 @@
  */
 class SwatDBException extends SwatException
 {
-    // {{{ private function ___construct()
-
     public function __construct($message = null, $code = 0)
     {
         if (is_object($message) && $message instanceof PEAR_Error) {
@@ -21,6 +19,4 @@ class SwatDBException extends SwatException
 
         parent::__construct($message, $code);
     }
-
-    // }}}
 }

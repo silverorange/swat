@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d2442fa536faabc4d3d7f23fb6281d0e",
+    "content-hash": "5564b1bb53919d76f07092ca03a12cf5",
     "packages": [
         {
             "name": "league/climate",
@@ -471,40 +471,61 @@
         },
         {
             "name": "silverorange/mdb2",
-            "version": "3.1.1",
+            "version": "3.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/silverorange/MDB2.git",
-                "reference": "35d0af9cc62c12fd9e27595434ab44361eb8c6fc"
+                "reference": "c80f69fe983faa46a9a8dcd34152550b2553cacb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.silverorange.com/dist/silverorange/mdb2/silverorange-mdb2-35d0af9cc62c12fd9e27595434ab44361eb8c6fc-zip-9e28e8.zip",
-                "reference": "35d0af9cc62c12fd9e27595434ab44361eb8c6fc",
-                "shasum": "9fd724f2bcea500e041947678398e5e43f02f8b6"
+                "url": "https://composer.silverorange.com/dist/silverorange/mdb2/silverorange-mdb2-c80f69fe983faa46a9a8dcd34152550b2553cacb-zip-49436c.zip",
+                "reference": "c80f69fe983faa46a9a8dcd34152550b2553cacb",
+                "shasum": "dbcf06f1dc5e89cca4e2db4c27c26a7e9d5d3cea"
             },
             "require": {
+                "ext-mbstring": "*",
                 "pear/pear-core-minimal": "^1.9.0",
-                "php": ">=5.3.0"
+                "php": ">=8.2"
             },
             "require-dev": {
-                "silverorange/coding-standard": "^0.6.0"
+                "friendsofphp/php-cs-fixer": "^3.64.0",
+                "phpstan/phpstan": "^1.12",
+                "rector/rector": "^1.2"
             },
             "type": "library",
             "autoload": {
                 "psr-0": {
                     "MDB2": ""
-                }
+                },
+                "files": [
+                    "MDB2.php"
+                ]
             },
             "scripts": {
-                "lint": [
-                    "./vendor/bin/phpcs"
+                "phpcs": [
+                    "./vendor/bin/php-cs-fixer check -v"
                 ],
-                "post-install-cmd": [
-                    "./vendor/bin/phpcs --config-set installed_paths vendor/silverorange/coding-standard/src"
+                "phpcs:ci": [
+                    "./vendor/bin/php-cs-fixer check --config=.php-cs-fixer.php --no-interaction --show-progress=none --diff --using-cache=no -vvv"
                 ],
-                "post-update-cmd": [
-                    "./vendor/bin/phpcs --config-set installed_paths vendor/silverorange/coding-standard/src"
+                "phpcs:write": [
+                    "./vendor/bin/php-cs-fixer fix -v"
+                ],
+                "phpstan": [
+                    "./vendor/bin/phpstan analyze"
+                ],
+                "phpstan:ci": [
+                    "./vendor/bin/phpstan analyze -vvv --no-progress --memory-limit 2G"
+                ],
+                "phpstan:baseline": [
+                    "./vendor/bin/phpstan analyze --generate-baseline"
+                ],
+                "rector": [
+                    "./vendor/bin/rector --dry-run"
+                ],
+                "rector:write": [
+                    "./vendor/bin/rector"
                 ]
             },
             "license": [
@@ -525,9 +546,9 @@
                 "orm"
             ],
             "support": {
-                "source": "https://github.com/silverorange/MDB2/tree/3.1.1"
+                "source": "https://github.com/silverorange/MDB2/tree/3.1.2"
             },
-            "time": "2017-12-05T18:20:09+00:00"
+            "time": "2025-07-29T17:08:37+00:00"
         },
         {
             "name": "silverorange/yui",

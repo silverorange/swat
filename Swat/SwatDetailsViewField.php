@@ -8,8 +8,6 @@
  */
 class SwatDetailsViewField extends SwatCellRendererContainer
 {
-    // {{{ public properties
-
     /**
      * The unique identifier of this field.
      *
@@ -66,18 +64,12 @@ class SwatDetailsViewField extends SwatCellRendererContainer
      */
     public $show_renderer_classes = true;
 
-    // }}}
-    // {{{ protected properties
-
     /**
      * Whether or not this field is odd or even in its parent details view.
      *
      * @var bool
      */
     protected $odd = false;
-
-    // }}}
-    // {{{ public function __construct()
 
     /**
      * Creates a new details view field.
@@ -91,9 +83,6 @@ class SwatDetailsViewField extends SwatCellRendererContainer
         parent::__construct();
     }
 
-    // }}}
-    // {{{ public function init()
-
     /**
      * Initializes this field.
      *
@@ -106,18 +95,12 @@ class SwatDetailsViewField extends SwatCellRendererContainer
         }
     }
 
-    // }}}
-    // {{{ public function process()
-
     public function process()
     {
         foreach ($this->renderers as $renderer) {
             $renderer->process();
         }
     }
-
-    // }}}
-    // {{{ public function display()
 
     /**
      * Displays this details view field using a data object.
@@ -145,9 +128,6 @@ class SwatDetailsViewField extends SwatCellRendererContainer
         $tr_tag->close();
     }
 
-    // }}}
-    // {{{ public function displayHeader()
-
     /**
      * Displays the header for this details view field.
      */
@@ -166,9 +146,6 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 
         $th_tag->display();
     }
-
-    // }}}
-    // {{{ public function displayValue()
 
     /**
      * Displays the value of this details view field.
@@ -197,9 +174,6 @@ class SwatDetailsViewField extends SwatCellRendererContainer
         $this->displayRenderers($data);
     }
 
-    // }}}
-    // {{{ public function getTdAttributes()
-
     /**
      * Gets the TD tag attributes for this column.
      *
@@ -213,9 +187,6 @@ class SwatDetailsViewField extends SwatCellRendererContainer
             'class' => $this->getCSSClassString(),
         ];
     }
-
-    // }}}
-    // {{{ public function getHtmlHeadEntrySet()
 
     /**
      * Gets the SwatHtmlHeadEntry objects needed by this field.
@@ -236,9 +207,6 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 
         return $set;
     }
-
-    // }}}
-    // {{{ public function getAvailableHtmlHeadEntrySet()
 
     /**
      * Gets the SwatHtmlHeadEntry objects that may be needed by this
@@ -261,9 +229,6 @@ class SwatDetailsViewField extends SwatCellRendererContainer
         return $set;
     }
 
-    // }}}
-    // {{{ protected function getHeaderTitle()
-
     /**
      * Gets the title to use for the header of this details view field.
      *
@@ -283,9 +248,6 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 
         return $header_title;
     }
-
-    // }}}
-    // {{{ protected function displayRenderers()
 
     /**
      * Renders each cell renderer in this details-view field.
@@ -311,9 +273,6 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 
         $td_tag->close();
     }
-
-    // }}}
-    // {{{ protected function getCSSClassNames()
 
     /**
      * Gets the array of CSS classes that are applied to this details-view
@@ -386,9 +345,6 @@ class SwatDetailsViewField extends SwatCellRendererContainer
         return $classes;
     }
 
-    // }}}
-    // {{{ protected function getBaseCSSClassNames()
-
     /**
      * Gets the base CSS class names of this details-view field.
      *
@@ -402,6 +358,4 @@ class SwatDetailsViewField extends SwatCellRendererContainer
     {
         return ['swat-details-view-field'];
     }
-
-    // }}}
 }

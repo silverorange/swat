@@ -18,8 +18,6 @@
  */
 class SwatCheckboxEntryList extends SwatCheckboxList
 {
-    // {{{ public properties
-
     /**
      * The size of all the embedded entry widgets.
      *
@@ -41,9 +39,6 @@ class SwatCheckboxEntryList extends SwatCheckboxList
      */
     public $entry_maxlength;
 
-    // }}}
-    // {{{ protected properties
-
     /**
      * The entry widgets used by this checkbox entry list.
      *
@@ -52,9 +47,6 @@ class SwatCheckboxEntryList extends SwatCheckboxList
      * @var array
      */
     protected $entry_widgets = [];
-
-    // }}}
-    // {{{ public function __construct()
 
     /**
      * Creates a new checkbox entry list.
@@ -78,9 +70,6 @@ class SwatCheckboxEntryList extends SwatCheckboxList
             'packages/swat/styles/swat-checkbox-entry-list.css',
         );
     }
-
-    // }}}
-    // {{{ public function display()
 
     /**
      * Displays this checkbox list.
@@ -165,9 +154,6 @@ class SwatCheckboxEntryList extends SwatCheckboxList
         Swat::displayInlineJavaScript($this->getInlineJavaScript());
     }
 
-    // }}}
-    // {{{ public function process()
-
     /**
      * Processes this checkbox entry list.
      *
@@ -191,9 +177,6 @@ class SwatCheckboxEntryList extends SwatCheckboxList
         }
     }
 
-    // }}}
-    // {{{ public function getMessages()
-
     /**
      * Gets all messages.
      *
@@ -213,9 +196,6 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 
         return $messages;
     }
-
-    // }}}
-    // {{{ public function hasMessage()
 
     /**
      * Checks for the presence of messages.
@@ -242,9 +222,6 @@ class SwatCheckboxEntryList extends SwatCheckboxList
         return $has_message;
     }
 
-    // }}}
-    // {{{ public function getEntryValue()
-
     /**
      * Gets the value of an entry widget in this checkbox entry list.
      *
@@ -264,9 +241,6 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 
         return $entry_value;
     }
-
-    // }}}
-    // {{{ public function setEntryValue()
 
     /**
      * Sets the value of an entry widget in this checkbox entry list.
@@ -300,9 +274,6 @@ class SwatCheckboxEntryList extends SwatCheckboxList
         $this->getEntryWidget($option_value)->getFirst()->value = $entry_value;
     }
 
-    // }}}
-    // {{{ public function setEntryValuesByArray()
-
     /**
      * Sets the values of multiple entry widgets.
      *
@@ -325,9 +296,6 @@ class SwatCheckboxEntryList extends SwatCheckboxList
             $this->setEntryValue($option_value, $entry_value);
         }
     }
-
-    // }}}
-    // {{{ protected function getInlineJavaScript()
 
     /**
      * Gets the inline JavaScript for this checkbox entry list.
@@ -354,9 +322,6 @@ class SwatCheckboxEntryList extends SwatCheckboxList
         return $javascript;
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
-
     /**
      * Gets the array of CSS classes that are applied to this checkbox entry
      * list.
@@ -371,9 +336,6 @@ class SwatCheckboxEntryList extends SwatCheckboxList
         return array_merge($classes, parent::getCSSClassNames());
     }
 
-    // }}}
-    // {{{ protected function hasEntryWidget()
-
     /**
      * Checks if this checkbox entry list has an entry widget for a given
      * option value.
@@ -387,9 +349,6 @@ class SwatCheckboxEntryList extends SwatCheckboxList
     {
         return isset($this->entry_widgets[$option_value]);
     }
-
-    // }}}
-    // {{{ protected function getEntryWidget()
 
     /**
      * Gets a widget tree for the entry widget of this checkbox entry list.
@@ -419,9 +378,6 @@ class SwatCheckboxEntryList extends SwatCheckboxList
         return $this->entry_widgets[$option_value];
     }
 
-    // }}}
-    // {{{ protected function createEntryWidget()
-
     /**
      * Creates an entry widget of this checkbox entry list.
      *
@@ -440,6 +396,4 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 
         return $widget;
     }
-
-    // }}}
 }

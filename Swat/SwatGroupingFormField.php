@@ -11,8 +11,6 @@
  */
 class SwatGroupingFormField extends SwatFormField
 {
-    // {{{ protected function getTitleTag()
-
     /**
      * Get a SwatHtmlTag to display the title.
      *
@@ -27,9 +25,6 @@ class SwatGroupingFormField extends SwatFormField
 
         return $legend_tag;
     }
-
-    // }}}
-    // {{{ public function display()
 
     /**
      * Displays this form field.
@@ -65,9 +60,6 @@ class SwatGroupingFormField extends SwatFormField
         $container_tag->close();
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
-
     /**
      * Gets the array of CSS classes that are applied to this footer form field.
      *
@@ -81,6 +73,4 @@ class SwatGroupingFormField extends SwatFormField
 
         return $classes;
     }
-
-    // }}}
 }

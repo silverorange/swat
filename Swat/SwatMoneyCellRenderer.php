@@ -8,8 +8,6 @@
  */
 class SwatMoneyCellRenderer extends SwatCellRenderer
 {
-    // {{{ public properties
-
     /**
      * Optional locale for currency format.
      *
@@ -74,9 +72,6 @@ class SwatMoneyCellRenderer extends SwatCellRenderer
      */
     public $null_display_value;
 
-    // }}}
-    // {{{ public function __construct()
-
     /**
      * Creates a money cell renderer.
      */
@@ -88,9 +83,6 @@ class SwatMoneyCellRenderer extends SwatCellRenderer
             'packages/swat/styles/swat-money-cell-renderer.css',
         );
     }
-
-    // }}}
-    // {{{ public function render()
 
     /**
      * Renders the contents of this cell.
@@ -131,9 +123,6 @@ class SwatMoneyCellRenderer extends SwatCellRenderer
         }
     }
 
-    // }}}
-    // {{{ protected function getCurrencyFormat()
-
     /**
      * Gets currency format to use when rendering.
      *
@@ -143,6 +132,4 @@ class SwatMoneyCellRenderer extends SwatCellRenderer
     {
         return ['fractional_digits' => $this->decimal_places];
     }
-
-    // }}}
 }

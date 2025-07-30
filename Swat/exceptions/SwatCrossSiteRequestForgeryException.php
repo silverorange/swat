@@ -14,17 +14,12 @@
  */
 class SwatCrossSiteRequestForgeryException extends SwatException
 {
-    // {{{ protected properties
-
     /**
      * The form that did not authenticate.
      *
      * @var SwatForm
      */
     protected $form;
-
-    // }}}
-    // {{{ public function __construct()
 
     /**
      * Creates a new cross-site request forgery exception.
@@ -39,9 +34,6 @@ class SwatCrossSiteRequestForgeryException extends SwatException
         $this->form = $form;
     }
 
-    // }}}
-    // {{{ public function getForm()
-
     /**
      * Gets the form that did not authenticate.
      *
@@ -51,6 +43,4 @@ class SwatCrossSiteRequestForgeryException extends SwatException
     {
         return $this->form;
     }
-
-    // }}}
 }

@@ -10,8 +10,6 @@
  */
 class SwatNavBarEntry extends SwatObject
 {
-    // {{{ public properties
-
     /**
      * The visible title of this entry.
      *
@@ -38,9 +36,6 @@ class SwatNavBarEntry extends SwatObject
      */
     public $content_type = 'text/plain';
 
-    // }}}
-    // {{{ public function __construct()
-
     /**
      * Creates a new navbar entry.
      *
@@ -57,6 +52,4 @@ class SwatNavBarEntry extends SwatObject
         $this->link = $link;
         $this->content_type = $content_type;
     }
-
-    // }}}
 }

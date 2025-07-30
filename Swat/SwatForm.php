@@ -14,8 +14,6 @@
  */
 class SwatForm extends SwatDisplayableContainer
 {
-    // {{{ constants
-
     public const METHOD_POST = 'post';
     public const METHOD_GET = 'get';
 
@@ -28,9 +26,6 @@ class SwatForm extends SwatDisplayableContainer
     public const ENCODING_ENTITY_VALUE = '&auml;&trade;&reg;';
     public const ENCODING_UTF8_VALUE = "\xc3\xa4\xe2\x84\xa2\xc2\xae";
     public const ENCODING_8BIT_VALUE = "\xe4\x99\xae";
-
-    // }}}
-    // {{{ public properties
 
     /**
      * The action attribute of the HTML form tag.
@@ -121,9 +116,6 @@ class SwatForm extends SwatDisplayableContainer
      */
     public static $default_salt;
 
-    // }}}
-    // {{{ protected properties
-
     /**
      * Hidden form fields.
      *
@@ -202,9 +194,6 @@ class SwatForm extends SwatDisplayableContainer
      */
     protected $connection_close_uri;
 
-    // }}}
-    // {{{ private properties
-
     /**
      * The method to use for this form.
      *
@@ -227,9 +216,6 @@ class SwatForm extends SwatDisplayableContainer
      * @see SwatForm::isAuthenticated()
      */
     private static $authentication_token;
-
-    // }}}
-    // {{{ public function __construct()
 
     /**
      * Creates a new form.
@@ -259,9 +245,6 @@ class SwatForm extends SwatDisplayableContainer
         $this->addJavaScript('packages/swat/javascript/swat-form.js');
     }
 
-    // }}}
-    // {{{ public function setMethod()
-
     /**
      * Sets the HTTP method this form uses to send data.
      *
@@ -281,9 +264,6 @@ class SwatForm extends SwatDisplayableContainer
         $this->method = $method;
     }
 
-    // }}}
-    // {{{ public function getMethod()
-
     /**
      * Gets the HTTP method this form uses to send data.
      *
@@ -293,9 +273,6 @@ class SwatForm extends SwatDisplayableContainer
     {
         return $this->method;
     }
-
-    // }}}
-    // {{{ public function display()
 
     /**
      * Displays this form.
@@ -334,9 +311,6 @@ class SwatForm extends SwatDisplayableContainer
         Swat::displayInlineJavaScript($this->getInlineJavaScript());
     }
 
-    // }}}
-    // {{{ public function process()
-
     /**
      * Processes this form.
      *
@@ -364,9 +338,6 @@ class SwatForm extends SwatDisplayableContainer
             }
         }
     }
-
-    // }}}
-    // {{{ public function addHiddenField()
 
     /**
      * Adds a hidden form field.
@@ -400,9 +371,6 @@ class SwatForm extends SwatDisplayableContainer
 
         $this->hidden_fields[$name] = $value;
     }
-
-    // }}}
-    // {{{ public function getHiddenField()
 
     /**
      * Gets the value of a hidden form field.
@@ -442,9 +410,6 @@ class SwatForm extends SwatDisplayableContainer
         return $data;
     }
 
-    // }}}
-    // {{{ public function clearHiddenFields()
-
     /**
      * Clears all hidden fields.
      */
@@ -452,9 +417,6 @@ class SwatForm extends SwatDisplayableContainer
     {
         $this->hidden_fields = [];
     }
-
-    // }}}
-    // {{{ public function addWithField()
 
     /**
      * Adds a widget within a new SwatFormField.
@@ -474,9 +436,6 @@ class SwatForm extends SwatDisplayableContainer
         $field->title = $title;
         $this->add($field);
     }
-
-    // }}}
-    // {{{ public function &getFormData()
 
     /**
      * Returns the super-global array with this form's data.
@@ -504,9 +463,6 @@ class SwatForm extends SwatDisplayableContainer
         return $data;
     }
 
-    // }}}
-    // {{{ public function isSubmitted()
-
     /**
      * Whether or not this form was submitted on the previous page request.
      *
@@ -524,9 +480,6 @@ class SwatForm extends SwatDisplayableContainer
         return isset($raw_data[self::PROCESS_FIELD])
             && $raw_data[self::PROCESS_FIELD] == $this->id;
     }
-
-    // }}}
-    // {{{ public function isAuthenticated()
 
     /**
      * Whether or not this form is authenticated.
@@ -570,9 +523,6 @@ class SwatForm extends SwatDisplayableContainer
             || self::$authentication_token === $token;
     }
 
-    // }}}
-    // {{{ public function setSalt()
-
     /**
      * Sets the salt value to use when salting signature data.
      *
@@ -582,9 +532,6 @@ class SwatForm extends SwatDisplayableContainer
     {
         $this->salt = (string) $salt;
     }
-
-    // }}}
-    // {{{ public function getSalt()
 
     /**
      * Gets the salt value to use when salting signature data.
@@ -603,9 +550,6 @@ class SwatForm extends SwatDisplayableContainer
         return $this->salt;
     }
 
-    // }}}
-    // {{{ public function set8BitEncoding()
-
     /**
      * Sets the encoding to assume for 8-bit content submitted from clients.
      *
@@ -621,9 +565,6 @@ class SwatForm extends SwatDisplayableContainer
     {
         $this->_8bit_encoding = $encoding;
     }
-
-    // }}}
-    // {{{ public function setConnectionCloseUri()
 
     /**
      * Sets the URI at which a Connection: close header may be sent to the
@@ -643,9 +584,6 @@ class SwatForm extends SwatDisplayableContainer
         $this->connection_close_uri = $connection_close_uri;
     }
 
-    // }}}
-    // {{{ public static function setDefault8BitEncoding()
-
     /**
      * Sets the default encoding to assume for 8-bit content submitted from
      * clients.
@@ -662,9 +600,6 @@ class SwatForm extends SwatDisplayableContainer
     {
         self::$default_8bit_encoding = $encoding;
     }
-
-    // }}}
-    // {{{ public static function setDefaultConnectionCloseUri()
 
     /**
      * Sets the default URI at which a Connection: close header may be sent to
@@ -685,9 +620,6 @@ class SwatForm extends SwatDisplayableContainer
         self::$default_connection_close_uri = $connection_close_uri;
     }
 
-    // }}}
-    // {{{ public static function setAuthenticationToken()
-
     /**
      * Sets the token value used to prevent cross-site request forgeries.
      *
@@ -707,9 +639,6 @@ class SwatForm extends SwatDisplayableContainer
         self::$authentication_token = (string) $token;
     }
 
-    // }}}
-    // {{{ public static function clearAuthenticationToken()
-
     /**
      * Clears the token value used to prevent cross-site request forgeries.
      *
@@ -722,9 +651,6 @@ class SwatForm extends SwatDisplayableContainer
     {
         self::$authentication_token = null;
     }
-
-    // }}}
-    // {{{ protected function processHiddenFields()
 
     /**
      * Checks submitted form data for hidden fields.
@@ -759,9 +685,6 @@ class SwatForm extends SwatDisplayableContainer
             }
         }
     }
-
-    // }}}
-    // {{{ protected function processEncoding()
 
     /**
      * Detects 8-bit character encoding in form data and converts data to UTF-8.
@@ -847,9 +770,6 @@ class SwatForm extends SwatDisplayableContainer
         }
     }
 
-    // }}}
-    // {{{ protected function notifyOfAdd()
-
     /**
      * Notifies this widget that a widget was added.
      *
@@ -876,9 +796,6 @@ class SwatForm extends SwatDisplayableContainer
             }
         }
     }
-
-    // }}}
-    // {{{ protected function displayHiddenFields()
 
     /**
      * Displays hidden form fields.
@@ -976,9 +893,6 @@ class SwatForm extends SwatDisplayableContainer
         echo '</div>';
     }
 
-    // }}}
-    // {{{ protected fucntion getFormTag()
-
     /**
      * Gets the XHTML form tag used to display this form.
      *
@@ -1004,9 +918,6 @@ class SwatForm extends SwatDisplayableContainer
         return $form_tag;
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
-
     /**
      * Gets the array of CSS classes that are applied to this form.
      *
@@ -1018,9 +929,6 @@ class SwatForm extends SwatDisplayableContainer
 
         return array_merge($classes, parent::getCSSClassNames());
     }
-
-    // }}}
-    // {{{ protected function getInlineJavaScript()
 
     /**
      * Gets inline JavaScript required for this form.
@@ -1071,9 +979,6 @@ class SwatForm extends SwatDisplayableContainer
         return $javascript;
     }
 
-    // }}}
-    // {{{ protected function getJavaScriptClass()
-
     /**
      * Gets the name of the JavaScript class to instantiate for this form.
      *
@@ -1087,9 +992,6 @@ class SwatForm extends SwatDisplayableContainer
     {
         return 'SwatForm';
     }
-
-    // }}}
-    // {{{ protected function serializeHiddenField()
 
     /**
      * Serializes a hidden field value into a string safe for including in
@@ -1113,9 +1015,6 @@ class SwatForm extends SwatDisplayableContainer
         return str_replace("\x0d", '\x0d', $value);
     }
 
-    // }}}
-    // {{{ protected function unserializeHiddenField()
-
     /**
      * Unserializes a hidden field value that was serialized using
      * {@link SwatForm::serializeHiddenField()}.
@@ -1138,6 +1037,4 @@ class SwatForm extends SwatDisplayableContainer
 
         return SwatString::signedUnserialize($value, $this->salt);
     }
-
-    // }}}
 }

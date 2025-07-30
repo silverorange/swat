@@ -10,13 +10,9 @@
  */
 class SwatDBDefaultRecordsetWrapper extends SwatDBRecordsetWrapper
 {
-    // {{{ public function __construct()
-
     public function __construct($rs = null)
     {
         $this->row_wrapper_class = null;
         parent::__construct($rs);
     }
-
-    // }}}
 }

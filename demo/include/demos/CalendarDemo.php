@@ -13,8 +13,6 @@ require_once 'Demo.php';
  */
 class CalendarDemo extends Demo
 {
-    // {{{ public function buildDemoUI()
-
     public function buildDemoUI(SwatUI $ui)
     {
         $flydown = $ui->getWidget('flydown');
@@ -30,6 +28,4 @@ class CalendarDemo extends Demo
             new SwatOption(8, 'Strawberry'),
         ];
     }
-
-    // }}}
 }

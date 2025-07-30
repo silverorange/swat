@@ -57,7 +57,7 @@
     "ext-pcre": "*",
     "pear/pear_exception": "^1.0.0",
     "silverorange/concentrate": "^2.0.0",
-    "silverorange/mdb2": "^3.1.1",
+    "silverorange/mdb2": "^3.1.2",
     "silverorange/yui": "^1.0.11"
   },
   "require-dev": {
@@ -73,9 +73,11 @@
   },
   "scripts": {
     "phpcs": "./vendor/bin/php-cs-fixer check -v",
+    "phpcs:ci": "./vendor/bin/php-cs-fixer check --config=.php-cs-fixer.php --no-interaction --show-progress=none --diff --using-cache=no -vvv",
     "phpcs:write": "./vendor/bin/php-cs-fixer fix -v",
-    "phpstan": "./vendor/bin/phpstan analyse",
-    "phpstan:baseline": "./vendor/bin/phpstan analyse --generate-baseline"
+    "phpstan": "./vendor/bin/phpstan analyze",
+    "phpstan:ci": "./vendor/bin/phpstan analyze -vvv --no-progress --memory-limit 2G",
+    "phpstan:baseline": "./vendor/bin/phpstan analyze --generate-baseline"
   },
   "config": {
     "sort-packages": true

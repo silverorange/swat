@@ -13,8 +13,6 @@
  */
 class SwatUriEntry extends SwatEntry
 {
-    // {{{ public properties
-
     /**
      * Whether or not to require the scheme for the URI.
      *
@@ -38,9 +36,6 @@ class SwatUriEntry extends SwatEntry
      * @var array
      */
     public $valid_schemes = ['http', 'https', 'ftp'];
-
-    // }}}
-    // {{{ public function process()
 
     /**
      * Processes this URI entry.
@@ -81,9 +76,6 @@ class SwatUriEntry extends SwatEntry
         }
     }
 
-    // }}}
-    // {{{ protected function validateUri()
-
     /**
      * Validates a URI.
      *
@@ -122,9 +114,6 @@ class SwatUriEntry extends SwatEntry
 
         return preg_match($regexp, $value) === 1;
     }
-
-    // }}}
-    // {{{ protected function getValidationMessage()
 
     /**
      * Gets a validation message for this entry.
@@ -171,9 +160,6 @@ class SwatUriEntry extends SwatEntry
         return new SwatMessage($text, 'error');
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
-
     /**
      * Gets the array of CSS classes that are applied to this entry.
      *
@@ -186,6 +172,4 @@ class SwatUriEntry extends SwatEntry
 
         return array_merge($classes, parent::getCSSClassNames());
     }
-
-    // }}}
 }

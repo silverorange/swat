@@ -8,8 +8,6 @@
  */
 class SwatSearchEntry extends SwatEntry
 {
-    // {{{ public properties
-
     /**
      * An XHTML name for this search entry widget.
      *
@@ -20,9 +18,6 @@ class SwatSearchEntry extends SwatEntry
      * @var string
      */
     public $name;
-
-    // }}}
-    // {{{ public function __construct()
 
     public function __construct($id = null)
     {
@@ -35,9 +30,6 @@ class SwatSearchEntry extends SwatEntry
         $this->addJavaScript('packages/swat/javascript/swat-search-entry.js');
         $this->addStyleSheet('packages/swat/styles/swat-search-entry.css');
     }
-
-    // }}}
-    // {{{ public function display()
 
     /**
      * Displays this search entry.
@@ -55,9 +47,6 @@ class SwatSearchEntry extends SwatEntry
         Swat::displayInlineJavaScript($this->getInlineJavaScript());
     }
 
-    // }}}
-    // {{{ protected function getInlineJavaScript()
-
     /**
      * Gets the inline JavaScript for this entry to function.
      *
@@ -72,9 +61,6 @@ class SwatSearchEntry extends SwatEntry
         return "var {$this->id}_obj = new SwatSearchEntry('{$this->id}');";
     }
 
-    // }}}
-    // {{{ protected function getInputTag()
-
     protected function getInputTag()
     {
         $tag = parent::getInputTag();
@@ -85,9 +71,6 @@ class SwatSearchEntry extends SwatEntry
 
         return $tag;
     }
-
-    // }}}
-    // {{{ protected function getCSSClassNames()
 
     /**
      * Gets the array of CSS classes that are applied to this entry.
@@ -101,9 +84,6 @@ class SwatSearchEntry extends SwatEntry
 
         return array_merge($classes, parent::getCSSClassNames());
     }
-
-    // }}}
-    // {{{ protected function getRawValue()
 
     /**
      * Gets the raw value entered by the user before processing.
@@ -127,9 +107,6 @@ class SwatSearchEntry extends SwatEntry
 
         return $value;
     }
-
-    // }}}
-    // {{{ protected function hasRawValue()
 
     /**
      * Gets whether or not a value was submitted by the user for this entry.
@@ -156,6 +133,4 @@ class SwatSearchEntry extends SwatEntry
 
         return $has_value;
     }
-
-    // }}}
 }

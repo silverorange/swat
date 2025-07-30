@@ -8,12 +8,7 @@
  */
 class SwatCommentHtmlHeadEntry extends SwatHtmlHeadEntry
 {
-    // {{{ protected properties
-
     protected $comment;
-
-    // }}}
-    // {{{ public function __construct()
 
     /**
      * Creates a new HTML head entry.
@@ -26,9 +21,6 @@ class SwatCommentHtmlHeadEntry extends SwatHtmlHeadEntry
         $this->comment = $comment;
     }
 
-    // }}}
-    // {{{ protected function displayInternal()
-
     protected function displayInternal($uri_prefix = '', $tag = null)
     {
         // double dashes are not allowed in XML comments
@@ -36,13 +28,8 @@ class SwatCommentHtmlHeadEntry extends SwatHtmlHeadEntry
         printf('<!-- %s -->', $comment);
     }
 
-    // }}}
-    // {{{ protected function displayInlineInternal()
-
     protected function displayInlineInternal($path)
     {
         $this->displayInternal();
     }
-
-    // }}}
 }

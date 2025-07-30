@@ -8,17 +8,12 @@
  */
 class SwatInvalidTypeException extends SwatException
 {
-    // {{{ protected properties
-
     /**
      * The value that is of the wrong type.
      *
      * @var mixed
      */
     protected $value;
-
-    // }}}
-    // {{{ public function __construct()
 
     /**
      * Creates a new invalid type exception.
@@ -33,9 +28,6 @@ class SwatInvalidTypeException extends SwatException
         $this->value = $value;
     }
 
-    // }}}
-    // {{{ public function getValue()
-
     /**
      * Gets the value that is of the wrong type.
      *
@@ -45,6 +37,4 @@ class SwatInvalidTypeException extends SwatException
     {
         return $this->value;
     }
-
-    // }}}
 }

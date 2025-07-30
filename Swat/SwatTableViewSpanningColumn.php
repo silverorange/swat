@@ -8,17 +8,12 @@
  */
 class SwatTableViewSpanningColumn extends SwatTableViewColumn
 {
-    // {{{ public properties
-
     /**
      * The number of columns to offset to the right.
      *
      * @var int
      */
     public $offset = 0;
-
-    // }}}
-    // {{{ protected function displayRenderers()
 
     /**
      * Renders each cell renderer in this column inside a wrapping XHTML
@@ -59,9 +54,6 @@ class SwatTableViewSpanningColumn extends SwatTableViewColumn
         $td_tag->close();
     }
 
-    // }}}
-    // {{{ public function getXhtmlColspan()
-
     /**
      * Gets how many XHTML table columns this column object spans on display.
      *
@@ -80,6 +72,4 @@ class SwatTableViewSpanningColumn extends SwatTableViewColumn
 
         return $colspan;
     }
-
-    // }}}
 }

@@ -8,13 +8,8 @@
  */
 class SwatYesNoRadioList extends SwatRadioList
 {
-    // {{{ constants
-
     public const NO = false;
     public const YES = true;
-
-    // }}}
-    // {{{ public function __construct()
 
     /**
      * Creates a new yes/no radio list.
@@ -31,6 +26,4 @@ class SwatYesNoRadioList extends SwatRadioList
         $this->addOption(self::NO, Swat::_('No'));
         $this->addOption(self::YES, Swat::_('Yes'));
     }
-
-    // }}}
 }

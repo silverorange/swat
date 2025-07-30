@@ -13,8 +13,6 @@
  */
 class SwatCascadeFlydown extends SwatFlydown
 {
-    // {{{ public properties
-
     /**
      * Flydown options.
      *
@@ -41,9 +39,6 @@ class SwatCascadeFlydown extends SwatFlydown
      */
     public $cascade_from;
 
-    // }}}
-    // {{{ public function __construct()
-
     /**
      * Creates a new calendar.
      *
@@ -63,9 +58,6 @@ class SwatCascadeFlydown extends SwatFlydown
         $this->addJavaScript('packages/swat/javascript/swat-cascade.js');
     }
 
-    // }}}
-    // {{{ public function display()
-
     /**
      * Displays this cascading flydown.
      *
@@ -80,9 +72,6 @@ class SwatCascadeFlydown extends SwatFlydown
         parent::display();
         Swat::displayInlineJavaScript($this->getInlineJavaScript());
     }
-
-    // }}}
-    // {{{ public function addOption()
 
     /**
      * Adds an option to this option control.
@@ -116,9 +105,6 @@ class SwatCascadeFlydown extends SwatFlydown
         $this->options[$parent][] = $option;
     }
 
-    // }}}
-    // {{{ public function addOptionsByArray()
-
     /**
      * Adds options to this option control using an associative array.
      *
@@ -139,9 +125,6 @@ class SwatCascadeFlydown extends SwatFlydown
             }
         }
     }
-
-    // }}}
-    // {{{ protected function getOptions()
 
     /**
      * Gets the options of this flydown as a flat array.
@@ -189,18 +172,12 @@ class SwatCascadeFlydown extends SwatFlydown
         return $options;
     }
 
-    // }}}
-    // {{{ protected function getParentValue()
-
     protected function getParentValue()
     {
         return $this->cascade_from instanceof SwatFlydown
             ? $this->cascade_from->value
             : null;
     }
-
-    // }}}
-    // {{{ protected function getParentOptions()
 
     protected function getParentOptions()
     {
@@ -209,25 +186,16 @@ class SwatCascadeFlydown extends SwatFlydown
             : [];
     }
 
-    // }}}
-    // {{{ protected function hasEmptyParent()
-
     protected function hasEmptyParent()
     {
         return count($this->getParentOptions()) === 0;
     }
-
-    // }}}
-    // {{{ protected function hasSingleParent()
 
     protected function hasSingleParent()
     {
         return count($this->getParentOptions()) === 1
             && $this->cascade_from->show_blank == false;
     }
-
-    // }}}
-    // {{{ protected function getBlankOption()
 
     protected function getBlankOption()
     {
@@ -238,9 +206,6 @@ class SwatCascadeFlydown extends SwatFlydown
 
         return new SwatFlydownBlankOption(null, $blank_title);
     }
-
-    // }}}
-    // {{{ protected function getInlineJavaScript()
 
     /**
      * Gets the inline JavaScript that makes this control work.
@@ -326,6 +291,4 @@ class SwatCascadeFlydown extends SwatFlydown
 
         return $javascript;
     }
-
-    // }}}
 }

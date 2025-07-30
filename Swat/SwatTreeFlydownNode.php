@@ -10,17 +10,12 @@
  */
 class SwatTreeFlydownNode extends SwatTreeNode
 {
-    // {{{ protected properties
-
     /**
      * The flydown option for this node.
      *
      * @var SwatOption
      */
     protected $flydown_option;
-
-    // }}}
-    // {{{ public function __construct()
 
     /**
      * Creates a new tree flydown node.
@@ -61,9 +56,6 @@ class SwatTreeFlydownNode extends SwatTreeNode
         }
     }
 
-    // }}}
-    // {{{ public function getOption()
-
     /**
      * Gets the option for this node.
      *
@@ -74,9 +66,6 @@ class SwatTreeFlydownNode extends SwatTreeNode
         return $this->flydown_option;
     }
 
-    // }}}
-    // {{{ public function addChild()
-
     /**
      * Adds a child node to this node.
      *
@@ -84,7 +73,7 @@ class SwatTreeFlydownNode extends SwatTreeNode
      *
      * @param SwatTreeNode $child the child node to add to this node
      */
-    public function addChild($child)
+    public function addChild($child): void
     {
         if ($child instanceof SwatDataTreeNode) {
             $child = self::convertFromDataTree($child);
@@ -93,10 +82,7 @@ class SwatTreeFlydownNode extends SwatTreeNode
         parent::addChild($child);
     }
 
-    // }}}
-    // {{{ public staticfunction convertFromDataTree()
-
-    public static function convertFromDataTree(SwatDataTreeNode $tree)
+    public static function convertFromDataTree(SwatDataTreeNode $tree): SwatTreeFlydownNode
     {
         $new_tree = new SwatTreeFlydownNode($tree->value, $tree->title);
 
@@ -106,6 +92,4 @@ class SwatTreeFlydownNode extends SwatTreeNode
 
         return $new_tree;
     }
-
-    // }}}
 }

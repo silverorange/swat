@@ -15,8 +15,6 @@
  */
 interface SwatDBMarshallable
 {
-    // {{{ public function marshall()
-
     /**
      * Marshalls this object.
      *
@@ -43,9 +41,6 @@ interface SwatDBMarshallable
      */
     public function marshall(array $tree = []);
 
-    // }}}
-    // {{{ public function unmarshall()
-
     /**
      * Unmarshalls this object using the specified data.
      *
@@ -58,6 +53,4 @@ interface SwatDBMarshallable
      * @param array $data optional. The marshalled object data.
      */
     public function unmarshall(array $data = []);
-
-    // }}}
 }

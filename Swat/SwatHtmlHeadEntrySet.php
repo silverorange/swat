@@ -8,40 +8,39 @@
  *
  * @copyright 2006-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ *
+ * @implements IteratorAggregate<string, SwatHtmlHeadEntry>
  */
 class SwatHtmlHeadEntrySet implements Countable, IteratorAggregate
 {
-    // {{{ protected properties
-
     /**
      * HTML head entries managed by this collection.
      *
      * Entries are indexed by URI.
      *
-     * @var array
+     * @var array<string, SwatHtmlHeadEntry>
      */
-    protected $entries = [];
+    protected array $entries = [];
 
     /**
      * Maps HTML head entry URIs to {@link SwatHtmlHeadEntry} class names.
      *
+     * @var array<string, class-string>
+     *
      * @see SwatHtmlHeadEntrySet::addEntry()
      * @see SwatHtmlHeadEntrySet::addTypeMapping()
      */
-    protected $type_map = [
-        '/\.js$/'   => 'SwatJavaScriptHtmlHeadEntry',
-        '/\.css$/'  => 'SwatStyleSheetHtmlHeadEntry',
-        '/\.less$/' => 'SwatLessStyleSheetHtmlHeadEntry',
+    protected array $type_map = [
+        '/\.js$/'   => SwatJavaScriptHtmlHeadEntry::class,
+        '/\.css$/'  => SwatStyleSheetHtmlHeadEntry::class,
+        '/\.less$/' => SwatLessStyleSheetHtmlHeadEntry::class,
     ];
-
-    // }}}
-    // {{{ public function __construct()
 
     /**
      * Creates a new HTML head entry collection.
      *
-     * @param SwatHtmlHeadEntrySet $set an optional existing HTML head entry
-     *                                  set to build this set from
+     * @param ?SwatHtmlHeadEntrySet $set an optional existing HTML head entry
+     *                                   set to build this set from
      */
     public function __construct(?SwatHtmlHeadEntrySet $set = null)
     {
@@ -49,9 +48,6 @@ class SwatHtmlHeadEntrySet implements Countable, IteratorAggregate
             $this->addEntrySet($set);
         }
     }
-
-    // }}}
-    // {{{ public function addEntry()
 
     /**
      * Adds a HTML head entry to this set.
@@ -89,9 +85,6 @@ class SwatHtmlHeadEntrySet implements Countable, IteratorAggregate
         }
     }
 
-    // }}}
-    // {{{ public function addEntrySet()
-
     /**
      * Adds a set of HTML head entries to this set.
      *
@@ -102,16 +95,10 @@ class SwatHtmlHeadEntrySet implements Countable, IteratorAggregate
         $this->entries = array_merge($this->entries, $set->entries);
     }
 
-    // }}}
-    // {{{ public function toArray()
-
     public function toArray()
     {
         return $this->entries;
     }
-
-    // }}}
-    // {{{ public function count()
 
     /**
      * Gets the number of entries in this set.
@@ -120,30 +107,24 @@ class SwatHtmlHeadEntrySet implements Countable, IteratorAggregate
      *
      * @return int the number of entries in this set
      */
-    public function count()
+    public function count(): int
     {
         return count($this->entries);
     }
-
-    // }}}
-    // {{{ public function getIterator()
 
     /**
      * Gets an iterator over the entries in this set.
      *
      * Fulfills the IteratorAggregate interface.
      *
-     * @return iterable an iterator over the entries in this set
+     * @return Traversable<string, SwatHtmlHeadEntry> an iterator over the entries in this set
      */
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         // return an array copy by design to fulfil the IteratorAggregate
         // interface.
-        return $this->entries;
+        return new ArrayIterator($this->entries);
     }
-
-    // }}}
-    // {{{ public function addTypeMapping()
 
     public function setTypeMapping($type, $class = null)
     {
@@ -172,9 +153,6 @@ class SwatHtmlHeadEntrySet implements Countable, IteratorAggregate
         $this->type_map = array_merge($this->type_map, $type);
     }
 
-    // }}}
-    // {{{ public function getByType()
-
     /**
      * Gets a subset of this set by the entry type.
      *
@@ -198,9 +176,6 @@ class SwatHtmlHeadEntrySet implements Countable, IteratorAggregate
         return $set;
     }
 
-    // }}}
-    // {{{ protected function getClassFromType()
-
     protected function getClassFromType($entry)
     {
         $class = null;
@@ -214,6 +189,4 @@ class SwatHtmlHeadEntrySet implements Countable, IteratorAggregate
 
         return $class;
     }
-
-    // }}}
 }

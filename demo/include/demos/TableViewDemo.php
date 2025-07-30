@@ -10,8 +10,6 @@ require_once 'Demo.php';
  */
 class TableViewDemo extends Demo
 {
-    // {{{ public function buildDemoUI();
-
     public function buildDemoUI(SwatUI $ui)
     {
         $message = new SwatMessage(
@@ -53,8 +51,6 @@ class TableViewDemo extends Demo
 
         $table_view->model = $table_store;
     }
-
-    // }}}
 }
 
 /**
@@ -65,8 +61,6 @@ class TableViewDemo extends Demo
  */
 class FruitObject
 {
-    // {{{ public properties
-
     public $image = '';
     public $image_width = 0;
     public $image_height = 0;
@@ -76,6 +70,4 @@ class FruitObject
     public $makes_pie = false;
     public $harvest_date;
     public $cost = 0;
-
-    // }}}
 }

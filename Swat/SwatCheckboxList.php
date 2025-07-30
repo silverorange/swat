@@ -8,17 +8,12 @@
  */
 class SwatCheckboxList extends SwatOptionControl implements SwatState
 {
-    // {{{ private properties
-
     /**
      * Used for displaying checkbox labels.
      *
      * @var SwatHtmlTag
      */
     private $label_tag;
-
-    // }}}
-    // {{{ public properties
 
     /**
      * List values.
@@ -51,9 +46,6 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
      */
     public $columns = 1;
 
-    // }}}
-    // {{{ public function __construct()
-
     /**
      * Creates a new checkbox list.
      *
@@ -70,9 +62,6 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
         $this->addJavaScript('packages/swat/javascript/swat-checkbox-list.js');
         $this->addStyleSheet('packages/swat/styles/swat.css');
     }
-
-    // }}}
-    // {{{ public function init()
 
     /**
      * Initializes this checkbox list.
@@ -97,9 +86,6 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
             }
         }
     }
-
-    // }}}
-    // {{{ public function display()
 
     /**
      * Displays this checkbox list.
@@ -187,9 +173,6 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
         Swat::displayInlineJavaScript($this->getInlineJavaScript());
     }
 
-    // }}}
-    // {{{ public function process()
-
     /**
      * Processes this checkbox list widget.
      */
@@ -212,9 +195,6 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
         }
     }
 
-    // }}}
-    // {{{ public function reset()
-
     /**
      * Reset this checkbox list.
      *
@@ -225,9 +205,6 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
     {
         $this->values = [];
     }
-
-    // }}}
-    // {{{ public function setState()
 
     /**
      * Sets the current state of this checkbox list.
@@ -241,9 +218,6 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
         $this->values = $state;
     }
 
-    // }}}
-    // {{{ public function getState()
-
     /**
      * Gets the current state of this checkbox list.
      *
@@ -255,9 +229,6 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
     {
         return $this->values;
     }
-
-    // }}}
-    // {{{ protected function processValues()
 
     /**
      * Processes the values of this checkbox list from raw form data.
@@ -279,9 +250,6 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
             $this->values = [];
         }
     }
-
-    // }}}
-    // {{{ protected function displayOption()
 
     /**
      * Helper method to display a single option of this checkbox list.
@@ -319,9 +287,6 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
         $li_tag->close();
     }
 
-    // }}}
-    // {{{ protected function displayOptionLabel()
-
     /**
      * Displays an option in the checkbox list.
      *
@@ -340,9 +305,6 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
         $this->label_tag->setContent($option->title, $option->content_type);
         $this->label_tag->display();
     }
-
-    // }}}
-    // {{{ protected function getLiTag()
 
     protected function getLiTag(SwatOption $option)
     {
@@ -367,9 +329,6 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 
         return $tag;
     }
-
-    // }}}
-    // {{{ protected function getInlineJavaScript()
 
     /**
      * Gets the inline JavaScript for this checkbox list.
@@ -398,9 +357,6 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
         return $javascript;
     }
 
-    // }}}
-    // {{{ protected function getJavaScriptClassName()
-
     /**
      * Get the name of the JavaScript class for this widget.
      *
@@ -410,9 +366,6 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
     {
         return 'SwatCheckboxList';
     }
-
-    // }}}
-    // {{{ protected function getCSSClassNames()
 
     /**
      * Gets the array of CSS classes that are applied to this checkbox list.
@@ -427,9 +380,6 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
         return array_merge($classes, parent::getCSSClassNames());
     }
 
-    // }}}
-    // {{{ protected function createCompositeWidgets()
-
     /**
      * Creates and adds composite widgets of this widget.
      *
@@ -440,6 +390,4 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
     {
         $this->addCompositeWidget(new SwatCheckAll(), 'check_all');
     }
-
-    // }}}
 }

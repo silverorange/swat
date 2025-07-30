@@ -8,8 +8,6 @@
  */
 class SwatFrameDisclosure extends SwatDisclosure
 {
-    // {{{ public function __construct()
-
     /**
      * Creates a new frame disclosure container.
      *
@@ -23,9 +21,6 @@ class SwatFrameDisclosure extends SwatDisclosure
 
         $this->addStyleSheet('packages/swat/styles/swat-frame-disclosure.css');
     }
-
-    // }}}
-    // {{{ public function display()
 
     /**
      * Displays this frame disclosure container.
@@ -88,9 +83,6 @@ class SwatFrameDisclosure extends SwatDisclosure
         $control_div->close();
     }
 
-    // }}}
-    // {{{ protected function getContainerDivTag()
-
     protected function getContainerDivTag()
     {
         $div = new SwatHtmlTag('div');
@@ -100,9 +92,6 @@ class SwatFrameDisclosure extends SwatDisclosure
         return $div;
     }
 
-    // }}}
-    // {{{ protected function getSpanTag()
-
     protected function getSpanTag()
     {
         $span_tag = parent::getSpanTag();
@@ -110,9 +99,6 @@ class SwatFrameDisclosure extends SwatDisclosure
 
         return $span_tag;
     }
-
-    // }}}
-    // {{{ protected function getJavaScriptClass()
 
     /**
      * Gets the name of the JavaScript class to instantiate for this disclosure.
@@ -127,9 +113,6 @@ class SwatFrameDisclosure extends SwatDisclosure
     {
         return 'SwatFrameDisclosure';
     }
-
-    // }}}
-    // {{{ protected function getCSSClassNames()
 
     /**
      * Gets the array of CSS classes that are applied to this disclosure.
@@ -147,6 +130,4 @@ class SwatFrameDisclosure extends SwatDisclosure
 
         return array_merge($classes, parent::getCSSClassNames());
     }
-
-    // }}}
 }

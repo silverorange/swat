@@ -10,8 +10,6 @@
  */
 class SwatImageDisplay extends SwatControl
 {
-    // {{{ public properties
-
     /**
      * Image.
      *
@@ -91,9 +89,6 @@ class SwatImageDisplay extends SwatControl
      */
     public $alt;
 
-    // }}}
-    // {{{ public function display()
-
     /**
      * Displays this image.
      */
@@ -141,9 +136,6 @@ class SwatImageDisplay extends SwatControl
         $image_tag->display();
     }
 
-    // }}}
-    // {{{ public static function getOccupyMargin()
-
     public static function getOccupyMargin(
         $width,
         $height,
@@ -178,9 +170,6 @@ class SwatImageDisplay extends SwatControl
         return $style;
     }
 
-    // }}}
-    // {{{ protected function getCSSClassNames()
-
     /**
      * Gets the array of CSS classes that are applied to this image display.
      *
@@ -193,6 +182,4 @@ class SwatImageDisplay extends SwatControl
 
         return array_merge($classes, parent::getCSSClassNames());
     }
-
-    // }}}
 }
