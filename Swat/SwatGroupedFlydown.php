@@ -21,7 +21,7 @@ class SwatGroupedFlydown extends SwatTreeFlydown
      *
      * @throws SwatException if the tree more than 3 levels deep
      */
-    public function setTree(SwatTreeFlydownNode $tree)
+    public function setTree($tree): void
     {
         $this->checkTree($tree);
         parent::setTree($tree);

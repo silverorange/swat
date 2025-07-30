@@ -14,10 +14,8 @@ abstract class SwatTreeNode extends SwatObject implements RecursiveIterator, Cou
      * An array of children tree nodes.
      *
      * This array is indexed numerically and starts at 0.
-     *
-     * @var array
      */
-    protected $children = [];
+    protected array $children = [];
 
     /**
      * The parent tree node of this tree node.
@@ -31,10 +29,8 @@ abstract class SwatTreeNode extends SwatObject implements RecursiveIterator, Cou
      *
      * The index of this node is used like an identifier and is used when
      * building paths in the tree.
-     *
-     * @var int
      */
-    private $index = 0;
+    private int $index = 0;
 
     /**
      * Adds a child node to this node.
@@ -105,8 +101,9 @@ abstract class SwatTreeNode extends SwatObject implements RecursiveIterator, Cou
      *
      * This method is needed to fulfill the RecursiveIterator interface.
      *
-     * @return $this node's children
+     * @return array this node's children
      */
+    #[ReturnTypeWillChange]
     public function getChildren()
     {
         return $this->children;
@@ -120,7 +117,7 @@ abstract class SwatTreeNode extends SwatObject implements RecursiveIterator, Cou
      * @return bool true if this node has children or false if this node
      *              does not have children
      */
-    public function hasChildren()
+    public function hasChildren(): bool
     {
         return count($this->children) > 0;
     }
@@ -144,6 +141,7 @@ abstract class SwatTreeNode extends SwatObject implements RecursiveIterator, Cou
      *               {@link SwatTreeNode} object. If the current child node is
      *               invalid, false is returned.
      */
+    #[ReturnTypeWillChange]
     public function current()
     {
         return current($this->children);
@@ -154,8 +152,9 @@ abstract class SwatTreeNode extends SwatObject implements RecursiveIterator, Cou
      *
      * This method is needed to fulfill the RecursiveIterator interface.
      *
-     * @reutrn integer the key (index) of the current child node in this node.
+     * @return int the key (index) of the current child node in this node
      */
+    #[ReturnTypeWillChange]
     public function key()
     {
         return key($this->children);
@@ -171,6 +170,7 @@ abstract class SwatTreeNode extends SwatObject implements RecursiveIterator, Cou
      *               {@link SwatTreeNode} object. If the next child node is
      *               invalid, false is returned.
      */
+    #[ReturnTypeWillChange]
     public function next()
     {
         return next($this->children);
@@ -186,6 +186,7 @@ abstract class SwatTreeNode extends SwatObject implements RecursiveIterator, Cou
      *               {@link SwatTreeNode} object. If there are no child nodes,
      *               false is returned.
      */
+    #[ReturnTypeWillChange]
     public function rewind()
     {
         return reset($this->children);
@@ -199,7 +200,7 @@ abstract class SwatTreeNode extends SwatObject implements RecursiveIterator, Cou
      * @return bool true if the current child node is valid and false if it
      *              is not
      */
-    public function valid()
+    public function valid(): bool
     {
         return $this->current() !== false;
     }

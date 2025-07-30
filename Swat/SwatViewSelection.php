@@ -31,19 +31,15 @@ class SwatViewSelection extends SwatObject implements Countable, Iterator
 {
     /**
      * The selected items of this selection.
-     *
-     * @var array
      */
-    private $selected_items = [];
+    private array $selected_items = [];
 
     /**
      * Current array index of the selected items of this selection.
      *
      * Used for implementing the Iterator interface.
-     *
-     * @var int
      */
-    private $current_index = 0;
+    private int $current_index = 0;
 
     /**
      * Creates a new selection object.
@@ -62,6 +58,7 @@ class SwatViewSelection extends SwatObject implements Countable, Iterator
      *
      * @return mixed the current selected item
      */
+    #[ReturnTypeWillChange]
     public function current()
     {
         return $this->selected_items[$this->current_index];
@@ -72,7 +69,7 @@ class SwatViewSelection extends SwatObject implements Countable, Iterator
      *
      * @return int the key of the current selected item
      */
-    public function key()
+    public function key(): int
     {
         return $this->current_index;
     }

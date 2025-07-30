@@ -15,28 +15,28 @@ class SwatHtmlHeadEntrySet implements Countable, IteratorAggregate
      * HTML head entries managed by this collection.
      *
      * Entries are indexed by URI.
-     *
-     * @var array
      */
-    protected $entries = [];
+    protected array $entries = [];
 
     /**
      * Maps HTML head entry URIs to {@link SwatHtmlHeadEntry} class names.
      *
+     * @var array<string, class-string>
+     *
      * @see SwatHtmlHeadEntrySet::addEntry()
      * @see SwatHtmlHeadEntrySet::addTypeMapping()
      */
-    protected $type_map = [
-        '/\.js$/'   => 'SwatJavaScriptHtmlHeadEntry',
-        '/\.css$/'  => 'SwatStyleSheetHtmlHeadEntry',
-        '/\.less$/' => 'SwatLessStyleSheetHtmlHeadEntry',
+    protected array $type_map = [
+        '/\.js$/'   => SwatJavaScriptHtmlHeadEntry::class,
+        '/\.css$/'  => SwatStyleSheetHtmlHeadEntry::class,
+        '/\.less$/' => SwatLessStyleSheetHtmlHeadEntry::class,
     ];
 
     /**
      * Creates a new HTML head entry collection.
      *
-     * @param SwatHtmlHeadEntrySet $set an optional existing HTML head entry
-     *                                  set to build this set from
+     * @param ?SwatHtmlHeadEntrySet $set an optional existing HTML head entry
+     *                                   set to build this set from
      */
     public function __construct(?SwatHtmlHeadEntrySet $set = null)
     {
@@ -103,7 +103,7 @@ class SwatHtmlHeadEntrySet implements Countable, IteratorAggregate
      *
      * @return int the number of entries in this set
      */
-    public function count()
+    public function count(): int
     {
         return count($this->entries);
     }
@@ -115,6 +115,7 @@ class SwatHtmlHeadEntrySet implements Countable, IteratorAggregate
      *
      * @return iterable an iterator over the entries in this set
      */
+    #[ReturnTypeWillChange]
     public function getIterator()
     {
         // return an array copy by design to fulfil the IteratorAggregate

@@ -15,20 +15,16 @@ class SwatNavBar extends SwatControl implements Countable
      *
      * If set to false, the last entry is displayed as text even if the last
      * navbar entry has a link. Defaults to true.
-     *
-     * @var bool
      */
-    public $link_last_entry = true;
+    public bool $link_last_entry = true;
 
     /**
      * Separator characters displayed between each navbar entry in this navbar.
      *
      * The default separator is a non-breaking space followed by a right
      * guillemet followed by a breaking space.
-     *
-     * @var string
      */
-    public $separator = ' » ';
+    public ?string $separator = ' » ';
 
     /**
      * Optional container tag for this navigational bar.
@@ -42,11 +38,9 @@ class SwatNavBar extends SwatControl implements Countable
     /**
      * Array of SwatNavBarEntry objects displayed in this navbar.
      *
-     * @var array
-     *
      * @see SwatNavBarEntry
      */
-    private $entries = [];
+    private array $entries = [];
 
     /**
      * Creates a SwatNavBarEntry and adds it to the end of this navigation bar.
@@ -200,7 +194,7 @@ class SwatNavBar extends SwatControl implements Countable
      *
      * @return int number of entries in this navigational bar
      */
-    public function count()
+    public function count(): int
     {
         return count($this->entries);
     }

@@ -12,18 +12,14 @@
 class SwatTableStore extends SwatObject implements SwatTableModel
 {
     /**
-     * The indvidual rows for this data structure.
-     *
-     * @var array
+     * The individual rows for this data structure.
      */
-    private $rows = [];
+    private array $rows = [];
 
     /**
      * The current index of the iterator interface.
-     *
-     * @var int
      */
-    private $current_index = 0;
+    private int $current_index = 0;
 
     /**
      * Gets the number of rows.
@@ -42,6 +38,7 @@ class SwatTableStore extends SwatObject implements SwatTableModel
      *
      * @return mixed the current element
      */
+    #[ReturnTypeWillChange]
     public function current()
     {
         return $this->rows[$this->current_index];
@@ -52,7 +49,7 @@ class SwatTableStore extends SwatObject implements SwatTableModel
      *
      * @return int the key of the current element
      */
-    public function key()
+    public function key(): int
     {
         return $this->current_index;
     }
@@ -68,7 +65,7 @@ class SwatTableStore extends SwatObject implements SwatTableModel
     /**
      * Moves forward to the previous element.
      */
-    public function prev()
+    public function prev(): void
     {
         $this->current_index--;
     }
@@ -95,7 +92,7 @@ class SwatTableStore extends SwatObject implements SwatTableModel
     /**
      * Adds a row to this data structure.
      *
-     * @param $data the data of the row to add
+     * @param mixed $data the data of the row to add
      */
     public function add($data)
     {
@@ -105,7 +102,7 @@ class SwatTableStore extends SwatObject implements SwatTableModel
     /**
      * Adds a row to the beginning of this data structure.
      *
-     * @param $data the data of the row to add
+     * @param $data mixed the data of the row to add
      */
     public function addToStart($data)
     {
@@ -138,8 +135,8 @@ class SwatTableStore extends SwatObject implements SwatTableModel
     /**
      * Adds a row to this data structure.
      *
-     * @param $data the data of the row to add
-     * @param $id   an optional uniqueid of the row to add
+     * @param $data mixed the data of the row to add
+     * @param $id   mixed an optional uniqueid of the row to add
      *
      * @deprecated Use SwatTableStore::add()
      */
