@@ -13,6 +13,8 @@ class SwatTableStore extends SwatObject implements SwatTableModel
 {
     /**
      * The individual rows for this data structure.
+     *
+     * @var list<mixed>
      */
     private array $rows = [];
 
@@ -38,8 +40,7 @@ class SwatTableStore extends SwatObject implements SwatTableModel
      *
      * @return mixed the current element
      */
-    #[ReturnTypeWillChange]
-    public function current()
+    public function current(): mixed
     {
         return $this->rows[$this->current_index];
     }

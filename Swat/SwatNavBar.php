@@ -38,7 +38,7 @@ class SwatNavBar extends SwatControl implements Countable
     /**
      * Array of SwatNavBarEntry objects displayed in this navbar.
      *
-     * @see SwatNavBarEntry
+     * @var list<SwatNavBarEntry>
      */
     private array $entries = [];
 

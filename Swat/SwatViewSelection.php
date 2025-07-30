@@ -26,11 +26,15 @@
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  *
  * @see       SwatView::getSelection()
+ *
+ * @implements Iterator<int, string>
  */
 class SwatViewSelection extends SwatObject implements Countable, Iterator
 {
     /**
      * The selected items of this selection.
+     *
+     * @var list<string>
      */
     private array $selected_items = [];
 
@@ -55,11 +59,8 @@ class SwatViewSelection extends SwatObject implements Countable, Iterator
 
     /**
      * Returns the current selected item.
-     *
-     * @return mixed the current selected item
      */
-    #[ReturnTypeWillChange]
-    public function current()
+    public function current(): string
     {
         return $this->selected_items[$this->current_index];
     }
@@ -130,7 +131,7 @@ class SwatViewSelection extends SwatObject implements Countable, Iterator
      * @return bool true if this selection contains the specified item and
      *              false if it does not
      */
-    public function contains($item)
+    public function contains($item): bool
     {
         return in_array($item, $this->selected_items);
     }

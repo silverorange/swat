@@ -8,6 +8,8 @@
  *
  * @copyright 2006-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ *
+ * @implements IteratorAggregate<string, SwatHtmlHeadEntry>
  */
 class SwatHtmlHeadEntrySet implements Countable, IteratorAggregate
 {
@@ -15,6 +17,8 @@ class SwatHtmlHeadEntrySet implements Countable, IteratorAggregate
      * HTML head entries managed by this collection.
      *
      * Entries are indexed by URI.
+     *
+     * @var array<string, SwatHtmlHeadEntry>
      */
     protected array $entries = [];
 
@@ -113,14 +117,13 @@ class SwatHtmlHeadEntrySet implements Countable, IteratorAggregate
      *
      * Fulfills the IteratorAggregate interface.
      *
-     * @return iterable an iterator over the entries in this set
+     * @return Traversable<string, SwatHtmlHeadEntry> an iterator over the entries in this set
      */
-    #[ReturnTypeWillChange]
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         // return an array copy by design to fulfil the IteratorAggregate
         // interface.
-        return $this->entries;
+        return new ArrayIterator($this->entries);
     }
 
     public function setTypeMapping($type, $class = null)

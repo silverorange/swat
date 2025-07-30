@@ -12,52 +12,44 @@ class SwatDataTreeNode extends SwatTreeNode
      * The value of this node.
      *
      * The value is used for processing. It is either a string or an integer.
-     *
-     * @var mixed
      */
-    public $value;
+    public int|string $value;
 
     /**
      * The title of this node.
      *
      * The title is used for display.
-     *
-     * @var string
      */
-    public $title;
+    public string $title;
 
     /**
      * Optional content type.
      *
      * Default text/plain, use text/xml for XHTML fragments.
-     *
-     * @var string
      */
-    public $content_type = 'text/plain';
+    public string $content_type = 'text/plain';
 
     /**
      * The sensitivity of this node.
      *
      * Used to mark this node as unselectable
-     *
-     * @var bool
      */
-    public $sensitive = true;
+    public bool $sensitive = true;
 
     /**
      * Creates a new data node.
      *
-     * @param mixed  $value        the value of the node. It is either a string or an
-     *                             integer.
-     * @param string $title        the title of the node
-     * @param string $content_type optional content-type
-     * @param mixed  $sensitive
+     * @param int|string $value        the value of the node. It is either a string or an
+     *                                 integer.
+     * @param string     $title        the title of the node
+     * @param string     $content_type optional content-type
+     * @param mixed      $sensitive
      */
     public function __construct(
-        $value,
-        $title,
-        $content_type = 'text/plain',
-        $sensitive = true,
+        int|string $value,
+        string $title,
+        string $content_type = 'text/plain',
+        bool $sensitive = true,
     ) {
         $this->value = $value;
         $this->title = $title;
