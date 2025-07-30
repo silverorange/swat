@@ -17,12 +17,14 @@ class SwatGroupedFlydown extends SwatTreeFlydown
      * The tree for a grouped flydown may be at most 3 levels deep including
      * the root node.
      *
-     * @param SwatDataTreeNode $tree the tree to use for display
+     * @param SwatDataTreeNode|SwatTreeFlydownNode $tree the tree to use for
+     *                                                   display
      *
-     * @throws SwatException if the tree more than 3 levels deep
+     * @throws SwatException if the tree is more than 3 levels deep
      */
-    public function setTree($tree): void
+    public function setTree(SwatDataTreeNode|SwatTreeFlydownNode $tree): void
     {
+        $tree = $this->normalizeTree($tree);
         $this->checkTree($tree);
         parent::setTree($tree);
     }
@@ -76,13 +78,14 @@ class SwatGroupedFlydown extends SwatTreeFlydown
     /**
      * Checks a tree to ensure it is valid for a grouped flydown.
      *
-     * @param SwatTreeFlydownNode the tree to check
-     * @param mixed $level
+     * @param SwatTreeFlydownNode $tree the tree to check
      *
      * @throws SwatException if the tree is not valid for a grouped flydown
      */
-    protected function checkTree(SwatTreeFlydownNode $tree, $level = 0)
-    {
+    protected function checkTree(
+        SwatTreeFlydownNode $tree,
+        int $level = 0
+    ): void {
         if ($level > 2) {
             throw new SwatException(
                 'SwatGroupedFlydown tree must not be '
