@@ -32,7 +32,7 @@
  * only filter one parameter. Use multiple <i>@sensitive</i> documentation tags
  * to filter multiple parameters in a single method.
  *
- * @copyright 2004-2016 silverorange
+ * @copyright 2004-2025 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatException extends Exception
@@ -56,6 +56,14 @@ class SwatException extends Exception
      * @var bool
      */
     private $handled = false;
+
+    /**
+     * Clears all the configured SwatException loggers.
+     */
+    public static function clearLoggers()
+    {
+        self::$loggers = [];
+    }
 
     /**
      * Sets the object that logs SwatException objects when they are processed.

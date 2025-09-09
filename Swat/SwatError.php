@@ -11,7 +11,7 @@
  * trace parameters. See the class-level documentation of SwatException for
  * details on how this works.
  *
- * @copyright 2006-2016 silverorange
+ * @copyright 2006-2025 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatError
@@ -79,6 +79,14 @@ class SwatError
      * @var int
      */
     protected static $fatal_severity = E_USER_ERROR;
+
+    /**
+     * Clears all the configured SwatError loggers.
+     */
+    public static function clearLoggers()
+    {
+        self::$loggers = [];
+    }
 
     /**
      * Sets the object that logs SwatError objects when they are processed.
