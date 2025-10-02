@@ -15,7 +15,7 @@ class SwatYUIComponent extends SwatObject
 {
     private $id;
     private $dependencies = [];
-    private $html_head_entries = [];
+    private $html_head_entry_set = [];
     private $beta = false;
 
     /**

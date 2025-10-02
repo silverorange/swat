@@ -143,7 +143,7 @@ class SwatActionItem extends SwatControl implements SwatUIParent
      */
     public function getAvailableHtmlHeadEntrySet()
     {
-        $set = parent::geAvailabletHtmlHeadEntrySet();
+        $set = parent::getAvailableHtmlHeadEntrySet();
 
         if ($this->widget !== null) {
             $set->addEntrySet($this->widget->getAvailableHtmlHeadEntrySet());

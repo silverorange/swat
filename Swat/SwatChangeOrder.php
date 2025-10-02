@@ -84,7 +84,7 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
         $list_div->class = 'swat-change-order-list';
         $list_div->open();
 
-        $option_div = new SwatHtmltag('div');
+        $option_div = new SwatHtmlTag('div');
         $option_div->class = 'swat-change-order-item';
 
         foreach ($ordered_options as $option) {
