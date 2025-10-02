@@ -80,7 +80,7 @@ class SwatDB extends SwatObject
     public static function query(
         MDB2_Driver_Common $db,
         string $sql,
-        null|string|SwatDBRecordsetWrapper $wrapper = SwatDBDefaultRecordsetWrapper::class,
+        string|SwatDBRecordsetWrapper|null $wrapper = SwatDBDefaultRecordsetWrapper::class,
         ?array $types = null,
     ): MDB2_Result_Common|SwatDBRecordsetWrapper {
         $mdb2_types = $types === null ? true : $types;

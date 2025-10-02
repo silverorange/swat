@@ -7,14 +7,14 @@ use PhpCsFixer\Runner\Parallel\ParallelConfigFactory;
 $finder = (new Finder())
     ->in(__DIR__)
     ->exclude([
-        'node_modules'
+        'node_modules',
     ]);
 
 return (new Config())
-    ->setParallelConfig(ParallelConfigFactory::detect(null, null, 2**18-1))
+    ->setParallelConfig(ParallelConfigFactory::detect(null, null, 2 ** 18 - 1))
     ->setRules([
         '@PhpCsFixer'      => true,
-        '@PHP82Migration'  => true,
+        '@PHP8x2Migration' => true,
         'indentation_type' => true,
 
         // Overrides for (opinionated) @PhpCsFixer and @Symfony rules:
