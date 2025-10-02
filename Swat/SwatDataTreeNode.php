@@ -13,7 +13,7 @@ class SwatDataTreeNode extends SwatTreeNode
      *
      * The value is used for processing. It is either a string or an integer.
      */
-    public null|int|string $value;
+    public int|string|null $value;
 
     /**
      * The title of this node.
@@ -46,7 +46,7 @@ class SwatDataTreeNode extends SwatTreeNode
      * @param mixed           $sensitive
      */
     public function __construct(
-        null|int|string $value,
+        int|string|null $value,
         string $title,
         string $content_type = 'text/plain',
         bool $sensitive = true,
