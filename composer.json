@@ -62,7 +62,8 @@
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "3.88.2",
-    "phpstan/phpstan": "^2.1"
+    "phpstan/phpstan": "^2.1",
+    "phpunit/phpunit": "^11.5"
   },
   "autoload": {
     "classmap": [
@@ -71,13 +72,20 @@
       "SwatI18N/"
     ]
   },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
   "scripts": {
     "phpcs": "./vendor/bin/php-cs-fixer check -v",
     "phpcs:ci": "./vendor/bin/php-cs-fixer check --config=.php-cs-fixer.php --no-interaction --show-progress=none --diff --using-cache=no -vvv",
     "phpcs:write": "./vendor/bin/php-cs-fixer fix -v",
     "phpstan": "./vendor/bin/phpstan analyze",
     "phpstan:ci": "./vendor/bin/phpstan analyze -vvv --no-progress --memory-limit 2G",
-    "phpstan:baseline": "./vendor/bin/phpstan analyze --generate-baseline"
+    "phpstan:baseline": "./vendor/bin/phpstan analyze --generate-baseline",
+    "phpunit": "./vendor/bin/phpunit --no-coverage",
+    "phpunit:coverage": "XDEBUG_MODE=coverage ./vendor/bin/phpunit && npx serve build/coverage"
   },
   "config": {
     "sort-packages": true
