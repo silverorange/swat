@@ -30,6 +30,12 @@ pipeline {
             }
         }
 
+        stage('Run Test Suite') {
+            steps {
+                sh 'composer run phpunit'
+            }
+        }
+
         stage('Check Formating') {
             steps {
                 sh 'n -d exec engine pnpm prettier'
