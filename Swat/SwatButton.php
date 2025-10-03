@@ -324,7 +324,7 @@ class SwatButton extends SwatInputControl
     /**
      * Gets the inline JavaScript required for this control.
      *
-     * @return stirng the inline JavaScript required for this control
+     * @return string the inline JavaScript required for this control
      */
     protected function getInlineJavaScript()
     {
