@@ -4,6 +4,11 @@ namespace Tests\Unit\Swat;
 
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
 class SwatStringTest extends TestCase
 {
     public function testToListSingleItem()

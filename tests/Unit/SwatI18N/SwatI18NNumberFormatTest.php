@@ -4,6 +4,11 @@ namespace tests\Unit\SwatI18N;
 
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
 class SwatI18NNumberFormatTest extends TestCase
 {
     protected \SwatI18NNumberFormat $format;
