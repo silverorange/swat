@@ -61,7 +61,7 @@ class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
      *
      * Implements the {SwatTitleable::getTitle()} interface.
      *
-     * @return the title of this fieldset
+     * @return string the title of this fieldset
      */
     public function getTitle()
     {

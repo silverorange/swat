@@ -13,7 +13,7 @@
  *
  * @see       SwatTile
  */
-class SwatTileView extends SwatView implements SwatUIParent
+class SwatTileView extends SwatView
 {
     /**
      * Whether to show a "check all" widget.

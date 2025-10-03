@@ -6,7 +6,7 @@
  * @copyright 2004-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-abstract class SwatView extends SwatControl
+abstract class SwatView extends SwatControl implements SwatUIParent
 {
     /**
      * A data structure that holds the data to display in this view.

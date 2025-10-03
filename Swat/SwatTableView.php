@@ -10,7 +10,7 @@
  * @copyright 2004-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatTableView extends SwatView implements SwatUIParent
+class SwatTableView extends SwatView
 {
     /**
      * The column of this table-view that data in the model is currently being

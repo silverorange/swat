@@ -319,8 +319,6 @@ class SwatForm extends SwatDisplayableContainer
      *
      * This form is only marked as processed if it was submitted by the user.
      *
-     * @return true if this form was actually submitted, false otherwise
-     *
      * @see SwatContainer::process()
      */
     public function process()

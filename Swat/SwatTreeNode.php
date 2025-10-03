@@ -111,7 +111,7 @@ abstract class SwatTreeNode extends SwatObject implements RecursiveIterator, Cou
      */
     public function getChildren(): ?RecursiveIterator
     {
-        return $this->children;
+        return new RecursiveArrayIterator($this->children);
     }
 
     /**

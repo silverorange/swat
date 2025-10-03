@@ -687,7 +687,7 @@ class SwatI18NLocale extends SwatObject
             if ($string > (float) PHP_INT_MAX) {
                 throw new SwatIntegerOverflowException(
                     'Floating point value is too big to be an integer',
-                    null,
+                    0,
                     1,
                 );
             }
@@ -695,7 +695,7 @@ class SwatI18NLocale extends SwatObject
             if ($string < (float) (-PHP_INT_MAX - 1)) {
                 throw new SwatIntegerOverflowException(
                     'Floating point value is too small to be an integer',
-                    null,
+                    0,
                     -1,
                 );
             }
@@ -1002,7 +1002,7 @@ class SwatI18NLocale extends SwatObject
                 $grouping_total = floor($grouping_total / pow(10, $grouping));
                 if ($grouping_total > 0) {
                     $grouping_value = str_pad(
-                        $grouping_value,
+                        (string) $grouping_value,
                         $grouping,
                         '0',
                         STR_PAD_LEFT,
@@ -1039,7 +1039,7 @@ class SwatI18NLocale extends SwatObject
 
                         if ($grouping_total > 0) {
                             $grouping_value = str_pad(
-                                $grouping_value,
+                                (string) $grouping_value,
                                 $grouping,
                                 '0',
                                 STR_PAD_LEFT,
@@ -1086,7 +1086,7 @@ class SwatI18NLocale extends SwatObject
             $frac_part = abs(fmod($value, 1));
             $frac_part = round($frac_part * pow(10, $fractional_digits));
             $frac_part = str_pad(
-                $frac_part,
+                (string) $frac_part,
                 $fractional_digits,
                 '0',
                 STR_PAD_LEFT,

@@ -26,9 +26,9 @@ interface SwatUIParent
      * this object. Widgets are ordered in the array as they are found in
      * a breadth-first traversal of the subtree.
      *
-     * @param string $class_name optional class name. If set, only UI-objects
-     *                           that are instances of <i>$class_name</i> are
-     *                           returned.
+     * @param ?class-string $class_name optional class name. If set, only UI-objects
+     *                                  that are instances of <i>$class_name</i> are
+     *                                  returned.
      *
      * @return array the descendant UI-objects of this object. If descendant
      *               objects have identifiers, the identifier is used as the
