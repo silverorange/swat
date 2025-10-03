@@ -9,3 +9,12 @@ parameters:
     - SwatI18N
   editorUrl: '%%relFile%%:%%line%%'
   editorUrlTitle: '%%relFile%%:%%line%%'
+# Checks from higher levels that we want to include here
+# Level 2
+  checkClassCaseSensitivity: true
+  checkPhpDocMissingReturn: true
+#  checkThisOnly: false
+# Level 3
+  checkPhpDocMethodSignatures: true
+# Level 5
+#  checkFunctionArgumentTypes: true
