@@ -19,6 +19,7 @@
     <coverage>
         <report>
             <html outputDirectory="build/coverage"/>
+            <clover outputFile="build/logs/clover.xml"/>
         </report>
     </coverage>
 </phpunit>
