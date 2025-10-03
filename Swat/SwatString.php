@@ -1439,7 +1439,7 @@ class SwatString extends SwatObject
      * Convert an iterable object or array into a human-readable, delimited
      * list.
      *
-     * @param array|Iterator $iterator                the object to convert to a list
+     * @param array|Iterator $array                   the object to convert to a list
      * @param string         $conjunction             the list's conjunction. Usually 'and' or
      *                                                'or'.
      * @param string         $delimiter               the list delimiter. If list items should
@@ -1457,46 +1457,40 @@ class SwatString extends SwatObject
      *       different locales.
      */
     public static function toList(
-        $iterator,
+        $array,
         $conjunction = 'and',
         $delimiter = ', ',
         $display_final_delimiter = true,
     ) {
-        if (is_array($iterator)) {
-            $iterator = new ArrayIterator($iterator);
+        if ($array instanceof Iterator) {
+            $array = iterator_to_array($array);
         }
 
-        if (!$iterator instanceof Iterator) {
+        if (!is_array($array)) {
             throw new SwatException('Value is not an Iterator or array');
         }
 
-        if (count($iterator) === 1) {
-            $iterator->rewind();
-            $list = $iterator->current();
-        } else {
-            $count = 0;
-            $list = '';
+        $count = count($array);
 
-            foreach ($iterator as $value) {
-                if ($count != 0) {
-                    if ($count == count($iterator) - 1) {
-                        $list
-                            .= $display_final_delimiter && count($iterator) > 2
-                                ? $delimiter
-                                : ' ';
-
-                        if ($conjunction != '') {
-                            $list .= $conjunction . ' ';
-                        }
-                    } else {
-                        $list .= $delimiter;
-                    }
-                }
-
-                $list .= $value;
-                $count++;
-            }
+        if ($count === 0) {
+            return '';
         }
+
+        if ($count === 1) {
+            return reset($array);
+        }
+
+        $last = array_pop($array);
+        $list = implode($delimiter, $array);
+        if ($display_final_delimiter && $count > 2) {
+            $list .= $delimiter;
+        } else {
+            $list .= ' ';
+        }
+        if ($conjunction !== '') {
+            $list .= $conjunction . ' ';
+        }
+        $list .= $last;
 
         return $list;
     }

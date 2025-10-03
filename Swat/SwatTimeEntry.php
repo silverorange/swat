@@ -408,7 +408,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
     /**
      * Sets the current state of this time entry widget.
      *
-     * @param bool $state the new state of this time entry widget
+     * @param mixed $state the new state of this time entry widget
      *
      * @see SwatState::setState()
      */
@@ -616,7 +616,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
     /**
      * Creates the hour flydown for this time entry.
      *
-     * @return the hour flydown for this time entry
+     * @return SwatFlydown the hour flydown for this time entry
      */
     private function createHourFlydown()
     {
@@ -647,7 +647,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
         $flydown->classes = ['swat-time-entry-minute'];
 
         for ($i = 0; $i <= 59; $i++) {
-            $flydown->addOption($i, str_pad($i, 2, '0', STR_PAD_LEFT));
+            $flydown->addOption($i, sprintf('%02d', $i));
         }
 
         return $flydown;
@@ -664,7 +664,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
         $flydown->classes = ['swat-time-entry-second'];
 
         for ($i = 0; $i <= 59; $i++) {
-            $flydown->addOption($i, str_pad($i, 2, '0', STR_PAD_LEFT));
+            $flydown->addOption($i, sprintf('%02d', $i));
         }
 
         return $flydown;
