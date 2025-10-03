@@ -17,4 +17,4 @@ parameters:
 # Level 3
   checkPhpDocMethodSignatures: true
 # Level 5
-#  checkFunctionArgumentTypes: true
+  checkFunctionArgumentTypes: true

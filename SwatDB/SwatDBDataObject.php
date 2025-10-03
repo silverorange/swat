@@ -54,7 +54,7 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
     private $deprecated_properties = [];
 
     /**
-     * @var MDB2
+     * @var MDB2_Driver_Common
      */
     protected $db;
 
