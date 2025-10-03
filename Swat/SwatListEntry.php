@@ -256,7 +256,7 @@ class SwatListEntry extends SwatEntry
      * For list entry, this is a delimiter separated string containing the
      * elements of {@link SwatListEntry::$values}.
      *
-     * @param array $value the value to format for display
+     * @param string $value the value to format for display
      *
      * @return string the values displayed in the XHTML input
      */
