@@ -1,7 +1,2 @@
 parameters:
 	ignoreErrors:
-		-
-			message: '#^Call to an undefined method SwatView\:\:getDescendants\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: Swat/SwatView.php
