@@ -1,21 +1,19 @@
 <?php
 
-namespace tests\Unit\SwatI18N;
-
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversClass(SwatI18NNumberFormat::class)]
 class SwatI18NNumberFormatTest extends TestCase
 {
-    protected \SwatI18NNumberFormat $format;
+    protected SwatI18NNumberFormat $format;
 
     public function setUp(): void
     {
-        $this->format = new \SwatI18NNumberFormat();
+        $this->format = new SwatI18NNumberFormat();
         $this->format->decimal_separator = '.';
         $this->format->thousands_separator = ',';
         $this->format->grouping = [3];
@@ -39,7 +37,7 @@ class SwatI18NNumberFormatTest extends TestCase
 
     public function testOverrideInvalidPropertyThrowsException()
     {
-        $this->expectException(\SwatException::class);
+        $this->expectException(SwatException::class);
         $this->format->override(['invalid_property' => 'value']);
     }
 

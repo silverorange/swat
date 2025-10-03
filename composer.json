@@ -73,9 +73,9 @@
     ]
   },
   "autoload-dev": {
-    "psr-4": {
-      "Tests\\": "tests/"
-    }
+    "classmap": [
+      "tests/"
+    ]
   },
   "scripts": {
     "phpcs": "./vendor/bin/php-cs-fixer check -v",
@@ -85,7 +85,7 @@
     "phpstan:ci": "./vendor/bin/phpstan analyze -vvv --no-progress --memory-limit 2G",
     "phpstan:baseline": "./vendor/bin/phpstan analyze --generate-baseline",
     "phpunit": "./vendor/bin/phpunit --no-coverage",
-    "phpunit:coverage": "XDEBUG_MODE=coverage ./vendor/bin/phpunit && npx serve build/coverage"
+    "phpunit:coverage": "rm -rf ./build && XDEBUG_MODE=coverage ./vendor/bin/phpunit && npx serve build/coverage"
   },
   "config": {
     "sort-packages": true
