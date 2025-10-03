@@ -119,7 +119,7 @@ class SwatGroupedFlydown extends SwatTreeFlydown
 
         if (
             $level == 1
-            && count($children) > 0
+            && iterator_count($children) > 0
             && end($flydown_option->value) === null
             && !($flydown_option instanceof SwatFlydownDivider)
         ) {

@@ -11,16 +11,16 @@ class SwatObjectNotFoundException extends SwatException
     /**
      * The object id that was searched for.
      *
-     * @var string
+     * @var ?string
      */
     protected $object_id;
 
     /**
      * Creates a new object not found exception.
      *
-     * @param string $message   the message of the exception
-     * @param int    $code      the code of the exception
-     * @param string $object_id the object id that was searched for
+     * @param string  $message   the message of the exception
+     * @param int     $code      the code of the exception
+     * @param ?string $object_id the object id that was searched for
      */
     public function __construct($message = null, $code = 0, $object_id = null)
     {

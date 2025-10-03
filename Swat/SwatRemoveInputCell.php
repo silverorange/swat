@@ -73,7 +73,7 @@ class SwatRemoveInputCell extends SwatInputCell
     {
         $widget = $this->getClonedWidget($replicator_id);
         // substitute the replicator_id into the content block's contents
-        $widget->content = str_replace('%s', $replicator_id, $widget->content);
+        $widget->content = str_replace('%s', (string) $replicator_id, $widget->content);
         $widget->display();
     }
 

@@ -192,11 +192,15 @@ class SwatUI extends SwatObject
             $validate = self::$validate_mode;
         }
 
-        $xml_file = null;
-
-        if (file_exists($filename)) {
-            $xml_file = $filename;
+        if (!file_exists($filename)) {
+            throw new SwatFileNotFoundException(
+                "SwatML file not found: '{$filename}'.",
+                0,
+                $filename,
+            );
         }
+
+        $xml_file = $filename;
 
         // try to guess the translation callback based on the
         // filename of the xml
@@ -217,14 +221,6 @@ class SwatUI extends SwatObject
             && extension_loaded('gettext')
         ) {
             $this->translation_callback = 'gettext';
-        }
-
-        if ($xml_file === null) {
-            throw new SwatFileNotFoundException(
-                "SwatML file not found: '{$filename}'.",
-                0,
-                $xml_file,
-            );
         }
 
         $errors = libxml_use_internal_errors(true);

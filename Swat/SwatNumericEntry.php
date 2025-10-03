@@ -74,7 +74,7 @@ abstract class SwatNumericEntry extends SwatEntry
                 $minimum_value = str_replace(
                     '%',
                     '%%',
-                    $this->getDisplayValue($this->minimum_value),
+                    $this->getDisplayValue((string) $this->minimum_value),
                 );
 
                 $message->primary_content = sprintf(
@@ -92,7 +92,7 @@ abstract class SwatNumericEntry extends SwatEntry
                 $maximum_value = str_replace(
                     '%',
                     '%%',
-                    $this->getDisplayValue($this->maximum_value),
+                    $this->getDisplayValue((string) $this->maximum_value),
                 );
 
                 $message->primary_content = sprintf(

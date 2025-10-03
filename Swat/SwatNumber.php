@@ -84,7 +84,7 @@ class SwatNumber extends SwatObject
 
         if (extension_loaded('intl')) {
             // get current locale
-            $locale = setlocale(LC_ALL, 0);
+            $locale = setlocale(LC_ALL, '0');
 
             static $formatters = [];
             if (!isset($formatter[$locale])) {

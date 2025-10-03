@@ -393,7 +393,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
     /**
      * Sets the current state of this date entry widget.
      *
-     * @param bool $state the new state of this date entry widget
+     * @param mixed $state the new state of this date entry widget
      *
      * @see SwatState::setState()
      */
@@ -720,7 +720,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
         $text = '';
 
         if ($this->show_month_number) {
-            $text .= str_pad($month, 2, '0', STR_PAD_LEFT) . ' - ';
+            $text .= sprintf('%02d', $month) . ' - ';
         }
 
         $date = new SwatDate('2010-' . $month . '-01');

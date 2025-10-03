@@ -469,11 +469,11 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
     /**
      * Gets a cloned widget given a unique identifier.
      *
-     * @param string $replicator_id the unique identifier of the new cloned
-     *                              widget. The actual cloned widget id is
-     *                              constructed from this identifier and from
-     *                              the input row that this input cell belongs
-     *                              to.
+     * @param int $replicator_id the unique identifier of the new cloned
+     *                           widget. The actual cloned widget id is
+     *                           constructed from this identifier and from
+     *                           the input row that this input cell belongs
+     *                           to.
      *
      * @return SwatWidget the new cloned widget or the cloned widget retrieved
      *                    from the {@link SwatInputCell::$clones} array

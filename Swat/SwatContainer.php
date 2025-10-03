@@ -481,7 +481,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
      * called elsewhere. To add a widget to a container use
      * {@link SwatContainer::add()}.
      *
-     * @param SwatWidget $child a reference to the child object to add
+     * @param SwatObject $child a reference to the child object to add
      *
      * @throws SwatInvalidClassException
      */

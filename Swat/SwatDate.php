@@ -905,7 +905,7 @@ class SwatDate extends DateTime implements Stringable
      *
      * This method is provided for backwards compatibility with PEAR::Date.
      *
-     * @return float the second of this date
+     * @return int the second of this date
      */
     public function getSecond()
     {
@@ -1143,7 +1143,7 @@ class SwatDate extends DateTime implements Stringable
      */
     public function setTZ(DateTimeZone $time_zone): DateTime
     {
-        return $this->addSeconds($this->format('Z'))
+        return $this->addSeconds((float) $this->format('Z'))
             ->setTimezone($time_zone)
             ->subtractSeconds($this->format('Z'));
     }
@@ -1482,7 +1482,7 @@ class SwatDate extends DateTime implements Stringable
      */
     public function setSecond($second): DateTime
     {
-        return $this->setTime($this->getHour(), $this->getMinute(), $second);
+        return $this->setTime($this->getHour(), $this->getMinute(), (int) $second);
     }
 
     /**

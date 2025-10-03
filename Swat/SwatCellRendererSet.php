@@ -212,7 +212,7 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
         throw new SwatObjectNotFoundException(
             'Set does not contain that many renderers.',
             0,
-            $position,
+            (string) $position,
         );
     }
 

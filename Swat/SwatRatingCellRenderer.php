@@ -60,9 +60,9 @@ class SwatRatingCellRenderer extends SwatNumericCellRenderer
             $outer_span->class = 'rating ' . $rating_class;
             $outer_span->open();
 
-            $content = str_repeat('★', ceil($value));
+            $content = str_repeat('★', (int) ceil($value));
             if ($difference > 0) {
-                $content .= str_repeat('☆', floor($difference));
+                $content .= str_repeat('☆', (int) floor($difference));
             }
 
             $value_tag = new SwatHtmlTag('span');
