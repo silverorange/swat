@@ -83,28 +83,13 @@ class SwatRatingCellRenderer extends SwatNumericCellRenderer
 
     public function getDisplayValue()
     {
-        switch ($this->round_mode) {
-            case self::ROUND_FLOOR:
-                $value = floor($this->value);
-                break;
-
-            case self::ROUND_CEIL:
-                $value = ceil($this->value);
-                break;
-
-            case self::ROUND_UP:
-                $value = round($this->value, $this->precision);
-                break;
-
-            case self::ROUND_NONE:
-                $value = $this->value;
-                break;
-
-            case self::ROUND_HALF:
-                $value = round($this->value * 2) / 2;
-                break;
-        }
-
-        return $value;
+        return match ($this->round_mode) {
+            self::ROUND_FLOOR => floor($this->value),
+            self::ROUND_CEIL  => ceil($this->value),
+            self::ROUND_UP    => round($this->value, $this->precision),
+            self::ROUND_NONE  => $this->value,
+            self::ROUND_HALF  => round($this->value * 2) / 2,
+            default           => throw new SwatException('Invalid round mode.'),
+        };
     }
 }

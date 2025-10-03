@@ -153,7 +153,7 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer implements SwatViewSelec
         echo '<span class="swat-checkbox-shim"></span>';
         echo '</span>';
 
-        if ($this->title !== null) {
+        if (isset($label_tag)) {
             $label_tag->displayContent();
             $label_tag->close();
         }

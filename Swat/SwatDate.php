@@ -692,8 +692,6 @@ class SwatDate extends DateTime implements Stringable
      */
     public static function getTimeZoneAbbreviations(): array
     {
-        static $shortnames = null;
-
         if (self::$tz_abbreviations === null) {
             self::$tz_abbreviations = [];
 
@@ -737,10 +735,10 @@ class SwatDate extends DateTime implements Stringable
         $key = $time_zone->getName();
 
         if (array_key_exists($key, $abbreviations)) {
-            $abbreviation = $abbreviations[$key];
+            return $abbreviations[$key];
         }
 
-        return $abbreviation;
+        return [];
     }
 
     /**

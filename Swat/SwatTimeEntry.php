@@ -552,11 +552,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
         $this->valid_range_start->setDay(self::$date_day);
         $this->valid_range_start->setTZById('UTC');
 
-        return SwatDate::compare(
-            $this->value,
-            $this->valid_range_start,
-            true,
-        ) >= 0;
+        return SwatDate::compare($this->value, $this->valid_range_start) >= 0;
     }
 
     /**
@@ -573,7 +569,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
         $this->valid_range_end->setDay(self::$date_day);
         $this->valid_range_end->setTZById('UTC');
 
-        return SwatDate::compare($this->value, $this->valid_range_end, true)
+        return SwatDate::compare($this->value, $this->valid_range_end)
             <= 0;
     }
 
