@@ -4,10 +4,14 @@
 vendor/
 node_modules/
 
+# testing and code styling output
+/build/
+.php-cs-fixer.cache
+.phpunit.result.cache
+
 # misc
 .DS_Store
 .env
 .idea/
-.php-cs-fixer.cache
 *.swp
 
