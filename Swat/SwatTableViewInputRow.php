@@ -661,6 +661,10 @@ class SwatTableViewInputRow extends SwatTableViewRow
             $colspan += $column->getXhtmlColspan();
         }
 
+        if (!isset($column)) {
+            $column = reset($columns);
+        }
+
         $close_length = $this->parent->getXhtmlColspan() - $position - 1;
 
         $tr_tag = new SwatHtmlTag('tr');
