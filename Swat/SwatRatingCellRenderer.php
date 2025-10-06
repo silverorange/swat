@@ -50,7 +50,7 @@ class SwatRatingCellRenderer extends SwatNumericCellRenderer
         } elseif ($this->value !== null) {
             $locale = SwatI18NLocale::get();
 
-            $value = $this->getDisplayValue();
+            $value = $this->getRoundedValue();
             $difference = $this->maximum_value - $value;
 
             $rating_class = floor(10 * min($value, $this->maximum_value));
@@ -83,12 +83,17 @@ class SwatRatingCellRenderer extends SwatNumericCellRenderer
 
     public function getDisplayValue()
     {
+        return (string) $this->getRoundedValue();
+    }
+
+    protected function getRoundedValue()
+    {
         return match ($this->round_mode) {
             self::ROUND_FLOOR => floor($this->value),
             self::ROUND_CEIL  => ceil($this->value),
             self::ROUND_UP    => round($this->value, $this->precision),
             self::ROUND_NONE  => $this->value,
-            self::ROUND_HALF  => round($this->value * 2) / 2,
+            self::ROUND_HALF  => round($this->value * 2) / 2.0,
             default           => throw new SwatException('Invalid round mode.'),
         };
     }

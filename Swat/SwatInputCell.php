@@ -124,7 +124,7 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
      * This creates a cloned widget for the given numeric identifier and then
      * displays the widget.
      *
-     * @param mixed $row_identifier
+     * @param int $row_identifier
      */
     public function display($row_identifier)
     {
@@ -228,9 +228,8 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
      *
      * This is useful if you are deleting a row from an input row.
      *
-     * @param int replicator_id the replicator id of the cloned widget to
-     *                 unset
-     * @param mixed $replicator_id
+     * @param int $replicator_id the replicator id of the cloned widget to
+     *                           unset
      *
      * @see SwatTableViewInputRow::removeReplicatedRow()
      */

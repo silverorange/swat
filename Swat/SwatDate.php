@@ -1480,7 +1480,15 @@ class SwatDate extends DateTime implements Stringable
      */
     public function setSecond($second): DateTime
     {
-        return $this->setTime($this->getHour(), $this->getMinute(), (int) $second);
+        $whole_second = (int) $second;
+        $microsecond = (int) (abs($second - $whole_second) * 1_000_000);
+
+        return $this->setTime(
+            $this->getHour(),
+            $this->getMinute(),
+            $whole_second,
+            $microsecond
+        );
     }
 
     /**

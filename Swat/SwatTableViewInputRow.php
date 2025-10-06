@@ -639,6 +639,12 @@ class SwatTableViewInputRow extends SwatTableViewRow
     {
         $columns = $this->parent->getVisibleColumns();
 
+        // If there are no columns in the table view, we cannot display an
+        // enter-another row.
+        if (count($columns) === 0) {
+            return;
+        }
+
         $this->createEmbeddedWidgets();
 
         /*
@@ -659,6 +665,10 @@ class SwatTableViewInputRow extends SwatTableViewRow
                 break;
             }
             $colspan += $column->getXhtmlColspan();
+        }
+
+        if (!isset($column)) {
+            $column = reset($columns);
         }
 
         $close_length = $this->parent->getXhtmlColspan() - $position - 1;
