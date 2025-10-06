@@ -354,7 +354,11 @@ class SwatException extends Exception
 
             if (array_key_exists('args', $entry)) {
                 $arguments = htmlspecialchars(
-                    $this->getArguments($entry['args'], $function, $class),
+                    string: $this->getArguments(
+                        $entry['args'],
+                        $function,
+                        $class
+                    ),
                     encoding: 'UTF-8',
                 );
             } else {
