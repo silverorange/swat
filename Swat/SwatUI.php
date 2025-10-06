@@ -518,25 +518,25 @@ class SwatUI extends SwatObject
     /**
      * Attaches a widget to a parent widget in the widget tree.
      *
-     * @param SwatUIObject $object the object to attach
-     * @param SwatUIParent $parent the parent to attach the widget to
+     * @param SwatUIObject $object the widget to attach
+     * @param SwatUIObject $parent the parent to which to attach the widget
      *
      * @throws SwatDoesNotImplementException
      */
-    private function attachToParent(SwatUIObject $object, SwatUIParent $parent)
+    private function attachToParent(SwatUIObject $object, SwatUIObject $parent)
     {
         if ($parent instanceof SwatUIParent) {
             $parent->addChild($object);
-        } else {
-            $class_name = get_class($parent);
 
-            throw new SwatDoesNotImplementException(
-                "Can not add object to parent. '{$class_name}' does not "
-                    . 'implement SwatUIParent.',
-                0,
-                $parent,
-            );
+            return;
         }
+        $class_name = $parent::class;
+
+        throw new SwatDoesNotImplementException(
+            "Can not add object to parent. '{$class_name}' does not implement SwatUIParent.",
+            0,
+            $parent,
+        );
     }
 
     /**
