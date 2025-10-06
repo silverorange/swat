@@ -192,11 +192,15 @@ class SwatUI extends SwatObject
             $validate = self::$validate_mode;
         }
 
-        $xml_file = null;
-
-        if (file_exists($filename)) {
-            $xml_file = $filename;
+        if (!file_exists($filename)) {
+            throw new SwatFileNotFoundException(
+                "SwatML file not found: '{$filename}'.",
+                0,
+                $filename,
+            );
         }
+
+        $xml_file = $filename;
 
         // try to guess the translation callback based on the
         // filename of the xml
@@ -217,14 +221,6 @@ class SwatUI extends SwatObject
             && extension_loaded('gettext')
         ) {
             $this->translation_callback = 'gettext';
-        }
-
-        if ($xml_file === null) {
-            throw new SwatFileNotFoundException(
-                "SwatML file not found: '{$filename}'.",
-                0,
-                $xml_file,
-            );
         }
 
         $errors = libxml_use_internal_errors(true);
@@ -522,25 +518,25 @@ class SwatUI extends SwatObject
     /**
      * Attaches a widget to a parent widget in the widget tree.
      *
-     * @param SwatUIObject $object the object to attach
-     * @param SwatUIParent $parent the parent to attach the widget to
+     * @param SwatUIObject $object the widget to attach
+     * @param SwatUIObject $parent the parent to which to attach the widget
      *
      * @throws SwatDoesNotImplementException
      */
-    private function attachToParent(SwatUIObject $object, SwatUIParent $parent)
+    private function attachToParent(SwatUIObject $object, SwatUIObject $parent)
     {
         if ($parent instanceof SwatUIParent) {
             $parent->addChild($object);
-        } else {
-            $class_name = get_class($parent);
 
-            throw new SwatDoesNotImplementException(
-                "Can not add object to parent. '{$class_name}' does not "
-                    . 'implement SwatUIParent.',
-                0,
-                $parent,
-            );
+            return;
         }
+        $class_name = $parent::class;
+
+        throw new SwatDoesNotImplementException(
+            "Can not add object to parent. '{$class_name}' does not implement SwatUIParent.",
+            0,
+            $parent,
+        );
     }
 
     /**

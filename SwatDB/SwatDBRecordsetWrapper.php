@@ -130,6 +130,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         $this->setDatabase($rs->db);
 
         do {
+            /** @var stdClass $row */
             $row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT);
             while ($row) {
                 $object = $this->instantiateRowWrapperObject($row);

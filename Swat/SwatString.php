@@ -959,7 +959,7 @@ class SwatString extends SwatObject
         }
 
         if ($locale !== null) {
-            $old_locale = setlocale(LC_ALL, 0);
+            $old_locale = setlocale(LC_ALL, '0');
             if (setlocale(LC_ALL, $locale) === false) {
                 throw new SwatException(
                     sprintf(
@@ -1023,7 +1023,7 @@ class SwatString extends SwatObject
     public static function getInternationalCurrencySymbol($locale = null)
     {
         if ($locale !== null) {
-            $old_locale = setlocale(LC_MONETARY, 0);
+            $old_locale = setlocale(LC_MONETARY, '0');
             if (setlocale(LC_MONETARY, $locale) === false) {
                 throw new SwatException(
                     sprintf(
@@ -1104,7 +1104,7 @@ class SwatString extends SwatObject
         );
 
         if ($locale !== null) {
-            $old_locale = setlocale(LC_ALL, 0);
+            $old_locale = setlocale(LC_ALL, '0');
             if (setlocale(LC_ALL, $locale) === false) {
                 throw new SwatException(
                     sprintf(
@@ -1290,7 +1290,6 @@ class SwatString extends SwatObject
         $pad_string = ' ',
         $pad_type = STR_PAD_RIGHT,
     ) {
-        $output = '';
         $length = $pad_length - mb_strlen($input);
 
         if ($pad_string === null || mb_strlen($pad_string) === 0) {
@@ -1302,17 +1301,17 @@ class SwatString extends SwatObject
                 case STR_PAD_LEFT:
                     $padding = str_repeat(
                         $pad_string,
-                        ceil($length / mb_strlen($pad_string)),
+                        (int) ceil($length / mb_strlen($pad_string)),
                     );
                     $output = mb_substr($padding, 0, $length) . $input;
                     break;
 
                 case STR_PAD_BOTH:
-                    $left_length = floor($length / 2);
-                    $right_length = ceil($length / 2);
+                    $left_length = (int) floor($length / 2);
+                    $right_length = (int) ceil($length / 2);
                     $padding = str_repeat(
                         $pad_string,
-                        ceil($right_length / mb_strlen($pad_string)),
+                        (int) ceil($right_length / mb_strlen($pad_string)),
                     );
                     $output
                         = mb_substr($padding, 0, $left_length)
@@ -1325,7 +1324,7 @@ class SwatString extends SwatObject
                 default:
                     $padding = str_repeat(
                         $pad_string,
-                        ceil($length / mb_strlen($pad_string)),
+                        (int) ceil($length / mb_strlen($pad_string)),
                     );
                     $output = $input . mb_substr($padding, 0, $length);
             }
@@ -1439,7 +1438,7 @@ class SwatString extends SwatObject
      * Convert an iterable object or array into a human-readable, delimited
      * list.
      *
-     * @param array|Iterator $iterator                the object to convert to a list
+     * @param array|Iterator $array                   the object to convert to a list
      * @param string         $conjunction             the list's conjunction. Usually 'and' or
      *                                                'or'.
      * @param string         $delimiter               the list delimiter. If list items should
@@ -1457,46 +1456,40 @@ class SwatString extends SwatObject
      *       different locales.
      */
     public static function toList(
-        $iterator,
+        $array,
         $conjunction = 'and',
         $delimiter = ', ',
         $display_final_delimiter = true,
     ) {
-        if (is_array($iterator)) {
-            $iterator = new ArrayIterator($iterator);
+        if ($array instanceof Iterator) {
+            $array = iterator_to_array($array);
         }
 
-        if (!$iterator instanceof Iterator) {
+        if (!is_array($array)) {
             throw new SwatException('Value is not an Iterator or array');
         }
 
-        if (count($iterator) === 1) {
-            $iterator->rewind();
-            $list = $iterator->current();
-        } else {
-            $count = 0;
-            $list = '';
+        $count = count($array);
 
-            foreach ($iterator as $value) {
-                if ($count != 0) {
-                    if ($count == count($iterator) - 1) {
-                        $list
-                            .= $display_final_delimiter && count($iterator) > 2
-                                ? $delimiter
-                                : ' ';
-
-                        if ($conjunction != '') {
-                            $list .= $conjunction . ' ';
-                        }
-                    } else {
-                        $list .= $delimiter;
-                    }
-                }
-
-                $list .= $value;
-                $count++;
-            }
+        if ($count === 0) {
+            return '';
         }
+
+        if ($count === 1) {
+            return reset($array);
+        }
+
+        $last = array_pop($array);
+        $list = implode($delimiter, $array);
+        if ($display_final_delimiter && $count > 2) {
+            $list .= $delimiter;
+        } else {
+            $list .= ' ';
+        }
+        if ($conjunction !== '') {
+            $list .= $conjunction . ' ';
+        }
+        $list .= $last;
 
         return $list;
     }

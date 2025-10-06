@@ -71,6 +71,8 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent, S
     /**
      * Fulfills SwatUIParent::addChild().
      *
+     * @param SwatWidget $child
+     *
      * @throws SwatException
      */
     public function addChild(SwatObject $child)

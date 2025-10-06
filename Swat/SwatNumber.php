@@ -84,18 +84,19 @@ class SwatNumber extends SwatObject
 
         if (extension_loaded('intl')) {
             // get current locale
-            $locale = setlocale(LC_ALL, 0);
+            $locale = setlocale(LC_ALL, '0');
 
             static $formatters = [];
-            if (!isset($formatter[$locale])) {
-                $formatter[$locale] = new NumberFormatter(
+
+            if (!isset($formatters[$locale])) {
+                $formatters[$locale] = new NumberFormatter(
                     $locale,
                     NumberFormatter::ORDINAL,
                 );
             }
 
             // format ordinal
-            $ordinal_value = $formatter[$locale]->format($value);
+            $ordinal_value = $formatters[$locale]->format($value);
 
             // decompose to latin-1 characters (removes superscripts)
             $ordinal_value = Normalizer::normalize(

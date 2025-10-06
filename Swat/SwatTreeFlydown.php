@@ -159,7 +159,7 @@ class SwatTreeFlydown extends SwatFlydown
         if ($this->value === null) {
             $this->path = [];
         } else {
-            $this->path = $this->value;
+            $this->path = [$this->value];
             $this->value = end($this->path);
         }
     }

@@ -14,7 +14,7 @@ class SwatByteCellRenderer extends SwatCellRenderer
     /**
      * Value in bytes.
      *
-     * @var float
+     * @var int
      */
     public $value;
 

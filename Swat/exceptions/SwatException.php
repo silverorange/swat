@@ -295,8 +295,8 @@ class SwatException extends Exception
             }
 
             printf(
-                "%s. In file '%s' on line %s.\n%sMethod: %s%s%s(%s)\n",
-                str_pad(--$count, 6, ' ', STR_PAD_LEFT),
+                "%6d. In file '%s' on line %s.\n%sMethod: %s%s%s(%s)\n",
+                --$count,
                 array_key_exists('file', $entry) ? $entry['file'] : 'unknown',
                 array_key_exists('line', $entry) ? $entry['line'] : 'unknown',
                 str_repeat(' ', 8),
@@ -354,9 +354,12 @@ class SwatException extends Exception
 
             if (array_key_exists('args', $entry)) {
                 $arguments = htmlspecialchars(
-                    $this->getArguments($entry['args'], $function, $class),
-                    null,
-                    'UTF-8',
+                    string: $this->getArguments(
+                        $entry['args'],
+                        $function,
+                        $class
+                    ),
+                    encoding: 'UTF-8',
                 );
             } else {
                 $arguments = '';

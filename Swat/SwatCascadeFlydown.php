@@ -166,7 +166,7 @@ class SwatCascadeFlydown extends SwatFlydown
             // if the options array doesn't exist for this parent_value, then
             // assume that means we don't want any values in this flydown for
             // that option.
-            $options = [new SwatOption(null, null)];
+            $options = [new SwatOption(null, '')];
         }
 
         return $options;

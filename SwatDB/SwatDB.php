@@ -1033,9 +1033,11 @@ class SwatDB extends SwatObject
                 $current_group = $row->group_id;
             }
 
-            $current_parent->addChild(
-                new SwatDataTreeNode($row->id, $row->title),
-            );
+            if (isset($current_parent)) {
+                $current_parent->addChild(
+                    new SwatDataTreeNode($row->id, $row->title),
+                );
+            }
 
             $row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT);
         }
@@ -1298,6 +1300,11 @@ class SwatDB extends SwatObject
                 ) {
                     break;
                 }
+            }
+
+            if (!isset($entry)) {
+                // fallback if all entries are in SwatDB package
+                $entry = end($trace);
             }
 
             $class = array_key_exists('class', $entry) ? $entry['class'] : null;

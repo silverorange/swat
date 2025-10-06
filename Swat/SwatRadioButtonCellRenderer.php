@@ -144,7 +144,7 @@ class SwatRadioButtonCellRenderer extends SwatCellRenderer implements SwatViewSe
         echo '<span class="swat-radio-shim"></span>';
         echo '</span>';
 
-        if ($this->title !== null) {
+        if (isset($label_tag)) {
             $label_tag->displayContent();
             $label_tag->close();
         }
