@@ -10,23 +10,27 @@
  *
  * Example code:
  *
- *     $db = SwatDB::connect('...dsn...');
- *     $map = [
- *         'status_type' => MyStatusEnum::class
- *     ];
- *     SwatDBEnumMapper::initialize($db, $map);
+ * ```php
+ * $db = SwatDB::connect('...dsn...');
+ * $map = [
+ *      'status_type' => MyStatusEnum::class
+ * ];
+ * SwatDBEnumMapper::initialize($db, $map);
+ * ```
  *
  * From here on, any queries against tables with columns of the `status_type` type
  * will map those columns to MyStatusEnum classes.
  *
  * You should also quote these values using the "enum" type when using them in queries:
  *
- *     $status = MyStatusEnum::IN_PROGRESS;
- *     $sql = sprintf(
- *         'UPDATE table SET status = '%s' WHERE ...',
- *         $db->quote($status, 'enum')
- *     );
- *     $db->query($sql);
+ * ```php
+ * $status = MyStatusEnum::IN_PROGRESS;
+ * $sql = sprintf(
+ *     'UPDATE table SET status = '%s' WHERE ...',
+ *     $db->quote($status, 'enum')
+ * );
+ * $db->query($sql);
+ * ```
  *
  * Enum classes can be simple unit enums (in which case the enum case _names_
  * should exactly match the possible values coming from the database), or they

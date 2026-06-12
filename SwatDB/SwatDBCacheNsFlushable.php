@@ -3,7 +3,7 @@
 /**
  * Interface that supports flushing cache name-spaces.
  *
- * @copyright 2014-2016 silverorange
+ * @copyright 2014-2026 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 interface SwatDBCacheNsFlushable
@@ -13,5 +13,5 @@ interface SwatDBCacheNsFlushable
      *
      * @param string $ns The name-space to flush
      */
-    public function flushNs($ns);
+    public function flushNs(string $ns): void;
 }

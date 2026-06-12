@@ -3,7 +3,7 @@
 /**
  * All public properties correspond to database fields.
  *
- * @copyright 2005-2025 silverorange
+ * @copyright 2005-2026 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecordable, SwatDBMarshallable, SwatDBFlushable
@@ -377,7 +377,7 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
      * duplicate has all the same public property values.  Unlike a clone, a
      * duplicate does not have an id and therefore can be saved to the
      * database as a new row. This method recursively duplicates
-     * sub-dataobjects which were registered with <i>$autosave</i> set to true.
+     * sub-dataobjects which were registered with `$autosave` set to true.
      *
      * @return static a duplicate of this object
      */
@@ -878,14 +878,13 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
      * The database is automatically set for all recordable sub-objects of this
      * data-object.
      *
-     * @param MDB2_Driver_Common $db  the database driver to use for this
-     *                                data-object
-     * @param array              $set optional array of objects passed through
-     *                                recursive call containing all objects that
-     *                                have been set already. Prevents infinite
-     *                                recursion.
+     * @param MDB2_Driver_Common  $db  the database driver to use for this data-object
+     * @param array<string, bool> $set optional array of objects passed through
+     *                                 recursive call.  Array keys represent hashes
+     *                                 of all objects that have already been set.
+     *                                 Prevents infinite recursion.
      */
-    public function setDatabase(MDB2_Driver_Common $db, array $set = [])
+    public function setDatabase(MDB2_Driver_Common $db, array $set = []): void
     {
         $key = spl_object_hash($this);
 
@@ -909,7 +908,7 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
      *
      * Only modified properties are updated.
      */
-    public function save()
+    public function save(): void
     {
         if ($this->read_only) {
             throw new SwatDBException(
@@ -952,7 +951,7 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
      *
      * @return bool whether data was sucessfully loaded
      */
-    public function load($id)
+    public function load($id): bool
     {
         $this->checkDB();
         $row = $this->loadInternal($id);
@@ -970,7 +969,7 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
     /**
      * Deletes this object from the database.
      */
-    public function delete()
+    public function delete(): void
     {
         if ($this->read_only) {
             throw new SwatDBException(
@@ -1000,7 +999,7 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
      * @return bool true if this object was modified and false if this
      *              object was not modified
      */
-    public function isModified()
+    public function isModified(): bool
     {
         if ($this->read_only) {
             return false;
@@ -1046,7 +1045,7 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
         return false;
     }
 
-    protected function checkDB()
+    protected function checkDB(): void
     {
         if ($this->db === null) {
             throw new SwatDBNoDatabaseException(
@@ -1325,15 +1324,15 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
     // cache flushing
 
     /**
-     * Sets the flushable cache to use for this dataobject.
+     * Sets the flushable cache to use for this data object.
      *
-     * Using a flushable cache allows clearing the cache when the dataobject
+     * Using a flushable cache allows clearing the cache when the data object
      * is modified or deleted.
      *
      * @param SwatDBCacheNsFlushable $cache the flushable cache to use for
      *                                      this dataobject
      */
-    public function setFlushableCache(SwatDBCacheNsFlushable $cache)
+    public function setFlushableCache(SwatDBCacheNsFlushable $cache): void
     {
         $this->flushable_cache = $cache;
     }
@@ -1475,7 +1474,7 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
         }
     }
 
-    public function marshall(array $tree = [])
+    public function marshall(array $tree = []): array
     {
         $data = [];
 
@@ -1540,7 +1539,7 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
         return $data;
     }
 
-    public function unmarshall(array $data = [])
+    public function unmarshall(array $data = []): void
     {
         // public properties
         $reflector = new ReflectionObject($this);

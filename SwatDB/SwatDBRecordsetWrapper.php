@@ -8,14 +8,19 @@
  * model for a recordset view. See {@link SwatView}.
  *
  * Recordsets are iterable and accessible using array access notation. One
- * important point about recordsets is that <strong>iteration will always visit
- * every record in this recordset</strong>, but if an index field is defined
- * for this recordset, <strong>array access notation can only access records
- * with their index field set</strong>. This is normally not a problem but
+ * important point about recordsets is that **iteration will always visit
+ * every record in this recordset**, but if an index field is defined
+ * for this recordset, **array access notation can only access records
+ * with their index field set**. This is normally not a problem but
  * inconsistencies can arise if records are added to this recordset that do not
  * have an index value.
  *
- * @copyright 2005-2024 silverorange
+ * @template TObject of stdClass|SwatDBDataObject
+ *
+ * @implements ArrayAccess<array-key, TObject>
+ * @implements SwatTableModel<TObject>
+ *
+ * @copyright 2005-2026 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatDBRecordsetWrapper extends SwatObject implements
@@ -29,9 +34,9 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
     /**
      * The name of the row wrapper class to use for this recordset wrapper.
      *
-     * @var string
+     * @var ?class-string<TObject>
      */
-    protected $row_wrapper_class;
+    protected ?string $row_wrapper_class = null;
 
     /**
      * The name of the record field to use as an index.
@@ -39,34 +44,32 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
      * This field is used to lookup objects using getIndex(). If unspecified
      * by a recordset subclass, the subclass records will not be indexed.
      *
-     * @var string
+     * @var ?non-empty-string
      */
-    protected $index_field;
+    protected ?string $index_field = null;
 
     /**
      * The database driver to use for this recordset.
      *
-     * @var MDB2_Driver_Common
-     *
      * @see SwatDBRecordsetWrapper::setDatabase()
      */
-    protected $db;
+    protected ?MDB2_Driver_Common $db = null;
 
     /**
-     * @var array
+     * @var array<string, mixed>
      *
      * @see SwatDBRecordsetWrapper::setOptions()
      */
-    protected $options = [];
+    protected array $options = [];
 
     /**
      * Records contained in this recordset.
      *
      * This array is indexed numerically.
      *
-     * @var array
+     * @var list<TObject>
      */
-    private $objects = [];
+    private array $objects = [];
 
     /**
      * Records contained in this recordset indexed by this recordset's
@@ -75,9 +78,9 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
      * If this recordset does not have a defined index field, this array is
      * not used.
      *
-     * @var array
+     * @var array<array-key, TObject>
      */
-    private $objects_by_index = [];
+    private array $objects_by_index = [];
 
     /**
      * Records removed from this recordset.
@@ -87,24 +90,22 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
      * in this array are deleted from the database. This array is indexed
      * numerically.
      *
-     * @var array
+     * @var list<TObject>
      */
-    private $removed_objects = [];
+    private array $removed_objects = [];
 
     /**
      * The current index of the iterator interface.
-     *
-     * @var int
      */
-    private $current_index = 0;
+    private int $current_index = 0;
 
     /**
      * Creates a new recordset wrapper.
      *
-     * @param MDB2_Result_Common $rs      optional. The MDB2 result set to
-     *                                    wrap.
-     * @param array              $options optional. An array of options for
-     *                                    this recordset.
+     * @param ?MDB2_Result_Common  $rs      optional. The MDB2 result set to
+     *                                      wrap.
+     * @param array<string, mixed> $options optional. An array of options for
+     *                                      this recordset.
      */
     public function __construct(
         ?MDB2_Result_Common $rs = null,
@@ -157,11 +158,11 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
     /**
      * Duplicates this record set wrapper.
      *
-     * @return SwatDBRecordsetWrapper a duplicate of this object
+     * @return static a duplicate of this object
      *
      * @see SwatDBDataobject::duplicate()
      */
-    public function duplicate()
+    public function duplicate(): static
     {
         $class = get_class($this);
         $new_wrapper = new $class();
@@ -183,18 +184,17 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
      *
      * Subclasses may define additional options. The default options are:
      *
-     * - <kbd>boolean read_only</kbd> if true, records are initialized as
-     *                                read only. Defaults to false.
+     * - `bool read_only`
+     *    If true, records are initialized as read-only. Defaults to false.
      *
-     * @param array|string $options either an array containing key-value pairs
-     *                              or a string cotnaining the option name to
-     *                              set
-     * @param mixed        $value   optional. If <kbd>$options</kbd> was passed
-     *                              as a string, this is the option value.
+     * @param array<string, mixed>|string $options either an array containing key-value pairs
+     *                                             or a string containing the option name to set
+     * @param mixed|null                  $value   optional. If `$options` was passed
+     *                                             as a string, this is the option value.
      *
-     * @return SwatDBRecordsetWrapper the current object for fluent interface
+     * @return $this the current object for fluent interface
      */
-    public function setOptions($options, $value = null)
+    public function setOptions(array|string $options, mixed $value = null): static
     {
         // if options passed as string then second param is option value
         if (is_string($options)) {
@@ -217,14 +217,14 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
     /**
      * Gets an option value or a default value if the option is not set.
      *
-     * @param string $name    the option name
-     * @param mixed  $default the default value to return if the option is
-     *                        not set for this recordset wrapper
+     * @param string     $name    the option name
+     * @param mixed|null $default the default value to return if the option is
+     *                            not set for this recordset wrapper
      *
      * @return mixed the option value or the default value if the option is
      *               not set
      */
-    public function getOption($name, $default = null)
+    public function getOption(string $name, mixed $default = null)
     {
         $value = $default;
 
@@ -238,9 +238,9 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
     /**
      * Creates a new empty copy of this recordset wrapper.
      *
-     * @return SwatDBRecordsetWrapper a new empty copy of this wrapper
+     * @return static a new empty copy of this wrapper
      */
-    public function copyEmpty()
+    public function copyEmpty(): static
     {
         $class_name = get_class($this);
         $wrapper = new $class_name();
@@ -253,20 +253,24 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
     }
 
     /**
-     * Creates a new dataobject.
+     * Creates a new data object.
      *
-     * @param stdClass $row the data row to use
+     * @template TInputRow of stdClass
      *
-     * @return mixed the instantiated data object or the original object if
-     *               no <i>$row_wrapper_class</i> is defined for this
-     *               recordset wrapper
+     * @param TInputRow $row the data row to use
+     *
+     * @return TInputRow|TObject the instantiated data object or the
+     *                           original object if no `$row_wrapper_class`
+     *                           is defined for this recordset wrapper
      */
     protected function instantiateRowWrapperObject($row)
     {
         if ($this->row_wrapper_class === null) {
             $object = $row;
         } else {
-            $object = new $this->row_wrapper_class(
+            /** @var class-string<SwatDBDataObject> $class */
+            $class = $this->row_wrapper_class;
+            $object = new $class(
                 $row,
                 $this->getOption('read_only'),
             );
@@ -282,7 +286,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
      * recordset's row wrapper class. See
      * {@link SwatDBRecordsetWrapper::$row_wrapper_class}.
      *
-     * Subclasses are also encoraged to specify an index field here. This
+     * Subclasses are also encouraged to specify an index field here. This
      * enables lookup of records in this recordset by the index field value.
      * See {@link SwatDBRecordsetWrapper::$index_field}.
      *
@@ -291,7 +295,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
      */
     protected function init() {}
 
-    protected function checkDB()
+    protected function checkDB(): void
     {
         if ($this->db === null) {
             throw new SwatDBNoDatabaseException(
@@ -307,7 +311,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
     // array access
 
     /**
-     * Gets whether or not a value exists for the given offset.
+     * Gets whether a value exists for the given offset.
      *
      * @param mixed $offset the offset to check. If this recordset has a
      *                      defined index field, the offset is an index
@@ -333,7 +337,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
      *                      an index value. Otherwise, the offset is an
      *                      ordinal value.
      *
-     * @return SwatDBDataObject the record at the specified offset
+     * @return TObject the record at the specified offset
      *
      * @throws OutOfBoundsException if no record exists at the specified offset
      *                              in this recordset
@@ -356,12 +360,12 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
     /**
      * Sets a record at a specified offset.
      *
-     * @param mixed $offset optional. The offset to set the record at. If this
-     *                      recordset has a defined index field, the offset is
-     *                      an index value. Otherwise, the offset is an
-     *                      ordinal value. If no offset is given, the record
-     *                      will be added at the end of this recordset.
-     * @param mixed $value  the record to add
+     * @param mixed   $offset optional. The offset to set the record at. If this
+     *                        recordset has a defined index field, the offset is
+     *                        an index value. Otherwise, the offset is an
+     *                        ordinal value. If no offset is given, the record
+     *                        will be added at the end of this recordset.
+     * @param TObject $value  the record to add
      *
      * @throws UnexpectedValueException if this recordset has a defined row
      *                                  wrapper class and the specified value
@@ -504,7 +508,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
     /**
      * Returns the current element.
      *
-     * @return mixed the current element
+     * @return TObject the current element
      */
     public function current(): mixed
     {
@@ -571,7 +575,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
      * @deprecated this class now implements Countable. Use count($object)
      *              instead of $object->getCount().
      */
-    public function getCount()
+    public function getCount(): int
     {
         return count($this);
     }
@@ -600,6 +604,15 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         $this->__unserialize(unserialize($data));
     }
 
+    /**
+     * @return array{
+     *     row_wrapper_class: class-string<TObject>|null,
+     *     index_field: non-empty-string|null,
+     *     objects: list<TObject>,
+     *     objects_by_index: array<array-key, TObject>,
+     *     options: array<string, mixed>
+     * }
+     */
     public function __serialize(): array
     {
         $data = [];
@@ -619,6 +632,15 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         return $data;
     }
 
+    /**
+     * @param array{
+     *     row_wrapper_class: class-string<TObject>|null,
+     *     index_field: non-empty-string|null,
+     *     objects: list<TObject>,
+     *     objects_by_index: array<array-key, TObject>,
+     *     options: array<string, mixed>
+     * } $data
+     */
     public function __unserialize(array $data): void
     {
         foreach ($data as $property => $value) {
@@ -626,7 +648,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         }
     }
 
-    public function marshall(array $tree = [])
+    public function marshall(array $tree = []): array
     {
         $data = [];
 
@@ -648,7 +670,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         return $data;
     }
 
-    public function unmarshall(array $data = [])
+    public function unmarshall(array $data = []): void
     {
         $private_properties = ['row_wrapper_class', 'index_field', 'options'];
 
@@ -683,14 +705,14 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
      *
      * @param string $name name of the internal property to get
      *
-     * @return array an array of values
+     * @return list<mixed> an array of values
      *
      * @throws SwatDBException if records in this recordset do not have an
-     *                         internal value with the specified <i>$name</i>
+     *                         internal value with the specified `$name`
      *
      * @see SwatDBDataObject::getInternalValue()
      */
-    public function getInternalValues($name)
+    public function getInternalValues(string $name): array
     {
         $values = [];
 
@@ -723,8 +745,8 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
      * @param MDB2_Driver_Common $db      database object
      * @param string             $sql     SQL to execute with placeholder for the set of
      *                                    internal property values. For example:
-     *                                    <code>select * from Foo where id in (%s)</code>.
-     * @param string             $wrapper the class name of the recordset wrapper to use
+     *                                    `select * from Foo where id in (%s)`
+     * @param class-string       $wrapper the class name of the recordset wrapper to use
      *                                    for the sub-data-objects
      * @param string             $type    optional. The MDB2 datatype of the internal property
      *                                    values. If not specified, 'integer' is used.
@@ -732,11 +754,11 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
      * @return SwatDBRecordsetWrapper an instance of the wrapper, or null
      */
     public function loadAllSubDataObjects(
-        $name,
+        string $name,
         MDB2_Driver_Common $db,
-        $sql,
-        $wrapper,
-        $type = 'integer',
+        string $sql,
+        string $wrapper,
+        string $type = 'integer',
     ) {
         $sub_data_objects = null;
 
@@ -951,9 +973,9 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
     /**
      * Gets the index values of the records in this recordset.
      *
-     * @return array the index values of the records in this recordset
+     * @return list<array-key> the index values of the records in this recordset
      */
-    public function getIndexes()
+    public function getIndexes(): array
     {
         if ($this->index_field === null) {
             throw new SwatDBException(
@@ -971,10 +993,10 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
     /**
      * Gets this recordset as an array of objects.
      *
-     * @return array this record set as an array. This gets a copy of the
-     *               internal object array (indexed ordinally).
+     * @return list<TObject> this record set as an array. This gets a copy of the
+     *                       internal object array (indexed ordinally).
      */
-    public function getArray()
+    public function getArray(): array
     {
         return $this->objects;
     }
@@ -982,8 +1004,8 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
     /**
      * Retrieves the first object in this recordset.
      *
-     * @return mixed the first object or null if there are no objects in this
-     *               recordset
+     * @return TObject|null the first object or null if there are no objects in this
+     *                      recordset
      */
     public function getFirst()
     {
@@ -999,8 +1021,8 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
     /**
      * Retrieves the last object in this recordset.
      *
-     * @return mixed the last object or null if there are no objects in this
-     *               recordset
+     * @return TObject|null the last object or null if there are no objects in this
+     *                      recordset
      */
     public function getLast()
     {
@@ -1016,20 +1038,21 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
     /**
      * Retrieves a record in this recordset by index.
      *
-     * By default indexes are ordinal numbers unless this class's
-     * $index_field property is set.
+     * By default, indexes are ordinal numbers unless this class's
+     * `$index_field` property is set.
      *
-     * You can use also get records using array acces notation. For example:
-     * <code>
-     * $value = (isset($set['index'])) ? $set['index'] : null;
-     * </code>
+     * You can use also get records using array access notation. For example:
+     *
+     * ```php
+     * $value = $set['index'] ?? null;
+     * ```
      *
      * @param mixed $index the offset for which to get the record. If this
      *                     recordset has a defined index field, the offset is
      *                     an index value. Otherwise, the offset is an
      *                     ordinal value.
      *
-     * @return mixed the record object or null if not found
+     * @return TObject|null the record object or null if not found
      */
     public function getByIndex($index)
     {
@@ -1039,17 +1062,17 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
     /**
      * Adds a record to this recordset.
      *
-     * You can also add records to this recordset using array access notation.
-     * For example:
-     * <code>
-     * $set[] = $new_record;
-     * </code>
+     * You can also add records to this recordset using array access notation:
      *
-     * @param SwatDBDataObject $object the object to add. If this recordset has
-     *                                 a row wrapper class defined, the object
-     *                                 must be an instance of that class.
+     * ```php
+     * $set[] = $new_record;
+     * ```
+     *
+     * @param TObject $object the object to add. If this recordset has
+     *                        a row wrapper class defined, the object
+     *                        must be an instance of that class.
      */
-    public function add(SwatDBDataObject $object)
+    public function add(stdClass|SwatDBDataObject $object): void
     {
         $this[] = $object;
     }
@@ -1057,9 +1080,9 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
     /**
      * Removes a record from this recordset.
      *
-     * @param SwatDBDataObject $remove_object the record to remove
+     * @param TObject $remove_object the record to remove
      */
-    public function remove(SwatDBDataObject $remove_object)
+    public function remove(stdClass|SwatDBDataObject $remove_object): void
     {
         if (in_array($remove_object, $this->objects, true)) {
             $this->removed_objects[] = $remove_object;
@@ -1087,18 +1110,18 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
     /**
      * Removes a record from this recordset given the record's index value.
      *
-     * You can also remove records from this recordset using array access
-     * notation. For example:
-     * <code>
+     * You can also remove records from this recordset using array access notation:
+     *
+     * ```php
      * unset($set[$index]);
-     * </code>
+     * ```
      *
      * @param mixed $index the offset of the record to remove. If this
      *                     recordset has a defined index field, the offset is
      *                     an index value. Otherwise, the offset is an
      *                     ordinal value.
      */
-    public function removeByIndex($index)
+    public function removeByIndex(mixed $index): void
     {
         unset($this[$index]);
     }
@@ -1106,7 +1129,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
     /**
      * Removes all records from this recordset.
      */
-    public function removeAll()
+    public function removeAll(): void
     {
         $this->removed_objects = array_values($this->objects);
         $this->objects = [];
@@ -1115,13 +1138,13 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
     }
 
     /**
-     * Reindexes this recordset.
+     * Re-indexes this recordset.
      *
      * Reindexing is useful when you have added new data-objects to this
      * recordset. Reindexing is only done if this recordset has a defined
      * index field.
      */
-    public function reindex()
+    public function reindex(): void
     {
         if ($this->index_field !== null) {
             $this->objects_by_index = [];
@@ -1139,12 +1162,12 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
      *
      * @param string $name name of the property to get
      *
-     * @return array an array of values
+     * @return list<mixed> an array of values
      *
      * @throws SwatDBException if records in this recordset do not have a
-     *                         property with the specified <i>$name</i>
+     *                         property with the specified `$name`
      */
-    public function getPropertyValues($name)
+    public function getPropertyValues(string $name): array
     {
         $values = [];
 
@@ -1172,19 +1195,18 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
      * The database is automatically set for all recordable records of this
      * recordset.
      *
-     * @param MDB2_Driver_Common $db  the database driver to use for this
-     *                                recordset
-     * @param array              $set optional array of objects passed through
-     *                                recursive call containing all objects that
-     *                                have been set already. Prevents infinite
-     *                                recursion.
+     * @param MDB2_Driver_Common  $db  the database driver to use for this recordset
+     * @param array<string, bool> $set optional array of objects passed through
+     *                                 recursive call.  Array keys represent hashes
+     *                                 of all objects that have already been set.
+     *                                 Prevents infinite recursion.
      */
-    public function setDatabase(MDB2_Driver_Common $db, array $set = [])
+    public function setDatabase(MDB2_Driver_Common $db, array $set = []): void
     {
         $key = spl_object_hash($this);
 
         if (isset($set[$key])) {
-            // prevent infinite recursion on datastructure cycles
+            // prevent infinite recursion on data structure cycles
             return;
         }
 
@@ -1206,11 +1228,11 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
      *  2. Objects that were added are inserted into the database,
      *  3. Objects that were modified are updated in the database,
      *
-     * Deleting is performed before adding incase a new row with the same
+     * Deleting is performed before adding in case a new row with the same
      * values as a deleted row is added. For example, a binding is removed and
      * an identical binding is added.
      */
-    public function save()
+    public function save(): void
     {
         $this->checkDB();
         $transaction = new SwatDBTransaction($this->db);
@@ -1252,14 +1274,13 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
      *              or more records could not be loaded. If any records
      *              fail to load, the recordset state remains unchanged.
      *
-     * @throws SwatInvalidTypeException  if the <i>$object_indexes</i> property
+     * @throws SwatInvalidTypeException  if the `$object_indexes` property
      *                                   is not an array
      * @throws SwatInvalidClassException if this recordset's
      *                                   {@link SwatDBRecordsetWrapper::$row_wrapper_class}
-     *                                   is not an instance of
-     *                                   {@link SwatDBRecordable}
+     *                                   is not an instance of {@link SwatDBRecordable}
      */
-    public function load($object_indexes)
+    public function load(mixed $object_indexes): bool
     {
         if (!is_array($object_indexes)) {
             throw new SwatInvalidTypeException(
@@ -1270,7 +1291,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         }
 
         $interfaces = class_implements($this->row_wrapper_class);
-        if (!in_array('SwatDBRecordable', $interfaces)) {
+        if (!in_array(SwatDBRecordable::class, $interfaces)) {
             throw new SwatInvalidClassException(
                 'The recordset must define a row wrapper class that is an '
                     . 'instance of SwatDBRecordable for recordset loading to work.',
@@ -1318,7 +1339,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
      * All records contained in this recordset are removed from this set and
      * are deleted from the database.
      */
-    public function delete()
+    public function delete(): void
     {
         $this->removeAll();
         $this->save();
@@ -1334,13 +1355,13 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
      * @return bool true if this recordset was modified and false if this
      *              recordset was not modified
      */
-    public function isModified()
+    public function isModified(): bool
     {
         if (count($this->removed_objects) > 0) {
             return true;
         }
 
-        foreach ($this->objects as $name => $object) {
+        foreach ($this->objects as $object) {
             if ($object->isModified()) {
                 return true;
             }
@@ -1358,7 +1379,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
      * @param SwatDBCacheNsFlushable $cache the flushable cache to use for
      *                                      this dataobject
      */
-    public function setFlushableCache(SwatDBCacheNsFlushable $cache)
+    public function setFlushableCache(SwatDBCacheNsFlushable $cache): void
     {
         foreach ($this->objects as $object) {
             if ($object instanceof SwatDBFlushable) {

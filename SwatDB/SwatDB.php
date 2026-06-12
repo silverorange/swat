@@ -5,15 +5,15 @@
  *
  * Static convenience methods for working with a database.
  *
- * @copyright 2005-2025 silverorange
+ * @copyright 2005-2026 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDB extends SwatObject
 {
-    protected static $query_count = 0;
-    protected static $debug = false;
-    protected static $debug_info = [];
-    protected static $debug_wrapper_depth = 0;
+    protected static int $query_count = 0;
+    protected static bool $debug = false;
+    protected static array $debug_info = [];
+    protected static int $debug_wrapper_depth = 0;
 
     /**
      * Sets the debug mode used by SwatDB.
@@ -21,9 +21,9 @@ class SwatDB extends SwatObject
      * @param bool $debug optional. Whether or not to display SQL queries.
      *                    Defaults to true.
      */
-    public static function setDebug($debug = true)
+    public static function setDebug(bool $debug = true): void
     {
-        self::$debug = (bool) $debug;
+        self::$debug = $debug;
     }
 
     /**
@@ -34,11 +34,11 @@ class SwatDB extends SwatObject
      *
      * @param string $dsn the DSN to which to connect
      *
-     * @return MDB2_Driver_Common $db the database connection
+     * @return MDB2_Driver_Common the database connection
      *
      * @throws SwatDBException
      */
-    public static function connect($dsn)
+    public static function connect(string $dsn): MDB2_Driver_Common
     {
         $db = MDB2::connect($dsn);
 
@@ -62,7 +62,7 @@ class SwatDB extends SwatObject
      *                                                      not specified,
      *                                                      {@link SwatDBDefaultRecordsetWrapper}
      *                                                      is used. Specify
-     *                                                      <kbd>null</kbd> to return
+     *                                                      `null` to return
      *                                                      an unwrapped MDB2 result.
      * @param ?array                               $types   optional. An array of MDB2 datatypes
      *                                                      for the columns of the
@@ -70,7 +70,7 @@ class SwatDB extends SwatObject
      *
      * @return ($wrapper is null ? MDB2_Result_Common : TWrapper) A recordset containing
      *                                                            the query result. If
-     *                                                            <i>$wrapper</i> is
+     *                                                            `$wrapper` is
      *                                                            specified as null, a
      *                                                            MDB2_Result_Common object
      *                                                            is returned.
@@ -408,13 +408,13 @@ class SwatDB extends SwatObject
      *                                               not specified,
      *                                               {@link SwatDBDefaultRecordsetWrapper}
      *                                               is used. Specify
-     *                                               <kbd>null</kbd> to return
+     *                                               `null` to return
      *                                               an unwrapped MDB2 result.
      * @param array                         $types   optional. An array of MDB2 datatypes
      *                                               for the columns of the
      *                                               result set.
      *
-     * @return mixed A recordset containing the query result. If <i>$wrapper</i>
+     * @return mixed A recordset containing the query result. If `$wrapper`
      *               is specified as null, a MDB2_Result_Common object is
      *               returned.
      *
@@ -779,10 +779,10 @@ class SwatDB extends SwatObject
      *                                            standard MDB2 datatype. If type is ommitted, then integer is
      *                                            assummed for this field.
      * @param string             $order_by_clause Optional comma deliminated list of
-     *                                            database field names to use in the <i>order by</i> clause.
+     *                                            database field names to use in the _order by_ clause.
      *                                            Do not include "order by" in the string; only include the list
      *                                            of field names. Pass null to skip over this paramater.
-     * @param string             $where_clause    Optional <i>where</i> clause to limit the
+     * @param string             $where_clause    Optional _where_ clause to limit the
      *                                            returned results.  Do not include "where" in the string; only
      *                                            include the conditionals.
      *
@@ -854,10 +854,10 @@ class SwatDB extends SwatObject
      *                                            standard MDB2 datatype. If type is ommitted, then integer is
      *                                            assummed for this field.
      * @param string             $order_by_clause Optional comma deliminated list of
-     *                                            database field names to use in the <i>order by</i> clause.
+     *                                            database field names to use in the _order by_ clause.
      *                                            Do not include "order by" in the string; only include the list
      *                                            of field names. Pass null to skip over this paramater.
-     * @param string             $where_clause    Optional <i>where</i> clause to limit the
+     * @param string             $where_clause    Optional _where_ clause to limit the
      *                                            returned results.  Do not include "where" in the string; only
      *                                            include the conditionals.
      *
@@ -946,14 +946,14 @@ class SwatDB extends SwatObject
      *                                              type is a standard MDB2 datatype. If type is ommitted, then text
      *                                              is assummed for this field.
      * @param string             $group_field       The name of the database field in $table that
-     *                                              links with the $group_idfield. Can be given in the form type:name
+     *                                              links with the $group_id_field. Can be given in the form `type:name`
      *                                              where type is a standard MDB2 datatype. If type is ommitted, then
      *                                              integer is assummed for this field.
      * @param string             $order_by_clause   Optional comma deliminated list of
-     *                                              database field names to use in the <i>order by</i> clause.
+     *                                              database field names to use in the _order by_ clause.
      *                                              Do not include "order by" in the string; only include the list
      *                                              of field names. Pass null to skip over this paramater.
-     * @param string             $where_clause      Optional <i>where</i> clause to limit the
+     * @param string             $where_clause      Optional _where_ clause to limit the
      *                                              returned results.  Do not include "where" in the string; only
      *                                              include the conditionals.
      * @param SwatDataTreeNode   $tree              a tree to add nodes to. If no tree is
@@ -961,8 +961,7 @@ class SwatDB extends SwatObject
      *                                              empty tree.
      * @param mixed              $group_id_field
      *
-     * @return SwatDataTreeNode a tree composed of {@link SwatDataTreeNode}
-     *                          objects
+     * @return SwatDataTreeNode a tree composed of {@link SwatDataTreeNode} objects
      *
      * @throws SwatDBException
      */
@@ -1257,7 +1256,7 @@ class SwatDB extends SwatObject
     }
 
     /**
-     * Noramlizes Iterator objects into simple arrays.
+     * Normalizes Iterator objects into simple arrays.
      *
      * Checks a variable to see if it is an array or if it is an Iterator. If
      * the variable is an Iterator, converts it to an array of values.
@@ -1266,14 +1265,15 @@ class SwatDB extends SwatObject
      *
      * @return array the normalized array
      *
-     * @throws SwatDBException if the <i>$array</i> parameter is not an array
+     * @throws SwatDBException if the `$array` parameter is not an array
      *                         or an Iterator
      */
-    private static function initArray($array)
+    private static function initArray(array|Iterator $array): array
     {
         if (is_array($array)) {
             return $array;
         }
+
         if ($array instanceof Iterator) {
             $return = [];
             foreach ($array as $value) {
@@ -1283,7 +1283,7 @@ class SwatDB extends SwatObject
             return $return;
         }
 
-        throw new SwatDBException('Value is not an array');
+        throw new SwatDBException('Value is not an array or Iterator');
     }
 
     private static function debugStart($message)

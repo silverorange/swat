@@ -5,7 +5,7 @@
  *
  * This is a static class and should not be instantiated.
  *
- * @copyright 2006-2025 silverorange
+ * @copyright 2006-2026 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  *
  * @template TParent
@@ -27,30 +27,30 @@ class SwatDBClassMap
      * Maps a class name to another class name.
      *
      * Subsequent calls to {@link SwatDBClassMap::get()} using the
-     * <i>$from_class_name</i> will return the <i>$to_class_name</i>. Class
+     * `$from_class_name` will return the `$to_class_name`. Class
      * names may be mapped to already mapped class names. For example:
      *
-     * <code>
+     * ```php
      * SwatDBClassMap::add('Object', 'MyObject');
      * SwatDBClassMap::add('MyObject', 'MyOtherObject');
      * echo SwatDBClassMap::get('Object'); // MyOtherObject
-     * </code>
+     * ```
      *
      * If a circular dependency is created, an exception is thrown. If the
-     * <i>$from_class_name</i> is already mapped to another class the old
+     * `$from_class_name` is already mapped to another class the old
      * mapping is overwritten.
      *
      * @param class-string<TParent> $from_class_name The class name to map from
      * @param class-string<TChild>  $to_class_name   The class name to map to.
      *                                               The mapped class must be a
      *                                               subclass of the
-     *                                               <i>$from_class_name</i> otherwise
+     *                                               `$from_class_name` otherwise
      *                                               class resolution using
      *                                               {@link SwatDBClassMap::get()}
      *                                               will throw an exception.
      *
-     * @throws SwatInvalidClassException If <i>$to_class_name</i> is not a subclass
-     *                                   of <i>$from_class_name</i>
+     * @throws SwatInvalidClassException If `$to_class_name` is not a subclass
+     *                                   of `$from_class_name`
      * @throws SwatException             If the added mapping creates a circular dependency
      */
     public static function add(
