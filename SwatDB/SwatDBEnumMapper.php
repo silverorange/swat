@@ -186,6 +186,8 @@ class SwatDBEnumMapper
         // handle backed enums
         if ($reflection->isBacked()) {
             try {
+                // Temp fix: https://github.com/phpstan/phpstan/issues/10164
+                // @phpstan-ignore-next-line
                 return $classname::from($value);
             } catch (ValueError $e) {
                 throw new SwatDBException(
