@@ -6,7 +6,7 @@
  * Static convenience methods for working with a database.
  *
  * @phpstan-type TGroupOptionRow object{id: int|string, title: string, group_title: string, group_id: int|string}
-
+ *
  * @copyright 2005-2026 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
@@ -931,55 +931,55 @@ class SwatDB extends SwatObject
      * objects used for things like {@link SwatCheckboxList} where checkboxes
      * are grouped together under a title.
      *
-     * @param MDB2_Driver_Common $db                the database connection
-     * @param string             $table             the database table to query
-     * @param string             $title_field       The name of the database field to query for
-     *                                              the title. Can be given in the form type:name where type is a
-     *                                              standard MDB2 datatype. If type is ommitted, then text is
-     *                                              assummed for this field.
-     * @param string             $id_field          The name of the database field to query for
-     *                                              the id. Can be given in the form type:name where type is a
-     *                                              standard MDB2 datatype. If type is ommitted, then integer is
-     *                                              assummed for this field.
-     * @param string             $group_table       the database table that the group titles come
-     *                                              from
-     * @param string             $group_title_field The name of the database field to query
-     *                                              for the group title. Can be given in the form type:name where
-     *                                              type is a standard MDB2 datatype. If type is ommitted, then text
-     *                                              is assummed for this field.
-     * @param string             $group_field       The name of the database field in $table that
-     *                                              links with the $group_id_field. Can be given in the form `type:name`
-     *                                              where type is a standard MDB2 datatype. If type is ommitted, then
+     * @param MDB2_Driver_Common $db                The database connection
+     * @param string             $table             The database table to query
+     * @param string             $title_field       The name of the database field to query for the title.
+     *                                              Can be given in the form `type:name` where `type` is a
+     *                                              standard MDB2 datatype. If `type` is ommitted, then
+     *                                              text is assummed for this field.
+     * @param string             $id_field          The name of the database field to query for the id.
+     *                                              Can be given in the form `type:name` where `type` is a
+     *                                              standard MDB2 datatype. If `type` is ommitted, then
      *                                              integer is assummed for this field.
-     * @param string             $order_by_clause   Optional comma deliminated list of
+     * @param string             $group_table       The database table that the group titles come from
+     * @param string             $group_title_field The name of the database field to query for the group title.
+     *                                              Can be given in the form `type:name` where `type `is a
+     *                                              standard MDB2 datatype. If `type` is ommitted, then
+     *                                              text is assummed for this field.
+     * @param string             $group_id_field    The name of the database field to query for the group id.
+     *                                              Can be given in the form `type:name` where `type` is a
+     *                                              standard MDB2 datatype. If `type` is ommitted, then
+     *                                              integer is assummed for this field.
+     * @param string             $group_field       The name of the database field in $table that links with the
+     *                                              $group_id_field. Can be given in the form `type:name` where
+     *                                              `type` is a standard MDB2 datatype. If `type` is ommitted, then
+     *                                              integer is assummed for this field.
+     * @param ?string            $order_by_clause   Optional comma deliminated list of
      *                                              database field names to use in the _order by_ clause.
      *                                              Do not include "order by" in the string; only include the list
-     *                                              of field names. Pass null to skip over this paramater.
-     * @param string             $where_clause      Optional _where_ clause to limit the
-     *                                              returned results.  Do not include "where" in the string; only
-     *                                              include the conditionals.
-     * @param SwatDataTreeNode   $tree              a tree to add nodes to. If no tree is
-     *                                              specified, nodes are added to a new
-     *                                              empty tree.
-     * @param mixed              $group_id_field
+     *                                              of field names. Pass `null` to skip over this paramater.
+     * @param ?string            $where_clause      Optional _where_ clause to limit the returned results.
+     *                                              Do not include "where" in the string; only include the conditionals.
+     * @param ?SwatDataTreeNode  $tree              A tree to add nodes to. If no tree is specified,
+     *                                              nodes are added to a new empty tree.
      *
      * @return SwatDataTreeNode a tree composed of {@link SwatDataTreeNode} objects
      *
      * @throws SwatDBException
      */
     public static function getGroupedOptionArray(
-        $db,
-        $table,
-        $title_field,
-        $id_field,
-        $group_table,
-        $group_title_field,
-        $group_id_field,
-        $group_field,
-        $order_by_clause = null,
-        $where_clause = null,
-        $tree = null,
-    ) {
+        MDB2_Driver_Common $db,
+        string $table,
+        string $title_field,
+        string $id_field,
+        string $group_table,
+        string $group_title_field,
+        string $group_id_field,
+        string $group_field,
+        ?string $order_by_clause = null,
+        ?string $where_clause = null,
+        ?SwatDataTreeNode $tree = null,
+    ): SwatDataTreeNode {
         $title_field = new SwatDBField($title_field, 'text');
         $id_field = new SwatDBField($id_field, 'integer');
         $group_title_field = new SwatDBField($group_title_field, 'text');

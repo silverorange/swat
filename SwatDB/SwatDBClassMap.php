@@ -97,8 +97,8 @@ class SwatDBClassMap
      * @param class-string<TParent> $from_class_name The name of the class to resolve
      *
      * @return class-string<TChild>|class-string<TParent> The resolved class name. If no class mapping
-     *                                      exists for the given class name, the same
-     *                                      class name is returned.
+     *                                                    exists for the given class name, the same
+     *                                                    class name is returned.
      */
     public static function get(string $from_class_name): string
     {

@@ -164,6 +164,7 @@ class SwatDBEnumMapper
      * is assumed to be the actual enum case name.
      *
      * @template T of TEnumClass
+     *
      * @param class-string<T> $classname
      *
      * @return T
