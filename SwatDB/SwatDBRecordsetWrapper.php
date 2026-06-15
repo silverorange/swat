@@ -119,7 +119,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         }
     }
 
-    public function initializeFromResultSet(MDB2_Result_Common $rs)
+    public function initializeFromResultSet(MDB2_Result_Common|MDB2_Error $rs)
     {
         if (MDB2::isError($rs)) {
             throw new SwatDBException($rs->getMessage());
