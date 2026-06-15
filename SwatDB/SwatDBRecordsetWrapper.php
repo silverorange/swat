@@ -875,7 +875,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
             $record_ids[] = $record->{$this->index_field};
         }
 
-        $record_ids = $this->db->implodeArray(
+        $record_ids = $this->db->datatype->implodeArray(
             $record_ids,
             $binding_field->type,
         );
