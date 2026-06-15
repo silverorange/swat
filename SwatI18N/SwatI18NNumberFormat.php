@@ -3,34 +3,32 @@
 /**
  * Information for formatting numeric values.
  *
- * @copyright 2007-2016 silverorange
+ * @copyright 2007-2026 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  *
  * @see       SwatLocale::formatNumber()
  * @see       SwatLocale::getNumberFormat()
+ *
+ * @phpstan-import-type LocaleConvArray from SwatI18NLocale
  */
-class SwatI18NNumberFormat extends SwatObject
+class SwatI18NNumberFormat
 {
     /**
      * Decimal point character.
-     *
-     * @var string
      */
-    public $decimal_separator;
+    public string $decimal_separator = '.';
 
     /**
      * Thousands separator.
-     *
-     * @var string
      */
-    public $thousands_separator;
+    public string $thousands_separator = '';
 
     /**
      * Numeric groupings.
      *
-     * @var array
+     * @var list<int>
      */
-    public $grouping;
+    public array $grouping = [];
 
     /**
      * Gets a new number format object with certain properties overridden from
@@ -40,29 +38,28 @@ class SwatI18NNumberFormat extends SwatObject
      * array keys representing property names of this formatting object and
      * array values being the overridden values.
      *
-     * For example, to override the positive and negative signs of this format,
-     * use:
-     * <code>
-     * <?php
-     * $format->override(array('n_sign' => 'neg', 'p_sign' => 'pos'));
-     * ?>
-     * </code>
+     * For example, to override the positive and negative signs of this format:
      *
-     * @param array $format the format information with which to override thss
-     *                      format
+     * ```php
+     * $format->override([
+     *      'n_sign' => 'neg',
+     *      'p_sign' => 'pos'
+     * ]);
+     * ```
      *
-     * @return SwatI18NNumberFormat a copy of this number format with the
-     *                              specified properties set to the new values
+     * @param LocaleConvArray $format the format information with which to override this
+     *                                format
+     *
+     * @return static a copy of this number format with the
+     *                specified properties set to the new values
      *
      * @throws SwatException if any of the array keys do not match a formatting
      *                       property of this property
      */
-    public function override(array $format)
+    public function override(array $format): static
     {
-        $vars = get_object_vars($this);
-
         foreach ($format as $key => $value) {
-            if (!array_key_exists($key, $vars)) {
+            if (!property_exists($this, $key)) {
                 throw new SwatException(
                     'Number formatting information '
                         . "contains invalid property {$key} and cannot override "
@@ -80,29 +77,5 @@ class SwatI18NNumberFormat extends SwatObject
         }
 
         return $new_format;
-    }
-
-    /**
-     * Gets a string representation of this format.
-     *
-     * @return string a string representation of this format
-     */
-    public function __toString(): string
-    {
-        $string = '';
-
-        $string .= 'decimal_separator => ' . $this->decimal_separator . "\n";
-
-        $string
-            .= 'thousands_separator => ' . $this->thousands_separator . "\n";
-
-        $string .= 'grouping => ';
-        $string .= is_array($this->grouping)
-            ? implode(', ', $this->grouping)
-            : $this->grouping;
-
-        $string .= "\n";
-
-        return $string;
     }
 }

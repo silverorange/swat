@@ -3,8 +3,30 @@
 /**
  * A locale object.
  *
- * Locale objects are used to format and parse values according to locale-
- * specific rules.
+ * Locale objects are used to format and parse values according to
+ * locale-specific rules.
+ *
+ * @phpstan-type LocaleCategory LC_ALL|LC_COLLATE|LC_CTYPE|LC_MONETARY|LC_NUMERIC|LC_TIME|LC_MESSAGES
+ * @phpstan-type LocaleConvArray array{
+ *      decimal_point: string,
+ *      thousands_sep: string,
+ *      grouping: list<int>,
+ *      int_curr_symbol: string,
+ *      currency_symbol: string,
+ *      mon_decimal_point: string,
+ *      mon_thousands_sep: string,
+ *      mon_grouping: list<int>,
+ *      positive_sign: string,
+ *      negative_sign: string,
+ *      int_frac_digits: int,
+ *      frac_digits: int,
+ *      p_cs_precedes: bool,
+ *      p_sep_by_space: bool,
+ *      n_cs_precedes: bool,
+ *      n_sep_by_space: bool,
+ *      p_sign_posn: int<0, 4>,
+ *      n_sign_posn: int<0, 4>,
+ * }
  *
  * @copyright 2007-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
@@ -14,45 +36,37 @@ class SwatI18NLocale extends SwatObject
     /**
      * The locale string or array specified in the constructor for this locale.
      *
-     * @var array|string
+     * @var list<string>|string|null
      */
-    protected $locale;
+    protected array|string|null $locale;
 
     /**
      * The locale info array of this locale as provided by localeconv().
      *
-     * @var array
+     * @var LocaleConvArray
      */
-    protected $locale_info;
+    protected array $locale_info;
 
     /**
      * The preferred locale as selected by the operating system if the
      * {@link SwatI18NLocale::$locale} property is an array.
-     *
-     * @var string
      */
-    protected $preferred_locale;
+    protected string $preferred_locale;
 
     /**
      * The number format used by this locale.
-     *
-     * @var SwatI18NNumberFormat
      */
-    protected $number_format;
+    protected SwatI18NNumberFormat $number_format;
 
     /**
      * The national currency format used by this locale.
-     *
-     * @var SwatI18NCurrencyFormat
      */
-    protected $national_currency_format;
+    protected SwatI18NCurrencyFormat $national_currency_format;
 
     /**
      * The international currency format used by this locale.
-     *
-     * @var SwatI18NCurrencyFormat
      */
-    protected $international_currency_format;
+    protected SwatI18NCurrencyFormat $international_currency_format;
 
     /**
      * The previous locales indexed by the lc-type constant used to set the
@@ -62,9 +76,9 @@ class SwatI18NLocale extends SwatObject
      * {@link SwatI18NLocale::reset()} methods to reset the locale back to the
      * previous value.
      *
-     * @var array
+     * @var list<string>
      */
-    protected $old_locale_by_category = [];
+    protected array $old_locale_by_category = [];
 
     /**
      * Cache of existing locale objects.
@@ -72,29 +86,29 @@ class SwatI18NLocale extends SwatObject
      * This is an array of SwatI18NLocale objects indexed by the preferred
      * locale for this operating system.
      *
-     * @var array
+     * @var array<string, SwatI18NLocale>
      *
      * @see SwatI18NLocale::get()
      */
-    private static $locales = [];
+    private static array $locales = [];
 
     /**
      * Gets a locale object.
      *
-     * @param array|string $locale the locale identifier of this locale object.
-     *                             If the locale is not valid for the current
-     *                             operating system, an exception is thrown.
-     *                             If no locale is specified, the current
-     *                             locale is used. Multiple locale identifiers
-     *                             may be specified in an array. In this case,
-     *                             the first valid locale is used.
+     * @param array|string|null $locale the locale identifier of this locale object.
+     *                                  If the locale is not valid for the current
+     *                                  operating system, an exception is thrown.
+     *                                  If no locale is specified, the current
+     *                                  locale is used. Multiple locale identifiers
+     *                                  may be specified in an array. In this case,
+     *                                  the first valid locale is used.
      *
-     * @return SwatI18NLocale a locale object for the requested <i>$locale</i>
+     * @return SwatI18NLocale a locale object for the requested `$locale`
      *
-     * @throws SwatException if the specified <i>$locale</i> is not valid for
+     * @throws SwatException if the specified `$locale` is not valid for
      *                       the current operating system
      */
-    public static function get($locale = null)
+    public static function get(array|string|null $locale = null): SwatI18NLocale
     {
         $locale_object = null;
 
@@ -139,20 +153,21 @@ class SwatI18NLocale extends SwatObject
      * This is a wrapper for the system setlocale() function that provides
      * extra compatibility.
      *
-     * @param int          $category optional. The lc-type constant specifying the
-     *                               category of functions affected by setting
-     *                               the system locale.
-     * @param array|string $locale   the locale identifier. Use '0' to return
-     *                               the current system locale. Multiple locale
-     *                               identifiers may be specified in an array.
-     *                               In this case, the first valid locale is
-     *                               used.
+     * @param LocaleCategory $category optional. The LC_* constant specifying the
+     *                                 category of functions affected by setting
+     *                                 the system locale.
+     * @param string         $locale   the locale identifier. Use '0' to return
+     *                                 the current system locale. Multiple locale
+     *                                 identifiers may be specified in a semicolon-delimited string.
+     *                                 In this case, the first valid locale is used.
      *
-     * @return bool|string the new or current locale, or false if an invalid
-     *                     <i>$locale</i> is specified
+     * @return false|string the new or current locale, or false if an invalid
+     *                      `$locale` is specified
      */
-    public static function setlocale($category, $locale)
-    {
+    public static function setlocale(
+        int $category,
+        string $locale
+    ): false|string {
         $return = false;
 
         static $categories = [
@@ -167,7 +182,7 @@ class SwatI18NLocale extends SwatObject
         $parts = explode(';', $locale);
         if ($category === LC_ALL && count($parts) > 1) {
             // Handle case when LC_ALL is undefined and we're passing a giant
-            // string with all the separate lc-type values.
+            // string with all the separate LC-type values.
             foreach ($parts as $part) {
                 $part_exp = explode('=', $part, 2);
                 if (
@@ -190,12 +205,11 @@ class SwatI18NLocale extends SwatObject
     /**
      * Sets the system locale to this locale.
      *
-     * @param int $category optional. The lc-type constant specifying the
-     *                      category of functions affected by setting the
-     *                      system locale. If not specified, defaults to
-     *                      LC_ALL.
+     * @param LocaleCategory $category optional. The LC-type constant specifying the
+     *                                 category of functions affected by setting the
+     *                                 system locale. If not specified, defaults to `LC_ALL`.
      */
-    public function set($category = LC_ALL)
+    public function set(int $category = LC_ALL): void
     {
         $this->old_locale_by_category[$category] = self::setlocale(
             $category,
@@ -209,12 +223,11 @@ class SwatI18NLocale extends SwatObject
      * Resets the system to the previous locale after a call to
      * {@link SwatI18NLocale::set()}.
      *
-     * @param int $category optional. The lc-type constant specifying the
-     *                      category of functions affected by resetting
-     *                      the system locale. If not specified, defaults
-     *                      to LC_ALL.
+     * @param LocaleCategory $category optional. The LC-type constant specifying the category
+     *                                 of functions affected by resetting the system locale.
+     *                                 If not specified, defaults to `LC_ALL`.
      */
-    public function reset($category = LC_ALL)
+    public function reset(int $category = LC_ALL): void
     {
         self::setlocale($category, $this->old_locale_by_category[$category]);
     }
@@ -222,16 +235,16 @@ class SwatI18NLocale extends SwatObject
     /**
      * Formats a monetary value for this locale.
      *
-     * This is similar to PHP's money_format() function except is is more
+     * This is similar to PHP's `money_format()` function, except it is more
      * customizable because specific parts of the locale formatting may be
-     * overridden. For example, it is possible using this method to format
-     * numeric value as Canadian but have the currency symbol represent a
+     * overridden. For example, it is possible, using this method, to format
+     * numeric values as Canadian but have the currency symbol represent a
      * currency in another locale.
      *
-     * This method also works on platforms where money_format() is not defined.
+     * This method also works on platforms where `money_format()` is not defined.
      * For example, this method works in Windows.
      *
-     * This methods uses the POSIX.2 LC_MONETARY specification for formatting
+     * This method uses the POSIX.2 LC_MONETARY specification for formatting
      * monetary values.
      *
      * Numeric values are rounded to the specified number of fractional digits
@@ -246,28 +259,27 @@ class SwatI18NLocale extends SwatObject
      * @param array $format        optional. An associative array of currency
      *                             formatting information that overrides the
      *                             formatting for this locale. The array is of the
-     *                             form <i>'property' => value</i>. For example, use
-     *                             the value <code>array('grouping' => 0)</code> to
+     *                             form `'property' => value`. For example, use
+     *                             the value `['grouping' => 0]` to
      *                             turn off numeric groupings.
      *
      * @return string a UTF-8 encoded string containing the formatted monetary
      *                value
      *
-     * @throws SwatException if a property name specified in the <i>$format</i>
+     * @throws SwatException if a property name specified in the `$format`
      *                       parameter is invalid
      */
     public function formatCurrency(
-        $value,
-        $international = false,
+        float $value,
+        bool $international = false,
         array $format = [],
-    ) {
+    ): string {
         $format = $international
             ? $this->getInternationalCurrencyFormat()->override($format)
             : $this->getNationalCurrencyFormat()->override($format);
 
         // default fractional digits to 2 if locale is missing value
-        $fractional_digits
-            = $format->fractional_digits === CHAR_MAX
+        $fractional_digits = $format->fractional_digits === CHAR_MAX
                 ? 2
                 : $format->fractional_digits;
 
@@ -317,226 +329,192 @@ class SwatI18NLocale extends SwatObject
 
         // trim spacing character off international currency symbol
         // TODO: this is not quite the same as money_format().
-        $symbol
-            = $separate_by_space && $international
+        $symbol = $separate_by_space && $international
                 ? mb_substr($format->symbol, 0, 3)
                 : $format->symbol;
+
+        $space = $separate_by_space ? ' ' : '';
+
+        // 1 - sign
+        // 2 - currency symbol
+        // 3 - value
+        // 4 - separating space
 
         // now format the sign and symbol
         switch ($sign_position) {
             case 0:
                 // parentheses surround the quantity and currency symbol
-                if ($cs_precedes) {
-                    if ($separate_by_space) {
-                        $formatted_value = sprintf(
-                            '(%s %s)',
-                            $symbol,
-                            $formatted_value,
-                        );
-                    } else {
-                        $formatted_value = sprintf(
-                            '(%s%s)',
-                            $symbol,
-                            $formatted_value,
-                        );
-                    }
-                } else {
-                    if ($separate_by_space) {
-                        $formatted_value = sprintf(
-                            '(%s %s)',
-                            $formatted_value,
-                            $symbol,
-                        );
-                    } else {
-                        $formatted_value = sprintf(
-                            '(%s%s)',
-                            $formatted_value,
-                            $symbol,
-                        );
-                    }
-                }
+                $format = $cs_precedes
+                    ? '(%2$s%4$s%3$s)'
+                    : '(%3$s%2$s%2$s)';
+                //                if ($cs_precedes) {
+                //                    $formatted_value = sprintf(
+                //                        '(%s%s%s)',
+                //                        $symbol,
+                //                        $space,
+                //                        $formatted_value,
+                //                    );
+                //                } else {
+                //                    $formatted_value = sprintf(
+                //                        '(%s%s%s)',
+                //                        $formatted_value,
+                //                        $space,
+                //                        $symbol,
+                //                    );
+                //                }
                 break;
 
             case 1:
                 // the sign string precedes the quantity and currency symbol
-                if ($cs_precedes) {
-                    if ($separate_by_space) {
-                        $formatted_value = sprintf(
-                            '%s%s %s',
-                            $sign,
-                            $symbol,
-                            $formatted_value,
-                        );
-                    } else {
-                        $formatted_value = sprintf(
-                            '%s%s%s',
-                            $sign,
-                            $symbol,
-                            $formatted_value,
-                        );
-                    }
-                } else {
-                    if ($separate_by_space) {
-                        $formatted_value = sprintf(
-                            '%s%s %s',
-                            $sign,
-                            $formatted_value,
-                            $symbol,
-                        );
-                    } else {
-                        $formatted_value = sprintf(
-                            '%s%s%s',
-                            $sign,
-                            $formatted_value,
-                            $symbol,
-                        );
-                    }
-                }
+                $format = $cs_precedes
+                    ? '%1$s%2$s%4$s%3$s'
+                    : '%1$s%3$s%4$s%2$s';
+                //                if ($cs_precedes) {
+                //                    $formatted_value = sprintf(
+                //                        '%s%s%s%s',
+                //                        $sign,
+                //                        $symbol,
+                //                        $space,
+                //                        $formatted_value,
+                //                    );
+                //                } else {
+                //                    $formatted_value = sprintf(
+                //                        '%s%s%s%s',
+                //                        $sign,
+                //                        $formatted_value,
+                //                        $space,
+                //                        $symbol,
+                //                    );
+                //                }
                 break;
 
             case 2:
                 // the sign string succeeds the quantity and currency symbol
-                if ($cs_precedes) {
-                    if ($separate_by_space) {
-                        $formatted_value = sprintf(
-                            '%s %s%s',
-                            $symbol,
-                            $formatted_value,
-                            $sign,
-                        );
-                    } else {
-                        $formatted_value = sprintf(
-                            '%s%s%s',
-                            $symbol,
-                            $formatted_value,
-                            $sign,
-                        );
-                    }
-                } else {
-                    if ($separate_by_space) {
-                        $formatted_value = sprintf(
-                            '%s %s%s',
-                            $formatted_value,
-                            $symbol,
-                            $sign,
-                        );
-                    } else {
-                        $formatted_value = sprintf(
-                            '%s%s%s',
-                            $sign,
-                            $formatted_value,
-                            $symbol,
-                        );
-                    }
-                }
+                // 1 - sign
+                // 2 - currency symbol
+                // 3 - value
+                // 4 - separating space
+                $format = $cs_precedes
+                    ? '%2$s%4$s%3$s%1$s'
+                    : '%3$s%4$s%2$s%1$s';
+                //                if ($cs_precedes) {
+                //                    $formatted_value = sprintf(
+                //                        '%s%s%s%s',
+                //                        $symbol,
+                //                        $space,
+                //                        $formatted_value,
+                //                        $sign,
+                //                    );
+                //                } else {
+                //                    $formatted_value = sprintf(
+                //                        '%s%s%s%s',
+                //                        $formatted_value,
+                //                        $space,
+                //                        $symbol,
+                //                        $sign,
+                //                    );
+                //                }
                 break;
 
             case 3:
                 // the sign string immediately precedes the currency symbol
-                if ($cs_precedes) {
-                    if ($separate_by_space) {
-                        $formatted_value = sprintf(
-                            '%s%s %s',
-                            $sign,
-                            $symbol,
-                            $formatted_value,
-                        );
-                    } else {
-                        $formatted_value = sprintf(
-                            '%s%s%s',
-                            $sign,
-                            $symbol,
-                            $formatted_value,
-                        );
-                    }
-                } else {
-                    if ($separate_by_space) {
-                        $formatted_value = sprintf(
-                            '%s %s%s',
-                            $formatted_value,
-                            $sign,
-                            $symbol,
-                        );
-                    } else {
-                        $formatted_value = sprintf(
-                            '%s%s%s',
-                            $formatted_value,
-                            $sign,
-                            $symbol,
-                        );
-                    }
-                }
+                // 1 - sign
+                // 2 - currency symbol
+                // 3 - value
+                // 4 - separating space
+                $format = $cs_precedes
+                    ? '%1$s%2$s%4$s%3$s'
+                    : '%3$s%4$s%1$s%2$s';
+                //                if ($cs_precedes) {
+                //                    $formatted_value = sprintf(
+                //                        '%s%s%s%s',
+                //                        $sign,
+                //                        $symbol,
+                //                        $space,
+                //                        $formatted_value,
+                //                    );
+                //                } else {
+                //                    $formatted_value = sprintf(
+                //                        '%s%s%s%s',
+                //                        $formatted_value,
+                //                        $space,
+                //                        $sign,
+                //                        $symbol,
+                //                    );
+                //                }
                 break;
 
             case 4:
                 // the sign string immediately succeeds the currency symbol
-                if ($cs_precedes) {
-                    if ($separate_by_space) {
-                        $formatted_value = sprintf(
-                            '%s%s %s',
-                            $symbol,
-                            $sign,
-                            $formatted_value,
-                        );
-                    } else {
-                        $formatted_value = sprintf(
-                            '%s%s%s',
-                            $symbol,
-                            $sign,
-                            $formatted_value,
-                        );
-                    }
-                } else {
-                    if ($separate_by_space) {
-                        $formatted_value = sprintf(
-                            '%s %s%s',
-                            $formatted_value,
-                            $symbol,
-                            $sign,
-                        );
-                    } else {
-                        $formatted_value = sprintf(
-                            '%s%s%s',
-                            $formatted_value,
-                            $symbol,
-                            $sign,
-                        );
-                    }
-                }
+                // 1 - sign
+                // 2 - currency symbol
+                // 3 - value
+                // 4 - separating space
+                $format = $cs_precedes
+                    ? '%2$s%1$s%4$s%3$s'
+                    : '%3$s%4$s%2$s%1$s';
+                //                if ($cs_precedes) {
+                //                    $formatted_value = sprintf(
+                //                        '%s%s%s%s',
+                //                        $symbol,
+                //                        $sign,
+                //                        $space,
+                //                        $formatted_value,
+                //                    );
+                //                } else {
+                //                    $formatted_value = sprintf(
+                //                        '%s%s%s%s',
+                //                        $formatted_value,
+                //                        $space,
+                //                        $symbol,
+                //                        $sign,
+                //                    );
+                //                }
                 break;
         }
 
-        return $formatted_value;
+        // 1 - sign
+        // 2 - currency symbol
+        // 3 - value
+        // 4 - separating space
+        return sprintf(
+            $format,
+            $sign,
+            $symbol,
+            $formatted_value,
+            $space
+        );
     }
 
     /**
      * Formats a numeric value for this locale.
      *
-     * This methods uses the POSIX.2 LC_NUMERIC specification for formatting
+     * This method uses the POSIX.2 LC_NUMERIC specification for formatting
      * numeric values.
      *
      * Numeric values are rounded to the specified number of fractional digits
      * using a round-half-up rounding method (PHP's default round).
      *
-     * @param float $value    the numeric value to format
-     * @param int   $decimals optional. The number of fractional digits to
-     *                        include in the returned string. If not
-     *                        specified, all fractional digits are included.
-     * @param array $format   optional. An associative array of number formatting
-     *                        information that overrides the formatting for this
-     *                        locale. The array is of the form
-     *                        <i>'property' => value</i>. For example, use the
-     *                        value <code>array('grouping' => 0)</code> to turn
-     *                        off numeric groupings.
+     * @param float|int $value    the numeric value to format
+     * @param ?int      $decimals optional. The number of fractional digits to
+     *                            include in the returned string. If not
+     *                            specified, all fractional digits are included.
+     * @param array     $format   optional. An associative array of number formatting
+     *                            information that overrides the formatting for this
+     *                            locale. The array is of the form
+     *                            `'property' => value`. For example, use the
+     *                            value `['grouping' => 0]` to turn
+     *                            off numeric groupings.
      *
-     * @return string a UTF-8 encoded string containing the formatted numeric
-     *                value
+     * @return string a UTF-8 encoded string containing the formatted numeric value
      *
-     * @throws SwatException if a property name specified in the <i>$format</i>
-     *                       parameter is invalid
+     * @throws SwatException if a property name specified in the `$format` parameter is invalid
      */
-    public function formatNumber($value, $decimals = null, array $format = [])
-    {
+    public function formatNumber(
+        float|int $value,
+        ?int $decimals = null,
+        array $format = []
+    ): string {
         $value = (float) $value;
 
         $format = $this->getNumberFormat()->override($format);
@@ -960,13 +938,13 @@ class SwatI18NLocale extends SwatObject
      * grouping integer-part digits. Grouped digits are separated using the
      * thousands separator character specified by the format object.
      *
-     * @param float $value the value to format
-     * @param SwatI18NNumberFormat the number format to use
+     * @param float                $value  the value to format
+     * @param SwatI18NNumberFormat $format the number format to use
      *
      * @return string the grouped integer part of the value
      */
     protected function formatIntegerGroupings(
-        $value,
+        float $value,
         SwatI18NNumberFormat $format,
     ) {
         // group integer part with thousands separators
@@ -1172,22 +1150,18 @@ class SwatI18NLocale extends SwatObject
      *
      * This gets the number of digits after the decimal point.
      *
+     * This is a bit hacky (and probably slow). We get the string
+     * representation and then count the number of digits after the decimal
+     * separator. This may or may not be faster than the equivalent
+     * IEEE-754 decomposition (written in PHP). The string-based code has
+     * not been profiled against the equivalent IEEE-754 code.
+     *
      * @param float $value the value for which to get the fractional precision
      *
      * @return int the fractional precision of the value
      */
-    protected function getFractionalPrecision($value)
+    protected function getFractionalPrecision(float $value): int
     {
-        /*
-         * This is a bit hacky (and probably slow). We get the string
-         * representation and then count the number of digits after the decimal
-         * separator. This may or may not be faster than the equivalent
-         * IEEE-754 decomposition (written in PHP). The string-based code has
-         * not been profiled against the equivalent IEEE-754 code.
-         */
-
-        $value = (float) $value;
-
         // get current locale
         $locale = self::get();
 
@@ -1225,7 +1199,7 @@ class SwatI18NLocale extends SwatObject
      *
      * @return float the rounded value
      */
-    protected function roundToEven($value, $fractional_digits)
+    public function roundToEven($value, $fractional_digits)
     {
         $exp = pow(10, $fractional_digits);
         $frac_part = abs(fmod($value, 1)) * $exp;
@@ -1253,20 +1227,20 @@ class SwatI18NLocale extends SwatObject
      * This constructor is private. Locale objects should be instantiated using
      * the static {@link SwatI18NLocale::get()} method.
      *
-     * @param array|string $locale the locale identifier of this locale object.
-     *                             If the locale is not valid for the current
-     *                             operating system, an exception is thrown.
-     *                             If no locale is specified, the current
-     *                             locale is used. Multiple locale identifiers
-     *                             may be specified in an array. In this case,
-     *                             the first valid locale is used.
+     * @param list<string>|string|null $locale the locale identifier of this locale object.
+     *                                         If the locale is not valid for the current
+     *                                         operating system, an exception is thrown.
+     *                                         If no locale is specified, the current
+     *                                         locale is used. Multiple locale identifiers
+     *                                         may be specified in an array. In this case,
+     *                                         the first valid locale is used.
      *
-     * @throws SwatException if the specified <i>$locale</i> is not valid for
+     * @throws SwatException if the specified `$locale` is not valid for
      *                       the current operating system
      *
      * @see SwatI18NLocale::get()
      */
-    private function __construct($locale = null)
+    private function __construct(array|string|null $locale = null)
     {
         $this->locale = $locale;
 

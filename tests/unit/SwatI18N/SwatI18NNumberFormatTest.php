@@ -57,27 +57,4 @@ class SwatI18NNumberFormatTest extends TestCase
             $newFormat->decimal_separator
         );
     }
-
-    #[Test]
-    public function testToString()
-    {
-        $expected = "decimal_separator => .\nthousands_separator => ,\ngrouping => 3\n";
-        $this->assertEquals(
-            $expected,
-            (string) $this->format
-        );
-    }
-
-    #[Test]
-    public function testToStringWithArrayGrouping()
-    {
-        $newFormat = $this->format->override([
-            'grouping' => 3,
-        ]);
-        $expected = "decimal_separator => .\nthousands_separator => ,\ngrouping => 3\n";
-        $this->assertEquals(
-            $expected,
-            (string) $newFormat
-        );
-    }
 }

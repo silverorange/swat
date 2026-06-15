@@ -13,139 +13,77 @@ class SwatI18NCurrencyFormat extends SwatI18NNumberFormat
 {
     /**
      * Number of fractional digits.
-     *
-     * @var int
      */
-    public $fractional_digits;
+    public int $fractional_digits = 2;
 
     /**
-     * Whether or not currency symbol preceds a positive value.
+     * Whether the currency symbol precedes a positive value.
      *
-     * True if <code>$symbol</code> precedes a positive value, false if it
-     * succeeds one.
+     * True if `$symbol` precedes a positive value, false if it succeeds one.
+     */
+    public bool $p_cs_precedes = true;
+
+    /**
+     * Whether the currency symbol precedes a negative value.
+     *
+     * True if `$symbol` precedes a negative value, false if it succeeds one.
+     */
+    public bool $n_cs_precedes = true;
+
+    /**
+     * Whether the currency symbol is separated by space for positive values.
+     *
+     * True if a space separates `$symbol` from a positive value, false otherwise.
      *
      * @var bool
      */
-    public $p_cs_precedes;
+    public $p_separate_by_space = false;
 
     /**
-     * Whether or not currency symbol preceds a negative value.
+     * Whether the currency symbol is separated by space for negative values.
      *
-     * True if <code>$symbol</code> precedes a negative value, false if it
-     * succeeds one.
-     *
-     * @var bool
+     * True if a space separates `$symbol` from a negative value, false otherwise.
      */
-    public $n_cs_precedes;
-
-    /**
-     * Whether or not currency symbol is separated by space for positive values.
-     *
-     * True if a space separates <code>$symbol</code> from a positive value,
-     * false otherwise.
-     *
-     * @var bool
-     */
-    public $p_separate_by_space;
-
-    /**
-     * Whether or not currency symbol is separated by space for negative values.
-     *
-     * True if a space separates <code>$symbol</code> from a negative value,
-     * false otherwise.
-     *
-     * @var bool
-     */
-    public $n_separate_by_space;
+    public bool $n_separate_by_space = false;
 
     /**
      * Positive sign position.
      *
-     * <pre>
-     * 0 - Parentheses surround the quantity and currency_symbol
-     * 1 - The sign string precedes the quantity and currency_symbol
-     * 2 - The sign string succeeds the quantity and currency_symbol
-     * 3 - The sign string immediately precedes the currency_symbol
-     * 4 - The sign string immediately succeeds the currency_symbol
-     * </pre>
+     * - `0` - Parentheses surround the quantity and currency_symbol
+     * - `1` - The sign string precedes the quantity and currency_symbol
+     * - `2` - The sign string succeeds the quantity and currency_symbol
+     * - `3` - The sign string immediately precedes the currency_symbol
+     * - `4` - The sign string immediately succeeds the currency_symbol
      *
-     * @var int
+     * @var int<0,4>
      */
-    public $p_sign_position;
+    public int $p_sign_position = 1;
 
     /**
      * Negative sign position.
      *
-     * <pre>
-     * 0 - Parentheses surround the quantity and currency_symbol
-     * 1 - The sign string precedes the quantity and currency_symbol
-     * 2 - The sign string succeeds the quantity and currency_symbol
-     * 3 - The sign string immediately precedes the currency_symbol
-     * 4 - The sign string immediately succeeds the currency_symbol
-     * </pre>
+     * - `0` - Parentheses surround the quantity and currency_symbol
+     * - `1` - The sign string precedes the quantity and currency_symbol
+     * - `2` - The sign string succeeds the quantity and currency_symbol
+     * - `3` - The sign string immediately precedes the currency_symbol
+     * - `4` - The sign string immediately succeeds the currency_symbol
      *
-     * @var int
+     * @var int<0,4>
      */
-    public $n_sign_position;
+    public int $n_sign_position = 1;
 
     /**
      * Positive sign.
-     *
-     * @var string
      */
-    public $p_sign;
+    public string $p_sign = '';
 
     /**
      * Negative sign.
-     *
-     * @var string
      */
-    public $n_sign;
+    public string $n_sign = '-';
 
     /**
      * Currency symbol.
-     *
-     * @var string
      */
-    public $symbol;
-
-    /**
-     * Gets a string representation of this format.
-     *
-     * @return string a string representation of this format
-     */
-    public function __toString(): string
-    {
-        $string = parent::__toString();
-
-        $string .= 'fractional_digits => ' . $this->fractional_digits . "\n";
-
-        $string .= 'p_cs_precedes => ';
-        $string .= $this->p_cs_precedes ? 'true' : 'false';
-        $string .= "\n";
-
-        $string .= 'n_cs_precedes => ';
-        $string .= $this->n_cs_precedes ? 'true' : 'false';
-        $string .= "\n";
-
-        $string .= 'p_separate_by_space => ';
-        $string .= $this->p_separate_by_space ? 'true' : 'false';
-        $string .= "\n";
-
-        $string .= 'n_separate_by_space => ';
-        $string .= $this->n_separate_by_space ? 'true' : 'false';
-        $string .= "\n";
-
-        $string .= 'p_sign_position => ' . $this->p_sign_position . "\n";
-
-        $string .= 'n_sign_position => ' . $this->n_sign_position . "\n";
-
-        $string .= 'p_sign => ' . $this->p_sign . "\n";
-
-        $string .= 'n_sign => ' . $this->n_sign . "\n";
-
-        $string .= 'symbol => ' . $this->symbol . "\n";
-
-        return $string;
-    }
+    public string $symbol = '';
 }
