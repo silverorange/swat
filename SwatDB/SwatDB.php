@@ -1016,8 +1016,6 @@ class SwatDB extends SwatObject
 
         $rs = self::query($db, $sql, null);
 
-        $options = [];
-
         if ($tree !== null && $tree instanceof SwatDataTreeNode) {
             $base_parent = $tree;
         } else {
@@ -1025,6 +1023,7 @@ class SwatDB extends SwatObject
         }
 
         $current_group = null;
+        $current_parent = null;
 
         /** @var TGroupOptionRow $row */
         $row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT);
@@ -1035,7 +1034,7 @@ class SwatDB extends SwatObject
                 $current_group = $row->group_id;
             }
 
-            if (isset($current_parent)) {
+            if ($current_parent instanceof SwatDataTreeNode) {
                 $current_parent->addChild(
                     new SwatDataTreeNode($row->id, $row->title),
                 );
