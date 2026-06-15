@@ -39,9 +39,8 @@
  * @copyright 2025 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  *
- * @template TEnumClass of \UnitEnum
- * @template TEnumClassString of class-string<TEnumClass>
- * @template TEnumMap of array<string, TEnumClassString>
+ * @phpstan-type TEnumClass \UnitEnum
+ * @phpstan-type TEnumMap array<string, class-string<TEnumClass>>
  */
 class SwatDBEnumMapper
 {
@@ -164,9 +163,10 @@ class SwatDBEnumMapper
      * For backed enums, the `::from()` method is used.  For unit enums, the string value
      * is assumed to be the actual enum case name.
      *
-     * @param TEnumClassString $classname
+     * @template T of TEnumClass
+     * @param class-string<T> $classname
      *
-     * @return TEnumClass
+     * @return T
      *
      * @throws SwatDBException
      */
