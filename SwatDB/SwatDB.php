@@ -5,6 +5,8 @@
  *
  * Static convenience methods for working with a database.
  *
+ * @phpstan-type TGroupOptionRow object{id: int|string, title: string, group_title: string, group_id: int|string}
+
  * @copyright 2005-2026 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
@@ -1024,6 +1026,7 @@ class SwatDB extends SwatObject
 
         $current_group = null;
 
+        /** @var TGroupOptionRow $row */
         $row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT);
         while ($row) {
             if ($current_group !== $row->group_id) {
