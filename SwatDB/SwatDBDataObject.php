@@ -82,9 +82,9 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
 
     /**
      * @param mixed $data
-     * @param bool  $read_only Whether this data object is read only. Setting
+     * @param bool  $read_only Whether this data-object is read only. Setting
      *                         read-only to true will improve the performance of
-     *                         creating large amounts of dataobjects that will never be
+     *                         creating large amounts of data-objects that will never be
      *                         saved.
      */
     public function __construct($data = null, $read_only = false)
@@ -165,7 +165,7 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
                     "A property named '%s' does not "
                         . 'exist on the %s data-object. If the property corresponds '
                         . 'directly to a database field it should be added as a public '
-                        . 'property of this data object. If the property should access '
+                        . 'property of this data-object. If the property should access '
                         . 'a sub-data-object, either specify a class when registering '
                         . "the internal property named '%s' or define a custom loader "
                         . "method named '%s()'.",
@@ -218,16 +218,16 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
                 $this->unsetSubDataObject($key);
                 $this->setInternalValue($key, $value);
             } else {
-                // TODO: Maybe unset sub dataobject here
+                // TODO: Maybe unset sub-data-object here
                 $this->setInternalValue($key, $value);
             }
         } else {
             throw new SwatDBException(
                 "A property named '{$key}' does not exist on this "
-                    . 'dataobject.  If the property corresponds directly to '
+                    . 'data-object.  If the property corresponds directly to '
                     . 'a database field it should be added as a public property '
-                    . 'of this data object.  If the property should access a '
-                    . 'sub-dataobject, specify a class when registering the '
+                    . 'of this data-object.  If the property should access a '
+                    . 'sub-data-object, specify a class when registering the '
                     . "internal field named '{$key}'.",
             );
         }
@@ -257,7 +257,7 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
      */
     public function __toString(): string
     {
-        // prevent printing of MDB2 object for dataobjects
+        // prevent printing of MDB2 object for data-objects
         $db = $this->db;
         $this->db = null;
 
@@ -377,7 +377,7 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
      * duplicate has all the same public property values.  Unlike a clone, a
      * duplicate does not have an id and therefore can be saved to the
      * database as a new row. This method recursively duplicates
-     * sub-dataobjects which were registered with `$autosave` set to true.
+     * sub-data-objects which were registered with `$autosave` set to true.
      *
      * @return static a duplicate of this object
      */
@@ -399,7 +399,7 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
             }
         }
 
-        // sub-dataobjects
+        // sub-data-objects
         foreach ($this->sub_data_objects as $name => $object) {
             $saver_method
                 = 'save' . str_replace(' ', '', ucwords(strtr($name, '_', ' ')));
@@ -447,10 +447,10 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
     /**
      * Returns an array of the public and protected properties of this object.
      *
-     * This array is useful for places where get_object_vars() is useful but we
-     * also want to return the protected properties alongside the public onces.
-     * For example when using getter and setter methods instead of public
-     * properties on a dataobject.
+     * This array is useful for places where `get_object_vars()` is used, but we
+     * also want to return the protected properties alongside the public ones.
+     * For example, when using getter and setter methods instead of public
+     * properties on a data-object.
      *
      * @return array an array of public and protected properties
      *
@@ -509,7 +509,7 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
     {
         if ($row === null) {
             throw new SwatDBException(
-                'Attempting to initialize dataobject with a null row.',
+                'Attempting to initialize data-object with a null row.',
             );
         }
 
@@ -526,7 +526,7 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
             // Use array_key_exists() instead of isset(), because isset() will
             // return false when the value is null. Null values on properties
             // should not be ignored - otherwise calling initFromRow() on an
-            // existing dataobject can leave out of date values on properties
+            // existing data-object can leave out-of-date values on properties
             // when those values were updated to null.
             if (array_key_exists($name, $row)) {
                 if ($row[$name] === null) {
@@ -549,7 +549,7 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
     }
 
     /**
-     * Generates the set of md5 hashes for this data object.
+     * Generates the set of md5 hashes for this data-object.
      *
      * The md5 hashes represent all the public properties of this object and
      * are used to tell if a property has been modified.
@@ -627,7 +627,7 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
 
     protected function setSubDataObject($name, $value)
     {
-        // Can't add type-hinting because dataobjects may not be dataobjects.
+        // Can't add type-hinting because data-objects may not be data-objects.
         // Go figure.
         $this->sub_data_objects[$name] = $value;
         if ($value instanceof SwatDBRecordable && $this->db !== null) {
@@ -641,14 +641,13 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
     }
 
     /**
-     * Whether or not a sub data object is loaded for the given key.
+     * Whether a sub-data-object is loaded for the given key.
      *
      * @param string $key the key to check
      *
-     * @return bool true if a sub data object is loaded and false if it is
-     *              not
+     * @return bool true if a sub-data-object is loaded and false if it is not
      */
-    protected function hasSubDataObject($key)
+    protected function hasSubDataObject($key): bool
     {
         return isset($this->sub_data_objects[(string) $key]);
     }
@@ -804,10 +803,10 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
         $loader_method = $this->getLoaderMethod($key);
         if (method_exists($this, $loader_method)) {
             if ($this->hasSubDataObject($key)) {
-                // return loaded sub-dataobject
+                // return loaded sub-data-object
                 $value = $this->getSubDataObject($key);
             } else {
-                // use loader method to load sub-dataobject
+                // use loader method to load sub-data-object
                 $this->checkDB();
                 $this->setSubDataObject(
                     $key,
@@ -830,7 +829,7 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
             && $this->internal_property_accessible[$key]
         ) {
             if ($this->hasSubDataObject($key)) {
-                // return loaded sub-dataobject
+                // return loaded sub-data-object
                 $value = $this->getSubDataObject($key);
             } elseif ($this->hasInternalValue($key)) {
                 $value = $this->getInternalValue($key);
@@ -839,7 +838,7 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
                     $value !== null
                     && isset($this->internal_property_classes[$key])
                 ) {
-                    // autoload sub-dataobject
+                    // autoload sub-data-object
                     $class = $this->internal_property_classes[$key];
 
                     if (!class_exists($class)) {
@@ -912,7 +911,7 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
     {
         if ($this->read_only) {
             throw new SwatDBException(
-                'This dataobject was loaded read-only and cannot be saved.',
+                'This data-object was loaded read-only and cannot be saved.',
             );
         }
 
@@ -951,7 +950,7 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
      *
      * @return bool whether data was sucessfully loaded
      */
-    public function load($id): bool
+    public function load(mixed $id): bool
     {
         $this->checkDB();
         $row = $this->loadInternal($id);
@@ -973,7 +972,7 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
     {
         if ($this->read_only) {
             throw new SwatDBException(
-                'This dataobject was loaded read-only '
+                'This data-object was loaded read-only '
                     . 'and cannot be deleted.',
             );
         }
@@ -1050,7 +1049,7 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
         if ($this->db === null) {
             throw new SwatDBNoDatabaseException(
                 sprintf(
-                    'No database available to this dataobject (%s). '
+                    'No database available to this data-object (%s). '
                         . 'Call the setDatabase method.',
                     get_class($this),
                 ),
@@ -1210,9 +1209,9 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
         }
 
         /*
-         * This handles the case where an internal property sub-dataobject also
-         * exists in a sub-dataobject using a saver method. After the saver
-         * method runs, the id of the internal property sub-dataobject is known
+         * This handles the case where an internal property sub-data-object also
+         * exists in a sub-data-object using a saver method. After the saver
+         * method runs, the id of the internal property sub-data-object is known
          * so we update it and then save this object's internal values again.
          */
         foreach (array_keys($this->internal_properties) as $name) {
@@ -1324,13 +1323,13 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
     // cache flushing
 
     /**
-     * Sets the flushable cache to use for this data object.
+     * Sets the flushable cache to use for this data-object.
      *
-     * Using a flushable cache allows clearing the cache when the data object
+     * Using a flushable cache allows clearing the cache when the data-object
      * is modified or deleted.
      *
      * @param SwatDBCacheNsFlushable $cache the flushable cache to use for
-     *                                      this dataobject
+     *                                      this data-object
      */
     public function setFlushableCache(SwatDBCacheNsFlushable $cache): void
     {
@@ -1338,7 +1337,7 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
     }
 
     /**
-     * Gets the name-spaces that should be flushed for this dataobject.
+     * Gets the name-spaces that should be flushed for this data-object.
      *
      * @return array an array of name-spaces that should be flushed
      */
@@ -1348,7 +1347,7 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
     }
 
     /**
-     * Gets all available name-spaces that should be flushed for this dataobject
+     * Gets all available name-spaces that should be flushed for this data-object
      * ignoring any logic attempting to be smart about namespace.
      *
      * @return array an array of name-spaces that should be flushed
@@ -1413,7 +1412,7 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
     {
         $data = [];
 
-        // unset subdataobjects that are not to be serialized
+        // unset sub-data-objects that are not to be serialized
         $serializable_sub_data_objects = $this->getSerializableSubDataObjects();
         $unset_objects = [];
         foreach ($this->sub_data_objects as $name => $object) {
@@ -1442,7 +1441,7 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
             $data[$property] = $this->{$property};
         }
 
-        // restore unset sub-dataobjects on this object
+        // restore unset sub-data-objects on this object
         foreach ($unset_objects as $name => $object) {
             $this->setSubDataObject($name, $object);
         }
@@ -1595,12 +1594,12 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
         }
     }
 
-    protected function getSerializableSubDataObjects()
+    protected function getSerializableSubDataObjects(): array
     {
         return [];
     }
 
-    protected function getSerializablePrivateProperties()
+    protected function getSerializablePrivateProperties(): array
     {
         return [
             'table',
