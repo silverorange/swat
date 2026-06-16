@@ -94,8 +94,7 @@ abstract class SwatCellRendererContainer extends SwatUIObject implements SwatUIP
     /**
      * Gets a cell renderer of this container by its unique identifier.
      *
-     * @param string the unique identifier of the cell renderer to get
-     * @param mixed $renderer_id
+     * @param string $renderer_id the unique identifier of the cell renderer to get
      *
      * @return SwatCellRenderer the cell renderer of this container with the
      *                          provided unique identifier

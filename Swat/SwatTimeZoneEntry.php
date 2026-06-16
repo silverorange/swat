@@ -199,8 +199,7 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
      * Filters the full list of areas down to a select list and returns a
      * tree-structured array of areas, regions, and subregions.
      *
-     * @param array area_whitelist an array of valid area names
-     * @param mixed $area_whitelist
+     * @param array $area_whitelist an array of valid area names
      *
      * @return array a tree-structured array of areas regions and subregions
      *               inside the specified whitelist of areas

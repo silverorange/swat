@@ -85,9 +85,8 @@ class SwatHtmlTag extends SwatObject
      * this XHTML tag, the attributes in the array overwrite the existing
      * attributes.
      *
-     * @param array an array of attribute-value pairs of the form
+     * @param array $attributes an array of attribute-value pairs of the form
      *               'attribute' => 'value'
-     * @param mixed $attributes
      */
     public function addAttributes($attributes)
     {
