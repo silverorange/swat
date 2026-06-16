@@ -95,6 +95,14 @@ class SwatI18NLocale extends SwatObject
     private static array $locales = [];
 
     /**
+     * Clears the static cache of locale objects.
+     */
+    public static function clearLocaleCache(): void
+    {
+        static::$locales = [];
+    }
+
+    /**
      * Gets a locale object.
      *
      * @param array|string|null $locale the locale identifier of this locale object.
@@ -405,16 +413,16 @@ class SwatI18NLocale extends SwatObject
      * Numeric values are rounded to the specified number of fractional digits
      * using a round-half-up rounding method (PHP's default round).
      *
-     * @param float|int                     $value    the numeric value to format
-     * @param ?int                          $decimals optional. The number of fractional digits to
-     *                                                include in the returned string. If not
-     *                                                specified, all fractional digits are included.
-     * @param TOverrideableNumberProperties $format   optional. An associative array of number formatting
-     *                                                information that overrides the formatting for this
-     *                                                locale. The array is of the form
-     *                                                `'property' => value`. For example, use the
-     *                                                value `['grouping' => 0]` to turn
-     *                                                off numeric groupings.
+     * @param float|int                     $value     the numeric value to format
+     * @param ?int                          $decimals  optional. The number of fractional digits to
+     *                                                 include in the returned string. If not
+     *                                                 specified, all fractional digits are included.
+     * @param TOverrideableNumberProperties $overrides optional. An associative array of number formatting
+     *                                                 information that overrides the formatting for this
+     *                                                 locale. The array is of the form
+     *                                                 `'property' => value`. For example, use the
+     *                                                 value `['grouping' => 0]` to turn
+     *                                                 off numeric groupings.
      *
      * @return string a UTF-8 encoded string containing the formatted numeric value
      *
@@ -423,11 +431,11 @@ class SwatI18NLocale extends SwatObject
     public function formatNumber(
         float|int $value,
         ?int $decimals = null,
-        array $format = []
+        array $overrides = []
     ): string {
         $value = (float) $value;
 
-        $format = $this->getNumberFormat()->override($format);
+        $format = $this->getNumberFormat()->override($overrides);
 
         if ($decimals === null) {
             $decimals = $this->getFractionalPrecision($value);
@@ -1073,10 +1081,10 @@ class SwatI18NLocale extends SwatObject
     protected function getFractionalPrecision(float $value): int
     {
         // get current locale
-        $locale = self::get();
+        //        $locale = self::get();
 
         $precision = 0;
-        $lc = $locale->getLocaleInfo();
+        //        $lc = $locale->getLocaleInfo();
         $str_value = (string) $value;
 
         $e_pos = mb_stripos($str_value, 'E-');
@@ -1085,12 +1093,16 @@ class SwatI18NLocale extends SwatObject
             $str_value = mb_substr($str_value, 0, $e_pos);
         }
 
-        $decimal_pos = mb_strpos($str_value, $lc['decimal_point']);
+        //        $decimal_pos = mb_strpos($str_value, $lc['decimal_point']);
+        // PHP casts floats to strings using '.' as the decimal separator,
+        // independent of the active locale (PHP >= 8.0), so look for '.'.
+        $decimal_pos = mb_strpos($str_value, '.');
         if ($decimal_pos !== false) {
             $precision
                 += mb_strlen($str_value)
                 - $decimal_pos
-                - mb_strlen($lc['decimal_point']);
+                - 1;
+            //                - mb_strlen($lc['decimal_point']);
         }
 
         return $precision;

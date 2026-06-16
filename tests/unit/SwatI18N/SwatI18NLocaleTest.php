@@ -28,20 +28,21 @@ class SwatI18NLocaleTest extends TestCase
         'English_United States.1252',
     ];
 
+    /**
+     * Candidate identifiers for a comma-decimal locale across platforms.
+     *
+     * @var list<string>
+     */
+    private const DE_DE = [
+        'de_DE.UTF-8',
+        'de_DE.utf8',
+        'de_DE',
+        'German_Germany.1252',
+    ];
+
     private ?SwatI18NLocale $locale = null;
 
     private string $original_locale;
-
-    /**
-     * Clears the private static locale cache so tests cannot leak state into
-     * one another (it is keyed per-process and otherwise persists).
-     */
-    private function clearLocaleCache(): void
-    {
-        $property = new ReflectionProperty(SwatI18NLocale::class, 'locales');
-        $property->setAccessible(true);
-        $property->setValue(null, []);
-    }
 
     /**
      * Skips the current test unless SwatI18NLocale::get() actually rejects an
@@ -67,7 +68,7 @@ class SwatI18NLocaleTest extends TestCase
         } finally {
             // The probe may have cached a valid object under the probe key;
             // wipe it so it cannot affect the test that follows.
-            $this->clearLocaleCache();
+            SwatI18NLocale::clearLocaleCache();
         }
 
         if (!$rejected) {
@@ -80,7 +81,9 @@ class SwatI18NLocaleTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->clearLocaleCache();
+        // Clears the private static locale cache so tests cannot leak state into
+        // one another (it is keyed per-process and otherwise persists).
+        SwatI18NLocale::clearLocaleCache();
 
         // Remember the system locale so each test runs in isolation.
         $this->original_locale = setlocale(LC_ALL, '0');
@@ -359,6 +362,61 @@ class SwatI18NLocaleTest extends TestCase
         $this->assertSame(
             '1.5',
             $this->locale->formatNumber(1.5),
+        );
+    }
+
+    #[Test]
+    public function testFormatNumberAutoDetectsPrecisionUnderForeignSystemLocale(): void
+    {
+        // Force the *process-global* locale to one whose decimal separator is a
+        // comma. This is the exact condition that broke the previous test: the
+        // detector used to read the ambient locale's decimal_point and search
+        // for it in (string)$value, which PHP always renders with '.'.
+        $applied = setlocale(LC_ALL, self::DE_DE);
+        if ($applied === false) {
+            $this->markTestSkipped(
+                'No comma-decimal locale is available on this system.',
+            );
+        }
+
+        try {
+            // Sanity check: confirm the ambient locale really uses a comma, so a
+            // pass here is meaningful and not a no-op on a dot-decimal box.
+            $this->assertSame(',', localeconv()['decimal_point']);
+
+            // The en_US locale object must still auto-detect 1 fractional digit,
+            // independent of the comma-decimal system locale.
+            $this->assertSame(
+                '1.5',
+                $this->locale->formatNumber(1.5),
+            );
+
+            // And more digits, to be sure it's actually counting, not defaulting.
+            $this->assertSame(
+                '1.005',
+                $this->locale->formatNumber(1.005),
+            );
+        } finally {
+            // tearDown() also restores, but keep the test self-contained.
+            setlocale(LC_ALL, $this->original_locale);
+        }
+    }
+
+    #[Test]
+    public function testFormatNumberAutoDetectsPrecisionForCommaDecimalLocale(): void
+    {
+        try {
+            $locale = SwatI18NLocale::get(self::DE_DE);
+        } catch (SwatException $e) {
+            $this->markTestSkipped('No comma-decimal locale available.');
+        }
+
+        // 1.5 has one fractional digit; the comma-decimal locale should render
+        // it as "1,5" — proving precision detection is independent of the
+        // object's own decimal separator (PHP stringifies floats with '.').
+        $this->assertSame(
+            '1,5',
+            $locale->formatNumber(1.5)
         );
     }
 
