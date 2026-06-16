@@ -1,6 +1,7 @@
 <?php
 
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -19,6 +20,7 @@ class SwatI18NCurrencyFormatTest extends TestCase
         $this->format->grouping = [3];
     }
 
+    #[Test]
     public function testOverrideValidProperties()
     {
         $newFormat = $this->format->override([
@@ -37,6 +39,7 @@ class SwatI18NCurrencyFormatTest extends TestCase
         $this->assertEquals('+', $newFormat->p_sign);
     }
 
+    #[Test]
     public function testOverrideNullValueDoesNotChangeProperty()
     {
         $newFormat = $this->format->override([
@@ -48,6 +51,7 @@ class SwatI18NCurrencyFormatTest extends TestCase
         );
     }
 
+    #[Test]
     public function testOverrideWithInvalidPropertyThrowsException(): void
     {
         $this->expectException(SwatException::class);
@@ -57,6 +61,7 @@ class SwatI18NCurrencyFormatTest extends TestCase
         ]);
     }
 
+    #[Test]
     public function testOverrideDoesNotMutateOnInvalidProperty(): void
     {
         try {

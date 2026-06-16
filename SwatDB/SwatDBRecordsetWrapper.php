@@ -282,7 +282,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
     /**
      * Initializes this recordset wrapper.
      *
-     * Subclasses are encouraged to specify a SwatDBDataObject subclass as this
+     * Subclasses are encouraged to specify a `SwatDBDataObject` subclass as this
      * recordset's row wrapper class. See
      * {@link SwatDBRecordsetWrapper::$row_wrapper_class}.
      *
@@ -783,21 +783,21 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
     }
 
     /**
-     * Attach existing sub-dataobjects for an internal property of the
-     * dataobjects in this recordset.
+     * Attach existing sub-data-objects to an internal property of the
+     * data-objects in this recordset.
      *
      * @param string $name name of the property to attach to
      */
     public function attachSubDataObjects(
-        $name,
+        string $name,
         SwatDBRecordsetWrapper $sub_data_objects,
-    ) {
+    ): void {
         if ($sub_data_objects->index_field === null) {
             throw new SwatDBException(
                 sprintf(
                     'Index field must be specified in the sub-data-object '
                         . 'recordset wrapper class (%s::init()) '
-                        . 'in order to attach recordset as sub-dataobjects.',
+                        . 'in order to attach recordset as sub-data-objects.',
                     get_class($sub_data_objects),
                 ),
             );
@@ -1377,7 +1377,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
      * are modified or deleted.
      *
      * @param SwatDBCacheNsFlushable $cache the flushable cache to use for
-     *                                      this dataobject
+     *                                      this data-object
      */
     public function setFlushableCache(SwatDBCacheNsFlushable $cache): void
     {

@@ -58,6 +58,7 @@ class SwatI18NNumberFormatTest extends TestCase
         );
     }
 
+    #[Test]
     public function testOverrideWithInvalidPropertyThrowsException(): void
     {
         $this->expectException(SwatException::class);
@@ -67,6 +68,7 @@ class SwatI18NNumberFormatTest extends TestCase
         ]);
     }
 
+    #[Test]
     public function testOverrideDoesNotMutateOnInvalidProperty(): void
     {
         try {

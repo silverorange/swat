@@ -95,9 +95,9 @@ class SwatI18NCurrencyFormat extends SwatI18NNumberFormat
     public string $p_sign = '';
 
     /**
-     * Negative sign.
+     * Negative sign. This defaults to the Unicode Minus Sign (U+2212).
      */
-    public string $n_sign = '-';
+    public string $n_sign = '−';
 
     /**
      * Currency symbol.
@@ -108,7 +108,7 @@ class SwatI18NCurrencyFormat extends SwatI18NNumberFormat
      * Overrides the default format only to be able to specify the extended
      * set of allowable keys in the array.
      *
-     * @param TOverrideableCurrencyProperties&TOverrideableCurrencyProperties $format
+     * @param TOverrideableCurrencyProperties&TOverrideableNumberProperties $format
      */
     public function override(array $format): static
     {

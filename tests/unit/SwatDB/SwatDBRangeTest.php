@@ -1,6 +1,7 @@
 <?php
 
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -9,6 +10,7 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(SwatDBRange::class)]
 class SwatDBRangeTest extends TestCase
 {
+    #[Test]
     public function testCombiningRanges(): void
     {
         $range1 = new SwatDBRange(10, 100);
@@ -20,6 +22,7 @@ class SwatDBRangeTest extends TestCase
         $this->assertEquals(100, $combined->getOffset());
     }
 
+    #[Test]
     public function testCombinedRangesWithNoLimit(): void
     {
         $range1 = new SwatDBRange(null, 100);
@@ -31,6 +34,7 @@ class SwatDBRangeTest extends TestCase
         $this->assertEquals(100, $combined->getOffset());
     }
 
+    #[Test]
     public function testCombinedRangesWithNoOffset(): void
     {
         $range1 = new SwatDBRange(10);
@@ -42,6 +46,7 @@ class SwatDBRangeTest extends TestCase
         $this->assertEquals(0, $combined->getOffset());
     }
 
+    #[Test]
     public function testCombinedRangesWithNoOffsetOrLimit(): void
     {
         $range1 = new SwatDBRange(10);
