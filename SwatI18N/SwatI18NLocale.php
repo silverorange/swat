@@ -20,13 +20,15 @@
  *      negative_sign: string,
  *      int_frac_digits: int,
  *      frac_digits: int,
- *      p_cs_precedes: bool,
- *      p_sep_by_space: bool,
- *      n_cs_precedes: bool,
- *      n_sep_by_space: bool,
+ *      p_cs_precedes: 0|1|CHAR_MAX,
+ *      p_sep_by_space: 0|1|CHAR_MAX,
+ *      n_cs_precedes: 0|1|CHAR_MAX,
+ *      n_sep_by_space: 0|1|CHAR_MAX,
  *      p_sign_posn: int<0, 4>,
  *      n_sign_posn: int<0, 4>,
  * }
+ *
+ * @phpstan-import-type TOverrideableNumberProperties from SwatI18NNumberFormat
  *
  * @copyright 2007-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
@@ -335,33 +337,18 @@ class SwatI18NLocale extends SwatObject
 
         $space = $separate_by_space ? ' ' : '';
 
+        // create the sprintf format for the output with the positional placeholders:
         // 1 - sign
         // 2 - currency symbol
         // 3 - value
         // 4 - separating space
 
-        // now format the sign and symbol
         switch ($sign_position) {
             case 0:
                 // parentheses surround the quantity and currency symbol
                 $format = $cs_precedes
                     ? '(%2$s%4$s%3$s)'
                     : '(%3$s%2$s%2$s)';
-                //                if ($cs_precedes) {
-                //                    $formatted_value = sprintf(
-                //                        '(%s%s%s)',
-                //                        $symbol,
-                //                        $space,
-                //                        $formatted_value,
-                //                    );
-                //                } else {
-                //                    $formatted_value = sprintf(
-                //                        '(%s%s%s)',
-                //                        $formatted_value,
-                //                        $space,
-                //                        $symbol,
-                //                    );
-                //                }
                 break;
 
             case 1:
@@ -369,114 +356,32 @@ class SwatI18NLocale extends SwatObject
                 $format = $cs_precedes
                     ? '%1$s%2$s%4$s%3$s'
                     : '%1$s%3$s%4$s%2$s';
-                //                if ($cs_precedes) {
-                //                    $formatted_value = sprintf(
-                //                        '%s%s%s%s',
-                //                        $sign,
-                //                        $symbol,
-                //                        $space,
-                //                        $formatted_value,
-                //                    );
-                //                } else {
-                //                    $formatted_value = sprintf(
-                //                        '%s%s%s%s',
-                //                        $sign,
-                //                        $formatted_value,
-                //                        $space,
-                //                        $symbol,
-                //                    );
-                //                }
+
                 break;
 
             case 2:
                 // the sign string succeeds the quantity and currency symbol
-                // 1 - sign
-                // 2 - currency symbol
-                // 3 - value
-                // 4 - separating space
                 $format = $cs_precedes
                     ? '%2$s%4$s%3$s%1$s'
                     : '%3$s%4$s%2$s%1$s';
-                //                if ($cs_precedes) {
-                //                    $formatted_value = sprintf(
-                //                        '%s%s%s%s',
-                //                        $symbol,
-                //                        $space,
-                //                        $formatted_value,
-                //                        $sign,
-                //                    );
-                //                } else {
-                //                    $formatted_value = sprintf(
-                //                        '%s%s%s%s',
-                //                        $formatted_value,
-                //                        $space,
-                //                        $symbol,
-                //                        $sign,
-                //                    );
-                //                }
+
                 break;
 
             case 3:
                 // the sign string immediately precedes the currency symbol
-                // 1 - sign
-                // 2 - currency symbol
-                // 3 - value
-                // 4 - separating space
                 $format = $cs_precedes
                     ? '%1$s%2$s%4$s%3$s'
                     : '%3$s%4$s%1$s%2$s';
-                //                if ($cs_precedes) {
-                //                    $formatted_value = sprintf(
-                //                        '%s%s%s%s',
-                //                        $sign,
-                //                        $symbol,
-                //                        $space,
-                //                        $formatted_value,
-                //                    );
-                //                } else {
-                //                    $formatted_value = sprintf(
-                //                        '%s%s%s%s',
-                //                        $formatted_value,
-                //                        $space,
-                //                        $sign,
-                //                        $symbol,
-                //                    );
-                //                }
                 break;
 
             case 4:
                 // the sign string immediately succeeds the currency symbol
-                // 1 - sign
-                // 2 - currency symbol
-                // 3 - value
-                // 4 - separating space
                 $format = $cs_precedes
                     ? '%2$s%1$s%4$s%3$s'
                     : '%3$s%4$s%2$s%1$s';
-                //                if ($cs_precedes) {
-                //                    $formatted_value = sprintf(
-                //                        '%s%s%s%s',
-                //                        $symbol,
-                //                        $sign,
-                //                        $space,
-                //                        $formatted_value,
-                //                    );
-                //                } else {
-                //                    $formatted_value = sprintf(
-                //                        '%s%s%s%s',
-                //                        $formatted_value,
-                //                        $space,
-                //                        $symbol,
-                //                        $sign,
-                //                    );
-                //                }
                 break;
         }
 
-        // 1 - sign
-        // 2 - currency symbol
-        // 3 - value
-        // 4 - separating space
         return sprintf(
             $format,
             $sign,
@@ -495,16 +400,16 @@ class SwatI18NLocale extends SwatObject
      * Numeric values are rounded to the specified number of fractional digits
      * using a round-half-up rounding method (PHP's default round).
      *
-     * @param float|int $value    the numeric value to format
-     * @param ?int      $decimals optional. The number of fractional digits to
-     *                            include in the returned string. If not
-     *                            specified, all fractional digits are included.
-     * @param array     $format   optional. An associative array of number formatting
-     *                            information that overrides the formatting for this
-     *                            locale. The array is of the form
-     *                            `'property' => value`. For example, use the
-     *                            value `['grouping' => 0]` to turn
-     *                            off numeric groupings.
+     * @param float|int                     $value    the numeric value to format
+     * @param ?int                          $decimals optional. The number of fractional digits to
+     *                                                include in the returned string. If not
+     *                                                specified, all fractional digits are included.
+     * @param TOverrideableNumberProperties $format   optional. An associative array of number formatting
+     *                                                information that overrides the formatting for this
+     *                                                locale. The array is of the form
+     *                                                `'property' => value`. For example, use the
+     *                                                value `['grouping' => 0]` to turn
+     *                                                off numeric groupings.
      *
      * @return string a UTF-8 encoded string containing the formatted numeric value
      *
@@ -543,10 +448,10 @@ class SwatI18NLocale extends SwatObject
      *
      * @param string $string the formatted currency string
      *
-     * @return float the numeric value of the parsed currency. If the given
-     *               value could not be parsed, null is returned.
+     * @return ?float the numeric value of the parsed currency. If the given
+     *                value could not be parsed, null is returned.
      */
-    public function parseCurrency($string)
+    public function parseCurrency(string $string): ?float
     {
         $value = null;
 
@@ -594,10 +499,10 @@ class SwatI18NLocale extends SwatObject
      *
      * @param string $string the formatted string
      *
-     * @return float the numeric value of the parsed string. If the given
-     *               value could not be parsed, null is returned.
+     * @return ?float the numeric value of the parsed string. If the given
+     *                value could not be parsed, null is returned.
      */
-    public function parseFloat($string)
+    public function parseFloat(string $string): ?float
     {
         $value = null;
 
@@ -640,14 +545,14 @@ class SwatI18NLocale extends SwatObject
      *
      * @param string $string the formatted string
      *
-     * @return int the numeric value of the parsed string. If the given
-     *             value could not be parsed, null is returned.
+     * @return ?int the numeric value of the parsed string. If the given
+     *              value could not be parsed, null is returned.
      *
      * @throws SwatIntegerOverflowException if the converted number is too large
      *                                      to fit in an integer or if the converted number is too
      *                                      small to fit in an integer
      */
-    public function parseInteger($string)
+    public function parseInteger(string $string): ?int
     {
         $value = null;
 
@@ -670,7 +575,7 @@ class SwatI18NLocale extends SwatObject
                 );
             }
 
-            if ($string < (float) (-PHP_INT_MAX - 1)) {
+            if ($string < (float) PHP_INT_MIN) {
                 throw new SwatIntegerOverflowException(
                     'Floating point value is too small to be an integer',
                     0,
@@ -691,7 +596,7 @@ class SwatI18NLocale extends SwatObject
      *                              All string properties of the object are
      *                              UTF-8 encoded.
      */
-    public function getNumberFormat()
+    public function getNumberFormat(): SwatI18NNumberFormat
     {
         return clone $this->number_format;
     }
@@ -703,7 +608,7 @@ class SwatI18NLocale extends SwatObject
      *                                locale. All string properties of the
      *                                object are UTF-8 encoded.
      */
-    public function getNationalCurrencyFormat()
+    public function getNationalCurrencyFormat(): SwatI18NCurrencyFormat
     {
         return clone $this->national_currency_format;
     }
@@ -715,7 +620,7 @@ class SwatI18NLocale extends SwatObject
      *                                locale. All string properties of the
      *                                object are UTF-8 encoded.
      */
-    public function getInternationalCurrencyFormat()
+    public function getInternationalCurrencyFormat(): SwatI18NCurrencyFormat
     {
         return clone $this->international_currency_format;
     }
@@ -727,7 +632,7 @@ class SwatI18NLocale extends SwatObject
      *                symbol is UTF-8 encoded and does not include the spacing
      *                character specified in the C99 standard.
      */
-    public function getInternationalCurrencySymbol()
+    public function getInternationalCurrencySymbol(): string
     {
         $lc = $this->getLocaleInfo();
 
@@ -743,9 +648,9 @@ class SwatI18NLocale extends SwatObject
      * UTF-8 and the system locale does not need to be set to this locale to
      * get the information.
      *
-     * @return array the numeric formatting information for this locale
+     * @return LocaleConvArray the numeric formatting information for this locale
      */
-    public function getLocaleInfo()
+    public function getLocaleInfo(): array
     {
         return $this->locale_info;
     }
@@ -765,10 +670,10 @@ class SwatI18NLocale extends SwatObject
     /**
      * Detects the character encoding used by this locale.
      *
-     * @return string the character encoding used by this locale. If the
-     *                encoding could not be detected, null is returned.
+     * @return ?string the character encoding used by this locale. If the
+     *                 encoding could not be detected, null is returned.
      */
-    protected function detectCharacterEncoding()
+    protected function detectCharacterEncoding(): ?string
     {
         $encoding = null;
 
@@ -809,7 +714,7 @@ class SwatI18NLocale extends SwatObject
     /**
      * Builds the locale info array for this locale.
      */
-    protected function buildLocaleInfo()
+    protected function buildLocaleInfo(): void
     {
         $this->locale_info = localeconv();
 
@@ -845,7 +750,7 @@ class SwatI18NLocale extends SwatObject
     /**
      * Builds the number format of this locale.
      */
-    protected function buildNumberFormat()
+    protected function buildNumberFormat(): void
     {
         $lc = $this->getLocaleInfo();
 
@@ -861,7 +766,7 @@ class SwatI18NLocale extends SwatObject
     /**
      * Builds the national currency format of this locale.
      */
-    protected function buildNationalCurrencyFormat()
+    protected function buildNationalCurrencyFormat(): void
     {
         $lc = $this->getLocaleInfo();
 
@@ -901,9 +806,9 @@ class SwatI18NLocale extends SwatObject
     }
 
     /**
-     * Builds the internatiobal currency format for this locale.
+     * Builds the international currency format for this locale.
      */
-    protected function buildInternationalCurrencyFormat()
+    protected function buildInternationalCurrencyFormat(): void
     {
         $lc = $this->getLocaleInfo();
 
@@ -946,7 +851,7 @@ class SwatI18NLocale extends SwatObject
     protected function formatIntegerGroupings(
         float $value,
         SwatI18NNumberFormat $format,
-    ) {
+    ): string {
         // group integer part with thousands separators
         $grouping_values = [];
         $groupings = $format->grouping;
@@ -956,7 +861,7 @@ class SwatI18NLocale extends SwatObject
             || $grouping_total === 0
             || $format->thousands_separator == ''
         ) {
-            array_push($grouping_values, $grouping_total);
+            $grouping_values[] = $grouping_total;
         } else {
             $grouping_previous = 0;
             while (count($groupings) > 1 && $grouping_total > 0) {
@@ -967,7 +872,7 @@ class SwatI18NLocale extends SwatObject
                     $grouping = $grouping_previous;
                 } elseif ($grouping === CHAR_MAX) {
                     // a grouping of CHAR_MAX means no more grouping
-                    array_push($grouping_values, $grouping_total);
+                    $grouping_values[] = $grouping_total;
                     break;
                 } else {
                     $grouping_previous = $grouping;
@@ -987,7 +892,7 @@ class SwatI18NLocale extends SwatObject
                     );
                 }
 
-                array_push($grouping_values, $grouping_value);
+                $grouping_values[] = $grouping_value;
             }
 
             // last grouping repeats until integer part is finished
@@ -995,7 +900,7 @@ class SwatI18NLocale extends SwatObject
 
             // a grouping of CHAR_MAX means no more grouping
             if ($grouping === CHAR_MAX) {
-                array_push($grouping_values, $grouping_total);
+                $grouping_values[] = $grouping_total;
             } else {
                 // a grouping of 0 means use previous grouping
                 if ($grouping === 0) {
@@ -1004,7 +909,7 @@ class SwatI18NLocale extends SwatObject
 
                 // a grouping of 0 as the last grouping means no more grouping
                 if ($grouping === 0) {
-                    array_push($grouping_values, $grouping_total);
+                    $grouping_values[] = $grouping_total;
                 } else {
                     while ($grouping_total > 0) {
                         $grouping_value = floor(
@@ -1024,7 +929,7 @@ class SwatI18NLocale extends SwatObject
                             );
                         }
 
-                        array_push($grouping_values, $grouping_value);
+                        $grouping_values[] = $grouping_value;
                     }
                 }
             }
@@ -1040,7 +945,7 @@ class SwatI18NLocale extends SwatObject
     }
 
     /**
-     * Formats the fractional  part of a value.
+     * Formats the fractional part of a value.
      *
      * @param float                $value             the value to format
      * @param int                  $fractional_digits the number of fractional digits to
@@ -1054,10 +959,10 @@ class SwatI18NLocale extends SwatObject
      *                of the format object.
      */
     protected function formatFractionalPart(
-        $value,
-        $fractional_digits,
+        float $value,
+        int $fractional_digits,
         SwatI18NNumberFormat $format,
-    ) {
+    ): string {
         if ($fractional_digits === 0) {
             $formatted_value = '';
         } else {
@@ -1080,26 +985,26 @@ class SwatI18NLocale extends SwatObject
      * Parses the negative notation for a numeric string formatted in this
      * locale.
      *
-     * @param string $string          the formatted string
-     * @param string $n_sign          optional. The negative sign to parse. If not
-     *                                specified, the negative sign for this locale is
-     *                                used.
-     * @param int    $n_sign_position optional. The position of the negative
-     *                                sign in the formatted string. If not
-     *                                specified, the value 1 is assumed. This
-     *                                may be used to allow parsing
-     *                                parenthetical formatted negative values
-     *                                as used by some currencies.
+     * @param string  $string          the formatted string
+     * @param ?string $n_sign          optional. The negative sign to parse. If not
+     *                                 specified, the negative sign for this locale is
+     *                                 used.
+     * @param int     $n_sign_position optional. The position of the negative
+     *                                 sign in the formatted string. If not
+     *                                 specified, the value 1 is assumed. This
+     *                                 may be used to allow parsing
+     *                                 parenthetical formatted negative values
+     *                                 as used by some currencies.
      *
      * @return string the formatted string with the negative notation parsed
      *                and normalized into a form readable by intval() and
      *                floatval()
      */
     protected function parseNegativeNotation(
-        $string,
-        $n_sign = null,
-        $n_sign_position = 1,
-    ) {
+        string $string,
+        ?string $n_sign = null,
+        int $n_sign_position = 1,
+    ): string {
         $lc = $this->getLocaleInfo();
 
         $negative = false;
@@ -1193,32 +1098,15 @@ class SwatI18NLocale extends SwatObject
      * Round-to-even is primarily used for monetary values. See
      * {@link http://en.wikipedia.org/wiki/Rounding#Round-to-even_method}.
      *
-     * @param float $value             the value to round
-     * @param int   $fractional_digits the number of fractional digits in the
-     *                                 rounded result
+     * @param float|int $value             the value to round
+     * @param int       $fractional_digits the number of fractional digits in the
+     *                                     rounded result
      *
      * @return float the rounded value
      */
-    public function roundToEven($value, $fractional_digits)
+    public function roundToEven(float|int $value, int $fractional_digits): float
     {
-        $exp = pow(10, $fractional_digits);
-        $frac_part = abs(fmod($value, 1)) * $exp;
-        $ends_in_five = intval($frac_part * 10) % 10 === 5;
-        if ($ends_in_five) {
-            // check if fractional part is odd
-            if ((intval($frac_part) & 0x01) === 0x01) {
-                // round up on odd
-                $value = ceil($value * $exp) / $exp;
-            } else {
-                // round down on even
-                $value = floor($value * $exp) / $exp;
-            }
-        } else {
-            // use normal rounding
-            $value = round($value, $fractional_digits);
-        }
-
-        return $value;
+        return SwatNumber::roundToEven($value, $fractional_digits);
     }
 
     /**
@@ -1262,13 +1150,13 @@ class SwatI18NLocale extends SwatObject
         $this->buildNationalCurrencyFormat();
         $this->buildInternationalCurrencyFormat();
 
-        if ($this->locale !== null) {
+        if ($this->locale !== null && isset($old_locale)) {
             self::setlocale(LC_ALL, $old_locale);
         }
     }
 
     /**
-     * Recursivly converts the character encoding of all strings in an array.
+     * Recursively converts the character encoding of all strings in an array.
      *
      * @param string $from  the character encoding to convert from
      * @param string $to    the character encoding to convert to

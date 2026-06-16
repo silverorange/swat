@@ -9,6 +9,12 @@
  * @see       SwatLocale::formatNumber()
  * @see       SwatLocale::getNumberFormat()
  *
+ * @phpstan-type TOverrideableNumberProperties array{
+ *      decimal_separator?: string,
+ *      thousands_separator?: string,
+ *      grouping?: list<int>,
+ *  }
+ *
  * @phpstan-import-type LocaleConvArray from SwatI18NLocale
  */
 class SwatI18NNumberFormat
@@ -47,8 +53,8 @@ class SwatI18NNumberFormat
      * ]);
      * ```
      *
-     * @param LocaleConvArray $format the format information with which to override this
-     *                                format
+     * @param TOverrideableNumberProperties $format the format information with which to
+     *                                              override this format
      *
      * @return static a copy of this number format with the
      *                specified properties set to the new values

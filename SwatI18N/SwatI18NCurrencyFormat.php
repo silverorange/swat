@@ -8,6 +8,25 @@
  *
  * @see       SwatLocale::formatCurrency()
  * @see       SwatLocale::getCurrencyFormat()
+ *
+ * @phpstan-import-type TOverrideableNumberProperties from SwatI18NNumberFormat
+ *
+ * @phpstan-type TOverrideableCurrencyProperties TOverrideableNumberProperties&array{
+ *     currency_symbol?: string,
+ *     mon_decimal_point?: string,
+ *     mon_thousands_sep?: string,
+ *     mon_grouping?: list<int>,
+ *     positive_sign?: string,
+ *     negative_sign?: string,
+ *     int_frac_digits?: int,
+ *     frac_digits?: int,
+ *     p_cs_precedes?: bool,
+ *     p_sep_by_space?: bool,
+ *     n_cs_precedes?: bool,
+ *     n_sep_by_space?: bool,
+ *     p_sign_posn?: int<0, 4>,
+ *     n_sign_posn?: int<0, 4>,
+ * }
  */
 class SwatI18NCurrencyFormat extends SwatI18NNumberFormat
 {
@@ -86,4 +105,15 @@ class SwatI18NCurrencyFormat extends SwatI18NNumberFormat
      * Currency symbol.
      */
     public string $symbol = '';
+
+    /**
+     * Overrides the default format only to be able to specify the extended
+     * set of allowable keys in the array.
+     *
+     * @param TOverrideableCurrencyProperties $format
+     */
+    public function override(array $format): static
+    {
+        return parent::override($format);
+    }
 }

@@ -3,7 +3,7 @@
 /**
  * Number tools.
  *
- * @copyright 2008-2016 silverorange
+ * @copyright 2008-2026 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatNumber extends SwatObject
@@ -14,17 +14,21 @@ class SwatNumber extends SwatObject
      *
      * See {@link http://en.wikipedia.org/wiki/Rounding#Round_half_up}.
      *
-     * @param float $value             the value to round
-     * @param int   $fractional_digits the number of fractional digits in the
-     *                                 rounded result
+     * The home-grown implementation (while working) is replaced with the
+     * native PHP {@link http://php.net/manual/en/function.round.php round()}
+     * function, using the PHP_ROUND_HALF_UP constant.
+     *
+     * @param float|int $value             the value to round
+     * @param int       $fractional_digits the number of fractional digits in the
+     *                                     rounded result
      *
      * @return float the rounded value
      */
-    public static function roundUp($value, $fractional_digits)
-    {
-        $power = pow(10, $fractional_digits);
-
-        return ceil($value * $power) / $power;
+    public static function roundUp(
+        float|int $value,
+        int $fractional_digits
+    ): float {
+        return round($value, $fractional_digits, PHP_ROUND_HALF_UP);
     }
 
     /**
@@ -34,120 +38,63 @@ class SwatNumber extends SwatObject
      * Round-to-even is primarily used for monetary values. See
      * {@link http://en.wikipedia.org/wiki/Rounding#Round_half_to_even}.
      *
-     * @param float $value             the value to round
-     * @param int   $fractional_digits the number of fractional digits in the
-     *                                 rounded result
+     * Historically, our home-grown implementation of this method did not work,
+     * especially in cases with zero fractional digits. e.g.:
+     *
+     * ```php
+     * // outputs 1, but should be 2
+     * echo SwatNumber::roundToEven(1.5, 0);
+     * ```
+     *
+     * The home-grown implementation is replaced with the native PHP
+     * {@link http://php.net/manual/en/function.round.php round()}
+     * function using the PHP_ROUND_HALF_EVEN constant.
+     *
+     * @param float|int $value             the value to round
+     * @param int       $fractional_digits the number of fractional digits in the
+     *                                     rounded result
      *
      * @return float the rounded value
      */
-    public static function roundToEven($value, $fractional_digits)
-    {
-        $power = pow(10, $fractional_digits);
-        $fractional_part = abs(fmod($value, 1)) * $power;
-        $ends_in_five = intval($fractional_part * 10) % 10 === 5;
-        if ($ends_in_five) {
-            // check if fractional part is odd
-            if ((intval($fractional_part) & 0x01) === 0x01) {
-                // round up on odd
-                $value = ceil($value * $power) / $power;
-            } else {
-                // round down on even
-                $value = floor($value * $power) / $power;
-            }
-        } else {
-            // use normal rounding
-            $value = round($value, $fractional_digits);
-        }
-
-        return $value;
+    public static function roundToEven(
+        float|int $value,
+        int $fractional_digits
+    ): float {
+        return round($value, $fractional_digits, PHP_ROUND_HALF_EVEN);
     }
 
     /**
-     * Formats an integer as an ordinal number (1st, 2nd, 3rd).
+     * Formats an integer as an ordinal number (1st, 2nd, 3rd, etc.).
      *
-     * If the 'intl' extension is available, the ICU number formatter and
-     * string normalizers are used to get a correctly formatted ordinal for
-     * the current locale.
-     *
-     * If the 'intl' extension is not available, this method is only safe for
-     * English locales. The fallback implementation is mostly taken from the
-     * following comment on php.net:
-     * {@link http://www.php.net/manual/en/function.number-format.php#89655}
+     * The ICU number formatter and string normalizers from the `intl` extension
+     * are used to get a correctly formatted ordinal for the current locale.
      *
      * @param int $value the numeric value to format
      *
      * @return string the ordinal-formatted value
      */
-    public static function ordinal($value)
+    public static function ordinal(int $value): string
     {
-        $value = intval($value);
+        // get current locale
+        $locale = setlocale(LC_ALL, '0');
 
-        if (extension_loaded('intl')) {
-            // get current locale
-            $locale = setlocale(LC_ALL, '0');
+        static $formatters = [];
 
-            static $formatters = [];
-
-            if (!isset($formatters[$locale])) {
-                $formatters[$locale] = new NumberFormatter(
-                    $locale,
-                    NumberFormatter::ORDINAL,
-                );
-            }
-
-            // format ordinal
-            $ordinal_value = $formatters[$locale]->format($value);
-
-            // decompose to latin-1 characters (removes superscripts)
-            $ordinal_value = Normalizer::normalize(
-                $ordinal_value,
-                Normalizer::FORM_KC,
+        if (!isset($formatters[$locale])) {
+            $formatters[$locale] = new NumberFormatter(
+                $locale,
+                NumberFormatter::ORDINAL,
             );
-        } else {
-            // fallback implementation if icu is not available
-            $ordinal_value = abs($value);
-
-            switch ($ordinal_value % 100) {
-                case 11:
-                case 12:
-                case 13:
-                    $ordinal_value = sprintf(Swat::_('%sth'), $ordinal_value);
-                    break;
-
-                default:
-                    // Handle 1st, 2nd, 3rd
-                    switch ($value % 10) {
-                        case 1:
-                            $ordinal_value = sprintf(
-                                Swat::_('%sst'),
-                                $ordinal_value,
-                            );
-                            break;
-
-                        case 2:
-                            $ordinal_value = sprintf(
-                                Swat::_('%snd'),
-                                $ordinal_value,
-                            );
-                            break;
-
-                        case 3:
-                            $ordinal_value = sprintf(
-                                Swat::_('%srd'),
-                                $ordinal_value,
-                            );
-                            break;
-
-                        default:
-                            $ordinal_value = sprintf(
-                                Swat::_('%sth'),
-                                $ordinal_value,
-                            );
-                    }
-            }
         }
 
-        return $ordinal_value;
+        // format ordinal
+        $ordinal_value = $formatters[$locale]->format($value);
+
+        // Decompose to latin-1 characters (removes superscripts)
+        return Normalizer::normalize(
+            $ordinal_value,
+            Normalizer::FORM_KC
+        );
     }
 
     /**
