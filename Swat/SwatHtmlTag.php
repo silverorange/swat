@@ -86,7 +86,7 @@ class SwatHtmlTag extends SwatObject
      * attributes.
      *
      * @param array $attributes an array of attribute-value pairs of the form
-     *               'attribute' => 'value'
+     *                          'attribute' => 'value'
      */
     public function addAttributes($attributes)
     {

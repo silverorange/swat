@@ -1395,9 +1395,9 @@ class SwatTableView extends SwatView
     /**
      * Sets a default column to use for ordering the data of this table-view.
      *
-     * @param SwatTableViewOrderableColumn $column the column in this view to use
-     *                                      for default ordering
-     * @param int $direction the default direction of the ordered column
+     * @param SwatTableViewOrderableColumn $column    the column in this view to use
+     *                                                for default ordering
+     * @param int                          $direction the default direction of the ordered column
      *
      * @throws SwatException
      *
