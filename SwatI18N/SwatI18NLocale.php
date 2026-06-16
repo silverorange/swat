@@ -6,6 +6,9 @@
  * Locale objects are used to format and parse values according to
  * locale-specific rules.
  *
+ * @copyright 2007-2026 silverorange
+ * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ *
  * @phpstan-type LocaleCategory LC_ALL|LC_COLLATE|LC_CTYPE|LC_MONETARY|LC_NUMERIC|LC_TIME|LC_MESSAGES
  * @phpstan-type LocaleConvArray array{
  *      decimal_point: string,
@@ -29,9 +32,6 @@
  * }
  *
  * @phpstan-import-type TOverrideableNumberProperties from SwatI18NNumberFormat
- *
- * @copyright 2007-2016 silverorange
- * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatI18NLocale extends SwatObject
 {

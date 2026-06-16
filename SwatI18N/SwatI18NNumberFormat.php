@@ -9,13 +9,13 @@
  * @see       SwatLocale::formatNumber()
  * @see       SwatLocale::getNumberFormat()
  *
+ * @phpstan-import-type LocaleConvArray from SwatI18NLocale
+ *
  * @phpstan-type TOverrideableNumberProperties array{
  *      decimal_separator?: string,
  *      thousands_separator?: string,
  *      grouping?: list<int>,
- *  }
- *
- * @phpstan-import-type LocaleConvArray from SwatI18NLocale
+ * }
  */
 class SwatI18NNumberFormat
 {
@@ -44,12 +44,12 @@ class SwatI18NNumberFormat
      * array keys representing property names of this formatting object and
      * array values being the overridden values.
      *
-     * For example, to override the positive and negative signs of this format:
+     * For example, to override the decimal and separator strings:
      *
      * ```php
      * $format->override([
-     *      'n_sign' => 'neg',
-     *      'p_sign' => 'pos'
+     *      'decimal_separator'   => ',',
+     *      'thousands_separator' => ' '
      * ]);
      * ```
      *
