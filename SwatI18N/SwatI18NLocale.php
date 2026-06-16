@@ -112,38 +112,37 @@ class SwatI18NLocale extends SwatObject
      */
     public static function get(array|string|null $locale = null): SwatI18NLocale
     {
-        $locale_object = null;
-
+        // Build the list of identifiers to look up in the cache.
         if ($locale === null) {
-            $locale_key = self::setlocale(LC_ALL, '0');
-            if (array_key_exists($locale_key, self::$locales)) {
-                $locale_object = self::$locales[$locale_key];
-            }
+            $candidates = [self::setlocale(LC_ALL, '0')];
         } elseif (is_array($locale)) {
-            foreach ($locale as $locale_key) {
-                if (array_key_exists($locale_key, self::$locales)) {
-                    $locale_object = self::$locales[$locale_key];
-                    break;
-                }
-            }
+            $candidates = $locale;
         } else {
-            if (array_key_exists($locale, self::$locales)) {
-                $locale_object = self::$locales[$locale];
+            $candidates = [$locale];
+        }
+
+        // if the candidate is cached, return it
+        foreach ($candidates as $candidate) {
+            if (
+                $candidate !== false
+                && array_key_exists($candidate, self::$locales)
+            ) {
+                return self::$locales[$candidate];
             }
         }
 
-        if ($locale_object === null) {
-            $locale_object = new SwatI18NLocale($locale);
-            if ($locale === null) {
-                $locale_key = $locale_object->__toString();
-                self::$locales[$locale_key] = $locale_object;
-            } elseif (is_array($locale)) {
-                foreach ($locale as $locale_key) {
-                    self::$locales[$locale_key] = $locale_object;
-                }
-            } else {
-                self::$locales[$locale] = $locale_object;
-            }
+        $locale_object = new SwatI18NLocale($locale);
+
+        // Always cache under the resolved preferred locale.
+        self::$locales[$locale_object->__toString()] = $locale_object;
+
+        // For a single valid string identifier, also cache under that exact
+        // identifier so future lookups by the same alias hit the cache. We do
+        // NOT do this for arrays, because we cannot tell which identifiers were
+        // valid and which were skipped — caching a skipped (invalid) identifier
+        // would wrongly suppress exceptions on later lookups.
+        if (is_string($locale)) {
+            self::$locales[$locale] = $locale_object;
         }
 
         return $locale_object;
@@ -155,21 +154,27 @@ class SwatI18NLocale extends SwatObject
      * This is a wrapper for the system setlocale() function that provides
      * extra compatibility.
      *
-     * @param LocaleCategory $category optional. The LC_* constant specifying the
-     *                                 category of functions affected by setting
-     *                                 the system locale.
-     * @param string         $locale   the locale identifier. Use '0' to return
-     *                                 the current system locale. Multiple locale
-     *                                 identifiers may be specified in a semicolon-delimited string.
-     *                                 In this case, the first valid locale is used.
+     * @param LocaleCategory      $category optional. The LC_* constant specifying the
+     *                                      category of functions affected by setting
+     *                                      the system locale.
+     * @param list<string>|string $locale   the locale identifier. Use '0' to return
+     *                                      the current system locale. Multiple locale identifiers
+     *                                      may be specified in an array. In this case,
+     *                                      the first valid locale is used.
      *
      * @return false|string the new or current locale, or false if an invalid
      *                      `$locale` is specified
      */
     public static function setlocale(
         int $category,
-        string $locale
+        array|string $locale
     ): false|string {
+        // Native setlocale() already accepts a list of identifiers and uses
+        // the first valid one, so defer to it directly if passed an array.
+        if (is_array($locale)) {
+            return setlocale($category, $locale);
+        }
+
         $return = false;
 
         static $categories = [
@@ -1138,10 +1143,12 @@ class SwatI18NLocale extends SwatObject
             $old_locale = self::setlocale(LC_ALL, '0');
             $this->preferred_locale = self::setlocale(LC_ALL, $this->locale);
             if ($this->preferred_locale === false) {
-                throw new SwatException(
-                    "The locale {$this->locale} is not "
-                        . 'valid for this operating system.',
-                );
+                throw new SwatException(sprintf(
+                    'The locale %s is not valid for this operating system.',
+                    is_array($this->locale)
+                        ? '["' . implode('","', $this->locale) . '"]'
+                        : '"' . $this->locale . '"'
+                ));
             }
         }
 
