@@ -37,6 +37,24 @@ class SwatI18NNumberFormat
     public array $grouping = [];
 
     /**
+     * Create a new number format object from an array of localeconv() values.
+     *
+     * @param LocaleConvArray $lc an array of localeconv() values
+     */
+    public static function buildFromLocale(array $lc): static
+    {
+        $format = new static();
+
+        $format->decimal_separator = $lc['mon_decimal_point'] == ''
+            ? $lc['decimal_point']
+            : $lc['mon_decimal_point'];
+        $format->thousands_separator = $lc['mon_thousands_sep'];
+        $format->grouping = $lc['mon_grouping'];
+
+        return $format;
+    }
+
+    /**
      * Gets a new number format object with certain properties overridden from
      * specified values.
      *
@@ -84,4 +102,9 @@ class SwatI18NNumberFormat
 
         return $new_format;
     }
+
+    /**
+     * Prevent overriding the constructor of this class.
+     */
+    final public function __construct() {}
 }

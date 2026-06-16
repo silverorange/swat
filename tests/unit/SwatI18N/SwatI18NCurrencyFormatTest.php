@@ -27,7 +27,7 @@ class SwatI18NCurrencyFormatTest extends TestCase
             'decimal_separator'   => ',',
             'thousands_separator' => '.',
             'grouping'            => [],
-            'symbol'              => '$',
+            'symbol'              => '£',
             'p_sign'              => '+',
         ]);
 
@@ -35,7 +35,7 @@ class SwatI18NCurrencyFormatTest extends TestCase
         $this->assertEquals(',', $newFormat->decimal_separator);
         $this->assertEquals('.', $newFormat->thousands_separator);
         $this->assertEquals([], $newFormat->grouping);
-        $this->assertEquals('$', $newFormat->symbol);
+        $this->assertEquals('£', $newFormat->symbol);
         $this->assertEquals('+', $newFormat->p_sign);
     }
 

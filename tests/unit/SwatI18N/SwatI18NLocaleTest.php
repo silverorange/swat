@@ -380,45 +380,6 @@ class SwatI18NLocaleTest extends TestCase
     }
 
     #[Test]
-    public function testFormatCurrencyNational(): void
-    {
-        $this->assertSame(
-            '$1,234.56',
-            $this->locale->formatCurrency(1234.56),
-        );
-    }
-
-    #[Test]
-    public function testFormatCurrencyNegative(): void
-    {
-        $this->assertSame(
-            '-$1,234.56',
-            $this->locale->formatCurrency(-1234.56),
-        );
-    }
-
-    #[Test]
-    public function testFormatCurrencyZero(): void
-    {
-        $this->assertSame(
-            '$0.00',
-            $this->locale->formatCurrency(0),
-        );
-    }
-
-    #[Test]
-    public function testFormatCurrencyWithInvalidOverrideThrowsException(): void
-    {
-        $this->expectException(SwatException::class);
-
-        $this->locale->formatCurrency(
-            1,
-            false,
-            ['bogus_property' => 'x']
-        );
-    }
-
-    #[Test]
     public function testParseFloat(): void
     {
         $this->assertSame(
@@ -607,4 +568,155 @@ class SwatI18NLocaleTest extends TestCase
         $this->assertSame(2.46, $this->locale->roundToEven(2.455, 2));
     }
 
+    #[Test]
+    public function testFormatCurrency(): void
+    {
+        $this->assertSame(
+            '$1,234.56',
+            $this->locale->formatCurrency(1234.56)
+        );
+    }
+
+    #[Test]
+    public function testFormatCurrencyNegative(): void
+    {
+        // n_sign_position 1: sign precedes symbol and value.
+        $this->assertSame(
+            '-$1,234.56',
+            $this->locale->formatCurrency(-1234.56)
+        );
+    }
+
+    #[Test]
+    public function testFormatCurrencyZero(): void
+    {
+        $this->assertSame(
+            '$0.00',
+            $this->locale->formatCurrency(0)
+        );
+    }
+
+    #[Test]
+    public function testFormatCurrencyPadsFractionalDigits(): void
+    {
+        $this->assertSame(
+            '$1,234.50',
+            $this->locale->formatCurrency(1234.5)
+        );
+    }
+
+    #[Test]
+    public function testFormatCurrencyRoundsToEven(): void
+    {
+        // 1234.565 -> 1234.56 (round half to even).
+        $this->assertSame(
+            '$1,234.56',
+            $this->locale->formatCurrency(1234.565)
+        );
+
+        // 1234.575 -> 1234.58 (round half to even).
+        $this->assertSame(
+            '$1,234.58',
+            $this->locale->formatCurrency(1234.575)
+        );
+    }
+
+    #[Test]
+    public function testFormatCurrencyNational(): void
+    {
+        $this->assertSame(
+            '$1,234.56',
+            $this->locale->formatCurrency(1234.56),
+        );
+    }
+
+    #[Test]
+    public function testFormatCurrencyInternational(): void
+    {
+        // int symbol 'USD ' carries its own trailing space; en_US does not
+        // separate by space, so the symbol is not trimmed.
+        $this->assertSame(
+            'USD 1,234.56',
+            $this->locale->formatCurrency(1234.56, true),
+        );
+    }
+
+    #[Test]
+    public function testFormatCurrencyInternationalNegative(): void
+    {
+        $this->assertSame(
+            '-USD 1,234.56',
+            $this->locale->formatCurrency(-1234.56, true),
+        );
+    }
+
+    #[Test]
+    public function testFormatCurrencyOverrideGroupingOff(): void
+    {
+        $this->assertSame(
+            '$1234.56',
+            $this->locale->formatCurrency(
+                1234.56,
+                false,
+                ['grouping' => []]
+            ),
+        );
+    }
+
+    #[Test]
+    public function testFormatCurrencyWithInvalidOverrideThrowsException(): void
+    {
+        $this->expectException(SwatException::class);
+
+        $this->locale->formatCurrency(
+            1,
+            false,
+            ['bogus_property' => 'x']
+        );
+    }
+
+    #[Test]
+    public function testFormatCurrencyOverrideFractionalDigits(): void
+    {
+        // zero fractional digits removes the decimal part (round to even).
+        $this->assertSame(
+            '$1,235',
+            $this->locale->formatCurrency(
+                1234.56,
+                false,
+                ['fractional_digits' => 0],
+            ),
+        );
+    }
+
+    #[Test]
+    public function testFormatCurrencySignPosition0SymbolPrecedes(): void
+    {
+        // case 0, cs_precedes true: '(%2$s%4$s%3$s)' => (symbol value).
+        $this->assertSame(
+            '($1,234.56)',
+            $this->locale->formatCurrency(
+                -1234.56,
+                false,
+                ['n_sign_position' => 0],
+            ),
+        );
+    }
+
+    #[Test]
+    public function testFormatCurrencySignPosition0SymbolSucceeds(): void
+    {
+        // case 0, cs_precedes false: '(%3$s%4$s%2$s)' => (value symbol)
+        $this->assertSame(
+            '(1,234.56$)',
+            $this->locale->formatCurrency(
+                -1234.56,
+                false,
+                [
+                    'n_sign_position' => 0,
+                    'n_cs_precedes'   => false,
+                ],
+            ),
+        );
+    }
 }

@@ -9,27 +9,45 @@
  * @see       SwatLocale::formatCurrency()
  * @see       SwatLocale::getCurrencyFormat()
  *
+ * @phpstan-import-type LocaleConvArray from SwatI18NLocale
  * @phpstan-import-type TOverrideableNumberProperties from SwatI18NNumberFormat
  *
  * @phpstan-type TOverrideableCurrencyProperties array{
- *     currency_symbol?: string,
- *     mon_decimal_point?: string,
- *     mon_thousands_sep?: string,
- *     mon_grouping?: list<int>,
- *     positive_sign?: string,
- *     negative_sign?: string,
- *     int_frac_digits?: int,
- *     frac_digits?: int,
+ *     fractional_digits?: int,
  *     p_cs_precedes?: bool,
- *     p_sep_by_space?: bool,
  *     n_cs_precedes?: bool,
- *     n_sep_by_space?: bool,
- *     p_sign_posn?: int<0, 4>,
- *     n_sign_posn?: int<0, 4>,
+ *     p_separate_by_space?: bool,
+ *     n_separate_by_space?: bool,
+ *     p_sign_position?: self::SIGN_POSITION_*,
+ *     n_sign_position?: self::SIGN_POSITION_*,
+ *     p_sign?: string,
+ *     n_sign?: string,
+ *     symbol?: string,
  * }
  */
 class SwatI18NCurrencyFormat extends SwatI18NNumberFormat
 {
+    /**
+     * Sign position constants.
+     *
+     * @see https://www.php.net/manual/en/function.localeconv.php
+     */
+
+    // Parentheses surround the quantity and currency_symbol.
+    final public const SIGN_POSITION_PARENTHESES = 0;
+
+    // The sign string precedes the quantity and currency_symbol.
+    final public const SIGN_POSITION_BEFORE = 1;
+
+    // The sign string succeeds the quantity and currency_symbol.
+    final public const SIGN_POSITION_AFTER = 2;
+
+    // The sign string immediately precedes the currency_symbol.
+    final public const SIGN_POSITION_BEFORE_SYMBOL = 3;
+
+    // The sign string immediately succeeds the currency_symbol.
+    final public const SIGN_POSITION_AFTER_SYMBOL = 4;
+
     /**
      * Number of fractional digits.
      */
@@ -66,26 +84,14 @@ class SwatI18NCurrencyFormat extends SwatI18NNumberFormat
     /**
      * Positive sign position.
      *
-     * - `0` - Parentheses surround the quantity and currency_symbol
-     * - `1` - The sign string precedes the quantity and currency_symbol
-     * - `2` - The sign string succeeds the quantity and currency_symbol
-     * - `3` - The sign string immediately precedes the currency_symbol
-     * - `4` - The sign string immediately succeeds the currency_symbol
-     *
-     * @var int<0,4>
+     * @var self::SIGN_POSITION_*
      */
     public int $p_sign_position = 1;
 
     /**
      * Negative sign position.
      *
-     * - `0` - Parentheses surround the quantity and currency_symbol
-     * - `1` - The sign string precedes the quantity and currency_symbol
-     * - `2` - The sign string succeeds the quantity and currency_symbol
-     * - `3` - The sign string immediately precedes the currency_symbol
-     * - `4` - The sign string immediately succeeds the currency_symbol
-     *
-     * @var int<0,4>
+     * @var self::SIGN_POSITION_*
      */
     public int $n_sign_position = 1;
 
@@ -103,6 +109,54 @@ class SwatI18NCurrencyFormat extends SwatI18NNumberFormat
      * Currency symbol.
      */
     public string $symbol = '';
+
+    /**
+     * @param LocaleConvArray $lc
+     */
+    public static function buildFromLocale(array $lc, bool $international = false): static
+    {
+        // build the number format first
+        $format = parent::buildFromLocale($lc);
+
+        // then set the currency properties
+        $format->fractional_digits = $international
+            ? $lc['int_frac_digits']
+            : $lc['frac_digits'];
+
+        $format->p_cs_precedes = $lc['p_cs_precedes'] === CHAR_MAX
+            ? true
+            : boolval($lc['p_cs_precedes']);
+
+        $format->n_cs_precedes = $lc['n_cs_precedes'] === CHAR_MAX
+            ? true
+            : boolval($lc['n_cs_precedes']);
+
+        $format->p_separate_by_space = $lc['p_sep_by_space'] === CHAR_MAX
+            ? false
+            : boolval($lc['p_sep_by_space']);
+
+        $format->n_separate_by_space = $lc['n_sep_by_space'] === CHAR_MAX
+            ? false
+            : boolval($lc['n_sep_by_space']);
+
+        $format->p_sign_position = $lc['p_sign_posn'] === CHAR_MAX
+            ? 1
+            : $lc['p_sign_posn'];
+
+        $format->n_sign_position = $lc['n_sign_posn'] === CHAR_MAX
+            ? 1
+            : $lc['n_sign_posn'];
+
+        $format->p_sign = $lc['positive_sign'];
+
+        $format->n_sign = $lc['negative_sign'];
+
+        $format->symbol = $international
+            ? $lc['int_curr_symbol']
+            : $lc['currency_symbol'];
+
+        return $format;
+    }
 
     /**
      * Overrides the default format only to be able to specify the extended

@@ -290,7 +290,7 @@ class SwatI18NLocale extends SwatObject
      *                             currency format. If not specified, the
      *                             monetary value is formatted using the
      *                             national currency format.
-     * @param array $format        optional. An associative array of currency
+     * @param array $overrides     optional. An associative array of currency
      *                             formatting information that overrides the
      *                             formatting for this locale. The array is of the
      *                             form `'property' => value`. For example, use
@@ -306,11 +306,11 @@ class SwatI18NLocale extends SwatObject
     public function formatCurrency(
         float $value,
         bool $international = false,
-        array $format = [],
+        array $overrides = [],
     ): string {
         $format = $international
-            ? $this->getInternationalCurrencyFormat()->override($format)
-            : $this->getNationalCurrencyFormat()->override($format);
+            ? $this->getInternationalCurrencyFormat()->override($overrides)
+            : $this->getNationalCurrencyFormat()->override($overrides);
 
         // default fractional digits to 2 if locale is missing value
         $fractional_digits = $format->fractional_digits === CHAR_MAX
@@ -346,21 +346,6 @@ class SwatI18NLocale extends SwatObject
             }
         }
 
-        // default sign position if locale is missing value
-        if ($sign_position === CHAR_MAX) {
-            $sign_position = 1;
-        }
-
-        // default currency symbol position if locale is missing value
-        if ($cs_precedes === CHAR_MAX) {
-            $sign_position = true;
-        }
-
-        // default separate by space if locale is missing value
-        if ($separate_by_space === CHAR_MAX) {
-            $separate_by_space = false;
-        }
-
         // trim spacing character off international currency symbol
         // TODO: this is not quite the same as money_format().
         $symbol = $separate_by_space && $international
@@ -369,53 +354,58 @@ class SwatI18NLocale extends SwatObject
 
         $space = $separate_by_space ? ' ' : '';
 
-        // create the sprintf format for the output with the positional placeholders:
+        // create the sprintf template for the output with the positional placeholders:
         // 1 - sign
         // 2 - currency symbol
         // 3 - value
         // 4 - separating space
 
         switch ($sign_position) {
-            case 0:
+            case SwatI18NCurrencyFormat::SIGN_POSITION_PARENTHESES:
                 // parentheses surround the quantity and currency symbol
-                $format = $cs_precedes
+                $template = $cs_precedes
                     ? '(%2$s%4$s%3$s)'
-                    : '(%3$s%2$s%2$s)';
+                    : '(%3$s%4$s%2$s)';
                 break;
 
-            case 1:
+            case SwatI18NCurrencyFormat::SIGN_POSITION_BEFORE:
                 // the sign string precedes the quantity and currency symbol
-                $format = $cs_precedes
+                $template = $cs_precedes
                     ? '%1$s%2$s%4$s%3$s'
                     : '%1$s%3$s%4$s%2$s';
 
                 break;
 
-            case 2:
+            case SwatI18NCurrencyFormat::SIGN_POSITION_AFTER:
                 // the sign string succeeds the quantity and currency symbol
-                $format = $cs_precedes
+                $template = $cs_precedes
                     ? '%2$s%4$s%3$s%1$s'
                     : '%3$s%4$s%2$s%1$s';
 
                 break;
 
-            case 3:
+            case SwatI18NCurrencyFormat::SIGN_POSITION_BEFORE_SYMBOL:
                 // the sign string immediately precedes the currency symbol
-                $format = $cs_precedes
+                $template = $cs_precedes
                     ? '%1$s%2$s%4$s%3$s'
                     : '%3$s%4$s%1$s%2$s';
                 break;
 
-            case 4:
+            case SwatI18NCurrencyFormat::SIGN_POSITION_AFTER_SYMBOL:
                 // the sign string immediately succeeds the currency symbol
-                $format = $cs_precedes
+                $template = $cs_precedes
                     ? '%2$s%1$s%4$s%3$s'
                     : '%3$s%4$s%2$s%1$s';
                 break;
+
+            default:
+                throw new SwatException(
+                    "Invalid value “{$sign_position}” for sign_position."
+                );
         }
 
         return sprintf(
-            $format,
+            $template,
             $sign,
             $symbol,
             $formatted_value,
@@ -786,13 +776,7 @@ class SwatI18NLocale extends SwatObject
     {
         $lc = $this->getLocaleInfo();
 
-        $format = new SwatI18NNumberFormat();
-
-        $format->decimal_separator = $lc['decimal_point'];
-        $format->thousands_separator = $lc['thousands_sep'];
-        $format->grouping = $lc['grouping'];
-
-        $this->number_format = $format;
+        $this->number_format = SwatI18NNumberFormat::buildFromLocale($lc);
     }
 
     /**
@@ -802,39 +786,7 @@ class SwatI18NLocale extends SwatObject
     {
         $lc = $this->getLocaleInfo();
 
-        $format = new SwatI18NCurrencyFormat();
-
-        $format->fractional_digits = $lc['frac_digits'];
-        $format->p_cs_precedes = $lc['p_cs_precedes'];
-        $format->n_cs_precedes = $lc['n_cs_precedes'];
-        $format->p_separate_by_space = $lc['p_sep_by_space'];
-        $format->n_separate_by_space = $lc['n_sep_by_space'];
-        $format->p_sign_position = $lc['p_sign_posn'];
-        $format->n_sign_position = $lc['n_sign_posn'];
-        $format->decimal_separator
-            = $lc['mon_decimal_point'] == ''
-                ? $lc['decimal_point']
-                : $lc['mon_decimal_point'];
-
-        $format->thousands_separator = $lc['mon_thousands_sep'];
-        $format->symbol = $lc['currency_symbol'];
-        $format->grouping = $lc['mon_grouping'];
-        $format->p_sign = $lc['positive_sign'];
-        $format->n_sign = $lc['negative_sign'];
-
-        // special-cases and workarounds
-        switch ($this->preferred_locale) {
-            // Hebrew-Israeli
-            case 'he_IL':
-            case 'he_IL.utf8':
-                $format->p_sign_position = 1;
-                $format->n_sign_position = 1;
-                $format->p_cs_precedes = false;
-                $format->n_cs_precedes = false;
-                break;
-        }
-
-        $this->national_currency_format = $format;
+        $this->national_currency_format = SwatI18NCurrencyFormat::buildFromLocale($lc);
     }
 
     /**
@@ -844,27 +796,7 @@ class SwatI18NLocale extends SwatObject
     {
         $lc = $this->getLocaleInfo();
 
-        $format = new SwatI18NCurrencyFormat();
-
-        $format->fractional_digits = $lc['int_frac_digits'];
-        $format->p_cs_precedes = $lc['p_cs_precedes'];
-        $format->n_cs_precedes = $lc['n_cs_precedes'];
-        $format->p_separate_by_space = $lc['p_sep_by_space'];
-        $format->n_separate_by_space = $lc['n_sep_by_space'];
-        $format->p_sign_position = $lc['p_sign_posn'];
-        $format->n_sign_position = $lc['n_sign_posn'];
-        $format->decimal_separator
-            = $lc['mon_decimal_point'] == ''
-                ? $lc['decimal_point']
-                : $lc['mon_decimal_point'];
-
-        $format->thousands_separator = $lc['mon_thousands_sep'];
-        $format->symbol = $lc['int_curr_symbol'];
-        $format->grouping = $lc['mon_grouping'];
-        $format->p_sign = $lc['positive_sign'];
-        $format->n_sign = $lc['negative_sign'];
-
-        $this->international_currency_format = $format;
+        $this->international_currency_format = SwatI18NCurrencyFormat::buildFromLocale($lc, true);
     }
 
     /**
@@ -873,7 +805,7 @@ class SwatI18NLocale extends SwatObject
      *
      * This is a number formatting helper method. It is responsible for
      * grouping integer-part digits. Grouped digits are separated using the
-     * thousands separator character specified by the format object.
+     * thousands-separator character specified by the format object.
      *
      * @param float                $value  the value to format
      * @param SwatI18NNumberFormat $format the number format to use
@@ -884,7 +816,7 @@ class SwatI18NLocale extends SwatObject
         float $value,
         SwatI18NNumberFormat $format,
     ): string {
-        // group integer part with thousands separators
+        // group integer part with thousands-separators
         $grouping_values = [];
         $groupings = $format->grouping;
         $grouping_total = intval(floor(abs($value)));
