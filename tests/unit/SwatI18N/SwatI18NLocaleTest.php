@@ -44,41 +44,6 @@ class SwatI18NLocaleTest extends TestCase
 
     private string $original_locale;
 
-    /**
-     * Skips the current test unless SwatI18NLocale::get() actually rejects an
-     * invalid locale on this platform.
-     *
-     * glibc returns false for unknown locales, so get() throws. But
-     * macOS/BSD setlocale() is permissive and may "accept" nonsense
-     * identifiers, in which case the invalid-locale code paths simply cannot
-     * be exercised. Rather than guess at setlocale()'s behavior (which has
-     * diverged from get()'s real behavior in practice — codeset handling,
-     * the LC_ALL wrapper, and array handling all differ), we probe the exact
-     * code path the tests rely on and skip if it does not throw.
-     */
-    private function requireInvalidLocaleRejection(): void
-    {
-        $probe = 'zz_INVALID_LOCALE.bogus';
-
-        try {
-            SwatI18NLocale::get($probe);
-            $rejected = false;
-        } catch (SwatException $e) {
-            $rejected = true;
-        } finally {
-            // The probe may have cached a valid object under the probe key;
-            // wipe it so it cannot affect the test that follows.
-            SwatI18NLocale::clearLocaleCache();
-        }
-
-        if (!$rejected) {
-            $this->markTestSkipped(
-                'This platform does not reject invalid locales, so '
-                . 'invalid-locale handling cannot be tested here.',
-            );
-        }
-    }
-
     protected function setUp(): void
     {
         // Clears the private static locale cache so tests cannot leak state into
@@ -128,8 +93,6 @@ class SwatI18NLocaleTest extends TestCase
     #[Test]
     public function testGetWithInvalidLocaleThrowsException(): void
     {
-        $this->requireInvalidLocaleRejection();
-
         $this->expectException(SwatException::class);
         SwatI18NLocale::get('this_is_not_a_real_locale.bogus');
     }
@@ -137,8 +100,6 @@ class SwatI18NLocaleTest extends TestCase
     #[Test]
     public function testGetWithArrayDoesNotCacheSkippedIdentifiers(): void
     {
-        $this->requireInvalidLocaleRejection();
-
         // Resolve a valid object via an array whose first entry is invalid.
         SwatI18NLocale::get([
             'skipped_invalid.bogus',
@@ -154,8 +115,6 @@ class SwatI18NLocaleTest extends TestCase
     #[Test]
     public function testGetWithArrayOfAllInvalidThrowsException(): void
     {
-        $this->requireInvalidLocaleRejection();
-
         $this->expectException(SwatException::class);
         SwatI18NLocale::get(['not_a_real_locale.bogus', 'also_not_real.bogus']);
     }
@@ -604,24 +563,40 @@ class SwatI18NLocaleTest extends TestCase
         $this->assertFalse($result);
     }
 
-    #[Test]
-    public function testSetAndReset(): void
+    public function testSetAndResetRoundTrip(): void
     {
-        // Force a known starting locale.
-        SwatI18NLocale::setlocale(LC_NUMERIC, 'C');
-        $before = setlocale(LC_NUMERIC, '0');
+        $original = setlocale(LC_MONETARY, '0');
 
-        $this->locale->set(LC_NUMERIC);
-        $during = setlocale(LC_NUMERIC, '0');
+        $this->locale->set(LC_MONETARY);
+        $this->assertSame((string) $this->locale, setlocale(LC_MONETARY, '0'));
 
-        // The numeric locale should have changed after set().
-        $this->assertNotSame($before, $during);
+        $this->locale->reset(LC_MONETARY);
+        $this->assertSame($original, setlocale(LC_MONETARY, '0'));
+    }
 
-        $this->locale->reset(LC_NUMERIC);
-        $after = setlocale(LC_NUMERIC, '0');
+    public function testResetWithoutSetIsNoOp(): void
+    {
+        $original = setlocale(LC_MONETARY, '0');
 
-        // reset() should return the locale to its previous value.
-        $this->assertSame($before, $after);
+        // reset() without a prior set() for this category must not change
+        // the system locale.
+        $this->locale->reset(LC_MONETARY);
+
+        $this->assertSame($original, setlocale(LC_MONETARY, '0'));
+    }
+
+    public function testResetTwiceIsNoOp(): void
+    {
+        $original = setlocale(LC_MONETARY, '0');
+
+        $this->locale->set(LC_MONETARY);
+        $this->locale->reset(LC_MONETARY);
+
+        // A second reset() has nothing stored to restore and must leave the
+        // system locale untouched.
+        $this->locale->reset(LC_MONETARY);
+
+        $this->assertSame($original, setlocale(LC_MONETARY, '0'));
     }
 
     #[Test]
@@ -631,4 +606,5 @@ class SwatI18NLocaleTest extends TestCase
         $this->assertSame(4.0, $this->locale->roundToEven(3.5, 0));
         $this->assertSame(2.46, $this->locale->roundToEven(2.455, 2));
     }
+
 }

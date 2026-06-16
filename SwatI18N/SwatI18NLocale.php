@@ -223,15 +223,28 @@ class SwatI18NLocale extends SwatObject
      * @param LocaleCategory $category optional. The LC-type constant specifying the
      *                                 category of functions affected by setting the
      *                                 system locale. If not specified, defaults to `LC_ALL`.
+     *
+     * @throws SwatException if the system locale cannot be set
      */
     public function set(int $category = LC_ALL): void
     {
-        $this->old_locale_by_category[$category] = self::setlocale(
-            $category,
-            '0',
-        );
+        $old_locale = self::setlocale($category, '0');
 
-        self::setlocale($category, $this->locale);
+        // Only remember the previous locale if it could actually be queried.
+        // Storing false here would cause reset() to pass false back to
+        // setlocale(), which is meaningless and would silently do nothing.
+        if ($old_locale !== false) {
+            $this->old_locale_by_category[$category] = $old_locale;
+        }
+
+        if (self::setlocale($category, $this->preferred_locale) === false) {
+            throw new SwatException(
+                sprintf(
+                    "Unable to set the system locale to '%s'.",
+                    $this->preferred_locale,
+                ),
+            );
+        }
     }
 
     /**
@@ -244,7 +257,13 @@ class SwatI18NLocale extends SwatObject
      */
     public function reset(int $category = LC_ALL): void
     {
-        self::setlocale($category, $this->old_locale_by_category[$category]);
+        // Only reset if we have a previously-stored locale for this category.
+        // This guards against reset() being called without a matching set(),
+        // and against a false value that set() declined to store.
+        if (isset($this->old_locale_by_category[$category])) {
+            self::setlocale($category, $this->old_locale_by_category[$category]);
+            unset($this->old_locale_by_category[$category]);
+        }
     }
 
     /**
@@ -1153,8 +1172,14 @@ class SwatI18NLocale extends SwatObject
             $this->preferred_locale = self::setlocale(LC_ALL, '0');
         } else {
             $old_locale = self::setlocale(LC_ALL, '0');
-            $this->preferred_locale = self::setlocale(LC_ALL, $this->locale);
-            if ($this->preferred_locale === false) {
+
+            // Capture the result in a local variable first. Assigning directly
+            // to the typed string property $preferred_locale would coerce a
+            // false return value to '' (without strict_types), defeating the
+            // === false check below.
+            $preferred_locale = self::setlocale(LC_ALL, $this->locale);
+
+            if ($preferred_locale === false) {
                 throw new SwatException(sprintf(
                     'The locale %s is not valid for this operating system.',
                     is_array($this->locale)
@@ -1162,6 +1187,8 @@ class SwatI18NLocale extends SwatObject
                         : '"' . $this->locale . '"'
                 ));
             }
+
+            $this->preferred_locale = $preferred_locale;
         }
 
         $this->buildLocaleInfo();
