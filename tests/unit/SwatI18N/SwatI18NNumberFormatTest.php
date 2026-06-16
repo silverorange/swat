@@ -57,4 +57,28 @@ class SwatI18NNumberFormatTest extends TestCase
             $newFormat->decimal_separator
         );
     }
+
+    public function testOverrideWithInvalidPropertyThrowsException(): void
+    {
+        $this->expectException(SwatException::class);
+
+        $this->format->override([
+            'nonexistent_property' => 'value',
+        ]);
+    }
+
+    public function testOverrideDoesNotMutateOnInvalidProperty(): void
+    {
+        try {
+            $this->format->override([
+                'decimal_separator'    => ',',
+                'nonexistent_property' => 'value',
+            ]);
+            $this->fail('Expected SwatException was not thrown.');
+        } catch (SwatException $e) {
+            // The original object must be untouched because the validation
+            // pass happens before any properties are copied/changed.
+            $this->assertSame('.', $this->format->decimal_separator);
+        }
+    }
 }

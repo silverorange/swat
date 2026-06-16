@@ -11,7 +11,7 @@
  *
  * @phpstan-import-type TOverrideableNumberProperties from SwatI18NNumberFormat
  *
- * @phpstan-type TOverrideableCurrencyProperties TOverrideableNumberProperties&array{
+ * @phpstan-type TOverrideableCurrencyProperties array{
  *     currency_symbol?: string,
  *     mon_decimal_point?: string,
  *     mon_thousands_sep?: string,
@@ -53,10 +53,8 @@ class SwatI18NCurrencyFormat extends SwatI18NNumberFormat
      * Whether the currency symbol is separated by space for positive values.
      *
      * True if a space separates `$symbol` from a positive value, false otherwise.
-     *
-     * @var bool
      */
-    public $p_separate_by_space = false;
+    public bool $p_separate_by_space = false;
 
     /**
      * Whether the currency symbol is separated by space for negative values.
@@ -110,7 +108,7 @@ class SwatI18NCurrencyFormat extends SwatI18NNumberFormat
      * Overrides the default format only to be able to specify the extended
      * set of allowable keys in the array.
      *
-     * @param TOverrideableCurrencyProperties $format
+     * @param TOverrideableCurrencyProperties&TOverrideableCurrencyProperties $format
      */
     public function override(array $format): static
     {

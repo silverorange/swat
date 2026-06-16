@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @internal
  */
-#[CoversClass(SwatI18NLocale::class)]
+#[CoversClass(SwatNumber::class)]
 class SwatNumberTest extends TestCase
 {
     #[Test]
