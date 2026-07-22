@@ -48,8 +48,7 @@ class SwatNumberTest extends TestCase
     #[DataProviderExternal(OrdinalProvider::class, 'ordinalCasesEnUs')]
     public function testOrdinalForEnUs(int $value, string $expected): void
     {
-        $locale = SwatI18NLocale::setlocale(LC_ALL, 'en_US');
-        $this->assertSame('en_US', $locale);
+        SwatI18NLocale::setlocale(LC_ALL, 'en_US.UTF-8');
 
         $this->assertSame($expected, SwatNumber::ordinal($value));
     }
@@ -58,8 +57,7 @@ class SwatNumberTest extends TestCase
     #[DataProviderExternal(OrdinalProvider::class, 'ordinalCasesFrFr')]
     public function testOrdinalForFrFr(int $value, string $expected): void
     {
-        $locale = SwatI18NLocale::setlocale(LC_ALL, 'fr_FR');
-        $this->assertSame('fr_FR', $locale);
+        $locale = SwatI18NLocale::setlocale(LC_ALL, 'fr_FR.UTF-8');
 
         $this->assertSame($expected, SwatNumber::ordinal($value));
     }

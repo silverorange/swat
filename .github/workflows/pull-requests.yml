@@ -12,6 +12,10 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
+env:
+  LANG: en_US.UTF-8
+  LC_ALL: en_US.UTF-8
+
 jobs:
   phpcs:
     name: PHP Code Style
@@ -75,6 +79,12 @@ jobs:
     name: PHP Tests
     runs-on: ubuntu-latest
     steps:
+      - name: Install, generate and set locale (for i18n tests)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y locales
+          sudo locale-gen en_US.UTF-8 fr_FR.UTF-8 de_DE.UTF-8
+          echo "Current default locale: $LANG"
       - uses: actions/checkout@v7
         with:
           persist-credentials: false
@@ -84,7 +94,6 @@ jobs:
         run: |
           mkdir -p build
           composer run test:ci
-
       - name: Annotate PHPUnit failures
         if: always()
         shell: bash
