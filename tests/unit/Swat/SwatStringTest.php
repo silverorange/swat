@@ -54,4 +54,16 @@ class SwatStringTest extends TestCase
         // @phpstan-ignore argument.type
         SwatString::toList('a string');
     }
+
+    #[Test]
+    public function testIntentionalFail()
+    {
+        $this->fail('Intentional fail expected');
+    }
+
+    #[Test]
+    public function testAnotherIntentionalFail()
+    {
+        $this->fail('This one fails too');
+    }
 }

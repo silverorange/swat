@@ -45,7 +45,8 @@ jobs:
           # list of the problem files to the GH job summary
           if [ "$status" -ne 0 ]; then
             {
-              echo "The following files are not formatted correct; run \`pnpm format:fix\` to correct them."
+              echo "### ❌ Formatting Failures"
+              echo "The following files are not formatted correct; run \`pnpm format:fix\` locally to correct them."
               echo "$files" | while IFS= read -r file; do
                 [ -n "$file" ] && echo "- \`$file\`"
               done
