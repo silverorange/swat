@@ -1,12 +1,12 @@
-; Mark development-only paths with "export-ignore"
-;
-; This prevents them from being including when running `git archive`, which is
-; what GitHub uses to generate the source ZIPs that Composer typically downloads
-; as "dist" packages. In the end, Composer will get smaller packages without
-; test suites and related tooling/config, etc., which means faster installs on
-; downstream consumers of the package.
-;
-; These files/directories remain in the Git repository for development and CI.
+# Mark development-only paths with "export-ignore"
+#
+# This prevents them from being including when running `git archive`, which is
+# what GitHub uses to generate the source ZIPs that Composer typically downloads
+# as "dist" packages. In the end, Composer will get smaller packages without
+# test suites and related tooling/config, etc., which means faster installs on
+# downstream consumers of the package.
+#
+# These files/directories remain in the Git repository for development and CI.
 
 /.github/             export-ignore
 /build/               export-ignore
