@@ -97,10 +97,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Verify all checks passed
+        env:
+          RESULTS: ${{ join(needs.*.result, ' ') }}
         shell: bash
         run: |
-          if ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}; then
-            echo "One or more checks failed"
-            exit 1
-          fi
+          for result in $RESULTS; do
+            if [ "$result" != "success" ]; then
+              echo "One or more checks failed"
+              exit 1
+            fi
+          done
           echo "All checks passed"
