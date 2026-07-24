@@ -10,7 +10,7 @@ runs:
 
     - name: Enable Corepack
       shell: bash
-      run: npm i -g --force corepack && corepack enable
+      run: corepack enable
 
     - name: Setup Node.js
       uses: actions/setup-node@v7
