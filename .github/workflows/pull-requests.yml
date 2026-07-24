@@ -34,7 +34,7 @@ jobs:
         shell: bash
         run: composer run phpstan:ci
 
-  prettier:
+  format:
     name: Formatting
     runs-on: ubuntu-latest
     steps:
@@ -90,7 +90,7 @@ jobs:
   all-checks:
     name: All Checks
     if: always()
-    needs: [phpcs, phpstan, prettier, phpunit]
+    needs: [phpcs, phpstan, format, phpunit]
     runs-on: ubuntu-latest
     steps:
       - name: Verify all checks passed
