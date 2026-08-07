@@ -7,6 +7,7 @@
   "type": "module",
   "scripts": {
     "format": "prettier --check .",
+    "format:ci": "prettier --list-different .",
     "format:fix": "prettier --write ."
   },
   "devDependencies": {

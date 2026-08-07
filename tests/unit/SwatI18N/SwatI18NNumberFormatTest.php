@@ -1,6 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -11,7 +14,7 @@ class SwatI18NNumberFormatTest extends TestCase
 {
     protected SwatI18NNumberFormat $format;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->format = new SwatI18NNumberFormat();
         $this->format->decimal_separator = '.';
@@ -19,6 +22,7 @@ class SwatI18NNumberFormatTest extends TestCase
         $this->format->grouping = [3];
     }
 
+    #[Test]
     public function testOverrideValidProperties()
     {
         $newFormat = $this->format->override([
@@ -35,12 +39,14 @@ class SwatI18NNumberFormatTest extends TestCase
         );
     }
 
+    #[Test]
     public function testOverrideInvalidPropertyThrowsException()
     {
         $this->expectException(SwatException::class);
         $this->format->override(['invalid_property' => 'value']);
     }
 
+    #[Test]
     public function testOverrideNullValueDoesNotChangeProperty()
     {
         $newFormat = $this->format->override([
@@ -52,6 +58,7 @@ class SwatI18NNumberFormatTest extends TestCase
         );
     }
 
+    #[Test]
     public function testToString()
     {
         $expected = "decimal_separator => .\nthousands_separator => ,\ngrouping => 3\n";
@@ -61,6 +68,7 @@ class SwatI18NNumberFormatTest extends TestCase
         );
     }
 
+    #[Test]
     public function testToStringWithArrayGrouping()
     {
         $newFormat = $this->format->override([

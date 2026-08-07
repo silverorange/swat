@@ -52,10 +52,12 @@
     "silverorange/yui": "^1.0.13"
   },
   "require-dev": {
+    "ext-simplexml": "*",
     "friendsofphp/php-cs-fixer": "3.88.2",
     "phpstan/phpstan": "^2.2",
     "phpunit/phpunit": "^11.5",
-    "rector/rector": "^2.4"
+    "rector/rector": "^2.5",
+    "staabm/annotate-pull-request-from-checkstyle": "^1.8"
   },
   "autoload": {
     "classmap": [
@@ -74,14 +76,15 @@
   },
   "scripts": {
     "phpcs": "./vendor/bin/php-cs-fixer check -v",
-    "phpcs:ci": "./vendor/bin/php-cs-fixer check --config=.php-cs-fixer.php --no-interaction --show-progress=none --diff --using-cache=no -vvv",
+    "phpcs:ci": "./vendor/bin/php-cs-fixer check --config=.php-cs-fixer.php --no-interaction --show-progress=none --using-cache=no --format=checkstyle",
     "phpcs:fix": "./vendor/bin/php-cs-fixer fix -v",
     "phpstan": "./vendor/bin/phpstan analyze",
     "phpstan:baseline": "./vendor/bin/phpstan analyze --generate-baseline",
-    "phpstan:ci": "./vendor/bin/phpstan analyze -vvv --no-progress --memory-limit 2G",
+    "phpstan:ci": "./vendor/bin/phpstan analyze --no-progress --memory-limit 2G --error-format=github",
     "rector": "./vendor/bin/rector --dry-run",
     "rector:fix": "./vendor/bin/rector",
-    "test": "./vendor/bin/phpunit --no-coverage",
+    "test": "./vendor/bin/phpunit --no-coverage --no-logging",
+    "test:ci": "./vendor/bin/phpunit --no-coverage",
     "test:coverage": "rm -rf ./build && XDEBUG_MODE=coverage ./vendor/bin/phpunit && npx serve build/coverage"
   }
 }

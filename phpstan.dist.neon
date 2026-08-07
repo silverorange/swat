@@ -5,6 +5,7 @@ parameters:
     - Swat
     - SwatDB
     - SwatI18N
+    - tests
   editorUrl: '%%relfile%%:%%line%%'
   editorUrlTitle: '%%relfile%%:%%line%%'
   errorFormat: table

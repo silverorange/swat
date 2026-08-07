@@ -1,0 +1,23 @@
+name: 'Setup Node.js/pnpm'
+description: 'Set up Node.js, Corepack, pnpm, and install dependencies'
+runs:
+  using: composite
+  steps:
+    - name: Setup Node.js
+      uses: actions/setup-node@v7
+      with:
+        node-version-file: 'package.json'
+
+    - name: Install/enable Corepack
+      shell: bash
+      run: npm install --global --force corepack && corepack enable
+
+    - name: Setup Node.js with cache
+      uses: actions/setup-node@v7
+      with:
+        node-version-file: 'package.json'
+        cache: 'pnpm'
+
+    - name: Install Node.js dependencies
+      shell: bash
+      run: pnpm install --frozen-lockfile

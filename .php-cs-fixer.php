@@ -6,7 +6,7 @@ use PhpCsFixer\Runner\Parallel\ParallelConfigFactory;
 
 $finder = (new Finder())
     ->in(__DIR__)
-    ->append([__FILE__]);
+    ->ignoreDotFiles(false);
 
 return (new Config())
     ->setParallelConfig(ParallelConfigFactory::detect(null, null, 2 ** 18 - 1))
