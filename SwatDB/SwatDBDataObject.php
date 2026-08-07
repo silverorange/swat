@@ -140,17 +140,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
             return $this->getDeprecatedProperty($key);
         }
 
-        $property_list = $this->getProtectedPropertyList();
-        if (array_key_exists($key, $property_list)) {
-            if (array_key_exists('get', $property_list[$key])) {
-                $get = $property_list[$key]['get'];
-
-                return $this->{$get}();
-            }
-
-            return $this->{$key};
-        }
-
         $value = $this->getUsingLoaderMethod($key);
 
         if ($value === false) {
@@ -184,19 +173,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
     {
         if (in_array($key, $this->deprecated_properties)) {
             $this->setDeprecatedProperty($key, $value);
-
-            return;
-        }
-
-        $property_list = $this->getProtectedPropertyList();
-        if (array_key_exists($key, $property_list)) {
-            if (array_key_exists('set', $property_list[$key])) {
-                $set = $property_list[$key]['set'];
-                $this->{$set}($value);
-
-                return;
-            }
-            $this->{$key} = $value;
 
             return;
         }
@@ -241,8 +217,7 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
             $is_set
                 = method_exists($this, $this->getLoaderMethod($key))
                 || ($this->hasInternalValue($key)
-                    && $this->internal_property_accessible[$key])
-                || array_key_exists($key, $this->getProtectedPropertyList());
+                    && $this->internal_property_accessible[$key]);
         }
 
         return $is_set;
@@ -388,10 +363,7 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
         $id_field = new SwatDBField($this->id_field, 'integer');
 
         // public properties
-        $properties = array_merge(
-            $this->getPublicProperties(),
-            $this->getSerializableProtectedProperties(),
-        );
+        $properties = $this->getPublicProperties();
 
         foreach ($properties as $name => $value) {
             if ($name !== $id_field->name) {
@@ -447,22 +419,15 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
     /**
      * Returns an array of the public and protected properties of this object.
      *
-     * This array is useful for places where get_object_vars() is useful but we
-     * also want to return the protected properties alongside the public onces.
-     * For example when using getter and setter methods instead of public
-     * properties on a dataobject.
+     * This array is useful for places where get_object_vars() is useful.
      *
-     * @return array an array of public and protected properties
+     * @return array an array of properties
      *
      * @see SwatDBDataObject::getPublicProperties()
-     * @see SwatDBDataObject::getSerializableProtectedProperties()
      */
     public function getAttributes()
     {
-        return array_merge(
-            $this->getPublicProperties(),
-            $this->getProtectedProperties(),
-        );
+        return $this->getPublicProperties();
     }
 
     protected function setInternalValue($name, $value)
@@ -661,23 +626,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
     }
 
     /**
-     * Gets a list of all protected properties of this data-object.
-     *
-     * The keys of this array should map to protected properties on this
-     * object. The value of each entry is a second array in the format
-     * [ 'get' => 'getMethodName', 'set' => 'setMethodName' ]
-     * where the keys of each array correspond to methods on this object that
-     * will be called by the magic getter and setter when the protected
-     * property is accessed.
-     *
-     * @return array an array of protected property keys and method values
-     */
-    protected function getProtectedPropertyList()
-    {
-        return [];
-    }
-
-    /**
      * Gets the public properties of this data-object.
      *
      * Public properties should correspond directly to database fields.
@@ -715,49 +663,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
     }
 
     /**
-     * Gets the serializable protected properties of this data-object.
-     *
-     * Protected properties should correspond directly to database fields.
-     *
-     * @return array a reference to an associative array of protected properties
-     *               of this data-object. The array is of the form
-     *               'property name' => 'property value'.
-     */
-    private function getSerializableProtectedProperties()
-    {
-        $properties = [];
-        foreach ($this->getProtectedPropertyList() as $property => $accessors) {
-            // We want to maintain what is internally stored in this object so
-            // we don't want to use the getter. What the getter returns
-            // publicly may be different than what we have internally.
-            $properties[$property] = $this->{$property};
-        }
-
-        return $properties;
-    }
-
-    /**
-     * Gets the protected properties of this data-object using the getter
-     * accessor.
-     *
-     * Protected properties should correspond directly to database fields.
-     *
-     * @return array a reference to an associative array of protected properties
-     *               of this data-object. The array is of the form
-     *               'property name' => 'property value'.
-     */
-    private function getProtectedProperties()
-    {
-        $properties = [];
-        foreach ($this->getProtectedPropertyList() as $property => $accessors) {
-            // Use the getter for the property.
-            $properties[$property] = $this->{$accessors['get']}();
-        }
-
-        return $properties;
-    }
-
-    /**
      * Gets all the modifyable properties of this data-object.
      *
      * This includes the public and protected properties that correspond to
@@ -772,7 +677,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
     {
         $property_array = array_merge(
             $this->getPublicProperties(),
-            $this->getSerializableProtectedProperties(),
             $this->internal_properties,
         );
 
@@ -1436,13 +1340,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
             }
         }
 
-        foreach ($this->getProtectedPropertyList() as $property => $accessor) {
-            // We want to maintain what is internally stored in this object so
-            // we don't want to use the getter. What the getter returns
-            // publicly may be different than what we have internally.
-            $data[$property] = $this->{$property};
-        }
-
         // restore unset sub-dataobjects on this object
         foreach ($unset_objects as $name => $object) {
             $this->setSubDataObject($name, $object);
@@ -1530,13 +1427,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
             }
         }
 
-        foreach ($this->getProtectedPropertyList() as $property => $accessor) {
-            // We want to maintain what is internally stored in this object so
-            // we don't want to use the getter. What the getter returns
-            // publicly may be different than what we have internally.
-            $data[$property] = $this->{$property};
-        }
-
         return $data;
     }
 
@@ -1552,15 +1442,6 @@ class SwatDBDataObject extends SwatObject implements Serializable, SwatDBRecorda
                 } else {
                     $this->{$name} = null;
                 }
-            }
-        }
-
-        foreach ($this->getProtectedPropertyList() as $property => $accessor) {
-            if (isset($data[$property])) {
-                // We want to maintain what is internally stored in this object
-                // so we don't want to use the getter. What the setter sets may
-                // be different than what we have internally.
-                $this->{$property} = $data[$property];
             }
         }
 
