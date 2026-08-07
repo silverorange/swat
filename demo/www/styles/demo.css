@@ -1,115 +1,156 @@
-body {
-  font-family: sans-serif;
-  font-size: 13px;
-  color: #333;
-  background-color: #f7f5f3;
-  margin: 0;
-  padding-bottom: 2em;
+:root {
+  --fontStack-sansSerif:
+    'Mona Sans VF', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    'Noto Sans Backtick Fix', 'Noto Sans', Helvetica, Arial, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji';
+  --fontStack-monospace:
+    ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono,
+    monospace;
+  --color-white: #fff;
+  --color-black: #000;
+  --color-grey-lightest: oklch(0.97 0.005 65);
+  --color-grey-lighter: oklch(0.9 0.005 65);
+  --color-grey-light: oklch(0.75 0.005 65);
+  --color-grey: oklch(0.6 0.005 65);
+  --color-grey-dark: oklch(0.5 0.005 65);
+  --color-grey-darker: oklch(0.4 0.005 65);
+  --color-grey-darkest: oklch(0.3 0.005 65);
+  --color-brand: oklch(0.5 0.11 255);
+  --color-brand-dark: oklch(0.35 0.11 255);
+  --color-brand-light: oklch(0.75 0.11 255);
+  --color-note: oklch(0.95 0.1 98);
+  --color-note-dark: oklch(0.75 0.1 98);
 }
 
-a:link {
-  color: #3465a4;
+body {
+  margin: 0;
+  padding: 0 0 2rem 0;
+  background-color: var(--color-grey-lightest);
+  font-family: var(--fontStack-sansSerif);
+  font-size: 14px;
+  color: var(--color-grey-darkest);
 }
-a:visited {
-  color: #3465a4;
+
+a:link,
+a:visited,
+a:active {
+  color: var(--color-brand);
 }
 a:hover {
-  color: #204a87;
-}
-a:active {
-  color: #3465a4;
+  color: var(--color-brand-dark);
 }
 
 #menu {
-  width: 182px;
+  width: 10rem;
   position: absolute;
-  top: 4em;
-  left: 2em;
+  top: 4rem;
+  left: 1rem;
 }
 
 #menu {
   list-style: circle;
   margin: 0;
-  padding: 0.5em 0 0.5em 2em;
-  color: #999;
+  padding: 0 0 0 1.5rem;
+  color: var(--color-grey);
 }
 
 #menu li {
-  margin-bottom: 0.3em;
+  margin-bottom: 0.5rem;
   font-weight: bold;
 }
 
 #content {
-  margin-left: 2em;
-  margin-right: 2em;
-  padding-left: 200px;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  padding-left: 12rem;
 }
 
 #navbar {
   padding: 0.5em 2em;
-  margin-bottom: 2.5em;
-  background: #3465a4;
-  border-bottom: 2px solid #729fcf;
-  color: #eee;
+  margin-bottom: 2em;
+  background: var(--color-brand);
+  border-bottom: 2px solid var(--color-brand-light);
+  color: var(--color-grey-lighter);
 }
 
 #navbar a:link,
 #navbar a:visited,
 #navbar a:hover,
 #navbar a:active {
-  color: #fff;
+  color: var(--color-grey-lightest);
   font-weight: bold;
 }
 
 pre {
   margin: 0;
-  padding: 1em;
-  background: #fff;
-  border: 1px solid #e7ddc8;
+  padding: 0;
+  background: var(--color-grey-lightest);
+  border: 1px solid var(--color-grey-light);
+  font-family: var(--fontStack-monospace);
 }
 
 pre code,
 code pre {
-  font-size: 100%;
+  font-size: 85%;
 }
 
 .text-block {
-  border: 5px solid #eee;
-  padding: 15px;
+  border: 0.5rem solid var(--color-grey-lighter);
+  padding: 1rem;
 }
 
 ol.string-demo li {
-  margin-bottom: 1em;
-  border-bottom: 1px solid #eee;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--color-grey-lighter);
 }
 
 ol.string-demo li div {
-  padding-bottom: 1em;
+  padding-bottom: 1rem;
 }
 
 div.string-unformatted-text {
-  font-family: monospace;
-  background: #f7f5f3;
-  border: 1px solid #e7ddc8;
-  padding: 1em;
-  margin-bottom: 1em;
+  font-family: var(--fontStack-monospace);
+  background: var(--color-grey-lightest);
+  border: 1px solid var(--color-grey-lighter);
+  padding: 1rem;
+  margin-bottom: 1rem;
 }
 
 div.note {
-  margin-top: 2em;
-  padding: 0.5em;
-  border: 1px solid #ccc;
-  background: #fe9;
+  margin-top: 2rem;
+  padding: 0.5rem;
+  border: 1px solid var(--color-note-dark);
+  background: var(--color-note);
 }
 
 img {
   border: none;
 }
 form {
-  margin: none;
+  margin: 0;
 }
 
 .debug {
   font-size: xx-small;
-  color: #fff;
+  color: var(--color-white);
+}
+
+.hljs-ln td {
+  line-height: 1.4;
+}
+
+td.hljs-ln-numbers {
+  user-select: none;
+  text-align: right;
+  background: var(--color-grey-lightest);
+  color: var(--color-grey-light);
+  border-right: 1px solid var(--color-grey-lighter);
+  vertical-align: baseline;
+}
+
+.hljs-ln td {
+  padding: 0.1rem 0.5rem !important;
+}
+pre code.hljs {
+  padding: 0 !important;
 }

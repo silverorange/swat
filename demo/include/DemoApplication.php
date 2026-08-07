@@ -10,8 +10,8 @@
  */
 class DemoApplication
 {
-    private $layout_ui;
-    private $demo;
+    private SwatUI $layout_ui;
+    private ?string $demo_page = null;
 
     private array $available_demos = [
         'Accordion'         => 'SwatAccordion',
@@ -53,9 +53,6 @@ class DemoApplication
         'YesNoFlydown'      => 'SwatYesNoFlydown',
     ];
 
-    /**
-     * test.
-     */
     public function run(): void
     {
         SwatError::setupHandler();
@@ -66,20 +63,27 @@ class DemoApplication
         $this->layout_ui = new SwatUI();
         $this->layout_ui->loadFromXML(__DIR__ . '/layout.xml');
 
-        $this->demo = $this->getDemo();
+        $this->demo_page = $this->getDemo();
 
-        if ($this->demo === null) {
+        if ($this->demo_page === null) {
             $this->buildFrontPage();
             $title = Swat::_('Swat Demo');
         } else {
             $this->buildTitle();
             $this->buildDemo();
             $this->buildDemoDocumentationMenuBar();
-            $this->buildXmlSourceView();
-            $this->buildPhpSourceView();
+            $this->buildSourceView(
+                __DIR__ . '/demos/' . mb_strtolower($this->demo_page) . '.xml',
+                'xml'
+            );
+            $this->buildSourceView(
+                __DIR__ . '/demos/' . $this->demo_page . 'Demo.php',
+                'php'
+            );
+
             $title = sprintf(
                 Swat::_('%s - Swat Demo'),
-                $this->available_demos[$this->demo]
+                $this->available_demos[$this->demo_page]
             );
         }
 
@@ -94,17 +98,17 @@ class DemoApplication
     private function buildTitle(): void
     {
         $this->layout_ui->getWidget('main_frame')->title
-            = sprintf(Swat::_('%s Demo'), $this->available_demos[$this->demo]);
+            = sprintf(Swat::_('%s Demo'), $this->available_demos[$this->demo_page]);
     }
 
     private function buildDemo(): void
     {
         $demo_ui = new SwatUI($this->layout_ui->getWidget('main_frame'));
         $demo_ui->loadFromXML(
-            __DIR__ . '/demos/' . mb_strtolower($this->demo) . '.xml'
+            __DIR__ . '/demos/' . mb_strtolower($this->demo_page) . '.xml'
         );
 
-        $class_name = $this->demo . 'Demo';
+        $class_name = $this->demo_page . 'Demo';
 
         if (file_exists(__DIR__ . '/demos/' . $class_name . '.php')) {
             require_once __DIR__ . '/demos/' . $class_name . '.php';
@@ -116,52 +120,40 @@ class DemoApplication
         }
     }
 
-    private function buildXmlSourceView(): void
+    private function buildSourceView(string $filename, string $language): void
     {
-        $filename = __DIR__ . '/demos/' . mb_strtolower($this->demo) . '.xml';
-        if (file_exists($filename)) {
-            $this->layout_ui->getWidget('xml_source_container')->visible = true;
-
-            $code = file_get_contents($filename);
-//            $code = str_replace("\t", '  ', $code);
-            $code = highlight_string($code, true);
-
-            $pre_tag = new SwatHtmlTag('pre');
-            $pre_tag->setContent($code, 'text/xml');
-
-            $this->layout_ui->getWidget('xml_source_view')->content
-                = $pre_tag->toString();
+        if (!file_exists($filename)) {
+            return;
         }
-    }
 
-    private function buildPhpSourceView(): void
-    {
-        $filename = __DIR__ . '/demos/' . $this->demo . 'Demo.php';
-        if (file_exists($filename)) {
-            $this->layout_ui->getWidget('php_source_container')->visible = true;
+        $this->layout_ui->getWidget("{$language}_source_container")->visible = true;
 
-            $code = file_get_contents($filename);
-//            $code = str_replace("\t", '  ', $code);
-            $code = highlight_string($code, true);
-            $pre_tag = new SwatHtmlTag('pre');
-            $pre_tag->setContent($code, 'text/xml');
+        $code = file_get_contents($filename);
 
-            $this->layout_ui->getWidget('php_source_view')->content
-                = $pre_tag->toString();
-        }
+        $code_tag = new SwatHtmlTag('code');
+        $code_tag->addAttributes([
+            'class' => "language-{$language}",
+        ]);
+        $code_tag->setContent(SwatString::minimizeEntities($code), 'text/xml');
+
+        $pre_tag = new SwatHtmlTag('pre');
+        $pre_tag->setContent($code_tag->toString(), 'text/xml');
+
+        $this->layout_ui->getWidget("{$language}_source_view")->content
+            = $pre_tag->toString();
     }
 
     private function buildDemoMenuBar(): void
     {
         $this->layout_ui->getWidget('menu')->setEntries($this->available_demos);
-        $this->layout_ui->getWidget('menu')->setSelectedEntry($this->demo);
+        $this->layout_ui->getWidget('menu')->setSelectedEntry($this->demo_page);
     }
 
     private function buildDemoNavBar(): void
     {
         $navbar = $this->layout_ui->getWidget('navbar');
-        if ($this->demo) {
-            $title = $this->available_demos[$this->demo];
+        if ($this->demo_page) {
+            $title = $this->available_demos[$this->demo_page];
             $navbar->addEntry(new SwatNavBarEntry('Swat Demos', '.'));
             $navbar->addEntry(new SwatNavBarEntry($title));
         } else {
@@ -171,7 +163,7 @@ class DemoApplication
 
     private function buildDemoDocumentationMenuBar(): void
     {
-        $entries = match ($this->demo) {
+        $entries = match ($this->demo_page) {
             'Accordion' => [
                 'SwatAccordion',
                 'SwatNoteBookPage',
@@ -358,12 +350,12 @@ class DemoApplication
 
     private function buildLayout(): void
     {
-        if ($this->demo === null) {
+        if ($this->demo_page === null) {
             $title = Swat::_('Swat Demo');
         } else {
             $title = sprintf(
                 Swat::_('%s - Swat Demo'),
-                $this->available_demos[$this->demo]
+                $this->available_demos[$this->demo_page]
             );
         }
 
