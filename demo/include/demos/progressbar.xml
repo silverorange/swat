@@ -62,16 +62,19 @@
             ><![CDATA[
             <script type="text/javascript">
             // update status bar text when value changes
-            const handleDownloadValueChange = (e) => {
+            const handleChange = (e) => {
                 const { value } = e.detail;
                 const percentage = Math.round(value * 100000) / 1000;
-                download_progress_obj.setText(`${percentage}% complete`);
+                e.target.setText(`${percentage}% complete`);
             };
 
+            download_progress_obj.addEventListener('change', handleChange);
+            upload_progress_obj.addEventListener('change', handleChange);
+
             // show generic text when in pulse-mode
-            const handleDownloadPulse = (e) => {
-                download_progress_obj.setText('downloading...');
-            };
+            download_progress_obj.addEventListener('pulse', (e) => {
+                e.target.setText('downloading...');
+            });
 
             // increase value on mouse movement
             const handleMouseMove = (e, progress_bar) => {
@@ -83,31 +86,19 @@
                 }
             };
 
-            document.getElementById('download_progress').addEventListener('mousemove', (e) ==> {
+            document.getElementById('download_progress').addEventListener('mousemove', (e) => {
                 handleMouseMove(e, download_progress_obj);
             });
-
-            download_progress_obj.addEventListener('changeValue', handleDownloadValueChange);
-            download_progress_obj.addEventListener('pulse', handleDownloadPulse);
-
-            // update status bar text when value changes
-            const handleUploadValueChange = (e) => {
-                const { value } = e.detail;
-                const percentage = Math.round(value * 100000) / 1000;
-                upload_progress_obj.setText(`${percentage}% complete`);
-            };
 
             // set random value on mouse click
             const handleClick = (e, progress_bar) => {
                 const value = Math.round(Math.random() * 100) / 100;
                 progress_bar.setValueWithAnimation(value);
-            };
-
+            }
             document.getElementById('upload_progress').addEventListener('click', (e) => {
                 handleClick(e, upload_progress_obj);
             });
 
-            upload_progress_obj.addEventListener('changeValue', handleUploadValueChange);
             </script>
             ]]></property>
             <property name="content_type">text/xml</property>

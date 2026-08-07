@@ -96,7 +96,7 @@ class SwatProgressBar extends EventTarget {
     }
 
     this.dispatchEvent(
-      new CustomEvent('changeValue', {
+      new CustomEvent('change', {
         detail: { value: this.value }
       })
     );
@@ -199,7 +199,7 @@ class SwatProgressBar extends EventTarget {
       });
 
     this.dispatchEvent(
-      new CustomEvent('changeValue', {
+      new CustomEvent('change', {
         detail: { value: this.value }
       })
     );
