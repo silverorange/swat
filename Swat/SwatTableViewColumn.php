@@ -355,7 +355,8 @@ class SwatTableViewColumn extends SwatCellRendererContainer
      *
      * @param SwatCellRenderer $child the reference to the child object to add
      *
-     * @throws SwatException, SwatInvalidClassException
+     * @throws SwatException
+     * @throws SwatInvalidClassException
      *
      * @see SwatUIParent::addChild()
      */

@@ -18,7 +18,7 @@ abstract class SwatTableViewRow extends SwatUIObject
     /**
      * Unique identifier of this row.
      *
-     * @param string
+     * @var string
      */
     public $id;
 

@@ -7,28 +7,23 @@
  * iterator. This is most useful when iterating over a set of values that
  * define a range.
  *
- * Usage:
- * <code>
- * <?php
+ * ```php
  * $iterator = new SwatDBReadaheadIterator($recordset);
  * while($iterator->iterate()) {
  *     $current = $iterator->getCurrent();
  *     $next = $iterator->getNext();
  * }
- * ?>
- * </code>
+ * ```
  *
- * @copyright 2007-2016 silverorange
+ * @copyright 2007-2026 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDBReadaheadIterator extends SwatObject
 {
     /**
      * The iterator object being iterated.
-     *
-     * @var Iterator
      */
-    private $iterator;
+    private Iterator $iterator;
 
     /**
      * The item of the current iteration.
@@ -47,23 +42,13 @@ class SwatDBReadaheadIterator extends SwatObject
     /**
      * Creates a new readahead iterator.
      *
-     * @param array|Iterator either an array or Iterator object to use for
-     *                        readahead iteration
-     * @param mixed $iterator
-     *
-     * @throws InvalidArgumentException if the <i>$iterator</i> is not an array
-     *                                  or an Iterator
+     * @param array|Iterator $iterator either an array or Iterator object to use for
+     *                                 readahead iteration
      */
-    public function __construct($iterator)
+    public function __construct(array|Iterator $iterator)
     {
         if (is_array($iterator)) {
             $iterator = new ArrayIterator($iterator);
-        }
-
-        if (!$iterator instanceof Iterator) {
-            throw new InvalidArgumentException(
-                '$iterator must be either an array or an Iterator.',
-            );
         }
 
         $this->iterator = $iterator;
@@ -77,7 +62,7 @@ class SwatDBReadaheadIterator extends SwatObject
      *               will return null. This may also return null if the current
      *               item is null.
      */
-    public function getCurrent()
+    public function getCurrent(): mixed
     {
         return $this->current;
     }
@@ -90,7 +75,7 @@ class SwatDBReadaheadIterator extends SwatObject
      *
      * @see SwatDBReadaheadIterator::getCurrent()
      */
-    public function getKey()
+    public function getKey(): mixed
     {
         return $this->key;
     }
@@ -104,7 +89,7 @@ class SwatDBReadaheadIterator extends SwatObject
      *               {@link SwatDBReadaheadIterator::isLast()} to check if
      *               the current item is the last item.
      */
-    public function getNext()
+    public function getNext(): mixed
     {
         return $this->isLast() ? null : $this->iterator->current();
     }
@@ -117,7 +102,7 @@ class SwatDBReadaheadIterator extends SwatObject
      *
      * @see SwatDBReadaheadIterator::getNext();
      */
-    public function getNextKey()
+    public function getNextKey(): mixed
     {
         return $this->isLast() ? null : $this->iterator->key();
     }
@@ -128,7 +113,7 @@ class SwatDBReadaheadIterator extends SwatObject
      * @return bool true if the current item is the last item and false if
      *              it is not
      */
-    public function isLast()
+    public function isLast(): bool
     {
         return !$this->iterator->valid();
     }
@@ -138,7 +123,7 @@ class SwatDBReadaheadIterator extends SwatObject
      *
      * @return bool true if there is a next item
      */
-    public function iterate()
+    public function iterate(): bool
     {
         $this->current = $this->getNext();
         $this->key = $this->getNextKey();
@@ -155,7 +140,7 @@ class SwatDBReadaheadIterator extends SwatObject
     /**
      * Rewinds this readahead iterator back to the start.
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->iterator->rewind();
         $this->current = null;

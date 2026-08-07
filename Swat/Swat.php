@@ -133,12 +133,12 @@ class Swat
      *
      * Note:
      *
-     * If the object being printed is a UI object then its parent property
+     * If the object being printed is a UI object, then its parent property
      * is temporarily set to null to prevent recursing up the widget tree.
      *
-     * @param mixed $object the object to display
+     * @param SwatObject $object the object to display
      */
-    public static function printObject($object)
+    public static function printObject(SwatObject $object): void
     {
         echo '<pre>' . print_r($object, true) . '</pre>';
     }

@@ -3,14 +3,14 @@
 /**
  * A single object to represent a database query range.
  *
- * Objects of this class can be passed too and from methods as a single
+ * Objects of this class can be passed to and from methods as a single
  * argument representing the values of a limit/offset clause in a query. It is
  * intended that this object be used with MDB2 as follows:
  *
- * <code>
+ * ```php
  * $range = $my_object->getRange(); // assigns a SwatDBRange
  * $db->setLimit($range->getLimit(), $range->getOffset());
- * </code>
+ * ```
  *
  * @copyright 2007-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
@@ -18,52 +18,29 @@
 class SwatDBRange extends SwatObject
 {
     /**
-     * The limit of this range.
-     *
-     * @var int
-     *
-     * @see SwatDBRange::getLimit()
-     */
-    private $limit;
-
-    /**
-     * The offset of this range.
-     *
-     * @var int
-     *
-     * @see SwatDBRange::getOffset()
-     */
-    private $offset;
-
-    /**
      * Creates a new database range.
      *
-     * @param int $limit  the limit of this range
-     * @param int $offset optional. The offset of this range. If not
-     *                    specified, defaults to 0.
+     * @param ?int $limit  the limit of this range, or null for no limit
+     * @param int  $offset optional. The offset of this range. If not
+     *                     specified, defaults to 0.
      */
-    public function __construct($limit, $offset = 0)
-    {
-        $this->limit = $limit;
-        $this->offset = intval($offset);
-    }
+    public function __construct(
+        private ?int $limit,
+        private int $offset = 0
+    ) {}
 
     /**
      * Gets the limit of this range.
-     *
-     * @return int the limit of this range
      */
-    public function getLimit()
+    public function getLimit(): ?int
     {
         return $this->limit;
     }
 
     /**
      * Gets the offset of this range.
-     *
-     * @return int the offset of this range
      */
-    public function getOffset()
+    public function getOffset(): int
     {
         return $this->offset;
     }
@@ -73,29 +50,27 @@ class SwatDBRange extends SwatObject
      *
      * @param int $offset the amount by which to increase the offset
      */
-    public function addOffset($offset)
+    public function addOffset(int $offset): void
     {
-        $this->offset += intval($offset);
+        $this->offset += $offset;
     }
 
     /**
      * Combines this range with another range forming a new range.
      *
-     * Ranges are combined so the combined range includes both ranges. For
-     * example, if a range of (10, 100) is combined with a
-     * range of (20, 160) the resulting range will be (80, 100).
+     * Ranges are combined such that the combined range includes both ranges.
+     * For example, if a range of (10, 100) is combined with a
+     * range of (20, 160), the resulting range will be (80, 100).
      *
-     * <pre>
-     * ..|====|................. range1
-     * ...........|============| range2
-     * ..|=====================| combined range
-     * </pre>
+     *     ..|====|................... range1
+     *     ...........|============|.. range2
+     *     ..|=====================|.. combined range
      *
      * @param SwatDBRange $range the range to combine with this range
      *
      * @return SwatDBRange the combined range
      */
-    public function combine(SwatDBRange $range)
+    public function combine(SwatDBRange $range): SwatDBRange
     {
         // find leftmost extent
         $offset = min($this->getOffset(), $range->getOffset());

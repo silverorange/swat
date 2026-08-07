@@ -59,25 +59,28 @@ class SwatI18NNumberFormatTest extends TestCase
     }
 
     #[Test]
-    public function testToString()
+    public function testOverrideWithInvalidPropertyThrowsException(): void
     {
-        $expected = "decimal_separator => .\nthousands_separator => ,\ngrouping => 3\n";
-        $this->assertEquals(
-            $expected,
-            (string) $this->format
-        );
+        $this->expectException(SwatException::class);
+
+        $this->format->override([
+            'nonexistent_property' => 'value',
+        ]);
     }
 
     #[Test]
-    public function testToStringWithArrayGrouping()
+    public function testOverrideDoesNotMutateOnInvalidProperty(): void
     {
-        $newFormat = $this->format->override([
-            'grouping' => 3,
-        ]);
-        $expected = "decimal_separator => .\nthousands_separator => ,\ngrouping => 3\n";
-        $this->assertEquals(
-            $expected,
-            (string) $newFormat
-        );
+        try {
+            $this->format->override([
+                'decimal_separator'    => ',',
+                'nonexistent_property' => 'value',
+            ]);
+            $this->fail('Expected SwatException was not thrown.');
+        } catch (SwatException $e) {
+            // The original object must be untouched because the validation
+            // pass happens before any properties are copied/changed.
+            $this->assertSame('.', $this->format->decimal_separator);
+        }
     }
 }

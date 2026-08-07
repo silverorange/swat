@@ -85,7 +85,7 @@ class SwatTile extends SwatCellRendererContainer
     /**
      * Adds a message to this tile.
      *
-     * @param SwatMessage the message to add
+     * @param SwatMessage $message the message to add
      *
      * @see SwatMessage
      */

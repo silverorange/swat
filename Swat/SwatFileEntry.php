@@ -243,11 +243,10 @@ class SwatFileEntry extends SwatInputControl
     /**
      * Gets a unique file name for the uploaded file for the given path.
      *
-     * If the original file name is already unqiue, it will be used, otherwise
+     * If the original file name is already unique, it will be used, otherwise
      * a number will be appended to the end of the file name to make it unique.
      *
-     * @param string path where the file is to be saved
-     * @param mixed $path
+     * @param string $path path where the file is to be saved
      *
      * @return string the unique file name
      *

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Thrown when a property that can not be marshalled is asked to be
+ * Thrown when a property that cannot be marshalled is asked to be
  * marshalled.
  *
  * @copyright 2013-2016 silverorange
@@ -9,18 +9,15 @@
  */
 class SwatDBMarshallException extends SwatDBException
 {
-    /**
-     * @var string
-     */
-    protected $property = '';
-
-    public function __construct($message, $code = 0, $property = '')
-    {
+    public function __construct(
+        $message,
+        $code = 0,
+        protected string $property = ''
+    ) {
         parent::__construct($message, $code);
-        $this->property = $property;
     }
 
-    public function getProperty()
+    public function getProperty(): string
     {
         return $this->property;
     }

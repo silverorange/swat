@@ -21,7 +21,7 @@ return (new Config())
         'binary_operator_spaces' => ['operators' => ['=>' => 'align_single_space_minimal']],
 
         // Subset of statements that should be proceeded with blank line
-        'blank_line_before_statement' => ['statements' => ['case', 'continue', 'declare', 'default', 'return', 'throw', 'try', 'yield', 'yield_from']],
+        'blank_line_before_statement' => ['statements' => ['case', 'continue', 'declare', 'default', 'return', 'throw', 'try']],
 
         // Allow class list for multiple extends/implements to span multiple lines
         'class_definition' => ['multi_line_extends_each_single_line' => true],
@@ -44,6 +44,10 @@ return (new Config())
         // Ensure that traits are listed first in classes
         // (it would be nice to enforce more, but we'll start simple)
         'ordered_class_elements' => ['order' => ['use_trait']],
+
+        // Default is to convert @property-[read|write] to @property,
+        // which loses information in some of our data object documentation
+        'phpdoc_no_alias_tag' => ['replacements' => ['type' => 'var', 'link' => 'see']],
 
         // Ensure that param and return types are sorted consistently, with null at end
         'phpdoc_types_order' => ['sort_algorithm' => 'alpha', 'null_adjustment' => 'always_last'],

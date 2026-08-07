@@ -10,23 +10,27 @@
  *
  * Example code:
  *
- *     $db = SwatDB::connect('...dsn...');
- *     $map = [
- *         'status_type' => MyStatusEnum::class
- *     ];
- *     SwatDBEnumMapper::initialize($db, $map);
+ * ```php
+ * $db = SwatDB::connect('...dsn...');
+ * $map = [
+ *      'status_type' => MyStatusEnum::class
+ * ];
+ * SwatDBEnumMapper::initialize($db, $map);
+ * ```
  *
  * From here on, any queries against tables with columns of the `status_type` type
  * will map those columns to MyStatusEnum classes.
  *
  * You should also quote these values using the "enum" type when using them in queries:
  *
- *     $status = MyStatusEnum::IN_PROGRESS;
- *     $sql = sprintf(
- *         'UPDATE table SET status = '%s' WHERE ...',
- *         $db->quote($status, 'enum')
- *     );
- *     $db->query($sql);
+ * ```php
+ * $status = MyStatusEnum::IN_PROGRESS;
+ * $sql = sprintf(
+ *     'UPDATE table SET status = '%s' WHERE ...',
+ *     $db->quote($status, 'enum')
+ * );
+ * $db->query($sql);
+ * ```
  *
  * Enum classes can be simple unit enums (in which case the enum case _names_
  * should exactly match the possible values coming from the database), or they
@@ -35,9 +39,8 @@
  * @copyright 2025 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  *
- * @template TEnumClass of \UnitEnum
- * @template TEnumClassString of class-string<TEnumClass>
- * @template TEnumMap of array<string, TEnumClassString>
+ * @phpstan-type TEnumClass \UnitEnum
+ * @phpstan-type TEnumMap array<string, class-string<TEnumClass>>
  */
 class SwatDBEnumMapper
 {
@@ -160,9 +163,11 @@ class SwatDBEnumMapper
      * For backed enums, the `::from()` method is used.  For unit enums, the string value
      * is assumed to be the actual enum case name.
      *
-     * @param TEnumClassString $classname
+     * @template T of TEnumClass
      *
-     * @return TEnumClass
+     * @param class-string<T> $classname
+     *
+     * @return T
      *
      * @throws SwatDBException
      */
@@ -181,6 +186,8 @@ class SwatDBEnumMapper
         // handle backed enums
         if ($reflection->isBacked()) {
             try {
+                // When we get to level 2, we need to add phpstan-ignore-next-line
+                // as a temp fix for https://github.com/phpstan/phpstan/issues/10164
                 return $classname::from($value);
             } catch (ValueError $e) {
                 throw new SwatDBException(

@@ -4,7 +4,7 @@
 /vendor/
 /node_modules/
 
-# misc
+# local config and misc
 .DS_Store
 .env
 /.idea/

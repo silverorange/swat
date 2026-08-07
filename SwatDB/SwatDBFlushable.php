@@ -3,7 +3,7 @@
 /**
  * Interface that supports setting a flushable cache.
  *
- * @copyright 2014-2016 silverorange
+ * @copyright 2014-2026 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 interface SwatDBFlushable
@@ -16,5 +16,5 @@ interface SwatDBFlushable
      *
      * @see SwatDBCacheNsFlushable
      */
-    public function setFlushableCache(SwatDBCacheNsFlushable $cache);
+    public function setFlushableCache(SwatDBCacheNsFlushable $cache): void;
 }

@@ -11,13 +11,13 @@ class SwatObject implements Stringable
     /**
      * Gets this object as a string.
      *
-     * This is a magic method that is called by PHP when this object is used
-     * in string context. For example:
+     * This is a magic method called by PHP when this object is used
+     * in a string context. For example:
      *
-     * <code>
+     * ```php
      * $my_object = new SwatMessage('Hello, World!');
      * echo $my_object;
-     * </code>
+     * ```
      *
      * @return string this object represented as a string
      */

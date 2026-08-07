@@ -43,7 +43,7 @@ class SwatYUIComponent extends SwatObject
     /**
      * Adds a YUI component dependency to this YUI component.
      *
-     * @param SwatYUIComponent the YUI component this component depends on
+     * @param SwatYUIComponent $component the YUI component this component depends on
      */
     public function addDependency(SwatYUIComponent $component)
     {

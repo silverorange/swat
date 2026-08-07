@@ -10,7 +10,17 @@
  * An advantage of marshalling over straight serialization is you can specify
  * exactly what tree of objects will be included in the marshalled result.
  *
- * @copyright 2013-2016 silverorange
+ * Note: the PHPStan-type should really be:
+ *
+ *     MarshallableArray array<int|string, string|MarshallableArray>
+ *
+ * But this causes a circular reference, which PHPStan does not like.  Instead,
+ * we limit the enforcement to a depth of two levels, which is probably fine for
+ * most cases.
+ *
+ * @phpstan-type MarshallableArray array<int|string, string|array<int|string, string|array>>
+ *
+ * @copyright 2013-2026 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 interface SwatDBMarshallable
@@ -18,39 +28,33 @@ interface SwatDBMarshallable
     /**
      * Marshalls this object.
      *
-     * <code>
-     * <?php
-     * $data = $object->marshall(
-     *     array(
-     *         'daughters',
-     *         'sons' => array(
-     *             'grandkids'
-     *         )
-     *     )
-     * );
-     * ?>
-     * </code>
+     * ```php
+     * $data = $object->marshall([
+     *      'daughters',
+     *      'sons' => [
+     *          'grandkids'
+     *      ]
+     * ]);
+     * ```
      *
-     * @param array $tree optional. An array representing the data-structure
-     *                    sub-tree to include in the marshalled data.
+     * @param MarshallableArray $tree optional. An array representing the data-structure
+     *                                sub-tree to include in the marshalled data.
      *
-     * @return array the marshalled data
+     * @return MarshallableArray the marshalled data
      *
      * @throws SwatDBMarshallException if one of the sub-tree properties
      *                                 cannot be marshalled
      */
-    public function marshall(array $tree = []);
+    public function marshall(array $tree = []): array;
 
     /**
      * Unmarshalls this object using the specified data.
      *
-     * <code>
-     * <?php
+     * ```php
      * $object->unmarshall($data);
-     * ?>
-     * </code>
+     * ```
      *
-     * @param array $data optional. The marshalled object data.
+     * @param MarshallableArray $data optional. The marshalled object data.
      */
-    public function unmarshall(array $data = []);
+    public function unmarshall(array $data = []): void;
 }
