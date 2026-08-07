@@ -1,13 +1,15 @@
 /**
  * Progress bar
  *
- * The progress bar is accurate to four decimal places. This translates
+ * The progress bar is accurate to four decimal places. This translates to
  * one-hundredth of a percent.
  *
- * @copyright 2007-2016 silverorange
+ * @copyright 2007-2026 silverorange
  */
-class SwatProgressBar {
+class SwatProgressBar extends EventTarget {
   constructor(id, orientation, value) {
+    super();
+
     this.id = id;
     this.orientation = orientation;
     this.value = value;
@@ -21,9 +23,6 @@ class SwatProgressBar {
     this.empty = document.getElementById(this.id + '_empty');
     this.text = document.getElementById(this.id + '_text');
     this.container = document.getElementById(this.id);
-
-    this.changeValueEvent = new YAHOO.util.CustomEvent('changeValue');
-    this.pulseEvent = new YAHOO.util.CustomEvent('pulse');
 
     this.full_animation = null;
     this.empty_animation = null;
@@ -68,10 +67,8 @@ class SwatProgressBar {
 
     this.value = value;
 
-    var full_width = 100 * value;
-    var empty_width = 100 - 100 * value;
-    full_width = full_width > 100 ? 100 : full_width;
-    empty_width = empty_width < 0 ? 0 : empty_width;
+    const full_width = Math.min(100, 100 * value);
+    const empty_width = Math.max(0, 100 - 100 * value);
 
     // reset position if bar was set to pulse-mode
     if (this.orientation !== SwatProgressBar.ORIENTATION_BOTTOM_TO_TOP) {
@@ -98,7 +95,11 @@ class SwatProgressBar {
         break;
     }
 
-    this.changeValueEvent.fire(this.value);
+    this.dispatchEvent(
+      new CustomEvent('changeValue', {
+        detail: { value: this.value }
+      })
+    );
   }
 
   setValueWithAnimation(value) {
@@ -106,18 +107,14 @@ class SwatProgressBar {
       return;
     }
 
-    var old_full_width = 100 * this.value;
-    var old_empty_width = 100 - 100 * this.value;
-    old_full_width = old_full_width > 100 ? 100 : old_full_width;
-    old_empty_width = old_empty_width < 0 ? 0 : old_empty_width;
+    const old_full_width = Math.min(100, 100 * this.value);
+    const old_empty_width = Math.max(0, 100 - 100 * this.value);
 
     // set new value
     this.value = value;
 
-    var new_full_width = 100 * value;
-    var new_empty_width = 100 - 100 * value;
-    new_full_width = new_full_width > 100 ? 100 : new_full_width;
-    new_empty_width = new_empty_width < 0 ? 0 : new_empty_width;
+    const new_full_width = Math.min(100, 100 * value);
+    const new_empty_width = Math.max(0, 100 - 100 * value);
 
     // reset position if bar was set to pulse-mode
     if (this.orientation !== SwatProgressBar.ORIENTATION_BOTTOM_TO_TOP) {
@@ -127,8 +124,8 @@ class SwatProgressBar {
     // reset empty div if bar was set to pulse mode
     this.empty.style.display = 'block';
 
-    var full_keyframes = [];
-    var empty_keyframes = [];
+    let full_keyframes = [];
+    let empty_keyframes = [];
 
     switch (this.orientation) {
       case SwatProgressBar.ORIENTATION_LEFT_TO_RIGHT:
@@ -201,7 +198,11 @@ class SwatProgressBar {
         });
       });
 
-    this.changeValueEvent.fire(this.value);
+    this.dispatchEvent(
+      new CustomEvent('changeValue', {
+        detail: { value: this.value }
+      })
+    );
   }
 
   setText(text) {
@@ -236,7 +237,6 @@ class SwatProgressBar {
         this.full.style.height = this.pulse_width * 100 + '%';
         this.full.style.top =
           (1 - (this.pulse_position + this.pulse_width)) * 100 + '%';
-
         break;
 
       case SwatProgressBar.ORIENTATION_TOP_TO_BOTTOM:
@@ -245,18 +245,18 @@ class SwatProgressBar {
         break;
     }
 
-    var new_pulse_position =
+    const new_pulse_position =
       this.pulse_position + this.pulse_step * this.pulse_direction;
 
     if (
-      this.pulse_direction == 1 &&
+      this.pulse_direction === 1 &&
       SwatProgressBar.compare(new_pulse_position + this.pulse_width, 1) > 0
     ) {
       this.pulse_direction = -1;
     }
 
     if (
-      this.pulse_direction == -1 &&
+      this.pulse_direction === -1 &&
       SwatProgressBar.compare(new_pulse_position, 0) < 0
     ) {
       this.pulse_direction = 1;
@@ -264,7 +264,7 @@ class SwatProgressBar {
 
     this.pulse_position += this.pulse_step * this.pulse_direction;
 
-    this.pulseEvent.fire();
+    this.dispatchEvent(new CustomEvent('pulse'));
 
     // preserve precision across multiple calls to pulse()
     this.pulse_position =
