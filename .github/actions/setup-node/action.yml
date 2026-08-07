@@ -3,16 +3,16 @@ description: 'Set up Node.js, Corepack, pnpm, and install dependencies'
 runs:
   using: composite
   steps:
-    - name: Setup pnpm/Corepack
+    - name: Setup Node.js
       uses: actions/setup-node@v7
       with:
         node-version-file: 'package.json'
 
-    - name: Enable Corepack
+    - name: Install/enable Corepack
       shell: bash
-      run: corepack enable
+      run: npm install --global --force corepack && corepack enable
 
-    - name: Setup Node.js
+    - name: Setup Node.js with cache
       uses: actions/setup-node@v7
       with:
         node-version-file: 'package.json'
