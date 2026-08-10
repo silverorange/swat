@@ -37,9 +37,6 @@ class SwatAccordion extends SwatNoteBook
 
         $this->requires_id = true;
 
-        $yui = new SwatYUI(['animation']);
-        $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-
         $this->addStyleSheet('packages/swat/styles/swat-accordion.css');
         $this->addJavaScript('packages/swat/javascript/swat-accordion.js');
     }

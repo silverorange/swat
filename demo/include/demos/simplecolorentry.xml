@@ -15,7 +15,7 @@
                 name="content"
             ><![CDATA[
             <script type="text/javascript">
-                simple_color_entry_obj.addEventListener('colorChange', (e) => {
+                simple_color_entry_obj.addEventListener('change', (e) => {
                 const color = e.detail;
                 const navbar = document.getElementById('navbar');
                 navbar.style.background = color;

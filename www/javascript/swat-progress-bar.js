@@ -7,6 +7,29 @@
  * @copyright 2007-2026 silverorange
  */
 class SwatProgressBar extends EventTarget {
+
+  static ORIENTATION_LEFT_TO_RIGHT = 1;
+  static ORIENTATION_RIGHT_TO_LEFT = 2;
+  static ORIENTATION_BOTTOM_TO_TOP = 3;
+  static ORIENTATION_TOP_TO_BOTTOM = 4;
+
+  static PULSE_DIRECTION_FORWARD = 1;
+  static PULSE_DIRECTION_BACKWARD = -1;
+
+  static EPSILON = 0.0001;
+
+  static ANIMATION_DURATION = 0.5;
+
+  static compare(x, y) {
+    if (Math.abs(x - y) < SwatProgressBar.EPSILON) {
+      return 0;
+    }
+    if (x > y) {
+      return 1;
+    }
+    return -1;
+  }
+
   constructor(id, orientation, value) {
     super();
 
@@ -17,7 +40,7 @@ class SwatProgressBar extends EventTarget {
     this.pulse_step = 0.05;
     this.pulse_position = 0;
     this.pulse_width = 0.15;
-    this.pulse_direction = 1;
+    this.pulse_direction = SwatProgressBar.PULSE_DIRECTION_FORWARD;
 
     this.full = document.getElementById(this.id + '_full');
     this.empty = document.getElementById(this.id + '_empty');
@@ -39,25 +62,6 @@ class SwatProgressBar extends EventTarget {
       this.full_stubb.style.top = '-10000px';
       document.body.appendChild(this.full_stubb);
     });
-  }
-
-  static ORIENTATION_LEFT_TO_RIGHT = 1;
-  static ORIENTATION_RIGHT_TO_LEFT = 2;
-  static ORIENTATION_BOTTOM_TO_TOP = 3;
-  static ORIENTATION_TOP_TO_BOTTOM = 4;
-
-  static EPSILON = 0.0001;
-
-  static ANIMATION_DURATION = 0.5;
-
-  static compare(x, y) {
-    if (Math.abs(x - y) < SwatProgressBar.EPSILON) {
-      return 0;
-    }
-    if (x > y) {
-      return 1;
-    }
-    return -1;
   }
 
   setValue(value) {
@@ -249,17 +253,17 @@ class SwatProgressBar extends EventTarget {
       this.pulse_position + this.pulse_step * this.pulse_direction;
 
     if (
-      this.pulse_direction === 1 &&
+      this.pulse_direction === SwatProgressBar.PULSE_DIRECTION_FORWARD &&
       SwatProgressBar.compare(new_pulse_position + this.pulse_width, 1) > 0
     ) {
-      this.pulse_direction = -1;
+      this.pulse_direction = SwatProgressBar.PULSE_DIRECTION_BACKWARD;
     }
 
     if (
-      this.pulse_direction === -1 &&
+      this.pulse_direction === SwatProgressBar.PULSE_DIRECTION_BACKWARD &&
       SwatProgressBar.compare(new_pulse_position, 0) < 0
     ) {
-      this.pulse_direction = 1;
+      this.pulse_direction = SwatProgressBar.PULSE_DIRECTION_FORWARD;
     }
 
     this.pulse_position += this.pulse_step * this.pulse_direction;

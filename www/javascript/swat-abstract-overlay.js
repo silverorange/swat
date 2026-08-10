@@ -1,5 +1,10 @@
 /**
- * Abstract overlay widget
+ * Abstract overlay widget.
+ *
+ * This class doesn't emit any events itself, but some child classes
+ * (specifically SwatSimpleColorEntry) do, and those already extend
+ * other classes.  So rather than deal with a composite class, we've
+ * just made the overlay extend EventTarget.
  *
  * @copyright 2005-2026 silverorange
  */

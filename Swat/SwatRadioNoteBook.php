@@ -48,9 +48,6 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
 
         $this->requires_id = true;
 
-        $yui = new SwatYUI(['animation']);
-        $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-
         $this->addStyleSheet('packages/swat/styles/swat-radio-note-book.css');
 
         $this->addJavaScript(

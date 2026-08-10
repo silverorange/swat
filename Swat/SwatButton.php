@@ -104,8 +104,6 @@ class SwatButton extends SwatInputControl
     {
         parent::__construct($id);
 
-        $yui = new SwatYUI(['dom', 'animation']);
-        $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
         $this->addJavaScript('packages/swat/javascript/swat-button.js');
 
         $this->requires_id = true;

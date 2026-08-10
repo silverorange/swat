@@ -208,7 +208,7 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay {
       const event_color = color === null ? null : '#' + color;
 
       this.dispatchEvent(
-        new CustomEvent('colorChange', {
+        new CustomEvent('change', {
           detail: event_color
         })
       );

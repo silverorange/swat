@@ -66,7 +66,7 @@ class SwatAccordion extends EventTarget {
       this.pages.push(page);
     }
 
-    this.dispatchEvent(new CustomEvent('postInit'));
+    this.dispatchEvent(new CustomEvent('post-init'));
   }
 
   getPageFromHash() {
@@ -104,7 +104,7 @@ class SwatAccordion extends EventTarget {
     }
 
     this.dispatchEvent(
-      new CustomEvent('pageChange', {
+      new CustomEvent('change-page', {
         detail: { newPage: page, oldPage: this.current_page }
       })
     );
@@ -187,7 +187,7 @@ class SwatAccordion extends EventTarget {
     }
 
     this.dispatchEvent(
-      new CustomEvent('pageChange', {
+      new CustomEvent('change-page', {
         detail: { newPage: new_page, oldPage: old_page }
       })
     );

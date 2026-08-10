@@ -908,8 +908,8 @@ class SwatChangeOrder extends EventTarget {
     // fire order-changed event
     if (temp != hidden_field.value) {
       this.dispatchEvent(
-        new CustomEvent('orderChange', {
-          detail: { temp }
+        new CustomEvent('change-order', {
+          detail: temp
         })
       );
     }
