@@ -3,7 +3,7 @@
 /**
  * An abstract class from which to derive recordset views.
  *
- * @copyright 2004-2016 silverorange
+ * @copyright 2004-2026 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatView extends SwatControl implements SwatUIParent

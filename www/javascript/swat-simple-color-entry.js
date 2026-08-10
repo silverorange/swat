@@ -6,7 +6,7 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay {
    * @param {string[]} colors
    * @param {string} none_option_title
    *
-   * @copyright 2005-2016 silverorange
+   * @copyright 2005-2026 silverorange
    */
   constructor(id, colors, none_option_title) {
     super(id);

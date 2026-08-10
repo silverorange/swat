@@ -3,7 +3,7 @@
 /**
  * A single line search entry widget.
  *
- * @copyright 2007-2016 silverorange
+ * @copyright 2007-2026 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatSearchEntry extends SwatEntry

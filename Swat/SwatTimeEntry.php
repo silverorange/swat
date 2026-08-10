@@ -3,7 +3,7 @@
 /**
  * A time entry widget.
  *
- * @copyright 2004-2016 silverorange
+ * @copyright 2004-2026 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  *
  * @todo      Should we add a display_time_zone parameter?

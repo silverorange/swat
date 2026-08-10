@@ -4,11 +4,9 @@
  * Some of the drag and drop code is adapted from Nat Friedman's drag.js
  * script.
  *
- * @package   Swat
- * @copyright 2004-2016 silverorange
+ * @copyright 2004-2026 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-
 class SwatChangeOrder extends EventTarget {
   /**
    * An orderable list control widget

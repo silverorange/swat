@@ -16,7 +16,7 @@
  * accurate to four decimal places. This translates to one-hundredth of a
  * percent.
  *
- * @copyright 2007-2016 silverorange
+ * @copyright 2007-2026 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatProgressBar extends SwatControl

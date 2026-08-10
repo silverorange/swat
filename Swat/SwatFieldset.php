@@ -5,7 +5,7 @@
  *
  * An HTML fieldset tag with an optional HTML legend title.
  *
- * @copyright 2004-2016 silverorange
+ * @copyright 2004-2026 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable

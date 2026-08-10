@@ -6,7 +6,7 @@
  * This notebook is controlled using radio buttons and is a
  * {@link SwatInputControl}.
  *
- * @copyright 2012-2016 silverorange
+ * @copyright 2012-2026 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  *
  * @see       SwatNoteBookPage

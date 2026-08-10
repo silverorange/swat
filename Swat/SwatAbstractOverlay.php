@@ -1,18 +1,18 @@
 <?php
 
 /**
- * Abstract javascript overlay widget.
+ * Abstract JavaScript overlay widget.
  *
- * This widget allows creating a java-script run widget that opens an overlay
+ * This widget allows creating a JavaScript run widget that opens an overlay
  * containing the widget's contents. The framework for the overlay is handled
  * by this abstract class (opening, closing, toggle button, etc…), but the
  * functionality of the widget must be handled by sub-classing.
  *
  * Subclasses should, at the very least, sub-class swat-abstract-overlay.js
- * and add the new java-script class using the
+ * and add the new JavaScript class using the
  * SwatAbstractOverlay::getInlineJavaScript() method.
  *
- * @copyright 2010-2016 silverorange
+ * @copyright 2010-2026 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatAbstractOverlay extends SwatInputControl implements SwatState

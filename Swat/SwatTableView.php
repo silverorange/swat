@@ -7,7 +7,7 @@
  * view-selector to this table-view. See {@link SwatView} for details on how to
  * use {@link SwatViewSelector} objects.
  *
- * @copyright 2004-2016 silverorange
+ * @copyright 2004-2026 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTableView extends SwatView

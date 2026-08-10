@@ -3,7 +3,7 @@
 /**
  * A single line text entry widget.
  *
- * @copyright 2004-2023 silverorange
+ * @copyright 2004-2026 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatEntry extends SwatInputControl implements SwatState

@@ -6,7 +6,7 @@
  * This widget displays as an XHTML form submit button, so it must be used
  * within {@link SwatForm}.
  *
- * @copyright 2004-2016 silverorange
+ * @copyright 2004-2026 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatButton extends SwatInputControl
