@@ -3,13 +3,14 @@
  *
  * @copyright 2005-2016 silverorange
  */
-class SwatAbstractOverlay {
+class SwatAbstractOverlay extends EventTarget {
   /**
    * Creates an abstract overlay widget
    *
    * @param {string} id
    */
   constructor(id) {
+    super();
     this.id = id;
     this.container = document.getElementById(this.id);
     this.value_field = document.getElementById(this.id + '_value');

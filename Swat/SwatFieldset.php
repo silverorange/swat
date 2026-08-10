@@ -51,8 +51,6 @@ class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
         $this->requires_id = true;
 
         // JavaScript for IE peekaboo hack
-        $yui = new SwatYUI(['event']);
-        $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
         $this->addJavaScript('packages/swat/javascript/swat-fieldset.js');
     }
 

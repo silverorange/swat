@@ -9,7 +9,7 @@
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 
-class SwatChangeOrder {
+class SwatChangeOrder extends EventTarget {
   /**
    * An orderable list control widget
    *
@@ -17,6 +17,7 @@ class SwatChangeOrder {
    * @param {boolean} sensitive the initial sensitive of this object.
    */
   constructor(id, sensitive) {
+    super();
     this.is_webkit = /AppleWebKit|Konqueror|KHTML/gi.test(navigator.userAgent);
 
     this.id = id;
@@ -88,7 +89,6 @@ class SwatChangeOrder {
     }
 
     this.sensitive = sensitive;
-    this.orderChangeEvent = new YAHOO.util.CustomEvent('orderChange');
 
     // add grippies
     window.addEventListener('DOMContentLoaded', () => {
@@ -909,7 +909,11 @@ class SwatChangeOrder {
 
     // fire order-changed event
     if (temp != hidden_field.value) {
-      this.orderChangeEvent.fire(temp);
+      this.dispatchEvent(
+        new CustomEvent('orderChange', {
+          detail: { temp }
+        })
+      );
     }
 
     // update a hidden field with current order of keys

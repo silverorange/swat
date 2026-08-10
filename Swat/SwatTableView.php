@@ -193,9 +193,6 @@ class SwatTableView extends SwatView
     {
         parent::__construct($id);
 
-        $yui = new SwatYUI(['dom']);
-        $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-
         $this->addJavaScript('packages/swat/javascript/swat-table-view.js');
         $this->addStyleSheet('packages/swat/styles/swat-table-view.css');
     }

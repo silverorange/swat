@@ -12,7 +12,7 @@ class SwatTableView extends SwatView {
     // look for tbody node
     var tbody_node = null;
     for (var i = 0; i < this.table_node.childNodes.length; i++) {
-      if (this.table_node.childNodes[i].nodeName == 'TBODY') {
+      if (this.table_node.childNodes[i].nodeName === 'TBODY') {
         tbody_node = this.table_node.childNodes[i];
         break;
       }
@@ -24,7 +24,7 @@ class SwatTableView extends SwatView {
     }
 
     for (var i = 0; i < tbody_node.childNodes.length; i++) {
-      if (tbody_node.childNodes[i].nodeName == 'TR') {
+      if (tbody_node.childNodes[i].nodeName === 'TR') {
         this.items.push(tbody_node.childNodes[i]);
       }
     }
@@ -43,12 +43,12 @@ class SwatTableView extends SwatView {
     var row_node = node;
 
     // search for containing table row element
-    while (row_node.nodeName != 'TR' && row_node.nodeName != 'BODY') {
+    while (row_node.nodeName !== 'TR' && row_node.nodeName !== 'BODY') {
       row_node = row_node.parentNode;
     }
 
     // we reached the body element without finding the row node
-    if (row_node.nodeName == 'BODY') {
+    if (row_node.nodeName === 'BODY') {
       row_node = node;
     }
     return row_node;

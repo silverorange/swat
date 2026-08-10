@@ -148,8 +148,6 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 
         $this->requires_id = true;
 
-        $yui = new SwatYUI(['event']);
-        $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
         $this->addJavaScript('packages/swat/javascript/swat-time-entry.js');
 
         // guess twelve-hour or twenty-four hour default based on locale

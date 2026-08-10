@@ -301,13 +301,6 @@ class SwatForm extends SwatDisplayableContainer
         $this->displayHiddenFields();
         $form_tag->close();
 
-        if ($this->connection_close_uri != '') {
-            $yui = new SwatYUI(['event']);
-            $this->html_head_entry_set->addEntrySet(
-                $yui->getHtmlHeadEntrySet(),
-            );
-        }
-
         Swat::displayInlineJavaScript($this->getInlineJavaScript());
     }
 

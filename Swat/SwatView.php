@@ -61,8 +61,6 @@ abstract class SwatView extends SwatControl implements SwatUIParent
     {
         parent::__construct($id);
 
-        $yui = new SwatYUI(['dom']);
-        $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
         $this->addJavaScript('packages/swat/javascript/swat-view.js');
     }
 

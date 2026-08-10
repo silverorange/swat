@@ -46,7 +46,7 @@ abstract class SwatAbstractOverlay extends SwatInputControl implements SwatState
 
         $this->requires_id = true;
 
-        $yui = new SwatYUI(['dom', 'event', 'container']);
+        $yui = new SwatYUI(['dom', 'container']);
         $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
         $this->addJavaScript(
