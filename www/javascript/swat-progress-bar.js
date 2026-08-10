@@ -7,7 +7,6 @@
  * @copyright 2007-2026 silverorange
  */
 class SwatProgressBar extends EventTarget {
-
   static ORIENTATION_LEFT_TO_RIGHT = 1;
   static ORIENTATION_RIGHT_TO_LEFT = 2;
   static ORIENTATION_BOTTOM_TO_TOP = 3;
