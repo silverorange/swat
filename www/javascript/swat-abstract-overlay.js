@@ -1,15 +1,21 @@
 /**
- * Abstract overlay widget
+ * Abstract overlay widget.
  *
- * @copyright 2005-2016 silverorange
+ * This class doesn't emit any events itself, but some child classes
+ * (specifically SwatSimpleColorEntry) do, and those already extend
+ * other classes.  So rather than deal with a composite class, we've
+ * just made the overlay extend EventTarget.
+ *
+ * @copyright 2005-2026 silverorange
  */
-class SwatAbstractOverlay {
+class SwatAbstractOverlay extends EventTarget {
   /**
    * Creates an abstract overlay widget
    *
    * @param {string} id
    */
   constructor(id) {
+    super();
     this.id = id;
     this.container = document.getElementById(this.id);
     this.value_field = document.getElementById(this.id + '_value');

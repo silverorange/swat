@@ -3,7 +3,7 @@
 /**
  * Actions widget.
  *
- * @copyright 2005-2016 silverorange
+ * @copyright 2005-2026 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatActions extends SwatControl implements SwatUIParent
@@ -81,8 +81,6 @@ class SwatActions extends SwatControl implements SwatUIParent
     {
         parent::__construct($id);
 
-        $yui = new SwatYUI(['dom', 'event', 'animation']);
-        $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
         $this->addJavaScript('packages/swat/javascript/swat-actions.js');
         $this->addStyleSheet('packages/swat/styles/swat-actions.css');
     }

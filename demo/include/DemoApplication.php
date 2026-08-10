@@ -10,10 +10,10 @@
  */
 class DemoApplication
 {
-    private $ui;
-    private $demo;
+    private SwatUI $layout_ui;
+    private ?string $demo_page = null;
 
-    private $available_demos = [
+    private array $available_demos = [
         'Accordion'         => 'SwatAccordion',
         'Button'            => 'SwatButton',
         'Calendar'          => 'SwatCalendar',
@@ -53,30 +53,37 @@ class DemoApplication
         'YesNoFlydown'      => 'SwatYesNoFlydown',
     ];
 
-    /**
-     * test.
-     */
-    public function run()
+    public function run(): void
     {
         SwatError::setupHandler();
+
+        require_once __DIR__ . '/ui-objects/DemoDocumentationMenuBar.php';
+        require_once __DIR__ . '/ui-objects/DemoMenuBar.php';
+
         $this->layout_ui = new SwatUI();
-        $this->layout_ui->mapClassPrefixToPath('Demo', '../include/ui-objects');
-        $this->layout_ui->loadFromXML('../include/layout.xml');
+        $this->layout_ui->loadFromXML(__DIR__ . '/layout.xml');
 
-        $this->demo = $this->getDemo();
+        $this->demo_page = $this->getDemo();
 
-        if ($this->demo === null) {
+        if ($this->demo_page === null) {
             $this->buildFrontPage();
             $title = Swat::_('Swat Demo');
         } else {
             $this->buildTitle();
             $this->buildDemo();
             $this->buildDemoDocumentationMenuBar();
-            $this->buildXmlSourceView();
-            $this->buildPhpSourceView();
+            $this->buildSourceView(
+                __DIR__ . '/demos/' . mb_strtolower($this->demo_page) . '.xml',
+                'xml'
+            );
+            $this->buildSourceView(
+                __DIR__ . '/demos/' . $this->demo_page . 'Demo.php',
+                'php'
+            );
+
             $title = sprintf(
                 Swat::_('%s - Swat Demo'),
-                $this->available_demos[$this->demo]
+                $this->available_demos[$this->demo_page]
             );
         }
 
@@ -88,76 +95,65 @@ class DemoApplication
         $this->buildLayout();
     }
 
-    private function buildTitle()
+    private function buildTitle(): void
     {
         $this->layout_ui->getWidget('main_frame')->title
-            = sprintf(Swat::_('%s Demo'), $this->available_demos[$this->demo]);
+            = sprintf(Swat::_('%s Demo'), $this->available_demos[$this->demo_page]);
     }
 
-    private function buildDemo()
+    private function buildDemo(): void
     {
-        $this->demo_ui = new SwatUI($this->layout_ui->getWidget('main_frame'));
-        $this->demo_ui->loadFromXML(
-            '../include/demos/' . mb_strtolower($this->demo) . '.xml'
+        $demo_ui = new SwatUI($this->layout_ui->getWidget('main_frame'));
+        $demo_ui->loadFromXML(
+            __DIR__ . '/demos/' . mb_strtolower($this->demo_page) . '.xml'
         );
 
-        if (file_exists(__DIR__ . '/../include/demos/' . $this->demo . 'Demo.php')) {
-            require_once __DIR__ . '/../include/demos/' . $this->demo . 'Demo.php';
+        $class_name = $this->demo_page . 'Demo';
 
-            $class_name = $this->demo . 'Demo';
+        if (file_exists(__DIR__ . '/demos/' . $class_name . '.php')) {
+            require_once __DIR__ . '/demos/' . $class_name . '.php';
+
             if (class_exists($class_name)) {
                 $demo = new $class_name();
-                $demo->buildDemoUI($this->demo_ui);
+                $demo->buildDemoUI($demo_ui);
             }
         }
     }
 
-    private function buildXmlSourceView()
+    private function buildSourceView(string $filename, string $language): void
     {
-        $filename = '../include/demos/' . mb_strtolower($this->demo) . '.xml';
-        if (file_exists($filename)) {
-            $this->layout_ui->getWidget('xml_source_container')->visible = true;
-
-            $code = file_get_contents($filename);
-            $code = str_replace("\t", '  ', $code);
-            $code = highlight_string($code, true);
-
-            $pre_tag = new SwatHtmlTag('pre');
-            $pre_tag->setContent($code, 'text/xml');
-
-            $this->layout_ui->getWidget('xml_source_view')->content
-                = $pre_tag->toString();
+        if (!file_exists($filename)) {
+            return;
         }
+
+        $this->layout_ui->getWidget("{$language}_source_container")->visible = true;
+
+        $code = file_get_contents($filename);
+
+        $code_tag = new SwatHtmlTag('code');
+        $code_tag->addAttributes([
+            'class' => "language-{$language}",
+        ]);
+        $code_tag->setContent(SwatString::minimizeEntities($code), 'text/xml');
+
+        $pre_tag = new SwatHtmlTag('pre');
+        $pre_tag->setContent($code_tag->toString(), 'text/xml');
+
+        $this->layout_ui->getWidget("{$language}_source_view")->content
+            = $pre_tag->toString();
     }
 
-    private function buildPhpSourceView()
-    {
-        $filename = '../include/demos/' . $this->demo . 'Demo.php';
-        if (file_exists($filename)) {
-            $this->layout_ui->getWidget('php_source_container')->visible = true;
-
-            $code = file_get_contents($filename);
-            $code = str_replace("\t", '  ', $code);
-            $code = highlight_string($code, true);
-            $pre_tag = new SwatHtmlTag('pre');
-            $pre_tag->setContent($code, 'text/xml');
-
-            $this->layout_ui->getWidget('php_source_view')->content
-                = $pre_tag->toString();
-        }
-    }
-
-    private function buildDemoMenuBar()
+    private function buildDemoMenuBar(): void
     {
         $this->layout_ui->getWidget('menu')->setEntries($this->available_demos);
-        $this->layout_ui->getWidget('menu')->setSelectedEntry($this->demo);
+        $this->layout_ui->getWidget('menu')->setSelectedEntry($this->demo_page);
     }
 
-    private function buildDemoNavBar()
+    private function buildDemoNavBar(): void
     {
         $navbar = $this->layout_ui->getWidget('navbar');
-        if ($this->demo) {
-            $title = $this->available_demos[$this->demo];
+        if ($this->demo_page) {
+            $title = $this->available_demos[$this->demo_page];
             $navbar->addEntry(new SwatNavBarEntry('Swat Demos', '.'));
             $navbar->addEntry(new SwatNavBarEntry($title));
         } else {
@@ -165,261 +161,181 @@ class DemoApplication
         }
     }
 
-    private function buildDemoDocumentationMenuBar()
+    private function buildDemoDocumentationMenuBar(): void
     {
-        switch ($this->demo) {
-            case 'Accordion':
-                $entries = [
-                    'SwatAccordion',
-                    'SwatNoteBookPage',
-                ];
-                break;
+        $entries = match ($this->demo_page) {
+            'Accordion' => [
+                'SwatAccordion',
+                'SwatNoteBookPage',
+            ],
+            'Button' => [
+                'SwatButton',
+                'SwatConfirmationButton',
+            ],
+            'Calendar' => [
+                'SwatCalendar',
+            ],
+            'ChangeOrder' => [
+                'SwatChangeOrder',
+            ],
+            'Checkbox' => [
+                'SwatCheckbox',
+                'SwatCheckboxList',
+                'SwatCheckboxEntryList',
+                'SwatCheckboxTree',
+            ],
+            'DateEntry' => [
+                'SwatDateEntry',
+            ],
+            'DetailsView' => [
+                'SwatDetailsView',
+                'SwatDetailsViewField',
+                'SwatDetailsViewVerticalField',
+                'SwatBooleanCellRenderer',
+                'SwatDateCellRenderer',
+                'SwatImageCellRenderer',
+                'SwatMoneyCellRenderer',
+                'SwatTextCellRenderer',
+            ],
+            'Disclosure' => [
+                'SwatDisclosure',
+                'SwatFrameDisclosure',
+            ],
+            'Entry' => [
+                'SwatEntry',
+                'SwatListEntry',
+                'SwatEmailEntry',
+                'SwatIntegerEntry',
+                'SwatFloatEntry',
+                'SwatMoneyEntry',
+            ],
+            'Fieldset' => [
+                'SwatFieldset',
+            ],
+            'FileEntry' => [
+                'SwatFileEntry',
+            ],
+            'Flydown' => [
+                'SwatFlydown',
+                'SwatFlydownTree',
+                'SwatGroupedFlydown',
+                'SwatCascadeFlydown',
+                'SwatFlydownDivider',
+                'SwatTreeFlydownNode',
+                'SwatOption',
+            ],
+            'Frame' => [
+                'SwatFrame'],
+            'ImageCropper' => [
+                'SwatImageCropper',
+            ],
+            'ImageDisplay' => [
+                'SwatImageDisplay',
+                'SwatImagePreviewDisplay',
+            ],
+            'MessageDisplay' => [
+                'SwatMessageDisplay',
+            ],
+            'NavBar' => [
+                'SwatNavBar',
+                'SwatNavBarEntry',
+            ],
+            'NoteBook' => [
+                'SwatNoteBook',
+                'SwatNoteBookPage',
+            ],
+            'Pagination' => [
+                'SwatPagination',
+            ],
+            'PasswordEntry' => [
+                'SwatPasswordEntry',
+                'SwatConfirmPasswordEntry',
+            ],
+            'ProgressBar' => [
+                'SwatProgressBar',
+            ],
+            'RadioList' => [
+                'SwatRadioList',
+                'SwatRadioTable',
+            ],
+            'Replicable' => [
+                'SwatReplicable',
+                'SwatReplicableContainer',
+                'SwatReplicableFieldset',
+                'SwatReplicableFormField',
+            ],
+            'SelectListDemo' => [
+                'SwatSelectList',
+            ],
+            'SimpleColorEntry' => [
+                'SwatSimpleColorEntry',
+            ],
+            'StringDemo' => [
+                'SwatString',
+            ],
+            'TableView' => [
+                'SwatTableView',
+                'SwatTableStore',
+                'SwatTableViewColumn',
+                'SwatTableViewCheckboxColumn',
+                'SwatCheckboxCellRenderer',
+                'SwatBooleanCellRenderer',
+                'SwatDateCellRenderer',
+                'SwatImageCellRenderer',
+                'SwatMoneyCellRenderer',
+                'SwatTextCellRenderer',
+                'SwatActions',
+                'SwatActionItem',
+            ],
+            'TableViewInputRow' => [
+                'SwatTableView',
+                'SwatTableViewInputRow',
+                'SwatInputCell',
+                'SwatRemoveInputCell',
+            ],
+            'Textarea' => [
+                'SwatTextarea',
+                'SwatXHTMLTextarea',
+            ],
+            'TextareaEditor' => [
+                'SwatTextareaEditor',
+            ],
+            'TileView' => [
+                'SwatTileView',
+                'SwatTile',
+                'SwatTableStore',
+                'SwatCheckboxCellRenderer',
+                'SwatDateCellRenderer',
+                'SwatTextCellRenderer',
+            ],
+            'TimeEntry' => [
+                'SwatTimeEntry',
+            ],
+            'TimeZoneEntry' => [
+                'SwatTimeZoneEntry',
+            ],
+            'ToolLink' => [
+                'SwatToolLink',
+            ],
+            'ViewSelector' => [
+                'SwatCheckboxCellRenderer',
+                'SwatRadioButtonCellRenderer',
+                'SwatView',
+                'SwatViewSelection',
+                'SwatViewSelector',
+            ],
+            'YesNoFlydown' => [
+                'SwatYesNoFlydown',
+            ],
+            default => [],
+        };
 
-            case 'Button':
-                $entries = [
-                    'SwatButton',
-                    'SwatConfirmationButton',
-                ];
-                break;
-
-            case 'Calendar':
-                $entries = ['SwatCalendar'];
-                break;
-
-            case 'ChangeOrder':
-                $entries = ['SwatChangeOrder'];
-                break;
-
-            case 'Checkbox':
-                $entries = [
-                    'SwatCheckbox',
-                    'SwatCheckboxList',
-                    'SwatCheckboxEntryList',
-                    'SwatCheckboxTree',
-                ];
-                break;
-
-            case 'DateEntry':
-                $entries = ['SwatDateEntry'];
-                break;
-
-            case 'DetailsView':
-                $entries = [
-                    'SwatDetailsView',
-                    'SwatDetailsViewField',
-                    'SwatDetailsViewVerticalField',
-                    'SwatBooleanCellRenderer',
-                    'SwatDateCellRenderer',
-                    'SwatImageCellRenderer',
-                    'SwatMoneyCellRenderer',
-                    'SwatTextCellRenderer',
-                ];
-                break;
-
-            case 'Disclosure':
-                $entries = [
-                    'SwatDisclosure',
-                    'SwatFrameDisclosure',
-                ];
-                break;
-
-            case 'Entry':
-                $entries = [
-                    'SwatEntry',
-                    'SwatListEntry',
-                    'SwatEmailEntry',
-                    'SwatIntegerEntry',
-                    'SwatFloatEntry',
-                    'SwatMoneyEntry',
-                ];
-                break;
-
-            case 'Fieldset':
-                $entries = ['SwatFieldset'];
-                break;
-
-            case 'FileEntry':
-                $entries = ['SwatFileEntry'];
-                break;
-
-            case 'Flydown':
-                $entries = [
-                    'SwatFlydown',
-                    'SwatFlydownTree',
-                    'SwatGroupedFlydown',
-                    'SwatCascadeFlydown',
-                    'SwatFlydownDivider',
-                    'SwatTreeFlydownNode',
-                    'SwatOption',
-                ];
-                break;
-
-            case 'Frame':
-                $entries = ['SwatFrame'];
-                break;
-
-            case 'ImageCropper':
-                $entries = ['SwatImageCropper'];
-                break;
-
-            case 'ImageDisplay':
-                $entries = [
-                    'SwatImageDisplay',
-                    'SwatImagePreviewDisplay',
-                ];
-                break;
-
-            case 'MessageDisplay':
-                $entries = ['SwatMessageDisplay'];
-                break;
-
-            case 'NavBar':
-                $entries = [
-                    'SwatNavBar',
-                    'SwatNavBarEntry',
-                ];
-                break;
-
-            case 'NoteBook':
-                $entries = [
-                    'SwatNoteBook',
-                    'SwatNoteBookPage',
-                ];
-                break;
-
-            case 'Pagination':
-                $entries = ['SwatPagination'];
-                break;
-
-            case 'PasswordEntry':
-                $entries = [
-                    'SwatPasswordEntry',
-                    'SwatConfirmPasswordEntry',
-                ];
-                break;
-
-            case 'ProgressBar':
-                $entries = [
-                    'SwatProgressBar',
-                ];
-                break;
-
-            case 'RadioList':
-                $entries = [
-                    'SwatRadioList',
-                    'SwatRadioTable',
-                ];
-                break;
-
-            case 'Replicable':
-                $entries = [
-                    'SwatReplicable',
-                    'SwatReplicableContainer',
-                    'SwatReplicableFieldset',
-                    'SwatReplicableFormField',
-                ];
-                break;
-
-            case 'SelectListDemo':
-                $entries = ['SwatSelectList'];
-                break;
-
-            case 'SimpleColorEntry':
-                $entries = [
-                    'SwatSimpleColorEntry',
-                ];
-                break;
-
-            case 'StringDemo':
-                $entries = ['SwatString'];
-                break;
-
-            case 'TableView':
-                $entries = [
-                    'SwatTableView',
-                    'SwatTableStore',
-                    'SwatTableViewColumn',
-                    'SwatTableViewCheckboxColumn',
-                    'SwatCheckboxCellRenderer',
-                    'SwatBooleanCellRenderer',
-                    'SwatDateCellRenderer',
-                    'SwatImageCellRenderer',
-                    'SwatMoneyCellRenderer',
-                    'SwatTextCellRenderer',
-                    'SwatActions',
-                    'SwatActionItem',
-                ];
-                break;
-
-            case 'TableViewInputRow':
-                $entries = [
-                    'SwatTableView',
-                    'SwatTableViewInputRow',
-                    'SwatInputCell',
-                    'SwatRemoveInputCell',
-                ];
-                break;
-
-            case 'Textarea':
-                $entries = [
-                    'SwatTextarea',
-                    'SwatXHTMLTextarea',
-                ];
-                break;
-
-            case 'TextareaEditor':
-                $entries = ['SwatTextareaEditor'];
-                break;
-
-            case 'TileView':
-                $entries = [
-                    'SwatTileView',
-                    'SwatTile',
-                    'SwatTableStore',
-                    'SwatCheckboxCellRenderer',
-                    'SwatDateCellRenderer',
-                    'SwatTextCellRenderer',
-                ];
-                break;
-
-            case 'TimeEntry':
-                $entries = ['SwatTimeEntry'];
-                break;
-
-            case 'TimeZoneEntry':
-                $entries = ['SwatTimeZoneEntry'];
-                break;
-
-            case 'ToolLink':
-                $entries = ['SwatToolLink'];
-                break;
-
-            case 'ViewSelector':
-                $entries = [
-                    'SwatCheckboxCellRenderer',
-                    'SwatRadioButtonCellRenderer',
-                    'SwatView',
-                    'SwatViewSelection',
-                    'SwatViewSelector',
-                ];
-                break;
-
-            case 'YesNoFlydown':
-                $entries = ['SwatYesNoFlydown'];
-                break;
-
-            default:
-                $entries = [];
-                break;
-        }
-
-        $documentation_links
-            = $this->layout_ui->getWidget('documentation_links');
+        $documentation_links = $this->layout_ui->getWidget('documentation_links');
 
         $documentation_links->setEntries($entries);
     }
 
-    private function buildFrontPage()
+    private function buildFrontPage(): void
     {
         $content_block = new SwatContentBlock();
         $content_block->content
@@ -432,14 +348,14 @@ class DemoApplication
         $main_frame->add($content_block);
     }
 
-    private function buildLayout()
+    private function buildLayout(): void
     {
-        if ($this->demo === null) {
+        if ($this->demo_page === null) {
             $title = Swat::_('Swat Demo');
         } else {
             $title = sprintf(
                 Swat::_('%s - Swat Demo'),
-                $this->available_demos[$this->demo]
+                $this->available_demos[$this->demo_page]
             );
         }
 
@@ -454,13 +370,13 @@ class DemoApplication
         $displayer->display($this->layout_ui->getRoot()->getHtmlHeadEntrySet());
         $html_head_entries = ob_get_clean();
 
-        require '../include/layout.php';
+        require __DIR__ . '/layout.php';
     }
 
     /**
      * Gets the demo page.
      */
-    private function getDemo()
+    private function getDemo(): ?string
     {
         $demo = $_GET['demo'] ?? null;
 

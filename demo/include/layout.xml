@@ -16,7 +16,7 @@
                 ]]></property>
                 <property name="content_type" type="string">text/xml</property>
             </widget>
-            <widget class="swatcontentblock" id="xml_source_view">
+            <widget class="SwatContentBlock" id="xml_source_view">
                 <property name="content_type" type="string">text/xml</property>
             </widget>
         </widget>
@@ -31,7 +31,7 @@
                 ]]></property>
                 <property name="content_type" type="string">text/xml</property>
             </widget>
-            <widget class="swatcontentblock" id="php_source_view">
+            <widget class="SwatContentBlock" id="php_source_view">
                 <property name="content_type" type="string">text/xml</property>
             </widget>
         </widget>

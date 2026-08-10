@@ -7,7 +7,7 @@
  * stacked and open and close like disclosures. It sounds like a ye-olde
  * squeezebox.
  *
- * @copyright 2011-2016 silverorange
+ * @copyright 2011-2026 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  *
  * @see       SwatNoteBookPage
@@ -16,19 +16,15 @@ class SwatAccordion extends SwatNoteBook
 {
     /**
      * Whether or not to animate the opening/closing of the accordion.
-     *
-     * @var bool
      */
-    public $animate = true;
+    public bool $animate = true;
 
     /**
      * Whether or not one page of the accordion is always open.
      *
      * If false, the accordion can collapse to an all-closed state.
-     *
-     * @var bool
      */
-    public $always_open = false;
+    public bool $always_open = false;
 
     /**
      * Creates a new accordion view.
@@ -40,9 +36,6 @@ class SwatAccordion extends SwatNoteBook
         parent::__construct($id);
 
         $this->requires_id = true;
-
-        $yui = new SwatYUI(['yahoo', 'dom', 'event', 'animation']);
-        $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
         $this->addStyleSheet('packages/swat/styles/swat-accordion.css');
         $this->addJavaScript('packages/swat/javascript/swat-accordion.js');

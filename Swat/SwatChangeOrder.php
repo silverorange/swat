@@ -50,9 +50,6 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
         parent::__construct($id);
         $this->requires_id = true;
 
-        $yui = new SwatYUI(['dom', 'event']);
-        $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-
         $this->addStyleSheet('packages/swat/styles/swat-change-order.css');
         $this->addJavaScript('packages/swat/javascript/swat-change-order.js');
         $this->addJavaScript(

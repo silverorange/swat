@@ -6,7 +6,7 @@
  * This notebook is controlled using radio buttons and is a
  * {@link SwatInputControl}.
  *
- * @copyright 2012-2016 silverorange
+ * @copyright 2012-2026 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  *
  * @see       SwatNoteBookPage
@@ -47,9 +47,6 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
         parent::__construct($id);
 
         $this->requires_id = true;
-
-        $yui = new SwatYUI(['dom', 'event', 'animation', 'selector']);
-        $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
         $this->addStyleSheet('packages/swat/styles/swat-radio-note-book.css');
 

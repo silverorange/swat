@@ -59,9 +59,6 @@ class SwatCheckboxEntryList extends SwatCheckboxList
     {
         parent::__construct($id);
 
-        $yui = new SwatYUI(['dom', 'event']);
-        $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-
         $this->addJavaScript(
             'packages/swat/javascript/swat-checkbox-entry-list.js',
         );
