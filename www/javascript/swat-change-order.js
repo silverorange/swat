@@ -175,8 +175,8 @@ class SwatChangeOrder extends EventTarget {
       );
     }
 
-    var left = YAHOO.util.Event.getPageX(event) - shadow_item.mouse_offset_x;
-    var top = YAHOO.util.Event.getPageY(event) - shadow_item.mouse_offset_y;
+    var left = event.pageX - shadow_item.mouse_offset_x;
+    var top = event.pageY - shadow_item.mouse_offset_y;
     shadow_item.style.top = top + 'px';
     shadow_item.style.left = left + 'px';
 
@@ -474,10 +474,10 @@ class SwatChangeOrder extends EventTarget {
     var item_rect = this.getBoundingClientRect();
 
     shadow_item.mouse_offset_x =
-      YAHOO.util.Event.getPageX(event) - SwatChangeOrder.getPageX(item_rect);
+      event.pageX - SwatChangeOrder.getPageX(item_rect);
 
     shadow_item.mouse_offset_y =
-      YAHOO.util.Event.getPageY(event) - SwatChangeOrder.getPageY(item_rect);
+      event.pageY - SwatChangeOrder.getPageY(item_rect);
 
     var drop_marker = document.createElement('div');
 
@@ -584,7 +584,7 @@ class SwatChangeOrder extends EventTarget {
       return false;
     }
 
-    YAHOO.util.Event.purgeElement(el);
+    el.removeEventListener('mousedown', SwatChangeOrder.mousedownEventHandler);
 
     // remove from hidden value
     var hidden_value = document.getElementById(this.id + '_value');
