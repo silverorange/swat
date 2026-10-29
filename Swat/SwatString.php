@@ -3,7 +3,7 @@
 /**
  * String Tools.
  *
- * @copyright 2005-2016 silverorange
+ * @copyright 2005-2026 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatString extends SwatObject
@@ -2005,14 +2005,19 @@ class SwatString extends SwatObject
      * at {@link http://code.google.com/p/doctype/wiki/ArticleXSSInJavaScript}
      * are escaped to prevent XSS attacks.
      *
-     * @param string $string the PHP string to quote as a JavaScript string
+     * @param ?string $string the PHP string to quote as a JavaScript string, or null
      *
      * @return string the quoted JavaScript string. The quoted string is
      *                wrapped in single quotation marks and is safe to display
-     *                in inline JavaScript.
+     *                in inline JavaScript.  Null values just return a quoted
+     *                empty string.
      */
-    public static function quoteJavaScriptString($string)
+    public static function quoteJavaScriptString(?string $string): string
     {
+        if ($string === null) {
+            return "''";
+        }
+
         $search = [
             '\\', // backslash quote
             '&', // ampersand

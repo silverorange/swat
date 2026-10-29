@@ -6,7 +6,7 @@
  * This widget displays as an XHTML form submit button, so it must be used
  * within {@link SwatForm}.
  *
- * @copyright 2004-2016 silverorange
+ * @copyright 2004-2026 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatButton extends SwatInputControl
@@ -54,10 +54,8 @@ class SwatButton extends SwatInputControl
      * Showing a processing throbber is appropriate when this button is used
      * to submit forms that can take a long time to process. By default, the
      * processing throbber is not displayed.
-     *
-     * @var bool
      */
-    public $show_processing_throbber = false;
+    public bool $show_processing_throbber = false;
 
     /**
      * Optional content to display beside the processing throbber.
@@ -92,10 +90,8 @@ class SwatButton extends SwatInputControl
      * This is set to true after processing if this button was clicked.
      * The form will also contain a refernce to the clicked button in the
      * {@link SwatForm::$button} class variable.
-     *
-     * @var bool
      */
-    protected $clicked = false;
+    protected bool $clicked = false;
 
     /**
      * Creates a new button.
@@ -108,8 +104,6 @@ class SwatButton extends SwatInputControl
     {
         parent::__construct($id);
 
-        $yui = new SwatYUI(['dom', 'event', 'animation']);
-        $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
         $this->addJavaScript('packages/swat/javascript/swat-button.js');
 
         $this->requires_id = true;
@@ -270,7 +264,7 @@ class SwatButton extends SwatInputControl
         $tag->type = 'submit';
         $tag->name = $this->id;
         $tag->id = $this->id;
-        $tag->value = $this->title;
+        $tag->value = trim($this->title);
         $tag->class = $this->getCSSClassString();
         $tag->tabindex = $this->tab_index;
         $tag->accesskey = $this->access_key;

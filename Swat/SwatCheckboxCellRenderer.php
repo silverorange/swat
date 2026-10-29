@@ -81,8 +81,6 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer implements SwatViewSelec
 
         $this->makePropertyStatic('id');
 
-        $yui = new SwatYUI(['dom']);
-        $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
         $this->addJavaScript(
             'packages/swat/javascript/swat-checkbox-cell-renderer.js',
         );

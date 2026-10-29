@@ -1,4 +1,4 @@
-class SwatImagePreviewDisplay {
+class SwatImagePreviewDisplay extends EventTarget {
   constructor(
     id,
     preview_src,
@@ -7,6 +7,8 @@ class SwatImagePreviewDisplay {
     show_title,
     preview_title
   ) {
+    super();
+
     this.id = id;
     this.opened = false;
     this.show_title = show_title;
@@ -16,9 +18,6 @@ class SwatImagePreviewDisplay {
     this.preview_height = preview_height;
 
     this.handleKeyDown = this.handleKeyDown.bind(this);
-
-    this.onOpen = new YAHOO.util.CustomEvent('open');
-    this.onClose = new YAHOO.util.CustomEvent('close');
 
     window.addEventListener('DOMContentLoaded', () => {
       this.init();
@@ -32,12 +31,12 @@ class SwatImagePreviewDisplay {
 
     // link up the thumbnail image
     var image_wrapper = document.getElementById(this.id + '_wrapper');
-    if (image_wrapper.tagName == 'A') {
+    if (image_wrapper.tagName === 'A') {
       image_wrapper.href = '#view';
       image_wrapper.addEventListener('click', (e) => {
         e.preventDefault();
         if (!this.opened) {
-          this.onOpen.fire('thumbnail');
+          this.dispatchEvent(new CustomEvent('open', { detail: 'thumbnail' }));
         }
         this.open();
       });
@@ -64,7 +63,7 @@ class SwatImagePreviewDisplay {
       image_link.addEventListener('click', (e) => {
         e.preventDefault();
         if (!this.opened) {
-          this.onOpen.fire('thumbnail');
+          this.dispatchEvent(new CustomEvent('open', { detail: 'thumbnail' }));
         }
         this.open();
       });
@@ -105,7 +104,7 @@ class SwatImagePreviewDisplay {
     this.preview_mask.addEventListener('click', (e) => {
       e.preventDefault();
       if (this.opened) {
-        this.onClose.fire('overlayMask');
+        this.dispatchEvent(new CustomEvent('close', { detail: 'overlayMask' }));
       }
       this.close();
     });
@@ -161,7 +160,7 @@ class SwatImagePreviewDisplay {
     this.preview_container.addEventListener('click', (e) => {
       e.preventDefault();
       if (this.opened) {
-        this.onClose.fire('container');
+        this.dispatchEvent(new CustomEvent('close', { detail: 'container' }));
       }
       this.close();
     });
@@ -207,7 +206,7 @@ class SwatImagePreviewDisplay {
     if (e.key === 'Backspace' || e.key === 'Escape') {
       e.preventDefault();
       if (this.opened) {
-        this.onClose.fire('keyboard');
+        this.dispatchEvent(new CustomEvent('close', { detail: 'keyboard' }));
       }
       this.close();
     }

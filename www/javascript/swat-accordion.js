@@ -1,12 +1,11 @@
-class SwatAccordion {
+class SwatAccordion extends EventTarget {
   constructor(id) {
+    super();
     this.id = id;
     this.current_page = null;
     this.animate = true;
     this.always_open = true; // by default, always keep one page open
     this.semaphore = false;
-    this.pageChangeEvent = new YAHOO.util.CustomEvent('pageChange');
-    this.postInitEvent = new YAHOO.util.CustomEvent('postInit');
 
     window.addEventListener('DOMContentLoaded', () => {
       this.init();
@@ -67,7 +66,7 @@ class SwatAccordion {
       this.pages.push(page);
     }
 
-    this.postInitEvent.fire();
+    this.dispatchEvent(new CustomEvent('post-init'));
   }
 
   getPageFromHash() {
@@ -104,7 +103,11 @@ class SwatAccordion {
       }
     }
 
-    this.pageChangeEvent.fire(page, this.current_page);
+    this.dispatchEvent(
+      new CustomEvent('change-page', {
+        detail: { newPage: page, oldPage: this.current_page }
+      })
+    );
 
     this.current_page = page;
   }
@@ -183,7 +186,11 @@ class SwatAccordion {
       new_page.setStatus('opened');
     }
 
-    this.pageChangeEvent.fire(new_page, old_page);
+    this.dispatchEvent(
+      new CustomEvent('change-page', {
+        detail: { newPage: new_page, oldPage: old_page }
+      })
+    );
 
     this.current_page = new_page;
   }

@@ -4,7 +4,7 @@ class SwatView {
    *
    * This is the base class used for recordset views. It is primarily
    * responsible for providing helper methods for dynamically highlighting
-   * selecgted items in the view.
+   * selected items in the view.
    *
    * @param {string} id the identifier of this view.
    *

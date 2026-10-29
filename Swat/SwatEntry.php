@@ -3,7 +3,7 @@
 /**
  * A single line text entry widget.
  *
- * @copyright 2004-2023 silverorange
+ * @copyright 2004-2026 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatEntry extends SwatInputControl implements SwatState
@@ -160,7 +160,7 @@ class SwatEntry extends SwatInputControl implements SwatState
 
         $this->value = $this->getRawValue();
 
-        if ($this->auto_trim) {
+        if ($this->auto_trim && $this->value !== null) {
             $this->value = trim($this->value);
             if ($this->value === '') {
                 $this->value = null;
@@ -301,7 +301,7 @@ class SwatEntry extends SwatInputControl implements SwatState
             $tag->disabled = 'disabled';
         }
 
-        $value = $this->getDisplayValue($this->value);
+        $value = $this->getDisplayValue($this->value) ?? '';
 
         // escape value for display because we actually want to show entities
         // for editing

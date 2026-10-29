@@ -16,7 +16,7 @@
  * accurate to four decimal places. This translates to one-hundredth of a
  * percent.
  *
- * @copyright 2007-2016 silverorange
+ * @copyright 2007-2026 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatProgressBar extends SwatControl
@@ -124,9 +124,6 @@ class SwatProgressBar extends SwatControl
         parent::__construct($id);
 
         $this->requires_id = true;
-
-        $yui = new SwatYUI(['event']);
-        $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
         $this->addStyleSheet('packages/swat/styles/swat-progress-bar.css');
         $this->addJavaScript('packages/swat/javascript/swat-progress-bar.js');

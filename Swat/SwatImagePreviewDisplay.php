@@ -6,7 +6,7 @@
  * This control displays an image and uses a lightbox-like effect to display
  * another image when the first image is clicked.
  *
- * @copyright 2005-2016 silverorange
+ * @copyright 2005-2026 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatImagePreviewDisplay extends SwatImageDisplay
@@ -149,9 +149,6 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
         parent::__construct($id);
 
         $this->requires_id = true;
-
-        $yui = new SwatYUI(['dom', 'event']);
-        $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
         $this->addJavaScript(
             'packages/swat/javascript/swat-z-index-manager.js',

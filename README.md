@@ -31,3 +31,14 @@ native applications. Read about
 ```sh
 composer require silverorange/swat
 ```
+
+## Demo Application
+
+Assuming you have PHP installed and in your `$PATH`, from the root of this repository, run:
+
+```sh
+composer install
+php -S localhost:8888 -t demo/www
+```
+
+Then open http://localhost:8888/ in your browser.

@@ -9,7 +9,7 @@
  * With Swat's default style, SwatForm widgets have no visible margins, padding
  * or borders.
  *
- * @copyright 2004-2016 silverorange
+ * @copyright 2004-2026 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatForm extends SwatDisplayableContainer
@@ -300,13 +300,6 @@ class SwatForm extends SwatDisplayableContainer
         $this->displayChildren();
         $this->displayHiddenFields();
         $form_tag->close();
-
-        if ($this->connection_close_uri != '') {
-            $yui = new SwatYUI(['event']);
-            $this->html_head_entry_set->addEntrySet(
-                $yui->getHtmlHeadEntrySet(),
-            );
-        }
 
         Swat::displayInlineJavaScript($this->getInlineJavaScript());
     }

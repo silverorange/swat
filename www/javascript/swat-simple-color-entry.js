@@ -6,7 +6,7 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay {
    * @param {string[]} colors
    * @param {string} none_option_title
    *
-   * @copyright 2005-2016 silverorange
+   * @copyright 2005-2026 silverorange
    */
   constructor(id, colors, none_option_title) {
     super(id);
@@ -18,7 +18,6 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay {
     this.columns = Math.ceil(Math.sqrt(this.colors.length));
 
     this.current_color = null;
-    this.colorChangeEvent = new YAHOO.util.CustomEvent('colorChange');
   }
 
   init() {
@@ -206,11 +205,13 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay {
 
       this.current_color = color;
 
-      if (color === null) {
-        this.colorChangeEvent.fire(null);
-      } else {
-        this.colorChangeEvent.fire('#' + color);
-      }
+      const event_color = color === null ? null : '#' + color;
+
+      this.dispatchEvent(
+        new CustomEvent('change', {
+          detail: event_color
+        })
+      );
 
       this.highlightPaletteEntry(color);
     }

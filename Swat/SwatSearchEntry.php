@@ -3,7 +3,7 @@
 /**
  * A single line search entry widget.
  *
- * @copyright 2007-2016 silverorange
+ * @copyright 2007-2026 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatSearchEntry extends SwatEntry
@@ -25,8 +25,6 @@ class SwatSearchEntry extends SwatEntry
 
         $this->requires_id = true;
 
-        $yui = new SwatYUI(['dom', 'event']);
-        $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
         $this->addJavaScript('packages/swat/javascript/swat-search-entry.js');
         $this->addStyleSheet('packages/swat/styles/swat-search-entry.css');
     }

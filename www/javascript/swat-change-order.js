@@ -4,12 +4,10 @@
  * Some of the drag and drop code is adapted from Nat Friedman's drag.js
  * script.
  *
- * @package   Swat
- * @copyright 2004-2016 silverorange
+ * @copyright 2004-2026 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-
-class SwatChangeOrder {
+class SwatChangeOrder extends EventTarget {
   /**
    * An orderable list control widget
    *
@@ -17,6 +15,7 @@ class SwatChangeOrder {
    * @param {boolean} sensitive the initial sensitive of this object.
    */
   constructor(id, sensitive) {
+    super();
     this.is_webkit = /AppleWebKit|Konqueror|KHTML/gi.test(navigator.userAgent);
 
     this.id = id;
@@ -88,7 +87,6 @@ class SwatChangeOrder {
     }
 
     this.sensitive = sensitive;
-    this.orderChangeEvent = new YAHOO.util.CustomEvent('orderChange');
 
     // add grippies
     window.addEventListener('DOMContentLoaded', () => {
@@ -177,8 +175,8 @@ class SwatChangeOrder {
       );
     }
 
-    var left = YAHOO.util.Event.getPageX(event) - shadow_item.mouse_offset_x;
-    var top = YAHOO.util.Event.getPageY(event) - shadow_item.mouse_offset_y;
+    var left = event.pageX - shadow_item.mouse_offset_x;
+    var top = event.pageY - shadow_item.mouse_offset_y;
     shadow_item.style.top = top + 'px';
     shadow_item.style.left = left + 'px';
 
@@ -476,10 +474,10 @@ class SwatChangeOrder {
     var item_rect = this.getBoundingClientRect();
 
     shadow_item.mouse_offset_x =
-      YAHOO.util.Event.getPageX(event) - SwatChangeOrder.getPageX(item_rect);
+      event.pageX - SwatChangeOrder.getPageX(item_rect);
 
     shadow_item.mouse_offset_y =
-      YAHOO.util.Event.getPageY(event) - SwatChangeOrder.getPageY(item_rect);
+      event.pageY - SwatChangeOrder.getPageY(item_rect);
 
     var drop_marker = document.createElement('div');
 
@@ -586,7 +584,7 @@ class SwatChangeOrder {
       return false;
     }
 
-    YAHOO.util.Event.purgeElement(el);
+    el.removeEventListener('mousedown', SwatChangeOrder.mousedownEventHandler);
 
     // remove from hidden value
     var hidden_value = document.getElementById(this.id + '_value');
@@ -909,7 +907,11 @@ class SwatChangeOrder {
 
     // fire order-changed event
     if (temp != hidden_field.value) {
-      this.orderChangeEvent.fire(temp);
+      this.dispatchEvent(
+        new CustomEvent('change-order', {
+          detail: temp
+        })
+      );
     }
 
     // update a hidden field with current order of keys

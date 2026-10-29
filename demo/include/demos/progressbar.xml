@@ -61,60 +61,45 @@
                 name="content"
             ><![CDATA[
             <script type="text/javascript">
-			// update status bar text when value changes
-			function handleDownloadValueChange(type, value)
-			{
-				value = Math.round(value * 100000) / 1000;
-				download_progress_obj.setText(value + '% complete');
-			}
+            // update status bar text when value changes
+            const handleChange = (e) => {
+                const { value } = e.detail;
+                const percentage = Math.round(value * 100000) / 1000;
+                e.target.setText(`${percentage}% complete`);
+            };
 
-			// show generic text when in pulse-mode
-			function handleDownloadPulse(type)
-			{
-				download_progress_obj.setText('downloading...');
-			}
+            download_progress_obj.addEventListener('change', handleChange);
+            upload_progress_obj.addEventListener('change', handleChange);
 
-			// increase value on mouse movement
-			function handleMouseMove(event, progress_bar)
-			{
-				var value = progress_bar.getValue();
-				if (value > 1) {
-					progress_bar.pulse();
-				} else {
-					var value = progress_bar.getValue() + 0.01;
-					progress_bar.setValue(value);
-				}
-			}
+            // show generic text when in pulse-mode
+            download_progress_obj.addEventListener('pulse', (e) => {
+                e.target.setText('downloading...');
+            });
 
-			YAHOO.util.Event.addListener('download_progress', 'mousemove',
-				handleMouseMove, download_progress_obj);
+            // increase value on mouse movement
+            const handleMouseMove = (e, progress_bar) => {
+                var value = progress_bar.getValue();
+                if (value > 1) {
+                    progress_bar.pulse();
+                } else {
+                    progress_bar.setValue(value + 0.01);
+                }
+            };
 
-			download_progress_obj.changeValueEvent.subscribe(
-				handleDownloadValueChange);
+            document.getElementById('download_progress').addEventListener('mousemove', (e) => {
+                handleMouseMove(e, download_progress_obj);
+            });
 
-			download_progress_obj.pulseEvent.subscribe(handleDownloadPulse);
+            // set random value on mouse click
+            const handleClick = (e, progress_bar) => {
+                const value = Math.round(Math.random() * 100) / 100;
+                progress_bar.setValueWithAnimation(value);
+            }
+            document.getElementById('upload_progress').addEventListener('click', (e) => {
+                handleClick(e, upload_progress_obj);
+            });
 
-			// update status bar text when value changes
-			function handleUploadValueChange(type, value)
-			{
-				value = Math.round(value * 100000) / 1000;
-				upload_progress_obj.setText(value + '% complete');
-			}
-
-			// set random value on mouse click
-			function handleClick(event, progress_bar)
-			{
-				var value = Math.round(Math.random() * 100) / 100;
-				progress_bar.setValueWithAnimation(value);
-			}
-
-			YAHOO.util.Event.addListener('upload_progress', 'click',
-				handleClick, upload_progress_obj);
-
-			upload_progress_obj.changeValueEvent.subscribe(
-				handleUploadValueChange);
-
-			</script>
+            </script>
             ]]></property>
             <property name="content_type">text/xml</property>
         </widget>

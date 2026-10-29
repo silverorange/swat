@@ -15,15 +15,12 @@
                 name="content"
             ><![CDATA[
             <script type="text/javascript">
-			function handleColorChange(type, color)
-			{
-				var navbar = document.getElementById('navbar');
-				navbar.style.background = color;
-			}
-
-			simple_color_entry_obj.colorChangeEvent.subscribe(
-				handleColorChange);
-			</script>
+                simple_color_entry_obj.addEventListener('change', (e) => {
+                const color = e.detail;
+                const navbar = document.getElementById('navbar');
+                navbar.style.background = color;
+            });
+            </script>
             ]]></property>
             <property name="content_type">text/xml</property>
         </widget>
